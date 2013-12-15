@@ -2,5 +2,20 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="traveldreamEJB">
 		<jta-data-source>jdbc/traveldreamdb</jta-data-source>
+		<class>entities.Amici</class>
+		<class>entities.Citta</class>
+		<class>entities.Collegamenti</class>
+		<class>entities.DatePartenza</class>
+		<class>entities.DatePartenzaPK</class>
+		<class>entities.Destinazioni</class>
+		<class>entities.Durate</class>
+		<class>entities.DuratePK</class>
+		<class>entities.Escursioni</class>
+		<class>entities.Hotel</class>
+		<class>entities.Pacchetti</class>
+		<class>entities.PacchettiPredefiniti</class>
+		<class>entities.Persone</class>
+		<class>entities.PersonePK</class>
+		<class>entities.Utenti</class>
 	</persistence-unit>
 </persistence>
