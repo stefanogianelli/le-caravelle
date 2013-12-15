@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 
 /**
@@ -13,7 +15,7 @@ public class DatePartenzaPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Temporal(TemporalType.DATE)
-	private java.util.Date data;
+	private Date data;
 
 	@Column(insertable=false, updatable=false)
 	private int idPacchettoPredefinito;
@@ -21,11 +23,11 @@ public class DatePartenzaPK implements Serializable {
 	public DatePartenzaPK() {
 	}
 	
-	public java.util.Date getData() {
+	public Date getData() {
 		return this.data;
 	}
 	
-	public void setData(java.util.Date data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 	
