@@ -12,5 +12,9 @@ GlassFish Application Server 3.1 Java EE Application 6.0//EN"
 		<role-name>UTENTE</role-name>
 		<group-name>UTENTE</group-name>
 	</security-role-mapping>
+	<security-role-mapping>
+		<role-name>AMICO</role-name>
+		<group-name>AMICO</group-name>
+	</security-role-mapping>	
 	<realm>traveldreamJdbcRealm</realm>
 </glassfish-application>
