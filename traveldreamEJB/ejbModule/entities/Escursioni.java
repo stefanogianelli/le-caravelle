@@ -1,9 +1,14 @@
 package entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import enums.CategoriaEscursione;
+
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -19,7 +24,9 @@ public class Escursioni implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	private String categoria;
+	@ElementCollection(targetClass = CategoriaEscursione.class)
+	@Enumerated(EnumType.STRING)
+	private List<CategoriaEscursione> categoria;
 
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -48,11 +55,11 @@ public class Escursioni implements Serializable {
 		this.id = id;
 	}
 
-	public String getCategoria() {
+	public List<CategoriaEscursione> getCategoria() {
 		return this.categoria;
 	}
 
-	public void setCategoria(String categoria) {
+	public void setCategoria(List<CategoriaEscursione> categoria) {
 		this.categoria = categoria;
 	}
 
