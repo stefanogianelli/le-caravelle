@@ -1,15 +1,24 @@
 package dtos;
 
+import java.util.Date;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class PersonaDTO {
 
+	@NotEmpty
 	private String nome;
 
+	@NotEmpty
 	private String cognome;
 
-	private java.util.Date dataNascita;
+	@NotEmpty
+	private Date dataNascita;
 	
+	@NotEmpty
 	private String documentoIdentita;
 
+	@NotEmpty
 	private String telefono;
 
 	public String getNome() {
@@ -28,11 +37,11 @@ public class PersonaDTO {
 		this.cognome = cognome;
 	}
 
-	public java.util.Date getDataNascita() {
+	public Date getDataNascita() {
 		return dataNascita;
 	}
 
-	public void setDataNascita(java.util.Date dataNascita) {
+	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
 	}
 

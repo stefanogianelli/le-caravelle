@@ -3,24 +3,35 @@ package dtos;
 import java.sql.Time;
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class CollegamentoDTO {
 
+	@NotEmpty
 	private Date dataPartenza;
 
+	@NotEmpty
 	private String destinazione;
 
+	@NotEmpty
 	private Time oraArrivo;
 
+	@NotEmpty
 	private Time oraPartenza;
 
+	@NotEmpty
 	private String origine;
 	
+	@NotEmpty
 	private double prezzo;
 
+	@NotEmpty
 	private String tipoCollegamento;
 	
+	@NotEmpty
 	private CittaDTO cittaArrivo;
 	
+	@NotEmpty
 	private CittaDTO cittaPartenza;
 
 	public Date getDataPartenza() {

@@ -1,9 +1,13 @@
 package dtos;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class UtenteDTO {
 
+	@NotEmpty
 	private String email;
 
+	@NotEmpty
 	private String password;
 
 	public String getEmail() {

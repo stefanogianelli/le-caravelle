@@ -2,16 +2,23 @@ package dtos;
 
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class DestinazioneDTO {
 
+	@NotEmpty
 	private Date dataArrivo;
 	
+	@NotEmpty
 	private Date dataPartenza;
 	
+	@NotEmpty
 	private CittaDTO citta;
 	
+	@NotEmpty
 	private HotelDTO hotel;
 	
+	@NotEmpty
 	private PacchettoDTO pacchetto;
 
 	public Date getDataArrivo() {

@@ -2,22 +2,28 @@ package dtos;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class PacchettoDTO {
 
 	private String nome;
 
 	private int numPartecipanti;
 
+	@NotEmpty
 	private double prezzo;
 
+	@NotEmpty
 	private String tipoPacchetto;
 
 	private List<DestinazioneDTO> destinazioni;
 
+	@NotEmpty
 	private CittaDTO citta;
 
 	private PacchettoPredefinitoDTO pacchettoPredefinito;
 
+	@NotEmpty
 	private UtenteDTO utente;
 
 	public String getNome() {
