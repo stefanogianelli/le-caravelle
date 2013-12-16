@@ -44,6 +44,24 @@ public class GestoreHotelEJB implements GestoreHotel {
 		}
 		return dto;
 	}
+	
+    /**
+     * Mostra l'elenco di tutti gli hotel in una città
+     * @param nomeCitta Il nome della città
+     * @return L'elenco degli hotel
+     */
+	@Override
+	public List<HotelDTO> elencoHotel(String nomeCitta) {
+		Query q = em.createNamedQuery("Hotel.elenco", Hotel.class);
+		q.setParameter("citta", nomeCitta);
+		@SuppressWarnings("unchecked")
+		List<Hotel> hotel = q.getResultList();
+		List<HotelDTO> dto = new ArrayList<HotelDTO>();
+		for (Hotel h : hotel) {
+			dto.add(this.convertiInDTO(h));
+		}
+		return dto;
+	}	
 
 	/**
 	 * Mostra i dettagli relativi all'hotel con l'id in input

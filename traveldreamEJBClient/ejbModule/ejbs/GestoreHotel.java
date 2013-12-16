@@ -11,13 +11,15 @@ import dtos.HotelDTO;
 @Local
 public interface GestoreHotel {
 
-	public List<HotelDTO> elencoHotel ();
+	List<HotelDTO> elencoHotel ();
 	
-	public HotelDTO dettagliHotel (int idHotel) throws NoResultException;
+	List<HotelDTO> elencoHotel(String nomeCitta);
 	
-	public void creaHotel (HotelDTO hotel) throws EntityExistsException, NoResultException;
+	HotelDTO dettagliHotel (int idHotel) throws NoResultException;
 	
-	public void modificaDatiHotel (int idHotel, HotelDTO hotel) throws NoResultException;
+	void creaHotel (HotelDTO hotel) throws EntityExistsException, NoResultException;
 	
-	public void eliminaHotel (int idHotel) throws NoResultException;
+	void modificaDatiHotel (int idHotel, HotelDTO hotel) throws NoResultException;
+	
+	void eliminaHotel (int idHotel) throws NoResultException;
 }
