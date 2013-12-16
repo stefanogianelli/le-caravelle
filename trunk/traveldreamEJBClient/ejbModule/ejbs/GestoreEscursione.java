@@ -3,19 +3,23 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.persistence.EntityExistsException;
+import javax.persistence.NoResultException;
 
 import dtos.EscursioneDTO;
 
 @Local
 public interface GestoreEscursione {
 
-	public List<EscursioneDTO> elencoEscursioni ();
+	List<EscursioneDTO> elencoEscursioni ();
 	
-	public EscursioneDTO dettagliEscursione (int idEscursione);
+	List<EscursioneDTO> elencoEscursioni(String nomeCitta);
 	
-	public void creaEscursione (EscursioneDTO escursione);
+	EscursioneDTO dettagliEscursione (int idEscursione) throws NoResultException;
 	
-	public void modificaDatiEscursione (EscursioneDTO escursione);
+	void creaEscursione (EscursioneDTO escursione) throws EntityExistsException, NoResultException;
 	
-	public void eliminaEscursione (int idEscursione);
+	void modificaDatiEscursione (int id, EscursioneDTO escursione) throws NoResultException;
+	
+	void eliminaEscursione (int idEscursione) throws NoResultException;
 }

@@ -2,13 +2,16 @@ package dtos;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import enums.CategoriaEscursione;
 
 public class EscursioneDTO {
 
 	@NotEmpty
-	private String categoria;
+	private List<CategoriaEscursione> categoria;
 
 	@NotEmpty
 	private Date data;
@@ -28,11 +31,11 @@ public class EscursioneDTO {
 	@NotEmpty
 	private CittaDTO citta;
 
-	public String getCategoria() {
+	public List<CategoriaEscursione> getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(String categoria) {
+	public void setCategoria(List<CategoriaEscursione> categoria) {
 		this.categoria = categoria;
 	}
 
