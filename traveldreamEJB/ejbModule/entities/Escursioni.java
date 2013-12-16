@@ -16,7 +16,11 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Escursioni.findAll", query="SELECT e FROM Escursioni e")
+@NamedQueries ({
+	@NamedQuery(name = "Escursioni.elenco", query = "SELECT e FROM Escursioni e"),
+	@NamedQuery(name = "Escursioni.elencoPerCitta", query = "SELECT e FROM Escursioni e WHERE e.citta = :citta"),
+	@NamedQuery(name = "Escursioni.getEscursione", query = "SELECT e FROM Escursioni e WHERE e.id = :id")
+})
 public class Escursioni implements Serializable {
 	private static final long serialVersionUID = 1L;
 
