@@ -3,6 +3,8 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.persistence.EntityExistsException;
+import javax.persistence.NoResultException;
 
 import dtos.CollegamentoDTO;
 import enums.TipoCollegamento;
@@ -14,12 +16,12 @@ public interface GestoreCollegamento {
 	
 	List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo);	
 	
-	CollegamentoDTO dettagliCollegamento (int codiceCollegamento);
+	CollegamentoDTO dettagliCollegamento (int codiceCollegamento) throws NoResultException;
 	
-	void creaCollegamento (CollegamentoDTO collegamento);
+	void creaCollegamento (CollegamentoDTO collegamento) throws EntityExistsException, NoResultException;
 	
-	void modificaDatiCollegamento (int codice, CollegamentoDTO collegamento);
+	void modificaDatiCollegamento (int codice, CollegamentoDTO collegamento) throws NoResultException;
 	
-	void eliminaCollegamento (int codice);
+	void eliminaCollegamento (int codice) throws NoResultException;
 	
 }
