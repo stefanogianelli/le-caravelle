@@ -135,21 +135,20 @@ public class GestoreHotelEJB implements GestoreHotel {
 	}
 	
 	/**
-	 * Permette la conversione da un oggetto hotel al rispettivo DTO
+	 * Permette la conversione da un'entità hotel al rispettivo DTO
 	 * @param hotel L'oggetto da converitre
 	 * @return Il DTO risultante
 	 */
 	private HotelDTO convertiInDTO (Hotel hotel) {
-		HotelDTO dto = new HotelDTO (
-				hotel.getEmail(),
-				hotel.getIndirizzo(),
-				hotel.getNome(),
-				hotel.getPrezzo(),
-				hotel.getStelle(),
-				hotel.getTelefono(),
-				hotel.getWebsite(),
-				new CittaDTO (hotel.getCitta().getNazione(), hotel.getCitta().getNome(), hotel.getCitta().getRegione())
-				);
+		HotelDTO dto = new HotelDTO ();
+		dto.setEmail(hotel.getEmail());
+		dto.setIndirizzo(hotel.getIndirizzo());
+		dto.setNome(hotel.getNome());
+		dto.setPrezzo(hotel.getPrezzo());
+		dto.setStelle(hotel.getStelle());
+		dto.setTelefono(hotel.getTelefono());
+		dto.setWebsite(hotel.getWebsite());
+		dto.setCitta(new CittaDTO (hotel.getCitta().getNazione(), hotel.getCitta().getNome(), hotel.getCitta().getRegione()));
 		return dto;
 	}
 	

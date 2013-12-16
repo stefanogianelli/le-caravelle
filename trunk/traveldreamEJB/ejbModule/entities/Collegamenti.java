@@ -1,9 +1,14 @@
 package entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import enums.TipoCollegamento;
+
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -11,7 +16,11 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Collegamenti.findAll", query="SELECT c FROM Collegamenti c")
+@NamedQueries ({
+	@NamedQuery(name = "Collegamenti.elenco", query = "SELECT c FROM Collegamenti c"),
+	@NamedQuery(name = "Collegamenti.elencoPerTipo", query = "SELECT c FROM Collegamenti c WHERE c.tipoCollegamento = :tipo"),
+	@NamedQuery(name = "Collegamenti.getCollegamento", query = "SELECT c FROM Collegamenti c WHERE c.codice = :codice")
+})
 public class Collegamenti implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +41,9 @@ public class Collegamenti implements Serializable {
 
 	private double prezzo;
 
-	private String tipoCollegamento;
+	@ElementCollection(targetClass = TipoCollegamento.class)
+	@Enumerated(EnumType.STRING)
+	private List<TipoCollegamento> tipoCollegamento;
 
 	//bi-directional many-to-one association to Citta
 	@ManyToOne
@@ -103,11 +114,11 @@ public class Collegamenti implements Serializable {
 		this.prezzo = prezzo;
 	}
 
-	public String getTipoCollegamento() {
+	public List<TipoCollegamento> getTipoCollegamento() {
 		return this.tipoCollegamento;
 	}
 
-	public void setTipoCollegamento(String tipoCollegamento) {
+	public void setTipoCollegamento(List<TipoCollegamento> tipoCollegamento) {
 		this.tipoCollegamento = tipoCollegamento;
 	}
 

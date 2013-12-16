@@ -28,21 +28,6 @@ public class HotelDTO {
 	@NotEmpty
 	private CittaDTO citta;
 	
-	public HotelDTO () {
-		
-	}
-	
-	public HotelDTO (String email, String indirizzo, String nome, double prezzo, int stelle, String telefono, String website, CittaDTO citta) {
-		this.email = email;
-		this.indirizzo = indirizzo;
-		this.nome = nome;
-		this.prezzo = prezzo;
-		this.stelle = stelle;
-		this.telefono = telefono;
-		this.website = website;
-		this.citta = citta;
-	}	
-
 	public String getEmail() {
 		return email;
 	}

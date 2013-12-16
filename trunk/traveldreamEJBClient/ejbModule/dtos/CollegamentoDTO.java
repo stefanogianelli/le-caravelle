@@ -2,8 +2,11 @@ package dtos;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import enums.TipoCollegamento;
 
 public class CollegamentoDTO {
 
@@ -26,14 +29,14 @@ public class CollegamentoDTO {
 	private double prezzo;
 
 	@NotEmpty
-	private String tipoCollegamento;
+	private List<TipoCollegamento> tipoCollegamento;
 	
 	@NotEmpty
 	private CittaDTO cittaArrivo;
 	
 	@NotEmpty
 	private CittaDTO cittaPartenza;
-
+	
 	public Date getDataPartenza() {
 		return dataPartenza;
 	}
@@ -82,11 +85,11 @@ public class CollegamentoDTO {
 		this.prezzo = prezzo;
 	}
 
-	public String getTipoCollegamento() {
+	public List<TipoCollegamento> getTipoCollegamento() {
 		return tipoCollegamento;
 	}
 
-	public void setTipoCollegamento(String tipoCollegamento) {
+	public void setTipoCollegamento(List<TipoCollegamento> tipoCollegamento) {
 		this.tipoCollegamento = tipoCollegamento;
 	}
 
