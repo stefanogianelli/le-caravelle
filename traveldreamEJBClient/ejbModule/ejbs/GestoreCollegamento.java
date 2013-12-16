@@ -5,17 +5,21 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dtos.CollegamentoDTO;
+import enums.TipoCollegamento;
 
 @Local
 public interface GestoreCollegamento {
 
-	public List<CollegamentoDTO> elencoCollegamenti ();
+	List<CollegamentoDTO> elencoCollegamenti ();
 	
-	public CollegamentoDTO dettagliCollegamento (int codiceCollegamento);
+	List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo);	
 	
-	public void creaCollegamento (CollegamentoDTO collegamento);
+	CollegamentoDTO dettagliCollegamento (int codiceCollegamento);
 	
-	public void modificaDatiCollegamento (CollegamentoDTO collegamento);
+	void creaCollegamento (CollegamentoDTO collegamento);
 	
-	public void eliminaCollegamento (int idCollegamento);
+	void modificaDatiCollegamento (int codice, CollegamentoDTO collegamento);
+	
+	void eliminaCollegamento (int codice);
+	
 }
