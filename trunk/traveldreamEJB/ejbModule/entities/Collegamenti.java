@@ -8,7 +8,6 @@ import enums.TipoCollegamento;
 
 import java.sql.Time;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -41,9 +40,8 @@ public class Collegamenti implements Serializable {
 
 	private double prezzo;
 
-	@ElementCollection(targetClass = TipoCollegamento.class)
 	@Enumerated(EnumType.STRING)
-	private List<TipoCollegamento> tipoCollegamento;
+	private TipoCollegamento tipoCollegamento;
 
 	//bi-directional many-to-one association to Citta
 	@ManyToOne
@@ -114,11 +112,11 @@ public class Collegamenti implements Serializable {
 		this.prezzo = prezzo;
 	}
 
-	public List<TipoCollegamento> getTipoCollegamento() {
+	public TipoCollegamento getTipoCollegamento() {
 		return this.tipoCollegamento;
 	}
 
-	public void setTipoCollegamento(List<TipoCollegamento> tipoCollegamento) {
+	public void setTipoCollegamento(TipoCollegamento tipoCollegamento) {
 		this.tipoCollegamento = tipoCollegamento;
 	}
 

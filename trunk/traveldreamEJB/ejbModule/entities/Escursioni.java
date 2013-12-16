@@ -8,7 +8,6 @@ import enums.CategoriaEscursione;
 
 import java.sql.Time;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -28,9 +27,8 @@ public class Escursioni implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@ElementCollection(targetClass = CategoriaEscursione.class)
 	@Enumerated(EnumType.STRING)
-	private List<CategoriaEscursione> categoria;
+	private CategoriaEscursione categoria;
 
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -59,11 +57,11 @@ public class Escursioni implements Serializable {
 		this.id = id;
 	}
 
-	public List<CategoriaEscursione> getCategoria() {
+	public CategoriaEscursione getCategoria() {
 		return this.categoria;
 	}
 
-	public void setCategoria(List<CategoriaEscursione> categoria) {
+	public void setCategoria(CategoriaEscursione categoria) {
 		this.categoria = categoria;
 	}
 
