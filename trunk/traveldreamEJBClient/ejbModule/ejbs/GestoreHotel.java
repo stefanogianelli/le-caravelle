@@ -3,6 +3,8 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.persistence.EntityExistsException;
+import javax.persistence.NoResultException;
 
 import dtos.HotelDTO;
 
@@ -11,11 +13,11 @@ public interface GestoreHotel {
 
 	public List<HotelDTO> elencoHotel ();
 	
-	public HotelDTO dettagliHotel (int idHotel);
+	public HotelDTO dettagliHotel (int idHotel) throws NoResultException;
 	
-	public void creaHotel (HotelDTO hotel);
+	public void creaHotel (HotelDTO hotel) throws EntityExistsException, NoResultException;
 	
-	public void modificaDatiHotel (HotelDTO hotel);
+	public void modificaDatiHotel (int idHotel, HotelDTO hotel) throws NoResultException;
 	
-	public void eliminaHotel (int idHotel);
+	public void eliminaHotel (int idHotel) throws NoResultException;
 }

@@ -9,7 +9,10 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Citta.findAll", query="SELECT c FROM Citta c")
+@NamedQueries ({
+	@NamedQuery(name = "Citta.elenco", query = "SELECT c FROM Citta c"),
+	@NamedQuery(name = "Citta.getCitta", query = "SELECT c FROM Citta c WHERE c.nome = :nome")
+})
 public class Citta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
