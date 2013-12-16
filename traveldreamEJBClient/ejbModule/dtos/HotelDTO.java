@@ -1,21 +1,31 @@
 package dtos;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class HotelDTO {
 
+	@NotEmpty
 	private String email;
 
+	@NotEmpty
 	private String indirizzo;
 
+	@NotEmpty
 	private String nome;
 
+	@NotEmpty
 	private double prezzo;
 
+	@NotEmpty
 	private int stelle;
 
+	@NotEmpty
 	private String telefono;
 
+	@NotEmpty
 	private String website;
 
+	@NotEmpty
 	private CittaDTO citta;
 
 	public String getEmail() {

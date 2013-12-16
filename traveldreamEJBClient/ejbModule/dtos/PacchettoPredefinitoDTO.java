@@ -3,16 +3,23 @@ package dtos;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class PacchettoPredefinitoDTO {
 
+	@NotEmpty
 	private String nome;
 
+	@NotEmpty
 	private double prezzo;
 
+	@NotEmpty
 	private List<Date> datePartenza;
 
+	@NotEmpty
 	private List<Integer> durate;
 
+	@NotEmpty
 	private HotelDTO hotel;
 
 	public String getNome() {
