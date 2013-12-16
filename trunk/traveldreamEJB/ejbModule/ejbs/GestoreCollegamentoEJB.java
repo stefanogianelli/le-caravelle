@@ -51,13 +51,12 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
      * @param tipo La tipologia del collegamento
      * @return L'elenco dei collegamenti
      */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo) {
-		List<Collegamenti> collegamenti = new ArrayList<Collegamenti>();
 		Query q = em.createNamedQuery("Collegamenti.elencoPerTipo", Collegamenti.class);
 		q.setParameter("tipo", tipo);
-		collegamenti.addAll(q.getResultList());
+		@SuppressWarnings("unchecked")
+		List<Collegamenti> collegamenti = q.getResultList();
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
 		for (Collegamenti c : collegamenti) {
 			dto.add(this.convertiInDTO(c));

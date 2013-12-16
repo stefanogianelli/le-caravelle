@@ -7,9 +7,9 @@ import dtos.UtenteDTO;
 @Local
 public interface GestoreProfilo {
 
-	public void registrazioneUtente (UtenteDTO datiUtente);
+	void registrazioneUtente (UtenteDTO datiUtente);
 	
-	public void resetPassword (String email);
+	void resetPassword (String email);
 	
-	public void modificaDatiPersonali (UtenteDTO datiUtenti);
+	void modificaDatiPersonali (UtenteDTO datiUtenti);
 }

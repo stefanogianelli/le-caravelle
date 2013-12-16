@@ -8,15 +8,15 @@ import dtos.CittaDTO;
 import dtos.DestinazioneDTO;
 
 @Local
-public interface GestoreDestinazione {
+interface GestoreDestinazione {
 
-	public List<CittaDTO> elencoCitta ();
+	List<CittaDTO> elencoCitta ();
 	
-	public void modificaDatiDestinazione (DestinazioneDTO destinazione);
+	void modificaDatiDestinazione (DestinazioneDTO destinazione);
 	
-	public void aggiuntaEscursione (int idEscursione, int numeroPartecipanti);
+	void aggiuntaEscursione (int idEscursione, int numeroPartecipanti);
 	
-	public void modificaDatiEscursione (int idEscursione, int numeroPartecipanti);
+	void modificaDatiEscursione (int idEscursione, int numeroPartecipanti);
 	
-	public void eliminaEscursione (int idEscursione);
+	void eliminaEscursione (int idEscursione);
 }

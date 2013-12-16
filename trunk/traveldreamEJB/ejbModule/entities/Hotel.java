@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries ({
 	@NamedQuery(name = "Hotel.elenco", query = "SELECT h FROM Hotel h"),
+	@NamedQuery(name = "Hotel.elencoPerCitta", query = "SELECT h FROM Hotel h WHERE h.citta = :citta"),
 	@NamedQuery(name = "Hotel.getHotel", query = "SELECT h FROM Hotel h WHERE h.id = :id")
 })	
 public class Hotel implements Serializable {
