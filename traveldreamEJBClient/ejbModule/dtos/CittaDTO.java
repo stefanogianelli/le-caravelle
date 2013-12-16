@@ -7,7 +7,17 @@ public class CittaDTO {
 	private String nome;
 
 	private String regione;
+	
+	public CittaDTO () {
+		
+	}
 
+	public CittaDTO (String nazione, String nome, String regione) {
+		this.nazione = nazione;
+		this.nome = nome;
+		this.regione = regione;
+	}
+	
 	public String getNazione() {
 		return nazione;
 	}
