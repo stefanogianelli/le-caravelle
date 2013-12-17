@@ -5,13 +5,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import dtos.CittaDTO;
 import dtos.DestinazioneDTO;
-import entities.Citta;
 import entities.Destinazioni;
 
 /**
@@ -31,6 +27,9 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	
 	@EJB
 	private GestoreEscursioneEJB escursione;
+	
+	@EJB
+	private GestoreCittaEJB citta;
 	
     /**
      * Default constructor. 
@@ -72,37 +71,10 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 * Ritorna l'oggetto destinazione con l'identificativo in input
 	 * @param id L'identificativo della destinazione
 	 * @return L'oggetto desiderato
-	 * @throws NoResultException Quando non esiste una destinazione nel database con l'id scelto
 	 */
-	private Destinazioni getDestinazione (int id) throws NoResultException {
-		Query q = em.createNamedQuery("Destinazioni.getDestinazione", Destinazioni.class);
-		q.setParameter("id", id);
-		return (Destinazioni) q.getSingleResult();
+	protected Destinazioni getDestinazione (int id) {
+		return em.find(Destinazioni.class, id);
 	}
-	
-	/**
-	 * Ritorna l'oggetto città col nome in input
-	 * @param nome Il nome della città
-	 * @return L'oggetto desiderato
-	 * @throws NoResultException Quando non viene trovata la città nel database
-	 */
-	private Citta getCitta (String nome) throws NoResultException {
-		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
-		q.setParameter("nome", nome);
-		return (Citta) q.getSingleResult();		
-	}	
-	
-	/**
-	 * Ritorna l'oggetto città con l'id in input
-	 * @param id L'identificativo della città
-	 * @return L'oggetto desiderato
-	 * @throws NoResultException Quando non viene trovata la città nel database
-	 */
-	private Citta getCitta (int id) throws NoResultException {
-		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
-		q.setParameter("id", id);
-		return (Citta) q.getSingleResult();		
-	}		
 	
 	/**
 	 * Permette la conversione da un'entità al rispettivo DTO
@@ -114,7 +86,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		
 		dto.setDataArrivo(destinazione.getDataArrivo());
 		dto.setDataPartenza(destinazione.getDataPartenza());
-		dto.setCitta(new CittaDTO (destinazione.getCitta().getNazione(), destinazione.getCitta().getNome(), destinazione.getCitta().getRegione()));
+		dto.setCitta(citta.convertiInDTO(destinazione.getCitta()));
 		//dto.setHotel(hotel.convertiInDTO(destinazione.getHotel()));
 		//dto.setHotel(pacchetto.convertiInDTO(destinazione.getPacchetto()));
 		

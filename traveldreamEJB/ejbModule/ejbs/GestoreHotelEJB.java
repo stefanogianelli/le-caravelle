@@ -3,6 +3,7 @@ package ejbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -10,9 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import dtos.CittaDTO;
 import dtos.HotelDTO;
-import entities.Citta;
 import entities.Hotel;
 
 /**
@@ -23,6 +22,9 @@ public class GestoreHotelEJB implements GestoreHotel {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	private GestoreCittaEJB citta;
 	
     /**
      * Default constructor. 
@@ -91,7 +93,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(this.getCitta(hotel.getCitta().getNome()));			
+		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));			
 		
 		em.persist(entity);
 	}
@@ -113,7 +115,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(this.getCitta(hotel.getCitta().getNome()));		
+		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));		
 		
 		em.merge(entity);
 	}
@@ -132,24 +134,9 @@ public class GestoreHotelEJB implements GestoreHotel {
 	 * Ritorna l'oggetto hotel corrispondente all'id in input
 	 * @param idHotel L'identificativo dell'hotel
 	 * @return L'oggetto hotel
-	 * @throws NoResultException Quando non esiste un hotel con l'id scelto 
 	 */
-	private Hotel getHotel (int idHotel) throws NoResultException {
-		Query q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
-		q.setParameter("id", idHotel);
-		return (Hotel) q.getSingleResult();
-	}
-	
-	/**
-	 * Ritorna l'oggetto città corrispondente al nome in input
-	 * @param nome Il nome della città
-	 * @return L'oggetto città
-	 * @throws NoResultException Quando non esiste una città con il nome scelto
-	 */
-	private Citta getCitta (String nome) throws NoResultException {
-		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
-		q.setParameter("nome", nome);
-		return (Citta) q.getSingleResult();
+	protected Hotel getHotel (int idHotel) {
+		return em.find(Hotel.class, idHotel);
 	}
 	
 	/**
@@ -166,7 +153,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 		dto.setStelle(hotel.getStelle());
 		dto.setTelefono(hotel.getTelefono());
 		dto.setWebsite(hotel.getWebsite());
-		dto.setCitta(new CittaDTO (hotel.getCitta().getNazione(), hotel.getCitta().getNome(), hotel.getCitta().getRegione()));
+		dto.setCitta(citta.convertiInDTO(hotel.getCitta()));
 		return dto;
 	}
 	
