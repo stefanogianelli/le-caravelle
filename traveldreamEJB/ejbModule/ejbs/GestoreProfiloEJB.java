@@ -7,8 +7,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
+import dtos.PersonaDTO;
 import dtos.UtenteDTO;
 import entities.Gruppi;
 import entities.Persone;
@@ -42,13 +44,13 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		gruppi.add(Gruppi.UTENTE);
 		
 		PersonePK personapk = new PersonePK();
-		personapk.setNome(datiUtente.getNome());
-		personapk.setCognome(datiUtente.getCognome());
-		personapk.setDataNascita(datiUtente.getDataNascita());
+		//personapk.setNome(datiUtente.getNome());
+		//personapk.setCognome(datiUtente.getCognome());
+		//personapk.setDataNascita(datiUtente.getDataNascita());
 		
 		Persone persona = new Persone ();
-		persona.setDocumentoIdentita(datiUtente.getDocumentoIdentita());
-		persona.setTelefono(datiUtente.getTelefono());
+		//persona.setDocumentoIdentita(datiUtente.getDocumentoIdentita());
+		//persona.setTelefono(datiUtente.getTelefono());
 		persona.setId(personapk);
 		
 		Utenti utente = new Utenti ();
@@ -73,31 +75,25 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	 * @param datiUtente I dati dell'utente
 	 */
 	@Override
-	public void modificaDatiPersonali(String email, UtenteDTO datiUtente) {
-		Utenti utente = this.getUtente(email);
+	public void modificaDatiPersonali(UtenteDTO datiUtente) {
+		Utenti utente = this.convertiInDAO(datiUtente);
 		
 		utente.setEmail(datiUtente.getEmail());
-		//utente.setPassword(password);
+		utente.setPassword(datiUtente.getPassword());
 		
 		Persone persona = utente.getPersona();
-		persona.setDocumentoIdentita(datiUtente.getDocumentoIdentita());
-		persona.setTelefono(datiUtente.getTelefono());
+		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
+		persona.setTelefono(datiUtente.getPersona().getTelefono());
 		
 		PersonePK personapk = persona.getId();
-		personapk.setNome(datiUtente.getNome());
-		personapk.setCognome(datiUtente.getCognome());
-		personapk.setDataNascita(datiUtente.getDataNascita());
+		personapk.setNome(datiUtente.getPersona().getNome());
+		personapk.setCognome(datiUtente.getPersona().getCognome());
+		personapk.setDataNascita(datiUtente.getPersona().getDataNascita());
+		
+		persona.setId(personapk);
+		utente.setPersona(persona);
 		
 		em.merge(utente);
-	}
-	
-	/**
-	 * Ricerca un utente nel database in base all'indirizzo email
-	 * @param email L'indirizzo email
-	 * @return L'utente desiderato
-	 */
-	private Utenti getUtente (String email) {
-		return em.find(Utenti.class, email);
 	}
 	
 	/**
@@ -108,6 +104,28 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		String password = "funzione casuale";
 		utente.setPassword(DigestUtils.sha256Hex(password));
 		return password;
+	}
+	
+	protected Utenti convertiInDAO (UtenteDTO utente) {
+		return em.find(Utenti.class, utente.getEmail());
+	}
+	
+	protected UtenteDTO convertiInDTO (Utenti utente) {
+		UtenteDTO utenteDTO = new UtenteDTO();
+		
+		utenteDTO.setEmail(utente.getEmail());
+		utenteDTO.setPassword(utenteDTO.getPassword());
+		
+		PersonaDTO personaDTO = new PersonaDTO();
+		personaDTO.setNome(utente.getPersona().getId().getNome());
+		personaDTO.setCognome(utente.getPersona().getId().getCognome());
+		personaDTO.setDataNascita(utente.getPersona().getId().getDataNascita());
+		personaDTO.setDocumentoIdentita(utente.getPersona().getDocumentoIdentita());
+		personaDTO.setTelefono(utente.getPersona().getTelefono());
+		
+		utenteDTO.setPersona(personaDTO);;
+		
+		return utenteDTO;
 	}
 
 }

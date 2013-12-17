@@ -12,5 +12,5 @@ public interface GestoreProfilo {
 	
 	void resetPassword (String email);
 	
-	void modificaDatiPersonali (String email, UtenteDTO datiUtente);
+	void modificaDatiPersonali (UtenteDTO datiUtente);
 }
