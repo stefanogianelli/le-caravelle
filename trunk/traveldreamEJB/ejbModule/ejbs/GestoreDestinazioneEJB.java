@@ -74,8 +74,15 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 
 	@Override
 	public void modificaDatiDestinazione(DestinazioneDTO destinazione) {
-		// TODO Auto-generated method stub
+		Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
 		
+		entity.setDataArrivo(destinazione.getDataArrivo());
+		entity.setDataPartenza(destinazione.getDataPartenza());
+		entity.setCitta(citta.convertiInDAO(destinazione.getCitta()));
+		entity.setHotel(hotel.convertiInDAO(destinazione.getHotel()));
+		//entity.setPacchetto(pacchetto);
+		
+		em.merge(entity);		
 	}
 
 	/**
