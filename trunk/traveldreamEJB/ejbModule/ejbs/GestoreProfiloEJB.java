@@ -7,8 +7,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.apache.commons.codec.digest.DigestUtils;
 
 import dtos.UtenteDTO;
@@ -99,9 +97,7 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	 * @return L'utente desiderato
 	 */
 	private Utenti getUtente (String email) {
-		Query q = em.createNamedQuery("Utenti.getUtente", Utenti.class);
-		q.setParameter("email", email);
-		return (Utenti) q.getSingleResult();
+		return em.find(Utenti.class, email);
 	}
 	
 	/**

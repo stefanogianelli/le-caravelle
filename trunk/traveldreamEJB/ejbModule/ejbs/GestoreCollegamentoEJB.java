@@ -3,6 +3,7 @@ package ejbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -10,9 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
-import entities.Citta;
 import entities.Collegamenti;
 import enums.TipoCollegamento;
 
@@ -24,6 +23,9 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	private GestoreCittaEJB citta;
 	
     /**
      * Default constructor. 
@@ -92,8 +94,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(this.getCitta(collegamento.getCittaArrivo().getNome()));
-		entity.setCittaPartenza(this.getCitta(collegamento.getCittaPartenza().getNome()));
+		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivo().getNome()));
+		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenza().getNome()));
 		
 		em.persist(entity);		
 	}
@@ -115,8 +117,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(this.getCitta(collegamento.getCittaArrivo().getNome()));
-		entity.setCittaPartenza(this.getCitta(collegamento.getCittaPartenza().getNome()));
+		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivo().getNome()));
+		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenza().getNome()));
 		
 		em.merge(entity);
 	}
@@ -136,20 +138,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	 * @param codice Il codice del collegamento
 	 * @return Il collegameno desiderato
 	 */
-	private Collegamenti getCollegamento (int codice) {
+	protected Collegamenti getCollegamento (int codice) {
 		return em.find(Collegamenti.class, codice);
-	}
-	
-	/**
-	 * Ritorna l'oggetto città col nome in input
-	 * @param nome Il nome della città
-	 * @return L'oggetto desiderato
-	 * @throws NoResultException Quando non viene trovata la città nel database
-	 */
-	private Citta getCitta (String nome) throws NoResultException {
-		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
-		q.setParameter("nome", nome);
-		return (Citta) q.getSingleResult();		
 	}
 	
 	/**
@@ -157,9 +147,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	 * @param collegamento L'entità di partenza
 	 * @return Il relativo DTO
 	 */
-	private CollegamentoDTO convertiInDTO (Collegamenti collegamento) {
-		Citta cittaPartenza = this.getCitta(collegamento.getCittaPartenza().getNome());
-		Citta cittaArrivo = this.getCitta(collegamento.getCittaArrivo().getNome());
+	protected CollegamentoDTO convertiInDTO (Collegamenti collegamento) {
 		CollegamentoDTO dto = new CollegamentoDTO ();
 		dto.setDataPartenza(collegamento.getDataPartenza());
 		dto.setDestinazione(collegamento.getDestinazione());
@@ -168,8 +156,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		dto.setOrigine(collegamento.getOrigine());
 		dto.setPrezzo(collegamento.getPrezzo());
 		dto.setTipoCollegamento(collegamento.getTipoCollegamento());
-		dto.setCittaArrivo(new CittaDTO (cittaArrivo.getNazione(), cittaArrivo.getNome(), cittaArrivo.getRegione()));
-		dto.setCittaPartenza(new CittaDTO (cittaPartenza.getNazione(), cittaPartenza.getNome(), cittaPartenza.getRegione()));
+		dto.setCittaArrivo(citta.convertiInDTO(collegamento.getCittaArrivo()));
+		dto.setCittaPartenza(citta.convertiInDTO(collegamento.getCittaPartenza()));
 		return dto;
 	}
 

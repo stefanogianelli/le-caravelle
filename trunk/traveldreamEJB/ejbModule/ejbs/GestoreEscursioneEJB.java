@@ -3,6 +3,7 @@ package ejbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -10,9 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import dtos.CittaDTO;
 import dtos.EscursioneDTO;
-import entities.Citta;
 import entities.Escursioni;
 
 /**
@@ -23,6 +22,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	private GestoreCittaEJB citta;
 	
     /**
      * Default constructor. 
@@ -90,7 +92,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		entity.setNome(escursione.getNome());
 		entity.setOra(escursione.getOra());
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(this.getCitta(escursione.getCitta().getNome()));
+		entity.setCitta(citta.getCitta(escursione.getCitta().getNome()));
 		
 		em.persist(entity);		
 	}
@@ -111,7 +113,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		entity.setNome(escursione.getNome());
 		entity.setOra(escursione.getOra());
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(this.getCitta(escursione.getCitta().getNome()));
+		entity.setCitta(citta.getCitta(escursione.getCitta().getNome()));
 		
 		em.merge(entity);
 	}
@@ -130,24 +132,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	 * Ritorna l'oggetto escursione corrispondente all'id in input
 	 * @param id L'identificativo dell'escursione
 	 * @return L'oggetto escursione
-	 * @throws NoResultException Quando non esiste una escursione con l'id scelto 
 	 */
-	protected Escursioni getEscursione (int id) throws NoResultException {
-		Query q = em.createNamedQuery("Escursioni.getEscursione", Escursioni.class);
-		q.setParameter("id", id);
-		return (Escursioni) q.getSingleResult();
-	}
-	
-	/**
-	 * Ritorna l'oggetto città corrispondente al nome in input
-	 * @param nome Il nome della città
-	 * @return L'oggetto città
-	 * @throws NoResultException Quando non esiste una città con il nome scelto
-	 */
-	private Citta getCitta (String nome) throws NoResultException {
-		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
-		q.setParameter("nome", nome);
-		return (Citta) q.getSingleResult();
+	protected Escursioni getEscursione (int id) {
+		return em.find(Escursioni.class, id);
 	}
 	
 	/**
@@ -155,7 +142,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	 * @param escursione L'oggetto da converitre
 	 * @return Il DTO risultante
 	 */
-	private EscursioneDTO convertiInDTO (Escursioni escursione) {
+	protected EscursioneDTO convertiInDTO (Escursioni escursione) {
 		EscursioneDTO dto = new EscursioneDTO();
 		dto.setCategoria(escursione.getCategoria());
 		dto.setData(escursione.getData());
@@ -163,7 +150,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		dto.setNome(escursione.getNome());
 		dto.setOra(escursione.getOra());
 		dto.setPrezzo(escursione.getPrezzo());
-		dto.setCitta(new CittaDTO (escursione.getCitta().getNazione(), escursione.getCitta().getNome(), escursione.getCitta().getRegione()));
+		dto.setCitta(citta.convertiInDTO(escursione.getCitta()));
 		return dto;
 	}
 
