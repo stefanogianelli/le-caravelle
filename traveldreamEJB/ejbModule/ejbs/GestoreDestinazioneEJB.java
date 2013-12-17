@@ -1,14 +1,20 @@
 package ejbs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import dtos.CittaDTO;
 import dtos.DestinazioneDTO;
+import entities.Attivita;
+import entities.Citta;
 import entities.Destinazioni;
+import entities.Escursioni;
 
 /**
  * Session Bean implementation class GestoreDestinazioneEJB
@@ -35,13 +41,34 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
      * Default constructor. 
      */
     public GestoreDestinazioneEJB() {
-        // TODO Auto-generated constructor stub
+        
     }
 
+    /**
+     * Ritorna l'elenco di tutte le città presenti nel database
+     * @return L'elenco delle città
+     */
 	@Override
 	public List<CittaDTO> elencoCitta() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Citta> citta = em.createNamedQuery("Citta.elenco", Citta.class).getResultList();
+		List<CittaDTO> dto = new ArrayList<CittaDTO>();
+		for (Citta c : citta) {
+			dto.add(this.citta.convertiInDTO(c));
+		}
+		return dto;
+	}
+	
+	@Override
+	public void aggiuntaDestinazione (DestinazioneDTO destinazione) {
+		Destinazioni entity = new Destinazioni();
+		
+		entity.setDataArrivo(destinazione.getDataArrivo());
+		entity.setDataPartenza(destinazione.getDataPartenza());
+		entity.setCitta(citta.getCitta(destinazione.getCitta().getNome()));
+		entity.setHotel(hotel.getHotel(destinazione.getHotel().getNome()));
+		//entity.setPacchetto(pacchetto);
+		
+		em.persist(entity);
 	}
 
 	@Override
@@ -50,21 +77,68 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		
 	}
 
+	/**
+	 * Permette l'aggiunta di una escursione
+	 * @param idDestinazione L'identificativo della destinazione
+	 * @param idEscursione L'identificativo dell'escursione
+	 * @param numeroPartecipanti Il numero di partecipanti all'escursione
+	 */
 	@Override
-	public void aggiuntaEscursione(int idEscursione, int numeroPartecipanti) {
-		// TODO Auto-generated method stub
+	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) {
+		Destinazioni destinazione = this.getDestinazione(idDestinazione);
+		
+		Attivita attivita = new Attivita();
+		attivita.setDestinazione(destinazione);
+		attivita.getId().setIdDestinazione(idDestinazione);
+		attivita.setEscursione(escursione.getEscursione(idEscursione));
+		attivita.getId().setIdEscursione(idEscursione);
+		attivita.setNumPartecipanti(numeroPartecipanti);
+		
+		destinazione.addAttivita(attivita);
+		
+		em.persist(destinazione);
 		
 	}
 
+	/**
+	 * Permette la modifica del numero di partecipanti ad una escursione
+	 * @param idDestinazione L'identificativo della destinazione
+	 * @param idEscursione L'identificativo dell'escursione
+	 * @param numeroPartecipanti Il numero di partecipanti all'escursione
+	 */
 	@Override
-	public void modificaDatiEscursione(int idEscursione, int numeroPartecipanti) {
-		// TODO Auto-generated method stub
+	public void modificaDatiEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) {
+		Destinazioni destinazione = this.getDestinazione(idDestinazione);
 		
+		Escursioni escursione = this.escursione.getEscursione(idEscursione);
+		
+		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+		q.setParameter("destinazione", destinazione);
+		q.setParameter("escursione", escursione);
+		Attivita attivita = (Attivita) q.getSingleResult();
+
+		attivita.setNumPartecipanti(numeroPartecipanti);
+		
+		em.merge(destinazione);		
 	}
 
+	/**
+	 * Permette l'eliminazione di una escursione
+	 * @param idDestinazione L'identificativo della destinazione
+	 * @param idEscursione L'identificativo dell'escursione
+	 */
 	@Override
 	public void eliminaEscursione(int idDestinazione, int idEscursione) {
-		//this.getDestinazione(idDestinazione).se
+		Destinazioni destinazione = this.getDestinazione(idDestinazione);
+		
+		Escursioni escursione = this.escursione.getEscursione(idEscursione);
+		
+		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+		q.setParameter("destinazione", destinazione);
+		q.setParameter("escursione", escursione);
+		Attivita attivita = (Attivita) q.getSingleResult();
+		
+		em.remove(attivita);
 	}
 	
 	/**
@@ -87,7 +161,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		dto.setDataArrivo(destinazione.getDataArrivo());
 		dto.setDataPartenza(destinazione.getDataPartenza());
 		dto.setCitta(citta.convertiInDTO(destinazione.getCitta()));
-		//dto.setHotel(hotel.convertiInDTO(destinazione.getHotel()));
+		dto.setHotel(hotel.convertiInDTO(destinazione.getHotel()));
 		//dto.setHotel(pacchetto.convertiInDTO(destinazione.getPacchetto()));
 		
 		return dto;
