@@ -1,10 +1,15 @@
 package dtos;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class PacchettoDTO {
+public class PacchettoDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int id;
 
 	private String nome;
 
@@ -25,6 +30,14 @@ public class PacchettoDTO {
 
 	@NotEmpty
 	private UtenteDTO utente;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;

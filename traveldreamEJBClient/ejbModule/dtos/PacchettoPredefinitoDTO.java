@@ -1,11 +1,16 @@
 package dtos;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class PacchettoPredefinitoDTO {
+public class PacchettoPredefinitoDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int id;
 
 	@NotEmpty
 	private String nome;
@@ -21,6 +26,14 @@ public class PacchettoPredefinitoDTO {
 
 	@NotEmpty
 	private HotelDTO hotel;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;

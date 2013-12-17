@@ -1,12 +1,18 @@
 package dtos;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import enums.CategoriaEscursione;
 
-public class EscursioneDTO {
+public class EscursioneDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int id;
 
 	@NotEmpty
 	private CategoriaEscursione categoria;
@@ -28,6 +34,14 @@ public class EscursioneDTO {
 
 	@NotEmpty
 	private CittaDTO citta;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public CategoriaEscursione getCategoria() {
 		return categoria;

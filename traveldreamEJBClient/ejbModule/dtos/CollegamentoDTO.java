@@ -1,12 +1,18 @@
 package dtos;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import enums.TipoCollegamento;
 
-public class CollegamentoDTO {
+public class CollegamentoDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int codice;
 
 	@NotEmpty
 	private Date dataPartenza;
@@ -35,6 +41,14 @@ public class CollegamentoDTO {
 	@NotEmpty
 	private CittaDTO cittaPartenza;
 	
+	public int getCodice() {
+		return codice;
+	}
+
+	public void setCodice(int codice) {
+		this.codice = codice;
+	}
+
 	public Date getDataPartenza() {
 		return dataPartenza;
 	}
