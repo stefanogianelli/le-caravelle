@@ -140,6 +140,17 @@ public class GestoreHotelEJB implements GestoreHotel {
 	}
 	
 	/**
+	 * Ritorna l'oggetto hotel corrispondente al nome in input
+	 * @param nome Il nome dell'hotel
+	 * @return L'oggetto hotel
+	 */
+	protected Hotel getHotel (String nome) {
+		Query q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
+		q.setParameter("nome", nome);
+		return (Hotel) q.getSingleResult();
+	}
+	
+	/**
 	 * Permette la conversione da un'entità hotel al rispettivo DTO
 	 * @param hotel L'oggetto da converitre
 	 * @return Il DTO risultante

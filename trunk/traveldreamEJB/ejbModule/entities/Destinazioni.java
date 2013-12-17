@@ -114,5 +114,5 @@ public class Destinazioni implements Serializable {
 
 		return attivita;
 	}
-
+	
 }
