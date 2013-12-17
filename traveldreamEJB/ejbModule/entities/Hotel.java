@@ -11,8 +11,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries ({
 	@NamedQuery(name = "Hotel.elenco", query = "SELECT h FROM Hotel h"),
-	@NamedQuery(name = "Hotel.elencoPerCitta", query = "SELECT h FROM Hotel h WHERE h.citta = :citta"),
-	@NamedQuery(name = "Hotel.getHotel", query = "SELECT h FROM Hotel h WHERE h.id = :id")
+	@NamedQuery(name = "Hotel.elencoPerCitta", query = "SELECT h FROM Hotel h WHERE h.citta = :citta")
 })	
 public class Hotel implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,20 +19,20 @@ public class Hotel implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-
-	private String email;
-
-	private String indirizzo;
-
+	
 	private String nome;
-
-	private double prezzo;
-
+	
 	private int stelle;
-
+	
+	private String indirizzo;
+	
 	private String telefono;
-
+	
 	private String website;
+
+	private String email;	
+
+	private double prezzo;	
 
 	//bi-directional many-to-one association to Citta
 	@ManyToOne

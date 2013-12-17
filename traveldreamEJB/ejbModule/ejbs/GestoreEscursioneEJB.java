@@ -132,7 +132,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	 * @return L'oggetto escursione
 	 * @throws NoResultException Quando non esiste una escursione con l'id scelto 
 	 */
-	private Escursioni getEscursione (int id) throws NoResultException {
+	protected Escursioni getEscursione (int id) throws NoResultException {
 		Query q = em.createNamedQuery("Escursioni.getEscursione", Escursioni.class);
 		q.setParameter("id", id);
 		return (Escursioni) q.getSingleResult();

@@ -2,7 +2,6 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -23,8 +22,8 @@ public class Persone implements Serializable {
 	private String telefono;
 
 	//bi-directional many-to-one association to Utenti
-	@OneToMany(mappedBy="persona")
-	private List<Utenti> utenti;
+	@OneToOne(mappedBy="persona")
+	private Utenti utenti;
 
 	public Persone() {
 	}
@@ -53,26 +52,12 @@ public class Persone implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public List<Utenti> getUtenti() {
+	public Utenti getUtenti() {
 		return this.utenti;
 	}
 
-	public void setUtenti(List<Utenti> utenti) {
+	public void setUtenti(Utenti utenti) {
 		this.utenti = utenti;
-	}
-
-	public Utenti addUtenti(Utenti utenti) {
-		getUtenti().add(utenti);
-		utenti.setPersona(this);
-
-		return utenti;
-	}
-
-	public Utenti removeUtenti(Utenti utenti) {
-		getUtenti().remove(utenti);
-		utenti.setPersona(null);
-
-		return utenti;
 	}
 
 }

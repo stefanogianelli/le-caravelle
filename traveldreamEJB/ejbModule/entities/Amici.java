@@ -18,10 +18,10 @@ public class Amici implements Serializable {
 
 	@Id
 	private String email;
-
-	private String cognome;
-
+	
 	private String nome;
+
+	private String cognome;	
 
 	//bi-directional many-to-many association to Pacchetti
 	@ManyToMany

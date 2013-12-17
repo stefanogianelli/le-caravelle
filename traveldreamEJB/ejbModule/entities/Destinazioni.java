@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -10,34 +11,36 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Destinazioni.findAll", query="SELECT d FROM Destinazioni d")
+@NamedQueries ({
+	@NamedQuery(name="Destinazioni.elenco", query="SELECT d FROM Destinazioni d")
+})
 public class Destinazioni implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private int id;	
 
 	@Temporal(TemporalType.DATE)
 	private Date dataArrivo;
 
 	@Temporal(TemporalType.DATE)
 	private Date dataPartenza;
+	
+	@OneToOne
+	@JoinColumn(name="idPacchetto")
+	private Pacchetti pacchetto;
 
-	//bi-directional many-to-one association to Citta
+	@ManyToOne
+	@JoinColumn(name="idHotel")
+	private Hotel hotel;	
+
+	@OneToMany(mappedBy="destinazione")
+	private List<Attivita> attivita;
+	
 	@ManyToOne
 	@JoinColumn(name="citta")
 	private Citta citta;
-
-	//bi-directional many-to-one association to Hotel
-	@ManyToOne
-	@JoinColumn(name="idHotel")
-	private Hotel hotel;
-
-	//bi-directional many-to-one association to Pacchetti
-	@ManyToOne
-	@JoinColumn(name="idPacchetto")
-	private Pacchetti pacchetto;
 
 	public Destinazioni() {
 	}
@@ -48,6 +51,14 @@ public class Destinazioni implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Citta getCitta() {
+		return this.citta;
+	}
+
+	public void setCitta(Citta citta) {
+		this.citta = citta;
 	}
 
 	public Date getDataArrivo() {
@@ -66,14 +77,6 @@ public class Destinazioni implements Serializable {
 		this.dataPartenza = dataPartenza;
 	}
 
-	public Citta getCitta() {
-		return this.citta;
-	}
-
-	public void setCitta(Citta citta) {
-		this.citta = citta;
-	}
-
 	public Hotel getHotel() {
 		return this.hotel;
 	}
@@ -88,6 +91,28 @@ public class Destinazioni implements Serializable {
 
 	public void setPacchetto(Pacchetti pacchetto) {
 		this.pacchetto = pacchetto;
+	}
+
+	public List<Attivita> getAttivita() {
+		return this.attivita;
+	}
+
+	public void setAttivita(List<Attivita> attivita) {
+		this.attivita = attivita;
+	}
+
+	public Attivita addAttivita(Attivita attivita) {
+		getAttivita().add(attivita);
+		attivita.setDestinazione(this);
+
+		return attivita;
+	}
+
+	public Attivita removeAttivita(Attivita attivita) {
+		getAttivita().remove(attivita);
+		attivita.setDestinazione(null);
+
+		return attivita;
 	}
 
 }

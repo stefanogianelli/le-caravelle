@@ -7,15 +7,17 @@
 		<class>entities.Collegamenti</class>
 		<class>entities.DatePartenza</class>
 		<class>entities.DatePartenzaPK</class>
-		<class>entities.Destinazioni</class>
 		<class>entities.Durate</class>
 		<class>entities.DuratePK</class>
-		<class>entities.Escursioni</class>
 		<class>entities.Hotel</class>
 		<class>entities.Pacchetti</class>
 		<class>entities.PacchettiPredefiniti</class>
 		<class>entities.Persone</class>
 		<class>entities.PersonePK</class>
 		<class>entities.Utenti</class>
+		<class>entities.Destinazioni</class>
+		<class>entities.Escursioni</class>
+		<class>entities.Attivita</class>
+		<class>entities.AttivitaPK</class>
 	</persistence-unit>
 </persistence>

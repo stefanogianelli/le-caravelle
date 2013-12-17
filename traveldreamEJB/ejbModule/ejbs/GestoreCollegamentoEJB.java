@@ -135,12 +135,9 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	 * Mostra il collegamento relativo al codice in input
 	 * @param codice Il codice del collegamento
 	 * @return Il collegameno desiderato
-	 * @throws NoResultException Quando non esiste il collegamento con il codice selezionato
 	 */
-	private Collegamenti getCollegamento (int codice) throws NoResultException {
-		Query q = em.createNamedQuery("Collegamenti.getCollegamento", Collegamenti.class);
-		q.setParameter("codice", codice);
-		return (Collegamenti) q.getSingleResult();
+	private Collegamenti getCollegamento (int codice) {
+		return em.find(Collegamenti.class, codice);
 	}
 	
 	/**

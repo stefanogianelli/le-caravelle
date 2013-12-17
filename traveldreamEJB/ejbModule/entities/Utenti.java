@@ -32,7 +32,7 @@ public class Utenti implements Serializable {
 	private List<Gruppi> gruppi;
 
 	//bi-directional many-to-one association to Persone
-	@ManyToOne
+	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name="persone_cognome", referencedColumnName="cognome"),
 		@JoinColumn(name="persone_dataNascita", referencedColumnName="dataNascita"),

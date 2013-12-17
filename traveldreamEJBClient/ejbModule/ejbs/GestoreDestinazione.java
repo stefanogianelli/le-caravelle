@@ -18,5 +18,5 @@ interface GestoreDestinazione {
 	
 	void modificaDatiEscursione (int idEscursione, int numeroPartecipanti);
 	
-	void eliminaEscursione (int idEscursione);
+	void eliminaEscursione (int idDestinazione, int idEscursione);
 }

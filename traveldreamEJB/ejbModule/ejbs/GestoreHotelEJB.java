@@ -157,7 +157,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 	 * @param hotel L'oggetto da converitre
 	 * @return Il DTO risultante
 	 */
-	private HotelDTO convertiInDTO (Hotel hotel) {
+	protected HotelDTO convertiInDTO (Hotel hotel) {
 		HotelDTO dto = new HotelDTO ();
 		dto.setEmail(hotel.getEmail());
 		dto.setIndirizzo(hotel.getIndirizzo());
