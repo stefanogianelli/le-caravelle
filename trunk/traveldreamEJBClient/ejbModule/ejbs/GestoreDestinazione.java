@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import dtos.CittaDTO;
 import dtos.DestinazioneDTO;
+import dtos.EscursioneDTO;
 
 @Local
 interface GestoreDestinazione {
@@ -16,9 +17,9 @@ interface GestoreDestinazione {
 	
 	void modificaDatiDestinazione (DestinazioneDTO destinazione);
 	
-	void aggiuntaEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti);
+	void aggiuntaEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti);
 	
-	void modificaDatiEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti);
+	void modificaDatiEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti);
 	
-	void eliminaEscursione (int idDestinazione, int idEscursione);
+	void eliminaEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione);
 }

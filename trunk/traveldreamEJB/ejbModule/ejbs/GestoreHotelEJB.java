@@ -66,17 +66,6 @@ public class GestoreHotelEJB implements GestoreHotel {
 	}	
 
 	/**
-	 * Mostra i dettagli relativi all'hotel con l'id in input
-	 * @param idHotel L'identificativo dell'hotel
-	 * @return L'hotel selezionato
-	 * @throws NoResultException Quando non esiste l'hotel con l'id selezionato
-	 */
-	@Override
-	public HotelDTO dettagliHotel(int idHotel) throws NoResultException {
-		return this.convertiInDTO(this.getHotel(idHotel));
-	}
-
-	/**
 	 * Crea un nuovo hotel nel database
 	 * @param hotel L'oggetto da salvare
 	 * @throws EntityExistsException Quando l'hotel esiste già nel database
@@ -93,20 +82,19 @@ public class GestoreHotelEJB implements GestoreHotel {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));			
+		entity.setCitta(citta.convertiInDAO(hotel.getCitta()));			
 		
 		em.persist(entity);
 	}
 
 	/**
 	 * Permette di modificare i dati di un hotel
-	 * @param idHotel L'identificativo dell'hotel
-	 * @param hotel I dati modificati dell'hotel
+	 * @param hotel L'hotel da modificare
 	 * @throws NoResultException Quando non viene trovata la città dell'hotel
 	 */
 	@Override
-	public void modificaDatiHotel(int idHotel, HotelDTO hotel) throws NoResultException {
-		Hotel entity = this.getHotel(idHotel);
+	public void modificaDatiHotel(HotelDTO hotel) throws NoResultException {
+		Hotel entity = this.convertiInDAO(hotel);
 		
 		entity.setEmail(hotel.getEmail());
 		entity.setIndirizzo(hotel.getIndirizzo());
@@ -115,40 +103,29 @@ public class GestoreHotelEJB implements GestoreHotel {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));		
+		entity.setCitta(citta.convertiInDAO(hotel.getCitta()));		
 		
 		em.merge(entity);
 	}
 
 	/**
 	 * Permette l'eliminazione di un hotel dal database
-	 * @param idHotel L'identificativo dell'hotel
+	 * @param hotel L'hotel da eliminare
 	 * @throws NoResultException Quando non esiste l'hotel con l'id selezionato
 	 */
 	@Override
-	public void eliminaHotel(int idHotel) throws NoResultException {
-		em.remove(this.getHotel(idHotel));
+	public void eliminaHotel(HotelDTO hotel) throws NoResultException {
+		em.remove(this.convertiInDAO(hotel));
 	}
 	
 	/**
-	 * Ritorna l'oggetto hotel corrispondente all'id in input
-	 * @param idHotel L'identificativo dell'hotel
-	 * @return L'oggetto hotel
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param hotel Il DTO dell'hotel
+	 * @return L'entità desiderata
 	 */
-	protected Hotel getHotel (int idHotel) {
-		return em.find(Hotel.class, idHotel);
-	}
-	
-	/**
-	 * Ritorna l'oggetto hotel corrispondente al nome in input
-	 * @param nome Il nome dell'hotel
-	 * @return L'oggetto hotel
-	 */
-	protected Hotel getHotel (String nome) {
-		Query q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
-		q.setParameter("nome", nome);
-		return (Hotel) q.getSingleResult();
-	}
+	protected Hotel convertiInDAO (HotelDTO hotel) {
+		return em.find(Hotel.class, hotel.getId());		
+	}	
 	
 	/**
 	 * Permette la conversione da un'entità hotel al rispettivo DTO

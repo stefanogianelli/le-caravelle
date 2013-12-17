@@ -15,11 +15,9 @@ public interface GestoreHotel {
 	
 	List<HotelDTO> elencoHotel(String nomeCitta);
 	
-	HotelDTO dettagliHotel (int idHotel) throws NoResultException;
-	
 	void creaHotel (HotelDTO hotel) throws EntityExistsException, NoResultException;
 	
-	void modificaDatiHotel (int idHotel, HotelDTO hotel) throws NoResultException;
+	void modificaDatiHotel (HotelDTO hotel) throws NoResultException;
 	
-	void eliminaHotel (int idHotel) throws NoResultException;
+	void eliminaHotel (HotelDTO hotel) throws NoResultException;
 }

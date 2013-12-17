@@ -67,17 +67,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	}	
 
 	/**
-	 * Mostra i dettagli relativi al collegamento con il codice in input
-	 * @param codiceCollegamento Il codice del collegamento
-	 * @return L'oggetto collegamento con i dettagli
-	 * @throws NoResultException Quando non esiste il collegamento con il codice selezionato
-	 */
-	@Override
-	public CollegamentoDTO dettagliCollegamento(int codiceCollegamento) throws NoResultException {
-		return this.convertiInDTO(this.getCollegamento(codiceCollegamento));
-	}
-
-	/**
 	 * Aggiunge un nuovo collegamento nel database
 	 * @param collegamento I dati del collegamento da aggiungere
 	 * @throws EntityExistsException Quando il collegamento esiste già nel database
@@ -94,21 +83,20 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivo().getNome()));
-		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenza().getNome()));
+		entity.setCittaArrivo(citta.convertiInDAO(collegamento.getCittaArrivo()));
+		entity.setCittaPartenza(citta.convertiInDAO(collegamento.getCittaPartenza()));
 		
 		em.persist(entity);		
 	}
 
 	/**
 	 * Permette la modifica dei dati di un collegamento
-	 * @param codice Il codice del collegamento da modificare
-	 * @param collegamento I nuovi dati del collegamento
+	 * @param collegamento Il collegamento da modiicare
 	 * @throws NoResultException Quando non vengono trovate le città del collegamento
 	 */
 	@Override
-	public void modificaDatiCollegamento(int codice, CollegamentoDTO collegamento) throws NoResultException {
-		Collegamenti entity = this.getCollegamento(codice);
+	public void modificaDatiCollegamento(CollegamentoDTO collegamento) throws NoResultException {
+		Collegamenti entity = this.convertiInDAO(collegamento);
 		
 		entity.setDataPartenza(collegamento.getDataPartenza());
 		entity.setDestinazione(collegamento.getDestinazione());
@@ -117,29 +105,29 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivo().getNome()));
-		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenza().getNome()));
+		entity.setCittaArrivo(citta.convertiInDAO(collegamento.getCittaArrivo()));
+		entity.setCittaPartenza(citta.convertiInDAO(collegamento.getCittaPartenza()));
 		
 		em.merge(entity);
 	}
 
 	/**
 	 * Permette l'eliminazione di un collegamento dal database
-	 * @param codice Il codice del collegamento da eliminare
+	 * @param collegamento Il collegamento da eliminare
 	 * @throws NoResultException Quando non esiste il collegamento con il codice selezionato
 	 */
 	@Override
-	public void eliminaCollegamento(int codice) throws NoResultException {
-		em.remove(this.getCollegamento(codice));		
+	public void eliminaCollegamento(CollegamentoDTO collegamento) throws NoResultException {
+		em.remove(this.convertiInDAO(collegamento));		
 	}
 	
 	/**
-	 * Mostra il collegamento relativo al codice in input
-	 * @param codice Il codice del collegamento
-	 * @return Il collegameno desiderato
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param collegamento Il DTO del collegamento
+	 * @return L'entità desiderata
 	 */
-	protected Collegamenti getCollegamento (int codice) {
-		return em.find(Collegamenti.class, codice);
+	protected Collegamenti convertiInDAO (CollegamentoDTO collegamento) {
+		return em.find(Collegamenti.class, collegamento.getCodice());
 	}
 	
 	/**
