@@ -66,17 +66,6 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	}	
 
 	/**
-	 * Mostra i dettagli relativi all'escursione con l'id in input
-	 * @param idEscursione L'identificativo dell'escursione
-	 * @return L'escursione selezionata
-	 * @throws NoResultException Quando non esiste l'escursione con l'id selezionato
-	 */
-	@Override
-	public EscursioneDTO dettagliEscursione(int idEscursione) throws NoResultException {
-		return this.convertiInDTO(this.getEscursione(idEscursione));
-	}
-
-	/**
 	 * Crea una nuova escursione nel database
 	 * @param escursione L'oggetto da salvare
 	 * @throws EntityExistsException Quando l'escursione esiste già nel database
@@ -92,20 +81,19 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		entity.setNome(escursione.getNome());
 		entity.setOra(escursione.getOra());
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.getCitta(escursione.getCitta().getNome()));
+		entity.setCitta(citta.convertiInDAO(escursione.getCitta()));
 		
 		em.persist(entity);		
 	}
 
 	/**
 	 * Permette di modificare i dati di una escursione
-	 * @param id L'identificativo dell'escursione
-	 * @param escursione I dati modificati dell'escursione
+	 * @param escursione L'escursione da modifciare
 	 * @throws NoResultException Quando non viene trovata la città dell'escursione
 	 */
 	@Override
-	public void modificaDatiEscursione(int id, EscursioneDTO escursione) throws NoResultException {
-		Escursioni entity = this.getEscursione(id);
+	public void modificaDatiEscursione(EscursioneDTO escursione) throws NoResultException {
+		Escursioni entity = this.convertiInDAO(escursione);
 		
 		entity.setCategoria(escursione.getCategoria());
 		entity.setData(escursione.getData());
@@ -113,28 +101,28 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		entity.setNome(escursione.getNome());
 		entity.setOra(escursione.getOra());
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.getCitta(escursione.getCitta().getNome()));
+		entity.setCitta(citta.convertiInDAO(escursione.getCitta()));
 		
 		em.merge(entity);
 	}
 
 	/**
 	 * Permette l'eliminazione di una escursione dal database
-	 * @param idEscursione L'identificativo dell'escursione
+	 * @param escursione L'escursione da eliminare
 	 * @throws NoResultException Quando non esiste l'escursione con l'id selezionato
 	 */
 	@Override
-	public void eliminaEscursione(int idEscursione) throws NoResultException {
-		em.remove(this.getEscursione(idEscursione));
+	public void eliminaEscursione(EscursioneDTO escursione) throws NoResultException {
+		em.remove(this.convertiInDAO(escursione));
 	}
-	
+
 	/**
-	 * Ritorna l'oggetto escursione corrispondente all'id in input
-	 * @param id L'identificativo dell'escursione
-	 * @return L'oggetto escursione
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param escursione Il DTO dell'escursione
+	 * @return L'entità desiderata
 	 */
-	protected Escursioni getEscursione (int id) {
-		return em.find(Escursioni.class, id);
+	protected Escursioni convertiInDAO (EscursioneDTO escursione) {
+		return em.find(Escursioni.class, escursione.getId());		
 	}
 	
 	/**

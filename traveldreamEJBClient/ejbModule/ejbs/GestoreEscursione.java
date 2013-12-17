@@ -15,11 +15,9 @@ public interface GestoreEscursione {
 	
 	List<EscursioneDTO> elencoEscursioni(String nomeCitta);
 	
-	EscursioneDTO dettagliEscursione (int idEscursione) throws NoResultException;
-	
 	void creaEscursione (EscursioneDTO escursione) throws EntityExistsException, NoResultException;
 	
-	void modificaDatiEscursione (int id, EscursioneDTO escursione) throws NoResultException;
+	void modificaDatiEscursione (EscursioneDTO escursione) throws NoResultException;
 	
-	void eliminaEscursione (int idEscursione) throws NoResultException;
+	void eliminaEscursione (EscursioneDTO escursione) throws NoResultException;
 }

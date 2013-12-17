@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import dtos.CittaDTO;
 import dtos.DestinazioneDTO;
+import dtos.EscursioneDTO;
 import entities.Attivita;
 import entities.Citta;
 import entities.Destinazioni;
@@ -64,8 +65,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
 		entity.setDataPartenza(destinazione.getDataPartenza());
-		entity.setCitta(citta.getCitta(destinazione.getCitta().getNome()));
-		entity.setHotel(hotel.getHotel(destinazione.getHotel().getNome()));
+		entity.setCitta(citta.convertiInDAO(destinazione.getCitta()));
+		entity.setHotel(hotel.convertiInDAO(destinazione.getHotel()));
 		//entity.setPacchetto(pacchetto);
 		
 		em.persist(entity);
@@ -84,19 +85,20 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 * @param numeroPartecipanti Il numero di partecipanti all'escursione
 	 */
 	@Override
-	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) {
-		Destinazioni destinazione = this.getDestinazione(idDestinazione);
+	public void aggiuntaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) {
+		Destinazioni destinazioneDAO = this.convertiInDAO(destinazione);
+		Escursioni escursioneDAO = this.escursione.convertiInDAO(escursione);
 		
 		Attivita attivita = new Attivita();
-		attivita.setDestinazione(destinazione);
-		attivita.getId().setIdDestinazione(idDestinazione);
-		attivita.setEscursione(escursione.getEscursione(idEscursione));
-		attivita.getId().setIdEscursione(idEscursione);
+		attivita.setDestinazione(destinazioneDAO);
+		attivita.getId().setIdDestinazione(destinazioneDAO.getId());
+		attivita.setEscursione(escursioneDAO);
+		attivita.getId().setIdEscursione(escursioneDAO.getId());
 		attivita.setNumPartecipanti(numeroPartecipanti);
 		
-		destinazione.addAttivita(attivita);
+		destinazioneDAO.addAttivita(attivita);
 		
-		em.persist(destinazione);
+		em.persist(destinazioneDAO);
 		
 	}
 
@@ -107,19 +109,19 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 * @param numeroPartecipanti Il numero di partecipanti all'escursione
 	 */
 	@Override
-	public void modificaDatiEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) {
-		Destinazioni destinazione = this.getDestinazione(idDestinazione);
+	public void modificaDatiEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) {
+		Destinazioni destinazioneDAO = this.convertiInDAO(destinazione);
 		
-		Escursioni escursione = this.escursione.getEscursione(idEscursione);
+		Escursioni escursioneDAO = this.escursione.convertiInDAO(escursione);
 		
 		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-		q.setParameter("destinazione", destinazione);
-		q.setParameter("escursione", escursione);
+		q.setParameter("destinazione", destinazioneDAO);
+		q.setParameter("escursione", escursioneDAO);
 		Attivita attivita = (Attivita) q.getSingleResult();
 
 		attivita.setNumPartecipanti(numeroPartecipanti);
 		
-		em.merge(destinazione);		
+		em.merge(attivita);		
 	}
 
 	/**
@@ -128,27 +130,29 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 * @param idEscursione L'identificativo dell'escursione
 	 */
 	@Override
-	public void eliminaEscursione(int idDestinazione, int idEscursione) {
-		Destinazioni destinazione = this.getDestinazione(idDestinazione);
+	public void eliminaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione) {
+		Destinazioni destinazioneDAO = this.convertiInDAO(destinazione);
 		
-		Escursioni escursione = this.escursione.getEscursione(idEscursione);
+		Escursioni escursioneDAO = this.escursione.convertiInDAO(escursione);
 		
 		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-		q.setParameter("destinazione", destinazione);
-		q.setParameter("escursione", escursione);
+		q.setParameter("destinazione", destinazioneDAO);
+		q.setParameter("escursione", escursioneDAO);
 		Attivita attivita = (Attivita) q.getSingleResult();
 		
-		em.remove(attivita);
+		destinazioneDAO.removeAttivita(attivita);
+		
+		em.remove(destinazioneDAO);
 	}
 	
 	/**
-	 * Ritorna l'oggetto destinazione con l'identificativo in input
-	 * @param id L'identificativo della destinazione
-	 * @return L'oggetto desiderato
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param destinazione Il DTO della destinazione
+	 * @return L'entità desiderata
 	 */
-	protected Destinazioni getDestinazione (int id) {
-		return em.find(Destinazioni.class, id);
-	}
+	protected Destinazioni convertiInDAO (DestinazioneDTO destinazione) {
+		return em.find(Destinazioni.class, destinazione.getId());		
+	}	
 	
 	/**
 	 * Permette la conversione da un'entità al rispettivo DTO

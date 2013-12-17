@@ -2,10 +2,7 @@ package ejbs;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import dtos.CittaDTO;
 import entities.Citta;
 
@@ -26,26 +23,19 @@ public class GestoreCittaEJB implements GestoreCitta {
     }
     
 	/**
-	 * Ritorna l'oggetto città con l'id in input
-	 * @param id L'identificativo della città
-	 * @return L'oggetto desiderato
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param citta Il DTO della citta
+	 * @return L'entità desiderata
 	 */
-	protected Citta getCitta (int id) {
-		return em.find(Citta.class, id);		
+	protected Citta convertiInDAO (CittaDTO citta) {
+		return em.find(Citta.class, citta.getId());		
 	}	
 	
 	/**
-	 * Ritorna l'oggetto città con il nome in input
-	 * @param nome Il nome della città
-	 * @return L'oggetto desiderato
-	 * @throws NoResultException Quando non viene trovata la città nel database
+	 * Permette la conversione da un'entità al rispettivo DTO
+	 * @param citta L'entità di partenza
+	 * @return Il relativo DTO
 	 */
-	protected Citta getCitta (String nome) throws NoResultException {
-		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
-		q.setParameter("nome", nome);
-		return (Citta) q.getSingleResult();			
-	}
-	
 	protected CittaDTO convertiInDTO (Citta citta) {
 		CittaDTO dto = new CittaDTO();
 		
