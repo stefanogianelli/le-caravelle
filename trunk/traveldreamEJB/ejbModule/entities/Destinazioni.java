@@ -27,7 +27,7 @@ public class Destinazioni implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dataPartenza;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="idPacchetto")
 	private Pacchetti pacchetto;
 

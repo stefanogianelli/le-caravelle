@@ -1,11 +1,7 @@
 package dtos;
 
 import java.io.Serializable;
-import java.util.Date;
-
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class UtenteDTO implements Serializable {
 
@@ -17,21 +13,8 @@ public class UtenteDTO implements Serializable {
 
 	private String password;
 	
-	@NotEmpty
-	private String nome;
+	private PersonaDTO persona;
 	
-	@NotEmpty
-	private String cognome;
-	
-	@NotEmpty
-	private Date dataNascita;
-	
-	@NotEmpty
-	private String documentoIdentita;
-
-	@NotEmpty
-	private String telefono;
-
 	public String getEmail() {
 		return email;
 	}
@@ -48,43 +31,11 @@ public class UtenteDTO implements Serializable {
 		this.password = password;
 	}
 
-	public String getNome() {
-		return nome;
+	public PersonaDTO getPersona() {
+		return persona;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-
-	public Date getDataNascita() {
-		return dataNascita;
-	}
-
-	public void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
-	}
-
-	public String getDocumentoIdentita() {
-		return documentoIdentita;
-	}
-
-	public void setDocumentoIdentita(String documentoIdentita) {
-		this.documentoIdentita = documentoIdentita;
-	}
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
+	public void setPersona(PersonaDTO persona) {
+		this.persona = persona;
 	}
 }

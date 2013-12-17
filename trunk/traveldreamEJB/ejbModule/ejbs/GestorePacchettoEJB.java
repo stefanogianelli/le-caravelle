@@ -1,5 +1,6 @@
 package ejbs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -11,6 +12,7 @@ import dtos.DestinazioneDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import dtos.PacchettoPredefinitoDTO;
+import entities.Destinazioni;
 import entities.Pacchetti;
 import entities.PacchettiPredefiniti;
 import enums.TipoPacchetto;
@@ -29,6 +31,12 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	
 	@EJB
 	private GestoreDestinazioneEJB destinazione;
+	
+	@EJB
+	private GestoreCittaEJB citta;
+	
+	@EJB
+	private GestoreProfiloEJB profilo;
 	
     /**
      * Default constructor. 
@@ -173,10 +181,14 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		pacchettoDTO.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		pacchettoDTO.setPrezzo(pacchetto.getPrezzo());
 		pacchettoDTO.setTipoPacchetto(pacchetto.getTipoPacchetto());
-		//pacchettoDTO.setDestinazioni(destinazione.convertiInDTO(pacchetto.getDestinazioni()));
-		//pacchettoDTO.setCitta(citta);
-		//pacchettoDTO.setPacchettoPredefinito(pacchettoPredefinito);
-		//pacchettoDTO.setUtente(utente);
+		List<DestinazioneDTO> destinazioni = new ArrayList<DestinazioneDTO>();
+		for (Destinazioni d : pacchetto.getDestinazioni()) {
+			destinazioni.add(this.destinazione.convertiInDTO(d));
+		}
+		pacchettoDTO.setDestinazioni(destinazioni);
+		pacchettoDTO.setCitta(citta.convertiInDTO(pacchetto.getCitta()));
+		pacchettoDTO.setPacchettoPredefinito(this.convertiInDTO(pacchetto.getPacchettoPredefinito()));
+		//pacchettoDTO.setUtente(profilo);
 		
 		return pacchettoDTO;
 	}
