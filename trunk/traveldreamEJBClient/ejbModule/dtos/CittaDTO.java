@@ -1,6 +1,12 @@
 package dtos;
 
-public class CittaDTO {
+import java.io.Serializable;
+
+public class CittaDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int id;
 
 	private String nazione;
 
@@ -8,6 +14,14 @@ public class CittaDTO {
 
 	private String regione;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getNazione() {
 		return nazione;
 	}

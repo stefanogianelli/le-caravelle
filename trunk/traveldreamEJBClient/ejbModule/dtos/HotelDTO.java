@@ -1,8 +1,14 @@
 package dtos;
 
+import java.io.Serializable;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class HotelDTO {
+public class HotelDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int id;
 
 	@NotEmpty
 	private String email;
@@ -28,6 +34,14 @@ public class HotelDTO {
 	@NotEmpty
 	private CittaDTO citta;
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getEmail() {
 		return email;
 	}

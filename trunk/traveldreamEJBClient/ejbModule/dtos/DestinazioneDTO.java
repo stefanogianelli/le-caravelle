@@ -1,10 +1,16 @@
 package dtos;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class DestinazioneDTO {
+public class DestinazioneDTO implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int id;
 
 	@NotEmpty
 	private Date dataArrivo;
@@ -18,8 +24,18 @@ public class DestinazioneDTO {
 	@NotEmpty
 	private HotelDTO hotel;
 	
+	private List<AttivitaDTO> attivita;
+	
 	@NotEmpty
 	private PacchettoDTO pacchetto;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Date getDataArrivo() {
 		return dataArrivo;
@@ -51,6 +67,14 @@ public class DestinazioneDTO {
 
 	public void setHotel(HotelDTO hotel) {
 		this.hotel = hotel;
+	}
+
+	public List<AttivitaDTO> getAttivita() {
+		return attivita;
+	}
+
+	public void setAttivita(List<AttivitaDTO> attivita) {
+		this.attivita = attivita;
 	}
 
 	public PacchettoDTO getPacchetto() {
