@@ -17,7 +17,6 @@ import java.util.Date;
 @Entity
 @NamedQueries ({
 	@NamedQuery(name = "Escursioni.elenco", query = "SELECT e FROM Escursioni e"),
-	@NamedQuery(name = "Escursioni.elencoPerCitta", query = "SELECT e FROM Escursioni e WHERE e.citta = :citta"),
 	@NamedQuery(name = "Escursioni.getEscursione", query = "SELECT e FROM Escursioni e WHERE e.id = :id")
 })
 public class Escursioni implements Serializable {
@@ -26,25 +25,24 @@ public class Escursioni implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-
-	@Enumerated(EnumType.STRING)
-	private CategoriaEscursione categoria;
-
+	
+	private String nome;
+	
 	@Temporal(TemporalType.DATE)
 	private Date data;
-
+	
+	private Time ora;
+	
 	private int durata;
 
-	private String nome;
+    @Enumerated(EnumType.STRING)
+    private CategoriaEscursione categoria;
 
-	private Time ora;
+    private double prezzo;	
 
-	private double prezzo;
-
-	//bi-directional many-to-one association to Citta
-	@ManyToOne
-	@JoinColumn(name="idCitta")
-	private Citta citta;
+    @ManyToOne
+    @JoinColumn(name="idCitta")
+	private Citta citta;		
 
 	public Escursioni() {
 	}
@@ -57,13 +55,13 @@ public class Escursioni implements Serializable {
 		this.id = id;
 	}
 
-	public CategoriaEscursione getCategoria() {
-		return this.categoria;
-	}
+    public CategoriaEscursione getCategoria() {
+        return this.categoria;
+    }
 
-	public void setCategoria(CategoriaEscursione categoria) {
-		this.categoria = categoria;
-	}
+    public void setCategoria(CategoriaEscursione categoria) {
+        this.categoria = categoria;
+    }
 
 	public Date getData() {
 		return this.data;
@@ -79,6 +77,14 @@ public class Escursioni implements Serializable {
 
 	public void setDurata(int durata) {
 		this.durata = durata;
+	}
+
+	public Citta getCitta() {
+		return this.citta;
+	}
+
+	public void setCitta(Citta citta) {
+		this.citta = citta;
 	}
 
 	public String getNome() {
@@ -104,13 +110,5 @@ public class Escursioni implements Serializable {
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
 	}
-
-	public Citta getCitta() {
-		return this.citta;
-	}
-
-	public void setCitta(Citta citta) {
-		this.citta = citta;
-	}
-
+	
 }

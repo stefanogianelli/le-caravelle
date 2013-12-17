@@ -17,8 +17,7 @@ import java.util.Date;
 @Entity
 @NamedQueries ({
 	@NamedQuery(name = "Collegamenti.elenco", query = "SELECT c FROM Collegamenti c"),
-	@NamedQuery(name = "Collegamenti.elencoPerTipo", query = "SELECT c FROM Collegamenti c WHERE c.tipoCollegamento = :tipo"),
-	@NamedQuery(name = "Collegamenti.getCollegamento", query = "SELECT c FROM Collegamenti c WHERE c.codice = :codice")
+	@NamedQuery(name = "Collegamenti.elencoPerTipo", query = "SELECT c FROM Collegamenti c WHERE c.tipoCollegamento = :tipo")
 })
 public class Collegamenti implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,22 +25,22 @@ public class Collegamenti implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int codice;
-
-	@Temporal(TemporalType.DATE)
-	private Date dataPartenza;
-
-	private String destinazione;
-
-	private Time oraArrivo;
-
-	private Time oraPartenza;
-
-	private String origine;
-
-	private double prezzo;
-
+	
 	@Enumerated(EnumType.STRING)
 	private TipoCollegamento tipoCollegamento;
+	
+	private String origine;
+	
+	private String destinazione;
+
+	@Temporal(TemporalType.DATE)
+	private Date dataPartenza;	
+
+	private Time oraPartenza;
+	
+	private Time oraArrivo;		
+
+	private double prezzo;
 
 	//bi-directional many-to-one association to Citta
 	@ManyToOne

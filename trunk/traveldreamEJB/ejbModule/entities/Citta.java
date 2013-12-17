@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @NamedQueries ({
 	@NamedQuery(name = "Citta.elenco", query = "SELECT c FROM Citta c"),
-	@NamedQuery(name = "Citta.getCitta", query = "SELECT c FROM Citta c WHERE c.nome = :nome")
+	@NamedQuery(name = "Citta.getCittaDaNome", query = "SELECT c FROM Citta c WHERE c.nome = :nome")
 })
 public class Citta implements Serializable {
 	private static final long serialVersionUID = 1L;
