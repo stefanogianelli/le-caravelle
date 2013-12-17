@@ -2,12 +2,17 @@ package ejbs;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import dtos.DestinazioneDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import dtos.PacchettoPredefinitoDTO;
+import entities.Pacchetti;
+import entities.PacchettiPredefiniti;
 import enums.TipoPacchetto;
 
 /**
@@ -16,11 +21,20 @@ import enums.TipoPacchetto;
 @Stateless
 public class GestorePacchettoEJB implements GestorePacchetto {
 
+	@PersistenceContext
+	private EntityManager em;
+	
+	@EJB
+	private GestoreHotelEJB hotel;
+	
+	@EJB
+	private GestoreDestinazioneEJB destinazione;
+	
     /**
      * Default constructor. 
      */
     public GestorePacchettoEJB() {
-        // TODO Auto-generated constructor stub
+        
     }
 
 	@Override
@@ -33,12 +47,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	public void aggiuntaPacchettoPersonalizzato(PacchettoDTO pacchetto) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public PacchettoDTO dettagliPacchetto(int idPacchetto) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -147,6 +155,43 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	public void salvaPacchetto(PacchettoPredefinitoDTO pacchetto) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	protected Pacchetti convertiInDAO (PacchettoDTO pacchetto) {
+		return em.find(Pacchetti.class, pacchetto.getId());
+	}
+	
+	protected PacchettiPredefiniti convertiInDAO (PacchettoPredefinitoDTO pacchetto) {
+		return em.find(PacchettiPredefiniti.class, pacchetto.getId());
+	}
+	
+	protected PacchettoDTO convertiInDTO (Pacchetti pacchetto) {
+		PacchettoDTO pacchettoDTO = new PacchettoDTO();
+		
+		pacchettoDTO.setId(pacchetto.getId());
+		pacchettoDTO.setNome(pacchetto.getNome());
+		pacchettoDTO.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		pacchettoDTO.setPrezzo(pacchetto.getPrezzo());
+		pacchettoDTO.setTipoPacchetto(pacchetto.getTipoPacchetto());
+		//pacchettoDTO.setDestinazioni(destinazione.convertiInDTO(pacchetto.getDestinazioni()));
+		//pacchettoDTO.setCitta(citta);
+		//pacchettoDTO.setPacchettoPredefinito(pacchettoPredefinito);
+		//pacchettoDTO.setUtente(utente);
+		
+		return pacchettoDTO;
+	}
+	
+	protected PacchettoPredefinitoDTO convertiInDTO (PacchettiPredefiniti pacchetto) {
+		PacchettoPredefinitoDTO pacchettoDTO = new PacchettoPredefinitoDTO();
+		
+		pacchettoDTO.setId(pacchetto.getId());
+		pacchettoDTO.setNome(pacchetto.getNome());
+		pacchettoDTO.setPrezzo(pacchetto.getPrezzo());
+		//pacchettoDTO.setDatePartenza(pacchetto.getDatePartenza());
+		//pacchettoDTO.setDurate(pacchetto.getDurate());
+		pacchettoDTO.setHotel(hotel.convertiInDTO(pacchetto.getHotel()));
+		
+		return pacchettoDTO;
 	}
 
 }

@@ -17,8 +17,6 @@ interface GestorePacchetto {
 	
 	void aggiuntaPacchettoPersonalizzato (PacchettoDTO pacchetto);
 	
-	PacchettoDTO dettagliPacchetto (int idPacchetto);
-	
 	void modificaDatiPacchetto (PacchettoDTO pacchetto);
 	
 	void salvaPacchetto (PacchettoDTO pacchetto);
