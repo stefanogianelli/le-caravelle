@@ -37,7 +37,7 @@ public class Destinazioni implements Serializable {
 	private Hotel hotel;	
 
 	//relazione bidirezionale one-to-many con l'entità Attivita
-	@OneToMany(mappedBy="destinazione")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="destinazione")
 	private List<Attivita> attivita;
 	
 	@ManyToOne

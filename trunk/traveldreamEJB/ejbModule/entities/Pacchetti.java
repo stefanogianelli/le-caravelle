@@ -29,7 +29,7 @@ public class Pacchetti implements Serializable {
 	private String tipoPacchetto;
 
 	//relazione bidirezionale one-to-many con l'entità Destinazioni
-	@OneToMany(mappedBy="pacchetto")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="pacchetto")
 	private List<Destinazioni> destinazioni;
 
 	@ManyToOne

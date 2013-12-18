@@ -85,5 +85,19 @@ public class Utenti implements Serializable {
 	public void setPacchetti(List<Pacchetti> pacchetti) {
 		this.pacchetti = pacchetti;
 	}
+	
+	public Pacchetti addPacchetto (Pacchetti pacchetto) {
+		this.getPacchetti().add(pacchetto);
+		pacchetto.setUtente(this);
+		
+		return pacchetto;
+	}
+	
+	public Pacchetti removePacchetto (Pacchetti pacchetto) {
+		this.getPacchetti().remove(pacchetti);
+		pacchetto.setUtente(null);
+		
+		return pacchetto;
+	}
 
 }
