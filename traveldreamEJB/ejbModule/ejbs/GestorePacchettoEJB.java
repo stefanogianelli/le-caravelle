@@ -1,6 +1,7 @@
 package ejbs;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,7 +13,9 @@ import dtos.DestinazioneDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import dtos.PacchettoPredefinitoDTO;
+import entities.DatePartenza;
 import entities.Destinazioni;
+import entities.Durate;
 import entities.Pacchetti;
 import entities.PacchettiPredefiniti;
 import enums.TipoPacchetto;
@@ -165,14 +168,29 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		
 	}
 	
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param pacchetto Il DTO del pacchetto
+	 * @return L'entità desiderata
+	 */
 	protected Pacchetti convertiInDAO (PacchettoDTO pacchetto) {
 		return em.find(Pacchetti.class, pacchetto.getId());
 	}
 	
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param pacchetto Il DTO del pacchetto predefinito
+	 * @return L'entità desiderata
+	 */
 	protected PacchettiPredefiniti convertiInDAO (PacchettoPredefinitoDTO pacchetto) {
 		return em.find(PacchettiPredefiniti.class, pacchetto.getId());
 	}
 	
+	/**
+	 * Permette la conversione da un'entità al rispettivo DTO
+	 * @param pacchetto L'entità di partenza
+	 * @return Il relativo DTO
+	 */
 	protected PacchettoDTO convertiInDTO (Pacchetti pacchetto) {
 		PacchettoDTO pacchettoDTO = new PacchettoDTO();
 		
@@ -188,19 +206,32 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		pacchettoDTO.setDestinazioni(destinazioni);
 		pacchettoDTO.setCitta(citta.convertiInDTO(pacchetto.getCitta()));
 		pacchettoDTO.setPacchettoPredefinito(this.convertiInDTO(pacchetto.getPacchettoPredefinito()));
-		//pacchettoDTO.setUtente(profilo);
+		pacchettoDTO.setUtente(profilo.convertiInDTO(pacchetto.getUtente()));
 		
 		return pacchettoDTO;
 	}
 	
+	/**
+	 * Permette la conversione da un'entità al rispettivo DTO
+	 * @param pacchetto L'entità di partenza
+	 * @return Il relativo DTO
+	 */
 	protected PacchettoPredefinitoDTO convertiInDTO (PacchettiPredefiniti pacchetto) {
 		PacchettoPredefinitoDTO pacchettoDTO = new PacchettoPredefinitoDTO();
 		
 		pacchettoDTO.setId(pacchetto.getId());
 		pacchettoDTO.setNome(pacchetto.getNome());
 		pacchettoDTO.setPrezzo(pacchetto.getPrezzo());
-		//pacchettoDTO.setDatePartenza(pacchetto.getDatePartenza());
-		//pacchettoDTO.setDurate(pacchetto.getDurate());
+		List<Date> datePartenza = new ArrayList<Date>();
+		for (DatePartenza d : pacchetto.getDatePartenza()) {
+			datePartenza.add(d.getId().getData());
+		}
+		pacchettoDTO.setDatePartenza(datePartenza);
+		List<Integer> durate = new ArrayList<Integer>();
+		for (Durate d : pacchetto.getDurate()) {
+			durate.add(d.getId().getDurata());
+		}
+		pacchettoDTO.setDurate(durate);
 		pacchettoDTO.setHotel(hotel.convertiInDTO(pacchetto.getHotel()));
 		
 		return pacchettoDTO;
