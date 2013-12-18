@@ -10,11 +10,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dtos.AttivitaDTO;
-import dtos.CittaDTO;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
 import entities.Attivita;
-import entities.Citta;
 import entities.Destinazioni;
 import entities.Escursioni;
 
@@ -46,20 +44,6 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
         
     }
 
-    /**
-     * Ritorna l'elenco di tutte le città presenti nel database
-     * @return L'elenco delle città
-     */
-	@Override
-	public List<CittaDTO> elencoCitta() {
-		List<Citta> citta = em.createNamedQuery("Citta.elenco", Citta.class).getResultList();
-		List<CittaDTO> dto = new ArrayList<CittaDTO>();
-		for (Citta c : citta) {
-			dto.add(this.citta.convertiInDTO(c));
-		}
-		return dto;
-	}
-	
 	/**
 	 * Permette l'aggiunta di una nuova destinazione
 	 * @param destinazione I dati della nuova destinazione
