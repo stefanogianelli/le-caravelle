@@ -1,14 +1,12 @@
 package ejbs;
 
 import javax.ejb.Local;
-import javax.persistence.EntityExistsException;
-
 import dtos.UtenteDTO;
 
 @Local
 public interface GestoreProfilo {
 
-	void registrazioneUtente (UtenteDTO datiUtente) throws EntityExistsException;
+	void registrazioneUtente (UtenteDTO datiUtente);
 	
 	void resetPassword (String email);
 	

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -36,10 +35,9 @@ public class GestoreProfiloEJB implements GestoreProfilo {
     /**
      * Permette la creazione di un profilo utente
      * @param datiUtente I dati dell'utente che si vuole registrare
-     * @throws EntityExistsException Quando esiste già l'utente nel database
      */
 	@Override
-	public void registrazioneUtente(UtenteDTO datiUtente) throws EntityExistsException {
+	public void registrazioneUtente(UtenteDTO datiUtente) {
 		List<Gruppi> gruppi = new ArrayList<Gruppi>();
 		gruppi.add(Gruppi.UTENTE);
 		
@@ -57,8 +55,9 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		utente.setEmail(datiUtente.getEmail());
 		utente.setPersona(persona);
 		utente.setGruppi(gruppi);
-		
 		String password = this.generaPassword(utente);
+		utente.setPassword(password);		
+		
 		//inviare per email la password all'utente
 		
 		em.persist(utente);

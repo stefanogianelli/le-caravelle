@@ -5,9 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -68,11 +66,9 @@ public class GestoreHotelEJB implements GestoreHotel {
 	/**
 	 * Crea un nuovo hotel nel database
 	 * @param hotel L'oggetto da salvare
-	 * @throws EntityExistsException Quando l'hotel esiste già nel database
-	 * @throws NoResultException Quando non viene trovata la città dell'hotel
 	 */
 	@Override
-	public void creaHotel(HotelDTO hotel) throws EntityExistsException, NoResultException {
+	public void creaHotel(HotelDTO hotel) {
 		Hotel entity = new Hotel ();
 		
 		entity.setEmail(hotel.getEmail());
@@ -90,10 +86,9 @@ public class GestoreHotelEJB implements GestoreHotel {
 	/**
 	 * Permette di modificare i dati di un hotel
 	 * @param hotel L'hotel da modificare
-	 * @throws NoResultException Quando non viene trovata la città dell'hotel
 	 */
 	@Override
-	public void modificaDatiHotel(HotelDTO hotel) throws NoResultException {
+	public void modificaDatiHotel(HotelDTO hotel) {
 		Hotel entity = this.convertiInDAO(hotel);
 		
 		entity.setEmail(hotel.getEmail());
@@ -111,10 +106,9 @@ public class GestoreHotelEJB implements GestoreHotel {
 	/**
 	 * Permette l'eliminazione di un hotel dal database
 	 * @param hotel L'hotel da eliminare
-	 * @throws NoResultException Quando non esiste l'hotel con l'id selezionato
 	 */
 	@Override
-	public void eliminaHotel(HotelDTO hotel) throws NoResultException {
+	public void eliminaHotel(HotelDTO hotel) {
 		em.remove(this.convertiInDAO(hotel));
 	}
 	
