@@ -21,11 +21,12 @@ public class Attivita implements Serializable {
 
 	private int numPartecipanti;
 	
+	//relazione bidirezionale many-to-one con l'entità Destinazioni
 	@ManyToOne
 	@JoinColumn(name="idDestinazione")
 	private Destinazioni destinazione;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="idEscursione")
 	private Escursioni escursione;
 

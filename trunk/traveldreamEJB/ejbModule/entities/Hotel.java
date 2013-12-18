@@ -35,7 +35,6 @@ public class Hotel implements Serializable {
 
 	private double prezzo;	
 
-	//bi-directional many-to-one association to Citta
 	@ManyToOne
 	@JoinColumn(name="citta")
 	private Citta citta;

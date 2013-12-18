@@ -12,7 +12,7 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Amici.findAll", query="SELECT a FROM Amici a")
+@NamedQuery(name="Amici.elenco", query="SELECT a FROM Amici a")
 public class Amici implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,8 +23,7 @@ public class Amici implements Serializable {
 
 	private String cognome;	
 
-	//bi-directional many-to-many association to Pacchetti
-	@ManyToMany
+	@OneToMany
 	@JoinTable(
 			name="condiviso_con"
 			, joinColumns={

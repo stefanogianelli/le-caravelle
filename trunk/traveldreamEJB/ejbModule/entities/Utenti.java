@@ -30,7 +30,7 @@ public class Utenti implements Serializable {
     @Column(name="gruppo")	
 	private List<Gruppi> gruppi;
 
-	//bi-directional many-to-one association to Persone
+	//relazione bidirezionale one-to-one con l'entità Persone
 	@OneToOne
 	@JoinColumns({
 		@JoinColumn(name="persone_cognome", referencedColumnName="cognome"),
@@ -38,6 +38,10 @@ public class Utenti implements Serializable {
 		@JoinColumn(name="persone_nome", referencedColumnName="nome")
 		})
 	private Persone persona;
+	
+	//relazione bidirezionale one-to-many con l'entità Pacchetti
+	@OneToMany(mappedBy="utente")
+	private List<Pacchetti> pacchetti;
 
 	public Utenti() {
 	}
@@ -72,6 +76,14 @@ public class Utenti implements Serializable {
 
 	public void setPersona(Persone persona) {
 		this.persona = persona;
+	}
+
+	public List<Pacchetti> getPacchetti() {
+		return pacchetti;
+	}
+
+	public void setPacchetti(List<Pacchetti> pacchetti) {
+		this.pacchetti = pacchetti;
 	}
 
 }

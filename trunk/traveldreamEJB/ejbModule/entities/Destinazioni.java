@@ -27,6 +27,7 @@ public class Destinazioni implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dataPartenza;
 	
+	//relazione bidirezionale many-to-one con l'entità Pacchetti
 	@ManyToOne
 	@JoinColumn(name="idPacchetto")
 	private Pacchetti pacchetto;
@@ -35,6 +36,7 @@ public class Destinazioni implements Serializable {
 	@JoinColumn(name="idHotel")
 	private Hotel hotel;	
 
+	//relazione bidirezionale one-to-many con l'entità Attivita
 	@OneToMany(mappedBy="destinazione")
 	private List<Attivita> attivita;
 	
