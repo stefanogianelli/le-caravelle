@@ -20,7 +20,7 @@ interface GestorePacchetto {
 	
 	void acquistaPacchetto (PacchettoDTO pacchetto);
 	
-	void condividiPacchetto (PacchettoDTO pacchetto);
+	void condividiPacchetto (PacchettoDTO pacchetto, String email);
 	
 	void eliminaPacchetto (PacchettoDTO pacchetto);
 	

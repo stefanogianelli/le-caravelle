@@ -63,9 +63,9 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	/**
 	 * Permette l'aggiunta di una nuova destinazione
 	 * @param destinazione I dati della nuova destinazione
+	 * @param La destinazione creata
 	 */
-	@Override
-	public void aggiuntaDestinazione (DestinazioneDTO destinazione) {
+	protected Destinazioni aggiuntaDestinazione (DestinazioneDTO destinazione) {
 		Destinazioni entity = new Destinazioni();
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
@@ -75,6 +75,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		entity.setPacchetto(pacchetto.convertiInDAO(destinazione.getPacchetto()));
 		
 		em.persist(entity);
+		
+		return entity;
 	}
 
 	/**
@@ -91,6 +93,14 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		entity.setHotel(hotel.convertiInDAO(destinazione.getHotel()));
 		
 		em.merge(entity);		
+	}
+	
+	/**
+	 * Permette l'eliminazione di una destinazione
+	 * @param destinazione La destinazione da eliminare
+	 */
+	protected void rimuoviDestinazione (DestinazioneDTO destinazione) {
+		em.remove(this.convertiInDAO(destinazione));
 	}
 
 	/**
@@ -113,8 +123,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		
 		destinazioneDAO.addAttivita(attivita);
 		
-		em.persist(attivita);
-		
+		em.persist(attivita);		
 	}
 
 	/**

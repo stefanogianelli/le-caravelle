@@ -13,8 +13,6 @@ interface GestoreDestinazione {
 
 	List<CittaDTO> elencoCitta ();
 	
-	void aggiuntaDestinazione (DestinazioneDTO destinazione);
-	
 	void modificaDatiDestinazione (DestinazioneDTO destinazione);
 	
 	void aggiuntaEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti);
