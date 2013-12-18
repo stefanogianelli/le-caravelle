@@ -11,10 +11,11 @@ import javax.persistence.PersistenceContext;
 
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
-import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 import entities.DatePartenza;
+import entities.DatePartenzaPK;
 import entities.Durate;
+import entities.DuratePK;
 import entities.PacchettiPredefiniti;
 
 /**
@@ -50,41 +51,63 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		return pacchettiDTO;
 	}
 
+	/**
+	 * Permette la creazione di un nuovo pacchetto predefinito
+	 * @param pacchetto I dati del pacchetto
+	 */
 	@Override
 	public void creaPacchetto(PacchettoPredefinitoDTO pacchetto) {
+		PacchettiPredefiniti pacchettoDAO = new PacchettiPredefiniti();
+		
+		pacchettoDAO.setNome(pacchetto.getNome());
+		pacchettoDAO.setPrezzo(pacchetto.getPrezzo());
+		for (Date d : pacchetto.getDatePartenza()) {
+			DatePartenzaPK dataPK = new DatePartenzaPK();
+			dataPK.setData(d);
+			dataPK.setIdPacchettoPredefinito(pacchettoDAO.getId());
+			
+			DatePartenza data = new DatePartenza();
+			data.setId(dataPK);
+			data.setPacchettoPredefinito(pacchettoDAO);
+			
+			pacchettoDAO.addDataPartenza(data);
+		}
+		for (Integer i : pacchetto.getDurate()) {
+			DuratePK duratePK = new DuratePK();
+			duratePK.setDurata(i);
+			duratePK.setIdPacchettoPredefinito(pacchettoDAO.getId());
+			
+			Durate durate = new Durate();
+			durate.setId(duratePK);
+			durate.setPacchettoPredefinito(pacchettoDAO);
+			
+			pacchettoDAO.addDurata(durate);
+		}
+		pacchettoDAO.setHotel(hotel.convertiInDAO(pacchetto.getHotel()));
+		
+		em.persist(pacchettoDAO);		
+	}
+	
+	@Override
+	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void aggiuntaHotel(PacchettoPredefinitoDTO pacchetto, HotelDTO hotel) {
+	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void rimuoviHotel(PacchettoPredefinitoDTO pacchetto, HotelDTO hotel) {
+	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto,
-			CollegamentoDTO collegamento) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto,
-			EscursioneDTO escursione) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto,
-			EscursioneDTO escursione) {
+	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -135,5 +158,4 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		
 		return pacchettoDTO;
 	}
-
 }

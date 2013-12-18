@@ -6,7 +6,6 @@ import javax.ejb.Local;
 
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
-import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 
 @Local
@@ -16,9 +15,7 @@ public interface GestorePacchettoPredefinito {
 	
 	void creaPacchetto (PacchettoPredefinitoDTO pacchetto);
 	
-	void aggiuntaHotel (PacchettoPredefinitoDTO pacchetto, HotelDTO hotel);
-	
-	void rimuoviHotel (PacchettoPredefinitoDTO pacchetto, HotelDTO hotel);
+	void aggiuntaCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento);
 	
 	void rimuoviCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento);
 	
