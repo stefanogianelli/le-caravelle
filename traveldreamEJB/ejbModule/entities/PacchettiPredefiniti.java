@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="pacchetti_predefiniti")
-@NamedQuery(name="PacchettiPredefiniti.findAll", query="SELECT p FROM PacchettiPredefiniti p")
+@NamedQuery(name="PacchettiPredefiniti.elenco", query="SELECT p FROM PacchettiPredefiniti p")
 public class PacchettiPredefiniti implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,15 +23,14 @@ public class PacchettiPredefiniti implements Serializable {
 
 	private double prezzo;
 
-	//bi-directional many-to-one association to DatePartenza
+	//relazione bidirezionale one-to-many con l'entità DatePartenza	
 	@OneToMany(mappedBy="pacchettoPredefinito")
 	private List<DatePartenza> datePartenza;
 
-	//bi-directional many-to-one association to Durate
+	//relazione bidirezionale one-to-many con l'entità Durate
 	@OneToMany(mappedBy="pacchettoPredefinito")
 	private List<Durate> durate;
 
-	//bi-directional many-to-one association to Hotel
 	@ManyToOne
 	@JoinColumn(name="idHotel")
 	private Hotel hotel;

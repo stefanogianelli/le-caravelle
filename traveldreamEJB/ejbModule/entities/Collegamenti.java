@@ -42,12 +42,10 @@ public class Collegamenti implements Serializable {
 
 	private double prezzo;
 
-	//bi-directional many-to-one association to Citta
 	@ManyToOne
 	@JoinColumn(name="cittaArrivo")
 	private Citta cittaArrivo;
 
-	//bi-directional many-to-one association to Citta
 	@ManyToOne
 	@JoinColumn(name="cittaPartenza")
 	private Citta cittaPartenza;

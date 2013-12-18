@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Persone.findAll", query="SELECT p FROM Persone p")
+@NamedQuery(name="Persone.elenco", query="SELECT p FROM Persone p")
 public class Persone implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,7 @@ public class Persone implements Serializable {
 
 	private String telefono;
 
-	//bi-directional many-to-one association to Utenti
+	//relazione bidirezionale one-to-one con l'entità Utenti
 	@OneToOne(mappedBy="persona")
 	private Utenti utenti;
 

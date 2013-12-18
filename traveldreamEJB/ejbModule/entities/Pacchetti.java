@@ -12,7 +12,7 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Pacchetti.findAll", query="SELECT p FROM Pacchetti p")
+@NamedQuery(name="Pacchetti.elenco", query="SELECT p FROM Pacchetti p")
 public class Pacchetti implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,21 +28,19 @@ public class Pacchetti implements Serializable {
 
 	private String tipoPacchetto;
 
-	//bi-directional many-to-one association to Destinazioni
+	//relazione bidirezionale one-to-many con l'entità Destinazioni
 	@OneToMany(mappedBy="pacchetto")
 	private List<Destinazioni> destinazioni;
 
-	//bi-directional many-to-one association to Citta
 	@ManyToOne
 	@JoinColumn(name="idCittaOrigine")
 	private Citta citta;
 
-	//bi-directional many-to-one association to PacchettiPredefiniti
 	@ManyToOne
 	@JoinColumn(name="idPred")
 	private PacchettiPredefiniti pacchettoPredefinito;
 
-	//bi-directional many-to-one association to Utenti
+	//relazione bidirezionale many-to-one con l'entità Utenti
 	@ManyToOne
 	@JoinColumn(name="emailUtente")
 	private Utenti utente;

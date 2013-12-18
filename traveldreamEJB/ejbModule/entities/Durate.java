@@ -16,7 +16,7 @@ public class Durate implements Serializable {
 	@EmbeddedId
 	private DuratePK id;
 
-	//bi-directional many-to-one association to PacchettiPredefiniti
+	//relazione bidirezionale many-to-one con l'entità PacchettiPredefiniti
 	@ManyToOne
 	@JoinColumn(name="idPacchettoPredefinito")
 	private PacchettiPredefiniti pacchettoPredefinito;
