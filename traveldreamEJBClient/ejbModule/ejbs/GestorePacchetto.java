@@ -14,7 +14,7 @@ interface GestorePacchetto {
 
 	List<PacchettoDTO> elencoPacchetti (TipoPacchetto tipo);
 	
-	void aggiuntaPacchettoPersonalizzato (PacchettoDTO pacchetto);
+	void creaPacchettoPersonalizzato (PacchettoDTO pacchetto);
 	
 	void salvaPacchetto (PacchettoDTO pacchetto);
 	

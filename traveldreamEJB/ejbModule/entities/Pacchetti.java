@@ -35,8 +35,20 @@ public class Pacchetti implements Serializable {
 	private TipoPacchetto tipoPacchetto;
 
 	//relazione bidirezionale one-to-many con l'entità Destinazioni
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="pacchetto")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchetto")
 	private List<Destinazioni> destinazioni;
+	
+	@ManyToMany
+	@JoinTable(
+			name="mezzi_trasporto"
+			, joinColumns={
+				@JoinColumn(name="idCollegamento")
+				}
+			, inverseJoinColumns={
+				@JoinColumn(name="idPacchetto")
+				}
+			)	
+	private List<Collegamenti> collegamenti;
 
 	@ManyToOne
 	@JoinColumn(name="idCittaOrigine")
@@ -102,18 +114,38 @@ public class Pacchetti implements Serializable {
 		this.destinazioni = destinazioni;
 	}
 
-	public Destinazioni addDestinazioni(Destinazioni destinazioni) {
-		getDestinazioni().add(destinazioni);
-		destinazioni.setPacchetto(this);
+	public Destinazioni addDestinazione(Destinazioni destinazione) {
+		getDestinazioni().add(destinazione);
+		destinazione.setPacchetto(this);
 
-		return destinazioni;
+		return destinazione;
 	}
 
-	public Destinazioni removeDestinazioni(Destinazioni destinazioni) {
-		getDestinazioni().remove(destinazioni);
-		destinazioni.setPacchetto(null);
+	public Destinazioni removeDestinazione(Destinazioni destinazione) {
+		getDestinazioni().remove(destinazione);
+		destinazione.setPacchetto(null);
 
-		return destinazioni;
+		return destinazione;
+	}
+
+	public List<Collegamenti> getCollegamenti() {
+		return collegamenti;
+	}
+
+	public void setCollegamenti(List<Collegamenti> collegamenti) {
+		this.collegamenti = collegamenti;
+	}
+	
+	public Collegamenti addCollegamento (Collegamenti collegamento) {
+		this.getCollegamenti().add(collegamento);
+		
+		return collegamento;
+	}
+	
+	public Collegamenti removeCollegamento (Collegamenti collegamento) {
+		this.getCollegamenti().remove(collegamento);
+		
+		return collegamento;
 	}
 
 	public Citta getCitta() {
