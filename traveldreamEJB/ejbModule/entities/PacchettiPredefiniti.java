@@ -1,7 +1,9 @@
 package entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -34,6 +36,18 @@ public class PacchettiPredefiniti implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="idHotel")
 	private Hotel hotel;
+	
+	@ManyToMany
+	@JoinTable(
+			name="mezzi_trasporto_pred"
+			, joinColumns={
+				@JoinColumn(name="idCollegamento")
+				}
+			, inverseJoinColumns={
+				@JoinColumn(name="idPacchettoPredefinito")
+				}
+			)
+	private List<Collegamenti> collegamenti;
 
 	public PacchettiPredefiniti() {
 	}
@@ -70,18 +84,18 @@ public class PacchettiPredefiniti implements Serializable {
 		this.datePartenza = datePartenza;
 	}
 
-	public DatePartenza addDatePartenza(DatePartenza datePartenza) {
-		getDatePartenza().add(datePartenza);
-		datePartenza.setPacchettoPredefinito(this);
+	public DatePartenza addDataPartenza(DatePartenza dataPartenza) {
+		getDatePartenza().add(dataPartenza);
+		dataPartenza.setPacchettoPredefinito(this);
 
-		return datePartenza;
+		return dataPartenza;
 	}
 
-	public DatePartenza removeDatePartenza(DatePartenza datePartenza) {
-		getDatePartenza().remove(datePartenza);
-		datePartenza.setPacchettoPredefinito(null);
+	public DatePartenza removeDataPartenza(DatePartenza dataPartenza) {
+		getDatePartenza().remove(dataPartenza);
+		dataPartenza.setPacchettoPredefinito(null);
 
-		return datePartenza;
+		return dataPartenza;
 	}
 
 	public List<Durate> getDurate() {
@@ -92,18 +106,18 @@ public class PacchettiPredefiniti implements Serializable {
 		this.durate = durate;
 	}
 
-	public Durate addDurate(Durate durate) {
-		getDurate().add(durate);
-		durate.setPacchettoPredefinito(this);
+	public Durate addDurata(Durate durata) {
+		getDurate().add(durata);
+		durata.setPacchettoPredefinito(this);
 
-		return durate;
+		return durata;
 	}
 
-	public Durate removeDurate(Durate durate) {
+	public Durate removeDurata(Durate durata) {
 		getDurate().remove(durate);
-		durate.setPacchettoPredefinito(null);
+		durata.setPacchettoPredefinito(null);
 
-		return durate;
+		return durata;
 	}
 
 	public Hotel getHotel() {
@@ -112,6 +126,26 @@ public class PacchettiPredefiniti implements Serializable {
 
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
+	}
+
+	public List<Collegamenti> getCollegamenti() {
+		return collegamenti;
+	}
+
+	public void setCollegamenti(List<Collegamenti> collegamenti) {
+		this.collegamenti = collegamenti;
+	}
+	
+	public Collegamenti addCollegamento (Collegamenti collegamento) {
+		this.getCollegamenti().add(collegamento);
+		
+		return collegamento;
+	}
+	
+	public Collegamenti removeCollegamento (Collegamenti collegamento) {
+		this.getCollegamenti().remove(collegamento);
+		
+		return collegamento;
 	}
 
 }
