@@ -5,9 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -69,11 +67,9 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	/**
 	 * Aggiunge un nuovo collegamento nel database
 	 * @param collegamento I dati del collegamento da aggiungere
-	 * @throws EntityExistsException Quando il collegamento esiste già nel database
-	 * @throws NoResultException Quando non vengono trovate le città del collegamento
 	 */
 	@Override
-	public void creaCollegamento(CollegamentoDTO collegamento) throws EntityExistsException, NoResultException {
+	public void creaCollegamento(CollegamentoDTO collegamento) {
 		Collegamenti entity = new Collegamenti ();
 		
 		entity.setDataPartenza(collegamento.getDataPartenza());
@@ -92,10 +88,9 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	/**
 	 * Permette la modifica dei dati di un collegamento
 	 * @param collegamento Il collegamento da modiicare
-	 * @throws NoResultException Quando non vengono trovate le città del collegamento
 	 */
 	@Override
-	public void modificaDatiCollegamento(CollegamentoDTO collegamento) throws NoResultException {
+	public void modificaDatiCollegamento(CollegamentoDTO collegamento) {
 		Collegamenti entity = this.convertiInDAO(collegamento);
 		
 		entity.setDataPartenza(collegamento.getDataPartenza());
@@ -114,10 +109,9 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	/**
 	 * Permette l'eliminazione di un collegamento dal database
 	 * @param collegamento Il collegamento da eliminare
-	 * @throws NoResultException Quando non esiste il collegamento con il codice selezionato
 	 */
 	@Override
-	public void eliminaCollegamento(CollegamentoDTO collegamento) throws NoResultException {
+	public void eliminaCollegamento(CollegamentoDTO collegamento){
 		em.remove(this.convertiInDAO(collegamento));		
 	}
 	
@@ -137,6 +131,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	 */
 	protected CollegamentoDTO convertiInDTO (Collegamenti collegamento) {
 		CollegamentoDTO dto = new CollegamentoDTO ();
+		
 		dto.setDataPartenza(collegamento.getDataPartenza());
 		dto.setDestinazione(collegamento.getDestinazione());
 		dto.setOraArrivo(collegamento.getOraArrivo());
@@ -146,6 +141,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		dto.setTipoCollegamento(collegamento.getTipoCollegamento());
 		dto.setCittaArrivo(citta.convertiInDTO(collegamento.getCittaArrivo()));
 		dto.setCittaPartenza(citta.convertiInDTO(collegamento.getCittaPartenza()));
+		
 		return dto;
 	}
 

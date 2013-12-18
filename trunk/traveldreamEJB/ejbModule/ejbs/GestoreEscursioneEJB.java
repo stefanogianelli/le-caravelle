@@ -5,9 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -68,11 +66,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	/**
 	 * Crea una nuova escursione nel database
 	 * @param escursione L'oggetto da salvare
-	 * @throws EntityExistsException Quando l'escursione esiste già nel database
-	 * @throws NoResultException Quando non viene trovata la città dell'escursione
 	 */
 	@Override
-	public void creaEscursione(EscursioneDTO escursione) throws EntityExistsException, NoResultException {
+	public void creaEscursione(EscursioneDTO escursione) {
 		Escursioni entity = new Escursioni ();
 		
 		entity.setCategoria(escursione.getCategoria());
@@ -89,10 +85,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	/**
 	 * Permette di modificare i dati di una escursione
 	 * @param escursione L'escursione da modifciare
-	 * @throws NoResultException Quando non viene trovata la città dell'escursione
 	 */
 	@Override
-	public void modificaDatiEscursione(EscursioneDTO escursione) throws NoResultException {
+	public void modificaDatiEscursione(EscursioneDTO escursione) {
 		Escursioni entity = this.convertiInDAO(escursione);
 		
 		entity.setCategoria(escursione.getCategoria());
@@ -109,10 +104,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	/**
 	 * Permette l'eliminazione di una escursione dal database
 	 * @param escursione L'escursione da eliminare
-	 * @throws NoResultException Quando non esiste l'escursione con l'id selezionato
 	 */
 	@Override
-	public void eliminaEscursione(EscursioneDTO escursione) throws NoResultException {
+	public void eliminaEscursione(EscursioneDTO escursione) {
 		em.remove(this.convertiInDAO(escursione));
 	}
 
