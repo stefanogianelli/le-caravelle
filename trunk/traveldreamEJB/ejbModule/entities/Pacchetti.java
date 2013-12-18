@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import enums.TipoPacchetto;
+
 import java.util.List;
 
 
@@ -29,7 +31,8 @@ public class Pacchetti implements Serializable {
 
 	private double prezzo;
 
-	private String tipoPacchetto;
+	@Enumerated(EnumType.STRING)
+	private TipoPacchetto tipoPacchetto;
 
 	//relazione bidirezionale one-to-many con l'entità Destinazioni
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="pacchetto")
@@ -83,11 +86,11 @@ public class Pacchetti implements Serializable {
 		this.prezzo = prezzo;
 	}
 
-	public String getTipoPacchetto() {
+	public TipoPacchetto getTipoPacchetto() {
 		return this.tipoPacchetto;
 	}
 
-	public void setTipoPacchetto(String tipoPacchetto) {
+	public void setTipoPacchetto(TipoPacchetto tipoPacchetto) {
 		this.tipoPacchetto = tipoPacchetto;
 	}
 

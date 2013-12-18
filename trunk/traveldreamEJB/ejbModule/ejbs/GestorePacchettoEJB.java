@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
+import entities.Amici;
 import entities.Destinazioni;
 import entities.Pacchetti;
 import enums.TipoPacchetto;
@@ -111,34 +112,59 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.merge(pacchettoDAO);			
 	}
 
+	/**
+	 * Permette l'acquisto di un pacchetto
+	 * @param pacchetto Il pacchetto da acquistare
+	 */
 	@Override
 	public void acquistaPacchetto(PacchettoDTO pacchetto) {
-		// TODO Auto-generated method stub
-		
+		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		pacchettoDAO.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
 	}
 
+	/**
+	 * Permette la condivisione di un pacchetto
+	 * @param pacchetto Il pacchetto da condividere
+	 * @param email L'indirizzo email dell'amico con cui condividere il paccheto
+	 */
 	@Override
-	public void condividiPacchetto(PacchettoDTO pacchetto) {
-		// TODO Auto-generated method stub
-		
+	public void condividiPacchetto(PacchettoDTO pacchetto, String email) {
+		Amici amico = em.find(Amici.class, email);
+		amico.addPacchetto(this.convertiInDAO(pacchetto));		
 	}
 
+	/**
+	 * Permette l'eliminazione di un pacchetto
+	 * @param pacchetto Il pacchetto da eliminare
+	 */
 	@Override
 	public void eliminaPacchetto(PacchettoDTO pacchetto) {
-		// TODO Auto-generated method stub
-		
+		em.remove(this.convertiInDAO(pacchetto));		
 	}
 
+	/**
+	 * Permette l'aggiunta di una nuova destinazione nel pacchetto
+	 * @param pacchetto Il pacchetto nel quale aggiungere la destinazione
+	 * @param destinazione La destinazione da aggiungere
+	 */
 	@Override
 	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
-		// TODO Auto-generated method stub
+		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
 		
+		pacchettoDAO.addDestinazioni(this.destinazione.aggiuntaDestinazione(destinazione));
+		
+		em.merge(pacchettoDAO);
 	}
 
+	/**
+	 * Permette l'eliminazione di una destinazione da un pacchetto
+	 * @param pacchetto Il pacchetto nel quale si vuole eliminare la destinazione
+	 * @param destinazione La destinazione da eliminare
+	 */
 	@Override
 	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
-		// TODO Auto-generated method stub
-		
+		this.convertiInDAO(pacchetto).removeDestinazioni(this.destinazione.convertiInDAO(destinazione));
+		this.destinazione.rimuoviDestinazione(destinazione);		
 	}
 
 	@Override
