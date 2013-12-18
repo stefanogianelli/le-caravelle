@@ -52,7 +52,7 @@ public class GestoreHotelEJB implements GestoreHotel {
      */
 	@Override
 	public List<HotelDTO> elencoHotel(String nomeCitta) {
-		Query q = em.createNamedQuery("Hotel.elenco", Hotel.class);
+		Query q = em.createNamedQuery("Hotel.elencoPerCitta", Hotel.class);
 		q.setParameter("citta", nomeCitta);
 		@SuppressWarnings("unchecked")
 		List<Hotel> hotel = q.getResultList();
@@ -128,6 +128,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 	 */
 	protected HotelDTO convertiInDTO (Hotel hotel) {
 		HotelDTO dto = new HotelDTO ();
+		
 		dto.setEmail(hotel.getEmail());
 		dto.setIndirizzo(hotel.getIndirizzo());
 		dto.setNome(hotel.getNome());
@@ -136,6 +137,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 		dto.setTelefono(hotel.getTelefono());
 		dto.setWebsite(hotel.getWebsite());
 		dto.setCitta(citta.convertiInDTO(hotel.getCitta()));
+		
 		return dto;
 	}
 	

@@ -126,6 +126,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	 */
 	protected EscursioneDTO convertiInDTO (Escursioni escursione) {
 		EscursioneDTO dto = new EscursioneDTO();
+		
 		dto.setCategoria(escursione.getCategoria());
 		dto.setData(escursione.getData());
 		dto.setDurata(escursione.getDurata());
@@ -133,6 +134,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		dto.setOra(escursione.getOra());
 		dto.setPrezzo(escursione.getPrezzo());
 		dto.setCitta(citta.convertiInDTO(escursione.getCitta()));
+		
 		return dto;
 	}
 

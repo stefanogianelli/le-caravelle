@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dtos.AttivitaDTO;
 import dtos.CittaDTO;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
@@ -59,6 +60,10 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		return dto;
 	}
 	
+	/**
+	 * Permette l'aggiunta di una nuova destinazione
+	 * @param destinazione I dati della nuova destinazione
+	 */
 	@Override
 	public void aggiuntaDestinazione (DestinazioneDTO destinazione) {
 		Destinazioni entity = new Destinazioni();
@@ -67,11 +72,15 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		entity.setDataPartenza(destinazione.getDataPartenza());
 		entity.setCitta(citta.convertiInDAO(destinazione.getCitta()));
 		entity.setHotel(hotel.convertiInDAO(destinazione.getHotel()));
-		//entity.setPacchetto(pacchetto);
+		entity.setPacchetto(pacchetto.convertiInDAO(destinazione.getPacchetto()));
 		
 		em.persist(entity);
 	}
 
+	/**
+	 * Permette la modifica dei dati di una destinazione
+	 * @param destinazione La destinazione da modificare
+	 */
 	@Override
 	public void modificaDatiDestinazione(DestinazioneDTO destinazione) {
 		Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
@@ -80,15 +89,14 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		entity.setDataPartenza(destinazione.getDataPartenza());
 		entity.setCitta(citta.convertiInDAO(destinazione.getCitta()));
 		entity.setHotel(hotel.convertiInDAO(destinazione.getHotel()));
-		//entity.setPacchetto(pacchetto);
 		
 		em.merge(entity);		
 	}
 
 	/**
 	 * Permette l'aggiunta di una escursione
-	 * @param idDestinazione L'identificativo della destinazione
-	 * @param idEscursione L'identificativo dell'escursione
+	 * @param destinazione L'identificativo della destinazione
+	 * @param escursione L'identificativo dell'escursione
 	 * @param numeroPartecipanti Il numero di partecipanti all'escursione
 	 */
 	@Override
@@ -105,14 +113,14 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		
 		destinazioneDAO.addAttivita(attivita);
 		
-		em.persist(destinazioneDAO);
+		em.persist(attivita);
 		
 	}
 
 	/**
 	 * Permette la modifica del numero di partecipanti ad una escursione
-	 * @param idDestinazione L'identificativo della destinazione
-	 * @param idEscursione L'identificativo dell'escursione
+	 * @param destinazione L'identificativo della destinazione
+	 * @param escursione L'identificativo dell'escursione
 	 * @param numeroPartecipanti Il numero di partecipanti all'escursione
 	 */
 	@Override
@@ -133,8 +141,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 
 	/**
 	 * Permette l'eliminazione di una escursione
-	 * @param idDestinazione L'identificativo della destinazione
-	 * @param idEscursione L'identificativo dell'escursione
+	 * @param destinazione L'identificativo della destinazione
+	 * @param escursione L'identificativo dell'escursione
 	 */
 	@Override
 	public void eliminaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione) {
@@ -149,7 +157,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		
 		destinazioneDAO.removeAttivita(attivita);
 		
-		em.remove(destinazioneDAO);
+		em.remove(attivita);
 	}
 	
 	/**
@@ -171,11 +179,43 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		
 		dto.setDataArrivo(destinazione.getDataArrivo());
 		dto.setDataPartenza(destinazione.getDataPartenza());
-		dto.setCitta(citta.convertiInDTO(destinazione.getCitta()));
+		dto.setPacchetto(pacchetto.convertiInDTO(destinazione.getPacchetto()));		
 		dto.setHotel(hotel.convertiInDTO(destinazione.getHotel()));
-		//dto.setHotel(pacchetto.convertiInDTO(destinazione.getPacchetto()));
+		List<AttivitaDTO> attivitaDTO = new ArrayList<AttivitaDTO>();
+		for (Attivita a : destinazione.getAttivita()) {
+			attivitaDTO.add(this.convertiInDTO(a));
+		}
+		dto.setAttivita(attivitaDTO);
+		dto.setCitta(citta.convertiInDTO(destinazione.getCitta()));
 		
 		return dto;
+	}
+	
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param destinazione Il DTO dell'attivita
+	 * @return L'entità desiderata
+	 */
+	protected Attivita convertiInDAO (AttivitaDTO attivita) {
+		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+		q.setParameter("destinazione", attivita.getIdDestinazione());
+		q.setParameter("escursione", attivita.getIdEscursione());
+		return (Attivita) q.getSingleResult();
+	}
+	
+	/**
+	 * Permette la conversione da un'entità al rispettivo DTO
+	 * @param attivita L'entità da convertire
+	 * @return Il relativo DTO
+	 */
+	protected AttivitaDTO convertiInDTO (Attivita attivita) {
+		AttivitaDTO attivitaDTO = new AttivitaDTO();
+		
+		attivitaDTO.setIdDestinazione(attivita.getDestinazione().getId());
+		attivitaDTO.setIdEscursione(attivita.getEscursione().getId());
+		attivitaDTO.setNumeroPartecipanti(attivita.getNumPartecipanti());
+		
+		return attivitaDTO;
 	}
 
 }
