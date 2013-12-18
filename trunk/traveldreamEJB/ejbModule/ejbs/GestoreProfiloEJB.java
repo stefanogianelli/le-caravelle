@@ -105,10 +105,20 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		return password;
 	}
 	
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param utente Il DTO dell'utente
+	 * @return L'entità desiderata
+	 */
 	protected Utenti convertiInDAO (UtenteDTO utente) {
 		return em.find(Utenti.class, utente.getEmail());
 	}
 	
+	/**
+	 * Permette la conversione da un'entità al rispettivo DTO
+	 * @param utente L'entità di partenza
+	 * @return Il relativo DTO
+	 */
 	protected UtenteDTO convertiInDTO (Utenti utente) {
 		UtenteDTO utenteDTO = new UtenteDTO();
 		
