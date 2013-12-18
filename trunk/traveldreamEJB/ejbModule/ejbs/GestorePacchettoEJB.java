@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import entities.Destinazioni;
@@ -111,43 +112,43 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 
 	@Override
-	public void acquistaPacchetto(int idPacchetto) {
+	public void acquistaPacchetto(PacchettoDTO pacchetto) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void condividiPacchetto(int idPacchetto) {
+	public void condividiPacchetto(PacchettoDTO pacchetto) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void eliminaPacchetto(int idPacchetto) {
+	public void eliminaPacchetto(PacchettoDTO pacchetto) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void aggiuntaDestinazione(DestinazioneDTO destinazione) {
+	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void eliminaDestinazione(int idDestinazione) {
+	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void aggiuntaCollegamento(int codiceCollegamento) {
+	public void aggiuntaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void modificaCollegamento(int codiceCollegamento) {
+	public void modificaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
 		// TODO Auto-generated method stub
 		
 	}

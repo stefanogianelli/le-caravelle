@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import enums.TipoPacchetto;
@@ -17,17 +18,17 @@ interface GestorePacchetto {
 	
 	void salvaPacchetto (PacchettoDTO pacchetto);
 	
-	void acquistaPacchetto (int idPacchetto);
+	void acquistaPacchetto (PacchettoDTO pacchetto);
 	
-	void condividiPacchetto (int idPacchetto);
+	void condividiPacchetto (PacchettoDTO pacchetto);
 	
-	void eliminaPacchetto (int idPacchetto);
+	void eliminaPacchetto (PacchettoDTO pacchetto);
 	
-	void aggiuntaDestinazione (DestinazioneDTO destinazione);
+	void aggiuntaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione);
 	
-	void eliminaDestinazione (int idDestinazione);
+	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione);
 	
-	void aggiuntaCollegamento (int codiceCollegamento);
+	void aggiuntaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento);
 	
-	void modificaCollegamento (int codiceCollegamento);
+	void modificaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento);
 }
