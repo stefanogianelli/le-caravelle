@@ -1,8 +1,12 @@
 package ejbs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import dtos.CittaDTO;
 import entities.Citta;
 
@@ -21,6 +25,20 @@ public class GestoreCittaEJB implements GestoreCitta {
     public GestoreCittaEJB() {
        
     }
+    
+    /**
+     * Ritorna l'elenco di tutte le città presenti nel database
+     * @return L'elenco delle città
+     */
+	@Override
+	public List<CittaDTO> elencoCitta() {
+		List<Citta> citta = em.createNamedQuery("Citta.elenco", Citta.class).getResultList();
+		List<CittaDTO> dto = new ArrayList<CittaDTO>();
+		for (Citta c : citta) {
+			dto.add(this.convertiInDTO(c));
+		}
+		return dto;
+	}
     
 	/**
 	 * Permette la conversione da un DTO alla rispettiva entità
