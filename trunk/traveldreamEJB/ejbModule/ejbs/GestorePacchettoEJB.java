@@ -33,6 +33,9 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	private GestoreDestinazioneEJB destinazione;
 	
 	@EJB
+	private GestoreCollegamentoEJB collegamento;
+	
+	@EJB
 	private GestoreCittaEJB citta;
 	
 	@EJB
@@ -71,7 +74,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 * @param pacchetto I dati del pacchetto
 	 */
 	@Override
-	public void aggiuntaPacchettoPersonalizzato(PacchettoDTO pacchetto) {
+	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) {
 		Pacchetti pacchettoDAO = new Pacchetti();
 		
 		pacchettoDAO.setNome(pacchetto.getNome());
@@ -119,7 +122,10 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	@Override
 	public void acquistaPacchetto(PacchettoDTO pacchetto) {
 		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		
 		pacchettoDAO.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
+		
+		em.merge(pacchettoDAO);
 	}
 
 	/**
@@ -130,7 +136,10 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	@Override
 	public void condividiPacchetto(PacchettoDTO pacchetto, String email) {
 		Amici amico = em.find(Amici.class, email);
-		amico.addPacchetto(this.convertiInDAO(pacchetto));		
+		
+		amico.addPacchetto(this.convertiInDAO(pacchetto));	
+		
+		em.persist(amico);
 	}
 
 	/**
@@ -151,7 +160,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
 		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
 		
-		pacchettoDAO.addDestinazioni(this.destinazione.aggiuntaDestinazione(destinazione));
+		pacchettoDAO.addDestinazione(this.destinazione.creaDestinazione(destinazione));
 		
 		em.merge(pacchettoDAO);
 	}
@@ -163,20 +172,39 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
-		this.convertiInDAO(pacchetto).removeDestinazioni(this.destinazione.convertiInDAO(destinazione));
-		this.destinazione.rimuoviDestinazione(destinazione);		
+		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		
+		pacchettoDAO.removeDestinazione(this.destinazione.convertiInDAO(destinazione));
+		
+		em.merge(pacchettoDAO);
 	}
 
+	/**
+	 * Permette l'aggiunta di un collegamento nel pacchetto
+	 * @param pacchetto Il pacchetto nel quale aggiungere il collegamento
+	 * @param collegamento Il collegamento selezionato
+	 */
 	@Override
 	public void aggiuntaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
-		// TODO Auto-generated method stub
+		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
 		
+		pacchettoDAO.addCollegamento(this.collegamento.convertiInDAO(collegamento));
+		
+		em.merge(pacchettoDAO);
 	}
 
+	/**
+	 * Permette l'eliminazione di un collegamento dal pacchetto
+	 * @param pacchetto Il pacchetto dal quale di vuole rimuovere il collegamento
+	 * @param collegamento Il collegamento da rimuovere
+	 */
 	@Override
 	public void modificaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
-		// TODO Auto-generated method stub
+		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
 		
+		pacchettoDAO.removeCollegamento(this.collegamento.convertiInDAO(collegamento));
+		
+		em.merge(pacchettoDAO);	
 	}
 
 	/**
