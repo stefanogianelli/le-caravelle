@@ -69,5 +69,17 @@ public class Amici implements Serializable {
 	public void setPacchetti(List<Pacchetti> pacchetti) {
 		this.pacchetti = pacchetti;
 	}
+	
+	public Pacchetti addPacchetto (Pacchetti pacchetto) {
+		this.getPacchetti().add(pacchetto);
+		
+		return pacchetto;
+	}
+	
+	public Pacchetti removePacchetto (Pacchetti pacchetto) {
+		this.getPacchetti().remove(pacchetto);
+		
+		return pacchetto;
+	}
 
 }

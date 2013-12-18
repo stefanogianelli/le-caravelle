@@ -24,11 +24,11 @@ public class PacchettiPredefiniti implements Serializable {
 	private double prezzo;
 
 	//relazione bidirezionale one-to-many con l'entità DatePartenza	
-	@OneToMany(mappedBy="pacchettoPredefinito")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="pacchettoPredefinito")
 	private List<DatePartenza> datePartenza;
 
 	//relazione bidirezionale one-to-many con l'entità Durate
-	@OneToMany(mappedBy="pacchettoPredefinito")
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="pacchettoPredefinito")
 	private List<Durate> durate;
 
 	@ManyToOne
