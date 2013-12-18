@@ -12,7 +12,10 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Pacchetti.elenco", query="SELECT p FROM Pacchetti p")
+@NamedQueries ({
+	@NamedQuery(name="Pacchetti.elenco", query="SELECT p FROM Pacchetti p"),
+	@NamedQuery(name="Pacchetti.getPacchettiPerTipo", query="SELECT p FROM Pacchetti p WHERE p.tipoPacchetto = :tipo")
+})
 public class Pacchetti implements Serializable {
 	private static final long serialVersionUID = 1L;
 

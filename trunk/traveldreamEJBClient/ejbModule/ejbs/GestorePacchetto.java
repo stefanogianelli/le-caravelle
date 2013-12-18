@@ -5,9 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dtos.DestinazioneDTO;
-import dtos.HotelDTO;
 import dtos.PacchettoDTO;
-import dtos.PacchettoPredefinitoDTO;
 import enums.TipoPacchetto;
 
 @Local
@@ -16,8 +14,6 @@ interface GestorePacchetto {
 	List<PacchettoDTO> elencoPacchetti (TipoPacchetto tipo);
 	
 	void aggiuntaPacchettoPersonalizzato (PacchettoDTO pacchetto);
-	
-	void modificaDatiPacchetto (PacchettoDTO pacchetto);
 	
 	void salvaPacchetto (PacchettoDTO pacchetto);
 	
@@ -34,22 +30,4 @@ interface GestorePacchetto {
 	void aggiuntaCollegamento (int codiceCollegamento);
 	
 	void modificaCollegamento (int codiceCollegamento);
-	
-	void creaPacchettoPredefinito (PacchettoPredefinitoDTO pacchetto);
-	
-	void aggiuntaHotel (HotelDTO hotel);
-	
-	void rimuoviHotel (int idHotel);
-	
-	void rimuoviCollegamento (int idCollegamento);
-	
-	void aggiuntaEscursione (int idEscursione);
-	
-	void rimuoviEscursione (int idEscursione);
-	
-	void modificaDatiPacchetto (PacchettoPredefinitoDTO pacchetto);
-	
-	PacchettoPredefinitoDTO dettagliPacchettoPredefinito (int idPacchetto);
-	
-	void salvaPacchetto (PacchettoPredefinitoDTO pacchetto);
 }
