@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -24,6 +26,21 @@ public class Persone implements Serializable {
 	//relazione bidirezionale one-to-one con l'entità Utenti
 	@OneToOne(mappedBy="persona")
 	private Utenti utenti;
+	
+	//relazione bidirezionale many-to-many con l'entità Pacchetti
+	@ManyToMany
+	@JoinTable(
+		name="dati_partecipanti"
+		, joinColumns={
+			@JoinColumn(name="cognomePart", referencedColumnName="cognome"),
+			@JoinColumn(name="dataNascitaPart", referencedColumnName="dataNascita"),
+			@JoinColumn(name="nomePart", referencedColumnName="nome")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="idPacchetto")
+			}
+		)
+	private List<Pacchetti> pacchetti;
 
 	public Persone() {
 	}
@@ -60,4 +77,19 @@ public class Persone implements Serializable {
 		this.utenti = utenti;
 	}
 
+	public List<Pacchetti> getPacchetti() {
+		return pacchetti;
+	}
+
+	public void setPacchetti(List<Pacchetti> pacchetti) {
+		this.pacchetti = pacchetti;
+	}
+	
+	public void addPacchetto (Pacchetti pacchetto) {
+		this.getPacchetti().add(pacchetto);
+	}
+	
+	public void removePacchetto (Pacchetti pacchetto) {
+		this.getPacchetti().remove(pacchetto);
+	}
 }
