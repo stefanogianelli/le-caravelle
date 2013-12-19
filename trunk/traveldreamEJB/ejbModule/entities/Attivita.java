@@ -55,6 +55,7 @@ public class Attivita implements Serializable {
 
 	public void setDestinazione(Destinazioni destinazione) {
 		this.destinazione = destinazione;
+		this.getId().setIdDestinazione(destinazione.getId());
 	}
 
 	public Escursioni getEscursione() {
@@ -63,6 +64,7 @@ public class Attivita implements Serializable {
 
 	public void setEscursione(Escursioni escursione) {
 		this.escursione = escursione;
+		this.getId().setIdEscursione(escursione.getId());
 	}
 
 }
