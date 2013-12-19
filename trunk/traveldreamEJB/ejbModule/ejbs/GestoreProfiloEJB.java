@@ -3,12 +3,16 @@ package ejbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
+import utils.EmailBean;
 import dtos.PersonaDTO;
 import dtos.UtenteDTO;
 import entities.Gruppi;
@@ -21,9 +25,14 @@ import entities.Utenti;
  */
 @Stateless
 public class GestoreProfiloEJB implements GestoreProfilo {
+	
+	private final int LUNGHEZZA_PASSWORD = 6;
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	private EmailBean email;
 	
     /**
      * Default constructor. 
@@ -35,42 +44,48 @@ public class GestoreProfiloEJB implements GestoreProfilo {
     /**
      * Permette la creazione di un profilo utente
      * @param datiUtente I dati dell'utente che si vuole registrare
+     * @throws MessagingException 
      */
 	@Override
-	public void registrazioneUtente(UtenteDTO datiUtente) {
+	public void registrazioneUtente(UtenteDTO datiUtente) throws MessagingException {
 		List<Gruppi> gruppi = new ArrayList<Gruppi>();
 		gruppi.add(Gruppi.UTENTE);
 		
 		PersonePK personapk = new PersonePK();
-		//personapk.setNome(datiUtente.getNome());
-		//personapk.setCognome(datiUtente.getCognome());
-		//personapk.setDataNascita(datiUtente.getDataNascita());
+		personapk.setNome(datiUtente.getPersona().getNome());
+		personapk.setCognome(datiUtente.getPersona().getCognome());
+		personapk.setDataNascita(datiUtente.getPersona().getDataNascita());
 		
 		Persone persona = new Persone ();
-		//persona.setDocumentoIdentita(datiUtente.getDocumentoIdentita());
-		//persona.setTelefono(datiUtente.getTelefono());
+		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
+		persona.setTelefono(datiUtente.getPersona().getTelefono());
 		persona.setId(personapk);
 		
 		Utenti utente = new Utenti ();
 		utente.setEmail(datiUtente.getEmail());
 		utente.setPersona(persona);
-		utente.setGruppi(gruppi);
-		String password = this.generaPassword(utente);
-		utente.setPassword(password);		
-		
-		//inviare per email la password all'utente
+		utente.setGruppi(gruppi);		
+		email.inviaPassword(datiUtente.getEmail(), this.generaPassword(utente));
 		
 		em.persist(utente);
 	}
 
+	/**
+	 * Permette il reset della password
+	 * @param datiUtente I dati dell'utente che ha richiesto il reset
+	 * @param MessagingException
+	 */
 	@Override
-	public void resetPassword(String email) {
-		// TODO Auto-generated method stub		
+	public void resetPassword(UtenteDTO datiUtente) throws MessagingException {
+		Utenti utente = this.convertiInEntita(datiUtente);
+		
+		email.resetPassword(utente.getEmail(), this.generaPassword(utente));
+		
+		em.merge(utente);
 	}
 
 	/**
 	 * Permette la modifica dei dati personali dell'utente
-	 * @param email L'indirizzo email dell'utente
 	 * @param datiUtente I dati dell'utente
 	 */
 	@Override
@@ -96,11 +111,12 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	}
 	
 	/**
-	 * Genera una password casuale
-	 * @return La password cifrata con l'algoritmo SHA-256
+	 * Genera una password casuale e assegna la password cifrata all'utente
+	 * @param utente L'utente al quale assegnare la password
+	 * @return La password generata in chiaro
 	 */
 	private String generaPassword (Utenti utente) {
-		String password = "funzione casuale";
+		String password = RandomStringUtils.random(LUNGHEZZA_PASSWORD);
 		utente.setPassword(DigestUtils.sha256Hex(password));
 		return password;
 	}
