@@ -88,11 +88,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 		Destinazioni entity = this.convertiInEntita(destinazione);
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
 		
-		Attivita attivita = new Attivita();
-		attivita.setDestinazione(entity);
-		attivita.getId().setIdDestinazione(entity.getId());
-		attivita.setEscursione(escursioneEntity);
-		attivita.getId().setIdEscursione(escursioneEntity.getId());
+		Attivita attivita = new Attivita();		
+		attivita.setEscursione(escursioneEntity);		
 		attivita.setNumPartecipanti(numeroPartecipanti);
 		
 		entity.addAttivita(attivita);
@@ -181,8 +178,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 */
 	protected Attivita convertiInEntita (AttivitaDTO attivita) {
 		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-		q.setParameter("destinazione", attivita.getIdDestinazione());
-		q.setParameter("escursione", attivita.getIdEscursione());
+		q.setParameter("destinazione", attivita.getDestinazione());
+		q.setParameter("escursione", attivita.getEscursione());
 		return (Attivita) q.getSingleResult();
 	}
 	
@@ -194,8 +191,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	protected AttivitaDTO convertiInDTO (Attivita attivita) {
 		AttivitaDTO attivitaDTO = new AttivitaDTO();
 		
-		attivitaDTO.setIdDestinazione(attivita.getDestinazione().getId());
-		attivitaDTO.setIdEscursione(attivita.getEscursione().getId());
+		attivitaDTO.setDestinazione(this.convertiInDTO(attivita.getDestinazione()));
+		attivitaDTO.setEscursione(escursione.convertiInDTO(attivita.getEscursione()));
 		attivitaDTO.setNumeroPartecipanti(attivita.getNumPartecipanti());
 		
 		return attivitaDTO;

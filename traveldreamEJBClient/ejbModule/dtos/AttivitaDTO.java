@@ -6,26 +6,26 @@ public class AttivitaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int idDestinazione;
+	private DestinazioneDTO destinazione;
 	
-	private int idEscursione;
+	private EscursioneDTO escursione;
 	
 	private int numeroPartecipanti;
 
-	public int getIdDestinazione() {
-		return idDestinazione;
+	public DestinazioneDTO getDestinazione() {
+		return destinazione;
 	}
 
-	public void setIdDestinazione(int idDestinazione) {
-		this.idDestinazione = idDestinazione;
+	public void setDestinazione(DestinazioneDTO destinazione) {
+		this.destinazione = destinazione;
 	}
 
-	public int getIdEscursione() {
-		return idEscursione;
+	public EscursioneDTO getEscursione() {
+		return escursione;
 	}
 
-	public void setIdEscursione(int idEscursione) {
-		this.idEscursione = idEscursione;
+	public void setEscursione(EscursioneDTO escursione) {
+		this.escursione = escursione;
 	}
 
 	public int getNumeroPartecipanti() {
