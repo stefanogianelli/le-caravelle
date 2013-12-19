@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 
 
@@ -10,7 +12,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="date_partenza")
-@NamedQuery(name="DatePartenza.findAll", query="SELECT d FROM DatePartenza d")
+@NamedQueries ({
+	@NamedQuery(name="DatePartenza.elenco", query="SELECT d FROM DatePartenza d"),
+	@NamedQuery(name="DatePartenza.getDataPartenza", query="SELECT d FROM DatePartenza d WHERE d.pacchettoPredefinito = :pacchetto AND d.id.data = :data")
+})
 public class DatePartenza implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -39,6 +44,15 @@ public class DatePartenza implements Serializable {
 
 	public void setPacchettoPredefinito(PacchettiPredefiniti pacchettoPredefinito) {
 		this.pacchettoPredefinito = pacchettoPredefinito;
+		this.getId().setIdPacchettoPredefinito(pacchettoPredefinito.getId());
+	}
+	
+	public Date getData () {
+		return this.getId().getData();
+	}
+	
+	public void setData (Date data) {
+		this.getId().setData(data);
 	}
 
 }

@@ -46,6 +46,7 @@ public class AttivitaPred implements Serializable {
 
 	public void setPacchetto(PacchettiPredefiniti pacchetto) {
 		this.pacchetto = pacchetto;
+		this.getId().setIdPacchettoPredefinito(pacchetto.getId());
 	}
 
 	public Escursioni getEscursione() {
@@ -54,6 +55,7 @@ public class AttivitaPred implements Serializable {
 
 	public void setEscursione(Escursioni escursione) {
 		this.escursione = escursione;
+		this.getId().setIdEscursione(escursione.getId());
 	}
 
 }
