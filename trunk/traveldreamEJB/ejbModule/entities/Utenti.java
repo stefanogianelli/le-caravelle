@@ -31,7 +31,7 @@ public class Utenti implements Serializable {
 	private List<Gruppi> gruppi;
 
 	//relazione bidirezionale one-to-one con l'entità Persone
-	@OneToOne
+	@OneToOne(cascade=CascadeType.MERGE)
 	@JoinColumns({
 		@JoinColumn(name="persone_cognome", referencedColumnName="cognome"),
 		@JoinColumn(name="persone_dataNascita", referencedColumnName="dataNascita"),
@@ -76,6 +76,7 @@ public class Utenti implements Serializable {
 
 	public void setPersona(Persone persona) {
 		this.persona = persona;
+		persona.setUtente(this);
 	}
 
 	public List<Pacchetti> getPacchetti() {

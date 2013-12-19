@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 
 /**
@@ -17,7 +19,7 @@ public class PersonePK implements Serializable {
 	private String cognome;
 
 	@Temporal(TemporalType.DATE)
-	private java.util.Date dataNascita;
+	private Date dataNascita;
 
 	public PersonePK() {
 	}
@@ -38,11 +40,11 @@ public class PersonePK implements Serializable {
 		this.cognome = cognome;
 	}
 	
-	public java.util.Date getDataNascita() {
+	public Date getDataNascita() {
 		return this.dataNascita;
 	}
 	
-	public void setDataNascita(java.util.Date dataNascita) {
+	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
 	}
 
