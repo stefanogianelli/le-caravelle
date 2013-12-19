@@ -83,7 +83,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		entity.setTipoPacchetto(pacchetto.getTipoPacchetto());
 		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.convertiInEntita(d));
+			destinazioni.add(this.destinazione.creaDestinazione(d));
 		}
 		entity.setDestinazioni(destinazioni);
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
@@ -95,7 +95,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 
 	/**
 	 * Permette il salvataggio di un pacchetto personalizzato
-	 * @param I dati del pacchetto
+	 * @param pacchetto I dati del pacchetto
 	 */
 	@Override
 	public void salvaPacchetto(PacchettoDTO pacchetto) {
@@ -104,12 +104,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		entity.setNome(pacchetto.getNome());
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setTipoPacchetto(pacchetto.getTipoPacchetto());
-		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
-		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.convertiInEntita(d));
-		}
-		entity.setDestinazioni(destinazioni);
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
 		
 		em.merge(entity);			
