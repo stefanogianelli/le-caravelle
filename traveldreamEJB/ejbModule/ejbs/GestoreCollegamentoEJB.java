@@ -79,8 +79,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(citta.convertiInDAO(collegamento.getCittaArrivo()));
-		entity.setCittaPartenza(citta.convertiInDAO(collegamento.getCittaPartenza()));
+		entity.setCittaArrivo(citta.convertiInEntita(collegamento.getCittaArrivo()));
+		entity.setCittaPartenza(citta.convertiInEntita(collegamento.getCittaPartenza()));
 		
 		em.persist(entity);		
 	}
@@ -91,7 +91,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	 */
 	@Override
 	public void modificaDatiCollegamento(CollegamentoDTO collegamento) {
-		Collegamenti entity = this.convertiInDAO(collegamento);
+		Collegamenti entity = this.convertiInEntita(collegamento);
 		
 		entity.setDataPartenza(collegamento.getDataPartenza());
 		entity.setDestinazione(collegamento.getDestinazione());
@@ -100,8 +100,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(citta.convertiInDAO(collegamento.getCittaArrivo()));
-		entity.setCittaPartenza(citta.convertiInDAO(collegamento.getCittaPartenza()));
+		entity.setCittaArrivo(citta.convertiInEntita(collegamento.getCittaArrivo()));
+		entity.setCittaPartenza(citta.convertiInEntita(collegamento.getCittaPartenza()));
 		
 		em.merge(entity);
 	}
@@ -112,7 +112,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	 */
 	@Override
 	public void eliminaCollegamento(CollegamentoDTO collegamento){
-		em.remove(this.convertiInDAO(collegamento));		
+		em.remove(this.convertiInEntita(collegamento));		
 	}
 	
 	/**
@@ -120,7 +120,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	 * @param collegamento Il DTO del collegamento
 	 * @return L'entità desiderata
 	 */
-	protected Collegamenti convertiInDAO (CollegamentoDTO collegamento) {
+	protected Collegamenti convertiInEntita (CollegamentoDTO collegamento) {
 		return em.find(Collegamenti.class, collegamento.getCodice());
 	}
 	

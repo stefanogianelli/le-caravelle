@@ -57,35 +57,35 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	 */
 	@Override
 	public void creaPacchetto(PacchettoPredefinitoDTO pacchetto) {
-		PacchettiPredefiniti pacchettoDAO = new PacchettiPredefiniti();
+		PacchettiPredefiniti entity = new PacchettiPredefiniti();
 		
-		pacchettoDAO.setNome(pacchetto.getNome());
-		pacchettoDAO.setPrezzo(pacchetto.getPrezzo());
+		entity.setNome(pacchetto.getNome());
+		entity.setPrezzo(pacchetto.getPrezzo());
 		for (Date d : pacchetto.getDatePartenza()) {
 			DatePartenzaPK dataPK = new DatePartenzaPK();
 			dataPK.setData(d);
-			dataPK.setIdPacchettoPredefinito(pacchettoDAO.getId());
+			dataPK.setIdPacchettoPredefinito(entity.getId());
 			
 			DatePartenza data = new DatePartenza();
 			data.setId(dataPK);
-			data.setPacchettoPredefinito(pacchettoDAO);
+			data.setPacchettoPredefinito(entity);
 			
-			pacchettoDAO.addDataPartenza(data);
+			entity.addDataPartenza(data);
 		}
 		for (Integer i : pacchetto.getDurate()) {
 			DuratePK duratePK = new DuratePK();
 			duratePK.setDurata(i);
-			duratePK.setIdPacchettoPredefinito(pacchettoDAO.getId());
+			duratePK.setIdPacchettoPredefinito(entity.getId());
 			
 			Durate durate = new Durate();
 			durate.setId(duratePK);
-			durate.setPacchettoPredefinito(pacchettoDAO);
+			durate.setPacchettoPredefinito(entity);
 			
-			pacchettoDAO.addDurata(durate);
+			entity.addDurata(durate);
 		}
-		pacchettoDAO.setHotel(hotel.convertiInDAO(pacchetto.getHotel()));
+		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
 		
-		em.persist(pacchettoDAO);		
+		em.persist(entity);		
 	}
 	
 	@Override
@@ -129,7 +129,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	 * @param pacchetto Il DTO del pacchetto predefinito
 	 * @return L'entità desiderata
 	 */
-	protected PacchettiPredefiniti convertiInDAO (PacchettoPredefinitoDTO pacchetto) {
+	protected PacchettiPredefiniti convertiInEntita (PacchettoPredefinitoDTO pacchetto) {
 		return em.find(PacchettiPredefiniti.class, pacchetto.getId());
 	}
 	
