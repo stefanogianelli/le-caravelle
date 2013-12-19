@@ -8,7 +8,7 @@ import dtos.UtenteDTO;
 @Local
 public interface GestoreProfilo {
 
-	void registrazioneUtente (UtenteDTO datiUtente) throws MessagingException;
+	void registrazioneUtente (String email) throws MessagingException;
 	
 	void aggiuntaDatiPersonali (UtenteDTO datiUtente);
 	
