@@ -1,5 +1,6 @@
 package ejbs;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -14,6 +15,14 @@ public interface GestorePacchettoPredefinito {
 	List<PacchettoPredefinitoDTO> elencoPacchetti();
 	
 	void creaPacchetto (PacchettoPredefinitoDTO pacchetto);
+	
+	void aggiuntaDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data);
+	
+	void rimuoviDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data);
+	
+	void aggiuntaDurata (PacchettoPredefinitoDTO pacchetto, int durata);
+	
+	void rimuoviDurata (PacchettoPredefinitoDTO pacchetto, int durata);
 	
 	void aggiuntaCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento);
 	

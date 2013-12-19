@@ -19,16 +19,21 @@ public class AttivitaPredPK implements Serializable {
 	private int idPacchettoPredefinito;
 
 	public AttivitaPredPK() {
+		
 	}
+	
 	public int getIdEscursione() {
 		return this.idEscursione;
 	}
+	
 	public void setIdEscursione(int idEscursione) {
 		this.idEscursione = idEscursione;
 	}
+	
 	public int getIdPacchettoPredefinito() {
 		return this.idPacchettoPredefinito;
 	}
+	
 	public void setIdPacchettoPredefinito(int idPacchettoPredefinito) {
 		this.idPacchettoPredefinito = idPacchettoPredefinito;
 	}

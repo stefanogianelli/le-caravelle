@@ -14,11 +14,8 @@ import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
 import entities.AttivitaPred;
-import entities.AttivitaPredPK;
 import entities.DatePartenza;
-import entities.DatePartenzaPK;
 import entities.Durate;
-import entities.DuratePK;
 import entities.Escursioni;
 import entities.PacchettiPredefiniti;
 
@@ -72,30 +69,90 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		entity.setNome(pacchetto.getNome());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		for (Date d : pacchetto.getDatePartenza()) {
-			DatePartenzaPK dataPK = new DatePartenzaPK();
-			dataPK.setData(d);
-			dataPK.setIdPacchettoPredefinito(entity.getId());
-			
 			DatePartenza data = new DatePartenza();
-			data.setId(dataPK);
-			data.setPacchettoPredefinito(entity);
-			
+			data.setData(d);			
 			entity.addDataPartenza(data);
 		}
 		for (Integer i : pacchetto.getDurate()) {
-			DuratePK duratePK = new DuratePK();
-			duratePK.setDurata(i);
-			duratePK.setIdPacchettoPredefinito(entity.getId());
-			
-			Durate durate = new Durate();
-			durate.setId(duratePK);
-			durate.setPacchettoPredefinito(entity);
-			
-			entity.addDurata(durate);
+			Durate durata = new Durate();
+			durata.setDurata(i);	
+			entity.addDurata(durata);
 		}
 		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
 		
 		em.persist(entity);		
+	}
+	
+	/**
+	 * Permette l'aggiunta di una nuova data di partenza nel pacchetto
+	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere la data
+	 * @param data La data che si vuole aggiungere
+	 */
+	@Override
+	public void aggiuntaDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) {
+		PacchettiPredefiniti entity = new PacchettiPredefiniti();
+		
+		DatePartenza dataPartenza = new DatePartenza();
+		dataPartenza.setData(data);
+		
+		entity.addDataPartenza(dataPartenza);
+		
+		em.merge(entity);
+	}
+
+	/**
+	 * Permette la rimozione di una data da un pacchetto
+	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere la data
+	 * @param data La data che si vuole eliminare
+	 */
+	@Override
+	public void rimuoviDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) {
+		PacchettiPredefiniti entity = new PacchettiPredefiniti();
+		
+		Query q = em.createNamedQuery("DatePartenza.getDataPartenza", DatePartenza.class);
+		q.setParameter("pacchetto", entity);
+		q.setParameter("data", data);
+		DatePartenza dataPartenza = (DatePartenza) q.getSingleResult();
+		
+		entity.removeDataPartenza(dataPartenza);
+		
+		em.merge(entity);
+	}
+
+	/**
+	 * Permette di aggiungere una nuova durata in un pacchetto
+	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere la durata
+	 * @param durata La durata da aggiungere
+	 */
+	@Override
+	public void aggiuntaDurata(PacchettoPredefinitoDTO pacchetto, int durata) {
+		PacchettiPredefiniti entity = new PacchettiPredefiniti();
+		
+		Durate nuovaDurata = new Durate();
+		nuovaDurata.setDurata(durata);
+		
+		entity.addDurata(nuovaDurata);
+		
+		em.merge(entity);
+	}
+
+	/**
+	 * Permette di eliminare una durata da un pacchetto
+	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere la durata
+	 * @param durata La durata che si vuole rimuovere
+	 */
+	@Override
+	public void rimuoviDurata(PacchettoPredefinitoDTO pacchetto, int durata) {
+		PacchettiPredefiniti entity = new PacchettiPredefiniti();
+		
+		Query q = em.createNamedQuery("DatePartenza.getDataPartenza", DatePartenza.class);
+		q.setParameter("pacchetto", entity);
+		q.setParameter("durata", durata);
+		Durate d = (Durate) q.getSingleResult();
+		
+		entity.removeDurata(d);
+		
+		em.merge(entity);	
 	}
 	
 	/**
@@ -137,13 +194,8 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
 		
-		AttivitaPredPK attivitaPK = new AttivitaPredPK();
-		attivitaPK.setIdEscursione(escursioneEntity.getId());
-		attivitaPK.setIdPacchettoPredefinito(entity.getId());
-		
 		AttivitaPred attivita = new AttivitaPred();
 		attivita.setEscursione(escursioneEntity);
-		attivita.setId(attivitaPK);
 		
 		entity.addAttivita(attivita);
 		
@@ -181,30 +233,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		
 		entity.setNome(pacchetto.getNome());
 		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setDatePartenza(null);
-		for (Date d : pacchetto.getDatePartenza()) {
-			DatePartenzaPK dataPK = new DatePartenzaPK();
-			dataPK.setData(d);
-			dataPK.setIdPacchettoPredefinito(entity.getId());
-			
-			DatePartenza data = new DatePartenza();
-			data.setId(dataPK);
-			data.setPacchettoPredefinito(entity);
-			
-			entity.addDataPartenza(data);
-		}
-		entity.setDurate(null);
-		for (Integer i : pacchetto.getDurate()) {
-			DuratePK duratePK = new DuratePK();
-			duratePK.setDurata(i);
-			duratePK.setIdPacchettoPredefinito(entity.getId());
-			
-			Durate durate = new Durate();
-			durate.setId(duratePK);
-			durate.setPacchettoPredefinito(entity);
-			
-			entity.addDurata(durate);
-		}
 		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
 		
 		em.merge(entity);		

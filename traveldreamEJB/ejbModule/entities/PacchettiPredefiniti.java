@@ -26,11 +26,11 @@ public class PacchettiPredefiniti implements Serializable {
 	private double prezzo;
 
 	//relazione bidirezionale one-to-many con l'entità DatePartenza	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="pacchettoPredefinito")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchettoPredefinito")
 	private List<DatePartenza> datePartenza;
 
 	//relazione bidirezionale one-to-many con l'entità Durate
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="pacchettoPredefinito")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchettoPredefinito")
 	private List<Durate> durate;
 
 	@ManyToOne
@@ -49,7 +49,7 @@ public class PacchettiPredefiniti implements Serializable {
 			)
 	private List<Collegamenti> collegamenti;
 	
-	@OneToMany(mappedBy="pacchetto")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchetto")
 	private List<AttivitaPred> attivita;
 
 	public PacchettiPredefiniti() {
