@@ -16,7 +16,6 @@ import dtos.PersonaDTO;
 import dtos.UtenteDTO;
 import entities.Gruppi;
 import entities.Persone;
-import entities.PersonePK;
 import entities.Utenti;
 
 /**
@@ -46,14 +45,16 @@ public class GestoreProfiloEJB implements GestoreProfilo {
      * @throws MessagingException 
      */
 	@Override
-	public void registrazioneUtente(UtenteDTO datiUtente) throws MessagingException {
+	public void registrazioneUtente(String email) throws MessagingException {
 		List<Gruppi> gruppi = new ArrayList<Gruppi>();
 		gruppi.add(Gruppi.UTENTE);
 		
 		Utenti utente = new Utenti ();
-		utente.setEmail(datiUtente.getEmail());
+		utente.setEmail(email);
 		utente.setGruppi(gruppi);		
-		email.inviaPassword(datiUtente.getEmail(), this.generaPassword(utente));
+		String password = this.generaPassword();
+		utente.setPassword(password);
+		this.email.inviaPassword(email, password);
 		
 		em.persist(utente);
 	}
@@ -92,13 +93,10 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		Persone persona = utente.getPersona();
 		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
 		persona.setTelefono(datiUtente.getPersona().getTelefono());
-		
-		PersonePK personapk = persona.getId();
-		personapk.setNome(datiUtente.getPersona().getNome());
-		personapk.setCognome(datiUtente.getPersona().getCognome());
-		personapk.setDataNascita(datiUtente.getPersona().getDataNascita());
-		
-		persona.setId(personapk);
+		persona.setNome(datiUtente.getPersona().getNome());
+		persona.setCognome(datiUtente.getPersona().getCognome());
+		persona.setDataNascita(datiUtente.getPersona().getDataNascita());
+
 		utente.setPersona(persona);
 		
 		em.merge(utente);
@@ -113,19 +111,20 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	public void resetPassword(UtenteDTO datiUtente) throws MessagingException {
 		Utenti utente = this.convertiInEntita(datiUtente);
 		
-		email.resetPassword(utente.getEmail(), this.generaPassword(utente));
+		String password = this.generaPassword();
+		utente.setPassword(password);
+		email.resetPassword(utente.getEmail(), password);
 		
 		em.merge(utente);
 	}
 	
 	/**
-	 * Genera una password casuale e assegna la password all'utente
-	 * @param utente L'utente al quale assegnare la password
+	 * Genera una password casuale
 	 * @return La password generata in chiaro
 	 */
-	private String generaPassword (Utenti utente) {
+	private String generaPassword () {
 		String password = RandomStringUtils.random(LUNGHEZZA_PASSWORD);
-		utente.setPassword(password);
+		
 		return password;
 	}
 	
