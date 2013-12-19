@@ -75,22 +75,22 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) {
-		Pacchetti pacchettoDAO = new Pacchetti();
+		Pacchetti entity = new Pacchetti();
 		
-		pacchettoDAO.setNome(pacchetto.getNome());
-		pacchettoDAO.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		pacchettoDAO.setPrezzo(pacchetto.getPrezzo());
-		pacchettoDAO.setTipoPacchetto(pacchetto.getTipoPacchetto());
+		entity.setNome(pacchetto.getNome());
+		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		entity.setPrezzo(pacchetto.getPrezzo());
+		entity.setTipoPacchetto(pacchetto.getTipoPacchetto());
 		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.convertiInDAO(d));
+			destinazioni.add(this.destinazione.convertiInEntita(d));
 		}
-		pacchettoDAO.setDestinazioni(destinazioni);
-		pacchettoDAO.setCitta(this.citta.convertiInDAO(pacchetto.getCitta()));
-		pacchettoDAO.setPacchettoPredefinito(this.predefinito.convertiInDAO(pacchetto.getPacchettoPredefinito()));
-		pacchettoDAO.setUtente(this.profilo.convertiInDAO(pacchetto.getUtente()));
+		entity.setDestinazioni(destinazioni);
+		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
+		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
-		em.persist(pacchettoDAO);
+		em.persist(entity);
 	}
 
 	/**
@@ -99,20 +99,20 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void salvaPacchetto(PacchettoDTO pacchetto) {
-		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		pacchettoDAO.setNome(pacchetto.getNome());
-		pacchettoDAO.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		pacchettoDAO.setPrezzo(pacchetto.getPrezzo());
-		pacchettoDAO.setTipoPacchetto(pacchetto.getTipoPacchetto());
+		entity.setNome(pacchetto.getNome());
+		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		entity.setPrezzo(pacchetto.getPrezzo());
+		entity.setTipoPacchetto(pacchetto.getTipoPacchetto());
 		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.convertiInDAO(d));
+			destinazioni.add(this.destinazione.convertiInEntita(d));
 		}
-		pacchettoDAO.setDestinazioni(destinazioni);
-		pacchettoDAO.setCitta(this.citta.convertiInDAO(pacchetto.getCitta()));
+		entity.setDestinazioni(destinazioni);
+		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
 		
-		em.merge(pacchettoDAO);			
+		em.merge(entity);			
 	}
 
 	/**
@@ -121,11 +121,11 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void acquistaPacchetto(PacchettoDTO pacchetto) {
-		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		pacchettoDAO.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
+		entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
 		
-		em.merge(pacchettoDAO);
+		em.merge(entity);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	public void condividiPacchetto(PacchettoDTO pacchetto, String email) {
 		Amici amico = em.find(Amici.class, email);
 		
-		amico.addPacchetto(this.convertiInDAO(pacchetto));	
+		amico.addPacchetto(this.convertiInEntita(pacchetto));	
 		
 		em.persist(amico);
 	}
@@ -148,7 +148,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void eliminaPacchetto(PacchettoDTO pacchetto) {
-		em.remove(this.convertiInDAO(pacchetto));		
+		em.remove(this.convertiInEntita(pacchetto));		
 	}
 
 	/**
@@ -158,11 +158,11 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
-		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		pacchettoDAO.addDestinazione(this.destinazione.creaDestinazione(destinazione));
+		entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
 		
-		em.merge(pacchettoDAO);
+		em.merge(entity);
 	}
 
 	/**
@@ -172,11 +172,11 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
-		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		pacchettoDAO.removeDestinazione(this.destinazione.convertiInDAO(destinazione));
+		entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));
 		
-		em.merge(pacchettoDAO);
+		em.merge(entity);
 	}
 
 	/**
@@ -186,11 +186,11 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void aggiuntaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
-		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		pacchettoDAO.addCollegamento(this.collegamento.convertiInDAO(collegamento));
+		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
 		
-		em.merge(pacchettoDAO);
+		em.merge(entity);
 	}
 
 	/**
@@ -200,11 +200,11 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 */
 	@Override
 	public void modificaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
-		Pacchetti pacchettoDAO = this.convertiInDAO(pacchetto);
+		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		pacchettoDAO.removeCollegamento(this.collegamento.convertiInDAO(collegamento));
+		entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
 		
-		em.merge(pacchettoDAO);	
+		em.merge(entity);	
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 * @param pacchetto Il DTO del pacchetto
 	 * @return L'entità desiderata
 	 */
-	protected Pacchetti convertiInDAO (PacchettoDTO pacchetto) {
+	protected Pacchetti convertiInEntita (PacchettoDTO pacchetto) {
 		return em.find(Pacchetti.class, pacchetto.getId());
 	}
 	

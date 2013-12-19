@@ -78,7 +78,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.convertiInDAO(hotel.getCitta()));			
+		entity.setCitta(citta.convertiInEntita(hotel.getCitta()));			
 		
 		em.persist(entity);
 	}
@@ -89,7 +89,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 	 */
 	@Override
 	public void modificaDatiHotel(HotelDTO hotel) {
-		Hotel entity = this.convertiInDAO(hotel);
+		Hotel entity = this.convertiInEntita(hotel);
 		
 		entity.setEmail(hotel.getEmail());
 		entity.setIndirizzo(hotel.getIndirizzo());
@@ -98,7 +98,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.convertiInDAO(hotel.getCitta()));		
+		entity.setCitta(citta.convertiInEntita(hotel.getCitta()));		
 		
 		em.merge(entity);
 	}
@@ -109,7 +109,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 	 */
 	@Override
 	public void eliminaHotel(HotelDTO hotel) {
-		em.remove(this.convertiInDAO(hotel));
+		em.remove(this.convertiInEntita(hotel));
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 	 * @param hotel Il DTO dell'hotel
 	 * @return L'entità desiderata
 	 */
-	protected Hotel convertiInDAO (HotelDTO hotel) {
+	protected Hotel convertiInEntita (HotelDTO hotel) {
 		return em.find(Hotel.class, hotel.getId());		
 	}	
 	

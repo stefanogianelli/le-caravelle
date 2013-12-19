@@ -45,7 +45,7 @@ public class GestoreCittaEJB implements GestoreCitta {
 	 * @param citta Il DTO della citta
 	 * @return L'entità desiderata
 	 */
-	protected Citta convertiInDAO (CittaDTO citta) {
+	protected Citta convertiInEntita (CittaDTO citta) {
 		return em.find(Citta.class, citta.getId());		
 	}	
 	

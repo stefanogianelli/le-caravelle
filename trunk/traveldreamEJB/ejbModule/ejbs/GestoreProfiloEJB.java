@@ -75,7 +75,7 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	 */
 	@Override
 	public void modificaDatiPersonali(UtenteDTO datiUtente) {
-		Utenti utente = this.convertiInDAO(datiUtente);
+		Utenti utente = this.convertiInEntita(datiUtente);
 		
 		utente.setEmail(datiUtente.getEmail());
 		utente.setPassword(datiUtente.getPassword());
@@ -110,7 +110,7 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	 * @param utente Il DTO dell'utente
 	 * @return L'entità desiderata
 	 */
-	protected Utenti convertiInDAO (UtenteDTO utente) {
+	protected Utenti convertiInEntita (UtenteDTO utente) {
 		return em.find(Utenti.class, utente.getEmail());
 	}
 	

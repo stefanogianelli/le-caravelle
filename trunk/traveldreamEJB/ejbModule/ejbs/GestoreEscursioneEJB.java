@@ -77,7 +77,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		entity.setNome(escursione.getNome());
 		entity.setOra(escursione.getOra());
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.convertiInDAO(escursione.getCitta()));
+		entity.setCitta(citta.convertiInEntita(escursione.getCitta()));
 		
 		em.persist(entity);		
 	}
@@ -88,7 +88,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	 */
 	@Override
 	public void modificaDatiEscursione(EscursioneDTO escursione) {
-		Escursioni entity = this.convertiInDAO(escursione);
+		Escursioni entity = this.convertiInEntita(escursione);
 		
 		entity.setCategoria(escursione.getCategoria());
 		entity.setData(escursione.getData());
@@ -96,7 +96,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		entity.setNome(escursione.getNome());
 		entity.setOra(escursione.getOra());
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.convertiInDAO(escursione.getCitta()));
+		entity.setCitta(citta.convertiInEntita(escursione.getCitta()));
 		
 		em.merge(entity);
 	}
@@ -107,7 +107,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	 */
 	@Override
 	public void eliminaEscursione(EscursioneDTO escursione) {
-		em.remove(this.convertiInDAO(escursione));
+		em.remove(this.convertiInEntita(escursione));
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	 * @param escursione Il DTO dell'escursione
 	 * @return L'entità desiderata
 	 */
-	protected Escursioni convertiInDAO (EscursioneDTO escursione) {
+	protected Escursioni convertiInEntita (EscursioneDTO escursione) {
 		return em.find(Escursioni.class, escursione.getId());		
 	}
 	
