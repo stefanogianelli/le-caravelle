@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -25,7 +26,7 @@ public class Persone implements Serializable {
 
 	//relazione bidirezionale one-to-one con l'entità Utenti
 	@OneToOne(mappedBy="persona")
-	private Utenti utenti;
+	private Utenti utente;
 	
 	//relazione bidirezionale many-to-many con l'entità Pacchetti
 	@ManyToMany
@@ -69,12 +70,12 @@ public class Persone implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public Utenti getUtenti() {
-		return this.utenti;
+	public Utenti getUtente() {
+		return this.utente;
 	}
 
-	public void setUtenti(Utenti utenti) {
-		this.utenti = utenti;
+	public void setUtente(Utenti utente) {
+		this.utente = utente;
 	}
 
 	public List<Pacchetti> getPacchetti() {
@@ -91,5 +92,29 @@ public class Persone implements Serializable {
 	
 	public void removePacchetto (Pacchetti pacchetto) {
 		this.getPacchetti().remove(pacchetto);
+	}
+	
+	public String getNome () {
+		return this.getId().getNome();
+	}
+	
+	public void setNome (String nome) {
+		this.getId().setNome(nome);
+	}
+	
+	public String getCognome () {
+		return this.getId().getCognome();
+	}
+	
+	public void setCognome (String cognome) {
+		this.getId().setCognome(cognome);
+	}
+	
+	public Date getDataNascita () {
+		return this.getId().getDataNascita();
+	}
+	
+	public void setDataNascita (Date data) {
+		this.getId().setDataNascita(data);
 	}
 }

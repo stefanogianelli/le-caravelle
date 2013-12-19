@@ -51,45 +51,34 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		List<Gruppi> gruppi = new ArrayList<Gruppi>();
 		gruppi.add(Gruppi.UTENTE);
 		
-		PersonePK personapk = new PersonePK();
-		personapk.setNome(datiUtente.getPersona().getNome());
-		personapk.setCognome(datiUtente.getPersona().getCognome());
-		personapk.setDataNascita(datiUtente.getPersona().getDataNascita());
-		
-		Persone persona = new Persone ();
-		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
-		persona.setTelefono(datiUtente.getPersona().getTelefono());
-		persona.setId(personapk);
-		
 		Utenti utente = new Utenti ();
 		utente.setEmail(datiUtente.getEmail());
-		utente.setPersona(persona);
 		utente.setGruppi(gruppi);		
 		email.inviaPassword(datiUtente.getEmail(), this.generaPassword(utente));
 		
 		em.persist(utente);
 	}
 	
-	@Override
-	public void aggiuntaDatiPersonali(UtenteDTO datiUtente) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
-	 * Permette il reset della password
-	 * @param datiUtente I dati dell'utente che ha richiesto il reset
-	 * @param MessagingException
+	 * Permette l'aggiunta dei dati personali di un utente
+	 * @param datiUtente I dati dell'utente
 	 */
 	@Override
-	public void resetPassword(UtenteDTO datiUtente) throws MessagingException {
+	public void aggiuntaDatiPersonali(UtenteDTO datiUtente) {
 		Utenti utente = this.convertiInEntita(datiUtente);
 		
-		email.resetPassword(utente.getEmail(), this.generaPassword(utente));
+		Persone persona = new Persone ();
+		persona.setNome(datiUtente.getPersona().getNome());
+		persona.setCognome(datiUtente.getPersona().getCognome());
+		persona.setDataNascita(datiUtente.getPersona().getDataNascita());
+		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
+		persona.setTelefono(datiUtente.getPersona().getTelefono());
+		
+		utente.setPersona(persona);
 		
 		em.merge(utente);
 	}
-
+	
 	/**
 	 * Permette la modifica dei dati personali dell'utente
 	 * @param datiUtente I dati dell'utente
@@ -112,6 +101,20 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		
 		persona.setId(personapk);
 		utente.setPersona(persona);
+		
+		em.merge(utente);
+	}	
+
+	/**
+	 * Permette il reset della password
+	 * @param datiUtente I dati dell'utente che ha richiesto il reset
+	 * @param MessagingException
+	 */
+	@Override
+	public void resetPassword(UtenteDTO datiUtente) throws MessagingException {
+		Utenti utente = this.convertiInEntita(datiUtente);
+		
+		email.resetPassword(utente.getEmail(), this.generaPassword(utente));
 		
 		em.merge(utente);
 	}

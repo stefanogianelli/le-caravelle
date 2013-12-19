@@ -12,7 +12,7 @@ public interface GestoreProfilo {
 	
 	void aggiuntaDatiPersonali (UtenteDTO datiUtente);
 	
-	void resetPassword (UtenteDTO datiUtente) throws MessagingException;
-	
 	void modificaDatiPersonali (UtenteDTO datiUtente);
+	
+	void resetPassword (UtenteDTO datiUtente) throws MessagingException;	
 }
