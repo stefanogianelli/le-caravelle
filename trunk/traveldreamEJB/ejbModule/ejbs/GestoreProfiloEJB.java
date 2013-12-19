@@ -9,7 +9,6 @@ import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import utils.EmailBean;
@@ -120,13 +119,13 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	}
 	
 	/**
-	 * Genera una password casuale e assegna la password cifrata all'utente
+	 * Genera una password casuale e assegna la password all'utente
 	 * @param utente L'utente al quale assegnare la password
 	 * @return La password generata in chiaro
 	 */
 	private String generaPassword (Utenti utente) {
 		String password = RandomStringUtils.random(LUNGHEZZA_PASSWORD);
-		utente.setPassword(DigestUtils.sha256Hex(password));
+		utente.setPassword(password);
 		return password;
 	}
 	

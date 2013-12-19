@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.util.List;
 
 
@@ -59,7 +61,7 @@ public class Utenti implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = DigestUtils.sha256Hex(password);
 	}
 
 	public List<Gruppi> getGruppi() {
