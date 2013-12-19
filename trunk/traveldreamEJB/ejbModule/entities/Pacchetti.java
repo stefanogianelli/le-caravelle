@@ -62,6 +62,10 @@ public class Pacchetti implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="emailUtente")
 	private Utenti utente;
+	
+	//relazione bidirezionale many-to-many con l'entità Persone
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchetti")
+	private List<Persone> datiPartecipanti;
 
 	public Pacchetti() {
 	}
@@ -172,4 +176,20 @@ public class Pacchetti implements Serializable {
 		this.utente = utente;
 	}
 
+	public List<Persone> getDatiPartecipanti() {
+		return datiPartecipanti;
+	}
+
+	public void setDatiPartecipanti(List<Persone> datiPartecipanti) {
+		this.datiPartecipanti = datiPartecipanti;
+	}
+	
+	public void addPartecipante (Persone datiPartecipante) {
+		this.getDatiPartecipanti().add(datiPartecipante);
+		datiPartecipante.addPacchetto(this);
+	}
+	
+	public void removePartecipante (Persone datiPartecipante) {
+		this.getDatiPartecipanti().remove(datiPartecipante);
+	}
 }

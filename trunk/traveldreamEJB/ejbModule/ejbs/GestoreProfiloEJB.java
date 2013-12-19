@@ -69,6 +69,12 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		
 		em.persist(utente);
 	}
+	
+	@Override
+	public void aggiuntaDatiPersonali(UtenteDTO datiUtente) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 * Permette il reset della password
@@ -152,5 +158,4 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		
 		return utenteDTO;
 	}
-
 }
