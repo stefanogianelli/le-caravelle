@@ -48,6 +48,9 @@ public class PacchettiPredefiniti implements Serializable {
 				}
 			)
 	private List<Collegamenti> collegamenti;
+	
+	@OneToMany(mappedBy="pacchetto")
+	private List<AttivitaPred> attivita;
 
 	public PacchettiPredefiniti() {
 	}
@@ -146,6 +149,28 @@ public class PacchettiPredefiniti implements Serializable {
 		this.getCollegamenti().remove(collegamento);
 		
 		return collegamento;
+	}
+
+	public List<AttivitaPred> getAttivita() {
+		return attivita;
+	}
+
+	public void setAttivita(List<AttivitaPred> attivita) {
+		this.attivita = attivita;
+	}
+	
+	public AttivitaPred addAttivita (AttivitaPred attivita) {
+		this.getAttivita().add(attivita);
+		attivita.setPacchetto(this);
+		
+		return attivita;
+	}
+	
+	public AttivitaPred removeAttivita (AttivitaPred attivita) {
+		this.getAttivita().remove(attivita);
+		attivita.setPacchetto(null);
+		
+		return attivita;
 	}
 
 }

@@ -19,5 +19,7 @@
 		<class>entities.Escursioni</class>
 		<class>entities.Attivita</class>
 		<class>entities.AttivitaPK</class>
+		<class>entities.AttivitaPred</class>
+		<class>entities.AttivitaPredPK</class>
 	</persistence-unit>
 </persistence>

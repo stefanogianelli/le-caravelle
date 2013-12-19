@@ -8,14 +8,18 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
+import entities.AttivitaPred;
+import entities.AttivitaPredPK;
 import entities.DatePartenza;
 import entities.DatePartenzaPK;
 import entities.Durate;
 import entities.DuratePK;
+import entities.Escursioni;
 import entities.PacchettiPredefiniti;
 
 /**
@@ -29,6 +33,12 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	
 	@EJB
 	private GestoreHotelEJB hotel;
+	
+	@EJB
+	private GestoreCollegamentoEJB collegamento;
+	
+	@EJB
+	private GestoreEscursioneEJB escursione;
 	
     /**
      * Default constructor. 
@@ -88,40 +98,125 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.persist(entity);		
 	}
 	
+	/**
+	 * Permette l'aggiunta di un collegamento nel pacchetto
+	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere il collegamento
+	 * @param collegamento Il collegamento da aggiungere
+	 */
 	@Override
 	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
-		// TODO Auto-generated method stub
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
+		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
+		
+		em.merge(entity);
 	}
 
+	/**
+	 * Permette la rimozione di un collegamento da un pacchetto
+	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere il collegamento
+	 * @param collegamento Il collegamento che si vuole eliminare
+	 */
 	@Override
 	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
-		// TODO Auto-generated method stub
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
+		entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
+		
+		em.merge(entity);
 	}
 
+	/**
+	 * Permette l'aggiunta di un'escursione nel pacchetto
+	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere l'escursione
+	 * @param escursione L'escursione che si vuole aggiungere
+	 */
 	@Override
 	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) {
-		// TODO Auto-generated method stub
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
+		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
+		
+		AttivitaPredPK attivitaPK = new AttivitaPredPK();
+		attivitaPK.setIdEscursione(escursioneEntity.getId());
+		attivitaPK.setIdPacchettoPredefinito(entity.getId());
+		
+		AttivitaPred attivita = new AttivitaPred();
+		attivita.setEscursione(escursioneEntity);
+		attivita.setId(attivitaPK);
+		
+		entity.addAttivita(attivita);
+		
+		em.merge(entity);		
 	}
 
+	/**
+	 * Permette la rimozione di un'escursione da un pacchetto
+	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere l'escursione
+	 * @param escursione L'escursione da rimuovere
+	 */
 	@Override
 	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) {
-		// TODO Auto-generated method stub
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
+		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
+		
+		Query q = em.createNamedQuery("AttivitaPred.getAttivita", AttivitaPred.class);
+		q.setParameter("pacchetto", entity);
+		q.setParameter("escursione", escursioneEntity);
+		AttivitaPred attivita = (AttivitaPred) q.getSingleResult();
+		
+		entity.removeAttivita(attivita);
+		
+		em.merge(entity);			
 	}
 
+	/**
+	 * Permette il salvataggio di un pacchetto
+	 * @param pacchetto Il pacchetto da salvare
+	 */
 	@Override
 	public void salvaPacchetto(PacchettoPredefinitoDTO pacchetto) {
-		// TODO Auto-generated method stub
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
+		entity.setNome(pacchetto.getNome());
+		entity.setPrezzo(pacchetto.getPrezzo());
+		entity.setDatePartenza(null);
+		for (Date d : pacchetto.getDatePartenza()) {
+			DatePartenzaPK dataPK = new DatePartenzaPK();
+			dataPK.setData(d);
+			dataPK.setIdPacchettoPredefinito(entity.getId());
+			
+			DatePartenza data = new DatePartenza();
+			data.setId(dataPK);
+			data.setPacchettoPredefinito(entity);
+			
+			entity.addDataPartenza(data);
+		}
+		entity.setDurate(null);
+		for (Integer i : pacchetto.getDurate()) {
+			DuratePK duratePK = new DuratePK();
+			duratePK.setDurata(i);
+			duratePK.setIdPacchettoPredefinito(entity.getId());
+			
+			Durate durate = new Durate();
+			durate.setId(duratePK);
+			durate.setPacchettoPredefinito(entity);
+			
+			entity.addDurata(durate);
+		}
+		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
+		
+		em.merge(entity);		
 	}
 
+	/**
+	 * Permette l'eliminazione di un pacchetto
+	 * @param pacchetto Il pacchetto da eliminare
+	 */
 	@Override
 	public void eliminaPacchetto(PacchettoPredefinitoDTO pacchetto) {
-		// TODO Auto-generated method stub
-		
+		em.remove(this.convertiInEntita(pacchetto));
 	}
 	
 	/**
