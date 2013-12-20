@@ -3,7 +3,9 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+
 import dtos.EscursioneDTO;
+import eccezioni.CittaInesistenteException;
 
 @Local
 public interface GestoreEscursione {
@@ -24,14 +26,16 @@ public interface GestoreEscursione {
 	/**
 	 * Crea una nuova escursione nel database
 	 * @param escursione L'oggetto da salvare
+	 * @param CittaInesistenteException Quando non viene trovata la città nel database
 	 */
-	void creaEscursione (EscursioneDTO escursione);
+	void creaEscursione (EscursioneDTO escursione) throws CittaInesistenteException;
 	
 	/**
 	 * Permette di modificare i dati di una escursione
 	 * @param escursione L'escursione da modifciare
+	 * @param CittaInesistenteException Quando non viene trovata la città nel database
 	 */
-	void modificaDatiEscursione (EscursioneDTO escursione);
+	void modificaDatiEscursione (EscursioneDTO escursione) throws CittaInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di una escursione dal database

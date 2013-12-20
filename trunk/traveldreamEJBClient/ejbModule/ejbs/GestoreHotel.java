@@ -3,7 +3,9 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+
 import dtos.HotelDTO;
+import eccezioni.CittaInesistenteException;
 
 @Local
 public interface GestoreHotel {
@@ -24,14 +26,16 @@ public interface GestoreHotel {
 	/**
 	 * Crea un nuovo hotel nel database
 	 * @param hotel L'oggetto da salvare
+	 * @throws CittaInesistenteException Quando non viene trovata la città nel database
 	 */
-	void creaHotel (HotelDTO hotel);
+	void creaHotel (HotelDTO hotel) throws CittaInesistenteException;
 	
 	/**
 	 * Permette di modificare i dati di un hotel
 	 * @param hotel L'hotel da modificare
+	 * @throws CittaInesistenteException Quando non viene trovata la città nel database
 	 */
-	void modificaDatiHotel (HotelDTO hotel);
+	void modificaDatiHotel (HotelDTO hotel) throws CittaInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un hotel dal database

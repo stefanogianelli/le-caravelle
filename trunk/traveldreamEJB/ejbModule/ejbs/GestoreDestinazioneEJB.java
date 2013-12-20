@@ -49,40 +49,30 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 * Permette l'aggiunta di una nuova destinazione
 	 * @param destinazione I dati della nuova destinazione
 	 * @param La destinazione creata
+	 * @throws CittaInesistenteException  Quando non viene trovata la città nel database
 	 */
-	protected Destinazioni creaDestinazione (DestinazioneDTO destinazione) {
-		try {
-			Destinazioni entity = new Destinazioni();
-			
-			entity.setDataArrivo(destinazione.getDataArrivo());
-			entity.setDataPartenza(destinazione.getDataPartenza());
-			entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
-			entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
-			entity.setPacchetto(pacchetto.convertiInEntita(destinazione.getPacchetto()));
-			
-			return entity;
-		} catch (CittaInesistenteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+	protected Destinazioni creaDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException {
+		Destinazioni entity = new Destinazioni();
+		
+		entity.setDataArrivo(destinazione.getDataArrivo());
+		entity.setDataPartenza(destinazione.getDataPartenza());
+		entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
+		entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
+		entity.setPacchetto(pacchetto.convertiInEntita(destinazione.getPacchetto()));
+		
+		return entity;
 	}
 
 	@Override
-	public void modificaDatiDestinazione(DestinazioneDTO destinazione) {
-		try {
-			Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
-			
-			entity.setDataArrivo(destinazione.getDataArrivo());
-			entity.setDataPartenza(destinazione.getDataPartenza());
-			entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
-			entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
-			
-			em.merge(entity);		
-		} catch (CittaInesistenteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void modificaDatiDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException {
+		Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
+		
+		entity.setDataArrivo(destinazione.getDataArrivo());
+		entity.setDataPartenza(destinazione.getDataPartenza());
+		entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
+		entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
+		
+		em.merge(entity);
 	}
 	
 	@Override

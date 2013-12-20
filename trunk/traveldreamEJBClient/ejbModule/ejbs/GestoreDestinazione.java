@@ -4,6 +4,7 @@ import javax.ejb.Local;
 
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
+import eccezioni.CittaInesistenteException;
 
 @Local
 interface GestoreDestinazione {
@@ -11,8 +12,9 @@ interface GestoreDestinazione {
 	/**
 	 * Permette la modifica dei dati di una destinazione
 	 * @param destinazione La destinazione da modificare
+	 * @throws CittaInesistenteException  Quando non viene trovata la città nel database
 	 */
-	void modificaDatiDestinazione (DestinazioneDTO destinazione);
+	void modificaDatiDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di una escursione
