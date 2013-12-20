@@ -129,32 +129,21 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 	
 	@Override
-	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
-		try {
-			PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
-			
-			entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
-			
-			em.merge(entity);		
-		} catch (CollegamentoInesistenteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
+		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
+		
+		em.merge(entity);		
 	}
 
 	@Override
-	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
-		try {
-			PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
-			
-			entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
-			
-			em.merge(entity);
-		} catch (CollegamentoInesistenteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+		
+		entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
+		
+		em.merge(entity);
 	}
 
 	@Override

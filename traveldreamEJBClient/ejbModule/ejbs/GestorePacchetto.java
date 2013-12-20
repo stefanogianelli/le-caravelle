@@ -7,6 +7,8 @@ import javax.ejb.Local;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
+import eccezioni.CittaInesistenteException;
+import eccezioni.CollegamentoInesistenteException;
 import enums.TipoPacchetto;
 
 @Local
@@ -22,20 +24,23 @@ interface GestorePacchetto {
 	/**
 	 * Permette la creazione di un nuovo pacchetto personalizzato
 	 * @param pacchetto I dati del pacchetto
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 */
-	void creaPacchettoPersonalizzato (PacchettoDTO pacchetto);
+	void creaPacchettoPersonalizzato (PacchettoDTO pacchetto) throws CittaInesistenteException;
 	
 	/**
 	 * Permette il salvataggio di un pacchetto personalizzato
 	 * @param pacchetto I dati del pacchetto
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 */
-	void salvaPacchetto (PacchettoDTO pacchetto);
+	void salvaPacchetto (PacchettoDTO pacchetto) throws CittaInesistenteException;
 	
 	/**
 	 * Permette il salvataggiuo di un pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 */
-	void salvaPacchettoPredefinito (PacchettoDTO pacchetto);
+	void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException;
 	
 	/**
 	 * Permette l'acquisto di un pacchetto
@@ -47,8 +52,9 @@ interface GestorePacchetto {
 	 * Permette la condivisione di un pacchetto
 	 * @param pacchetto Il pacchetto da condividere
 	 * @param email L'indirizzo email dell'amico con cui condividere il paccheto
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 */
-	void condividiPacchetto (PacchettoDTO pacchetto, String email);
+	void condividiPacchetto (PacchettoDTO pacchetto, String email) throws CittaInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
@@ -60,8 +66,9 @@ interface GestorePacchetto {
 	 * Permette l'aggiunta di una nuova destinazione nel pacchetto
 	 * @param pacchetto Il pacchetto nel quale aggiungere la destinazione
 	 * @param destinazione La destinazione da aggiungere
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 */
-	void aggiuntaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione);
+	void aggiuntaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di una destinazione da un pacchetto
@@ -74,13 +81,15 @@ interface GestorePacchetto {
 	 * Permette l'aggiunta di un collegamento nel pacchetto
 	 * @param pacchetto Il pacchetto nel quale aggiungere il collegamento
 	 * @param collegamento Il collegamento selezionato
+	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 */
-	void aggiuntaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento);
+	void aggiuntaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un collegamento dal pacchetto
 	 * @param pacchetto Il pacchetto dal quale di vuole rimuovere il collegamento
 	 * @param collegamento Il collegamento da rimuovere
+	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 */
-	void modificaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento);
+	void modificaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
 }

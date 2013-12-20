@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
+import eccezioni.CollegamentoInesistenteException;
 
 @Local
 public interface GestorePacchettoPredefinito {
@@ -56,15 +57,17 @@ public interface GestorePacchettoPredefinito {
 	 * Permette l'aggiunta di un collegamento nel pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere il collegamento
 	 * @param collegamento Il collegamento da aggiungere
+	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 */
-	void aggiuntaCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento);
+	void aggiuntaCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
 	
 	/**
 	 * Permette la rimozione di un collegamento da un pacchetto
 	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere il collegamento
 	 * @param collegamento Il collegamento che si vuole eliminare
+	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 */
-	void rimuoviCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento);
+	void rimuoviCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di un'escursione nel pacchetto
