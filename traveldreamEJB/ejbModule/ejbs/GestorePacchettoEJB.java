@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
+import eccezioni.CittaInesistenteException;
 import entities.Amici;
 import entities.Destinazioni;
 import entities.Pacchetti;
@@ -66,54 +67,69 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	
 	@Override
 	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) {
-		Pacchetti entity = new Pacchetti();
-		
-		entity.setNome(pacchetto.getNome());
-		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
-		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
-		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.creaDestinazione(d));
+		try {
+			Pacchetti entity = new Pacchetti();
+			
+			entity.setNome(pacchetto.getNome());
+			entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+			entity.setPrezzo(pacchetto.getPrezzo());
+			entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
+			List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
+			for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
+				destinazioni.add(this.destinazione.creaDestinazione(d));
+			}
+			entity.setDestinazioni(destinazioni);		
+			entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));	
+			entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+			entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+			
+			em.persist(entity);
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		entity.setDestinazioni(destinazioni);
-		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
-		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
-		
-		em.persist(entity);
 	}
 
 	@Override
 	public void salvaPacchetto(PacchettoDTO pacchetto) {
-		Pacchetti entity = this.convertiInEntita(pacchetto);
-		
-		entity.setNome(pacchetto.getNome());
-		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		
-		em.merge(entity);			
+		try {
+			Pacchetti entity = this.convertiInEntita(pacchetto);
+			
+			entity.setNome(pacchetto.getNome());
+			entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+			entity.setPrezzo(pacchetto.getPrezzo());
+			entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
+			
+			em.merge(entity);	
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
 	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) {
-		Pacchetti entity = new Pacchetti();
-		
-		entity.setNome(pacchetto.getNome());
-		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
-		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
-		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.creaDestinazione(d));
+		try {
+			Pacchetti entity = new Pacchetti();
+			
+			entity.setNome(pacchetto.getNome());
+			entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+			entity.setPrezzo(pacchetto.getPrezzo());
+			entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
+			List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
+			for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
+				destinazioni.add(this.destinazione.creaDestinazione(d));
+			}
+			entity.setDestinazioni(destinazioni);
+			entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
+			entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+			entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+			
+			em.persist(entity);
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		entity.setDestinazioni(destinazioni);
-		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
-		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
-		
-		em.persist(entity);
 	}
 
 	@Override
@@ -127,26 +143,31 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 
 	@Override
 	public void condividiPacchetto(PacchettoDTO pacchetto, String email) {
-		Amici amico = em.find(Amici.class, email);
-		
-		Pacchetti entity = new Pacchetti();
-		
-		entity.setNome(pacchetto.getNome());
-		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);
-		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
-		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.creaDestinazione(d));
+		try {
+			Amici amico = em.find(Amici.class, email);
+			
+			Pacchetti entity = new Pacchetti();
+			
+			entity.setNome(pacchetto.getNome());
+			entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+			entity.setPrezzo(pacchetto.getPrezzo());
+			entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);
+			List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
+			for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
+				destinazioni.add(this.destinazione.creaDestinazione(d));
+			}
+			entity.setDestinazioni(destinazioni);
+			entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
+			entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+			entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+			
+			amico.addPacchetto(entity);	
+			
+			em.persist(amico);
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		entity.setDestinazioni(destinazioni);
-		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
-		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
-		
-		amico.addPacchetto(entity);	
-		
-		em.persist(amico);
 	}
 
 	@Override

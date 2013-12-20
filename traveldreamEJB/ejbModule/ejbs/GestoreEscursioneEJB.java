@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dtos.EscursioneDTO;
+import eccezioni.CittaInesistenteException;
 import entities.Escursioni;
 
 /**
@@ -56,32 +57,42 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 
 	@Override
 	public void creaEscursione(EscursioneDTO escursione) {
-		Escursioni entity = new Escursioni ();
-		
-		entity.setCategoria(escursione.getCategoria());
-		entity.setData(escursione.getData());
-		entity.setDurata(escursione.getDurata());
-		entity.setNome(escursione.getNome());
-		entity.setOra(escursione.getOra());
-		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.convertiInEntita(escursione.getCitta()));
-		
-		em.persist(entity);		
+		try {
+			Escursioni entity = new Escursioni ();
+			
+			entity.setCategoria(escursione.getCategoria());
+			entity.setData(escursione.getData());
+			entity.setDurata(escursione.getDurata());
+			entity.setNome(escursione.getNome());
+			entity.setOra(escursione.getOra());
+			entity.setPrezzo(escursione.getPrezzo());
+			entity.setCitta(citta.convertiInEntita(escursione.getCitta()));
+			
+			em.persist(entity);		
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void modificaDatiEscursione(EscursioneDTO escursione) {
-		Escursioni entity = this.convertiInEntita(escursione);
-		
-		entity.setCategoria(escursione.getCategoria());
-		entity.setData(escursione.getData());
-		entity.setDurata(escursione.getDurata());
-		entity.setNome(escursione.getNome());
-		entity.setOra(escursione.getOra());
-		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.convertiInEntita(escursione.getCitta()));
-		
-		em.merge(entity);
+		try {
+			Escursioni entity = this.convertiInEntita(escursione);
+			
+			entity.setCategoria(escursione.getCategoria());
+			entity.setData(escursione.getData());
+			entity.setDurata(escursione.getDurata());
+			entity.setNome(escursione.getNome());
+			entity.setOra(escursione.getOra());
+			entity.setPrezzo(escursione.getPrezzo());
+			entity.setCitta(citta.convertiInEntita(escursione.getCitta()));
+			
+			em.merge(entity);
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

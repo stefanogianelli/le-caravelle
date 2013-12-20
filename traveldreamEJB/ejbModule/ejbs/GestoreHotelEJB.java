@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dtos.HotelDTO;
+import eccezioni.CittaInesistenteException;
 import entities.Hotel;
 
 /**
@@ -56,34 +57,44 @@ public class GestoreHotelEJB implements GestoreHotel {
 
 	@Override
 	public void creaHotel(HotelDTO hotel) {
-		Hotel entity = new Hotel ();
-		
-		entity.setEmail(hotel.getEmail());
-		entity.setIndirizzo(hotel.getIndirizzo());
-		entity.setNome(hotel.getNome());
-		entity.setPrezzo(hotel.getPrezzo());
-		entity.setStelle(hotel.getStelle());
-		entity.setTelefono(hotel.getTelefono());
-		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.convertiInEntita(hotel.getCitta()));			
-		
-		em.persist(entity);
+		try {
+			Hotel entity = new Hotel ();
+			
+			entity.setEmail(hotel.getEmail());
+			entity.setIndirizzo(hotel.getIndirizzo());
+			entity.setNome(hotel.getNome());
+			entity.setPrezzo(hotel.getPrezzo());
+			entity.setStelle(hotel.getStelle());
+			entity.setTelefono(hotel.getTelefono());
+			entity.setWebsite(hotel.getWebsite());
+			entity.setCitta(citta.convertiInEntita(hotel.getCitta()));			
+			
+			em.persist(entity);
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void modificaDatiHotel(HotelDTO hotel) {
-		Hotel entity = this.convertiInEntita(hotel);
-		
-		entity.setEmail(hotel.getEmail());
-		entity.setIndirizzo(hotel.getIndirizzo());
-		entity.setNome(hotel.getNome());
-		entity.setPrezzo(hotel.getPrezzo());
-		entity.setStelle(hotel.getStelle());
-		entity.setTelefono(hotel.getTelefono());
-		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.convertiInEntita(hotel.getCitta()));		
-		
-		em.merge(entity);
+		try {
+			Hotel entity = this.convertiInEntita(hotel);
+			
+			entity.setEmail(hotel.getEmail());
+			entity.setIndirizzo(hotel.getIndirizzo());
+			entity.setNome(hotel.getNome());
+			entity.setPrezzo(hotel.getPrezzo());
+			entity.setStelle(hotel.getStelle());
+			entity.setTelefono(hotel.getTelefono());
+			entity.setWebsite(hotel.getWebsite());
+			entity.setCitta(citta.convertiInEntita(hotel.getCitta()));		
+			
+			em.merge(entity);
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
