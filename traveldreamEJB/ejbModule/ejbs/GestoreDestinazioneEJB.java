@@ -14,6 +14,7 @@ import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EscursioneInesistenteException;
+import eccezioni.HotelInesistenteException;
 import entities.Attivita;
 import entities.Destinazioni;
 import entities.Escursioni;
@@ -51,8 +52,9 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 * @param destinazione I dati della nuova destinazione
 	 * @param La destinazione creata
 	 * @throws CittaInesistenteException  Quando non viene trovata la città nel database
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	protected Destinazioni creaDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException {
+	protected Destinazioni creaDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException {
 		Destinazioni entity = new Destinazioni();
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
@@ -65,7 +67,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 
 	@Override
-	public void modificaDatiDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException {
+	public void modificaDatiDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException {
 		Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
