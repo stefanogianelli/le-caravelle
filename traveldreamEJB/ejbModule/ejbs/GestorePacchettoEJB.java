@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -16,6 +17,7 @@ import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.PacchettoInesistenteException;
 import entities.Amici;
 import entities.Destinazioni;
 import entities.Pacchetti;
@@ -69,7 +71,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 	
 	@Override
-	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException {
+	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException {
 		Pacchetti entity = new Pacchetti();
 		
 		entity.setNome(pacchetto.getNome());
@@ -82,14 +84,14 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		}
 		entity.setDestinazioni(destinazioni);		
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));	
-		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+		//entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
 		em.persist(entity);
 	}
 
 	@Override
-	public void salvaPacchetto(PacchettoDTO pacchetto) throws CittaInesistenteException {
+	public void salvaPacchetto(PacchettoDTO pacchetto) throws CittaInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.setNome(pacchetto.getNome());
@@ -114,14 +116,14 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		}
 		entity.setDestinazioni(destinazioni);
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+		//entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
 		em.persist(entity);
 	}
 
 	@Override
-	public void acquistaPacchetto(PacchettoDTO pacchetto) {
+	public void acquistaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
@@ -145,7 +147,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		}
 		entity.setDestinazioni(destinazioni);
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+		//entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
 		amico.addPacchetto(entity);	
@@ -154,12 +156,12 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 
 	@Override
-	public void eliminaPacchetto(PacchettoDTO pacchetto) {
+	public void eliminaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException {
 		em.remove(this.convertiInEntita(pacchetto));		
 	}
 
 	@Override
-	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException {
+	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
@@ -168,7 +170,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 
 	@Override
-	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException {
+	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));
@@ -177,7 +179,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 
 	@Override
-	public void aggiuntaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
+	public void aggiuntaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);		
 	
 		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
@@ -186,7 +188,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 
 	@Override
-	public void modificaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
+	public void modificaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
@@ -198,9 +200,14 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 * Permette la conversione da un DTO alla rispettiva entità
 	 * @param pacchetto Il DTO del pacchetto
 	 * @return L'entità desiderata
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	protected Pacchetti convertiInEntita (PacchettoDTO pacchetto) {
-		return em.find(Pacchetti.class, pacchetto.getId());
+	protected Pacchetti convertiInEntita (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
+		Pacchetti pacchettoEntity = em.find(Pacchetti.class, pacchetto.getId());
+		if (pacchettoEntity != null)
+			return pacchettoEntity;
+		else
+			throw new PacchettoInesistenteException();
 	}
 	
 	/**

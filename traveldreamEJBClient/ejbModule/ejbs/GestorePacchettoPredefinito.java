@@ -11,6 +11,7 @@ import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.PacchettoInesistenteException;
 
 @Local
 public interface GestorePacchettoPredefinito {
@@ -61,44 +62,50 @@ public interface GestorePacchettoPredefinito {
 	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere il collegamento
 	 * @param collegamento Il collegamento da aggiungere
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void aggiuntaCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
+	void aggiuntaCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette la rimozione di un collegamento da un pacchetto
 	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere il collegamento
 	 * @param collegamento Il collegamento che si vuole eliminare
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void rimuoviCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
+	void rimuoviCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di un'escursione nel pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere l'escursione
 	 * @param escursione L'escursione che si vuole aggiungere
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void aggiuntaEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException;
+	void aggiuntaEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette la rimozione di un'escursione da un pacchetto
 	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere l'escursione
 	 * @param escursione L'escursione da rimuovere
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void rimuoviEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException;
+	void rimuoviEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette il salvataggio di un pacchetto
 	 * @param pacchetto Il pacchetto da salvare
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void salvaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException;
+	void salvaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
 	 * @param pacchetto Il pacchetto da eliminare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void eliminaPacchetto (PacchettoPredefinitoDTO pacchetto);
+	void eliminaPacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException;
 
 }

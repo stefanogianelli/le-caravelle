@@ -3,6 +3,7 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.persistence.EntityExistsException;
 
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
@@ -11,6 +12,7 @@ import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.PacchettoInesistenteException;
 import enums.TipoPacchetto;
 
 @Local
@@ -28,15 +30,17 @@ interface GestorePacchetto {
 	 * @param pacchetto I dati del pacchetto
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws EntityExistsException Quando il pacchetto è già esistente nel database
 	 */
-	void creaPacchettoPersonalizzato (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException;
+	void creaPacchettoPersonalizzato (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException;
 	
 	/**
 	 * Permette il salvataggio di un pacchetto personalizzato
 	 * @param pacchetto I dati del pacchetto
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void salvaPacchetto (PacchettoDTO pacchetto) throws CittaInesistenteException;
+	void salvaPacchetto (PacchettoDTO pacchetto) throws CittaInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette il salvataggiuo di un pacchetto predefinito
@@ -49,8 +53,9 @@ interface GestorePacchetto {
 	/**
 	 * Permette l'acquisto di un pacchetto
 	 * @param pacchetto Il pacchetto da acquistare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void acquistaPacchetto (PacchettoDTO pacchetto);
+	void acquistaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
 	
 	/**
 	 * Permette la condivisione di un pacchetto
@@ -64,8 +69,9 @@ interface GestorePacchetto {
 	/**
 	 * Permette l'eliminazione di un pacchetto
 	 * @param pacchetto Il pacchetto da eliminare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void eliminaPacchetto (PacchettoDTO pacchetto);
+	void eliminaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di una nuova destinazione nel pacchetto
@@ -73,30 +79,34 @@ interface GestorePacchetto {
 	 * @param destinazione La destinazione da aggiungere
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void aggiuntaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException;
+	void aggiuntaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di una destinazione da un pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole eliminare la destinazione
 	 * @param destinazione La destinazione da eliminare
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException;
+	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di un collegamento nel pacchetto
 	 * @param pacchetto Il pacchetto nel quale aggiungere il collegamento
 	 * @param collegamento Il collegamento selezionato
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void aggiuntaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
+	void aggiuntaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un collegamento dal pacchetto
 	 * @param pacchetto Il pacchetto dal quale di vuole rimuovere il collegamento
 	 * @param collegamento Il collegamento da rimuovere
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void modificaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
+	void modificaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
 }
