@@ -23,7 +23,7 @@ public class Amici implements Serializable {
 
 	private String cognome;	
 
-	@OneToMany
+	@OneToMany(cascade=CascadeType.PERSIST)
 	@JoinTable(
 			name="condiviso_con"
 			, joinColumns={

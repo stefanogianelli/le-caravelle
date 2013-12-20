@@ -129,7 +129,22 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	public void condividiPacchetto(PacchettoDTO pacchetto, String email) {
 		Amici amico = em.find(Amici.class, email);
 		
-		amico.addPacchetto(this.convertiInEntita(pacchetto));	
+		Pacchetti entity = new Pacchetti();
+		
+		entity.setNome(pacchetto.getNome());
+		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		entity.setPrezzo(pacchetto.getPrezzo());
+		entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);
+		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
+		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
+			destinazioni.add(this.destinazione.creaDestinazione(d));
+		}
+		entity.setDestinazioni(destinazioni);
+		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
+		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+		
+		amico.addPacchetto(entity);	
 		
 		em.persist(amico);
 	}
