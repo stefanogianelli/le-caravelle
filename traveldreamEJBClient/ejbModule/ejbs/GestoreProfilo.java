@@ -7,6 +7,8 @@ import dtos.UtenteDTO;
 
 @Local
 public interface GestoreProfilo {
+	
+	UtenteDTO getUtenteCorrente ();
 
 	void registrazioneUtente (String email) throws MessagingException;
 	

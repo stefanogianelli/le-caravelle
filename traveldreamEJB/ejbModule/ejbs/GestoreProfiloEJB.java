@@ -3,7 +3,9 @@ package ejbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
@@ -29,6 +31,9 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@Resource
+	private EJBContext context;
+	
 	@EJB
 	private EmailBean email;
 	
@@ -38,6 +43,16 @@ public class GestoreProfiloEJB implements GestoreProfilo {
     public GestoreProfiloEJB() {
      
     }
+    
+    /**
+     * Restituisce i dati dell'utente corrente
+     * @return Il DTO dell'utente corrente
+     */
+	@Override
+	public UtenteDTO getUtenteCorrente() {
+		String email = context.getCallerPrincipal().getName();
+		return this.convertiInDTO(em.find(Utenti.class, email));
+	}
 
     /**
      * Permette la creazione di un profilo utente
