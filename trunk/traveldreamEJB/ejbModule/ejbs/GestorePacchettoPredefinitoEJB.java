@@ -44,10 +44,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
         
     }
     
-	/**
-	 * Mostra l'elenco dei pacchetti predefiniti
-	 * @return L'elenco dei pacchetti predefiniti
-	 */
 	@Override
 	public List<PacchettoPredefinitoDTO> elencoPacchetti() {
 		List<PacchettiPredefiniti> pacchetti = em.createNamedQuery("PacchettiPredefiniti.elenco", PacchettiPredefiniti.class).getResultList();
@@ -58,10 +54,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		return pacchettiDTO;
 	}
 
-	/**
-	 * Permette la creazione di un nuovo pacchetto predefinito
-	 * @param pacchetto I dati del pacchetto
-	 */
 	@Override
 	public void creaPacchetto(PacchettoPredefinitoDTO pacchetto) {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
@@ -83,11 +75,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.persist(entity);		
 	}
 	
-	/**
-	 * Permette l'aggiunta di una nuova data di partenza nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere la data
-	 * @param data La data che si vuole aggiungere
-	 */
 	@Override
 	public void aggiuntaDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
@@ -100,11 +87,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette la rimozione di una data da un pacchetto
-	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere la data
-	 * @param data La data che si vuole eliminare
-	 */
 	@Override
 	public void rimuoviDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
@@ -119,11 +101,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette di aggiungere una nuova durata in un pacchetto
-	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere la durata
-	 * @param durata La durata da aggiungere
-	 */
 	@Override
 	public void aggiuntaDurata(PacchettoPredefinitoDTO pacchetto, int durata) {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
@@ -136,11 +113,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette di eliminare una durata da un pacchetto
-	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere la durata
-	 * @param durata La durata che si vuole rimuovere
-	 */
 	@Override
 	public void rimuoviDurata(PacchettoPredefinitoDTO pacchetto, int durata) {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
@@ -155,11 +127,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);	
 	}
 	
-	/**
-	 * Permette l'aggiunta di un collegamento nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere il collegamento
-	 * @param collegamento Il collegamento da aggiungere
-	 */
 	@Override
 	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
@@ -169,11 +136,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette la rimozione di un collegamento da un pacchetto
-	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere il collegamento
-	 * @param collegamento Il collegamento che si vuole eliminare
-	 */
 	@Override
 	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
@@ -183,11 +145,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette l'aggiunta di un'escursione nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere l'escursione
-	 * @param escursione L'escursione che si vuole aggiungere
-	 */
 	@Override
 	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
@@ -202,11 +159,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);		
 	}
 
-	/**
-	 * Permette la rimozione di un'escursione da un pacchetto
-	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere l'escursione
-	 * @param escursione L'escursione da rimuovere
-	 */
 	@Override
 	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
@@ -223,10 +175,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);			
 	}
 
-	/**
-	 * Permette il salvataggio di un pacchetto
-	 * @param pacchetto Il pacchetto da salvare
-	 */
 	@Override
 	public void salvaPacchetto(PacchettoPredefinitoDTO pacchetto) {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
@@ -238,10 +186,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.merge(entity);		
 	}
 
-	/**
-	 * Permette l'eliminazione di un pacchetto
-	 * @param pacchetto Il pacchetto da eliminare
-	 */
 	@Override
 	public void eliminaPacchetto(PacchettoPredefinitoDTO pacchetto) {
 		em.remove(this.convertiInEntita(pacchetto));

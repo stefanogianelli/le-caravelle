@@ -51,11 +51,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
         
     }
 
-    /**
-     * Mostra l'elenco dei pacchetti per tipologia
-     * @param tipo La tipologia di pacchetto da cercare
-     * @return L'elenco dei pacchetti
-     */
 	@Override
 	public List<PacchettoDTO> elencoPacchetti(TipoPacchetto tipo) {		
 		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
@@ -69,10 +64,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		return pacchettiDTO;
 	}
 	
-	/**
-	 * Permette la creazione di un nuovo pacchetto personalizzato
-	 * @param pacchetto I dati del pacchetto
-	 */
 	@Override
 	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) {
 		Pacchetti entity = new Pacchetti();
@@ -80,7 +71,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		entity.setNome(pacchetto.getNome());
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setTipoPacchetto(pacchetto.getTipoPacchetto());
+		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
 		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
 			destinazioni.add(this.destinazione.creaDestinazione(d));
@@ -93,10 +84,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.persist(entity);
 	}
 
-	/**
-	 * Permette il salvataggio di un pacchetto personalizzato
-	 * @param pacchetto I dati del pacchetto
-	 */
 	@Override
 	public void salvaPacchetto(PacchettoDTO pacchetto) {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
@@ -109,10 +96,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.merge(entity);			
 	}
 
-	/**
-	 * Permette l'acquisto di un pacchetto
-	 * @param pacchetto Il pacchetto da acquistare
-	 */
 	@Override
 	public void acquistaPacchetto(PacchettoDTO pacchetto) {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
@@ -122,11 +105,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette la condivisione di un pacchetto
-	 * @param pacchetto Il pacchetto da condividere
-	 * @param email L'indirizzo email dell'amico con cui condividere il paccheto
-	 */
 	@Override
 	public void condividiPacchetto(PacchettoDTO pacchetto, String email) {
 		Amici amico = em.find(Amici.class, email);
@@ -136,20 +114,11 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.persist(amico);
 	}
 
-	/**
-	 * Permette l'eliminazione di un pacchetto
-	 * @param pacchetto Il pacchetto da eliminare
-	 */
 	@Override
 	public void eliminaPacchetto(PacchettoDTO pacchetto) {
 		em.remove(this.convertiInEntita(pacchetto));		
 	}
 
-	/**
-	 * Permette l'aggiunta di una nuova destinazione nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale aggiungere la destinazione
-	 * @param destinazione La destinazione da aggiungere
-	 */
 	@Override
 	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
@@ -159,11 +128,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette l'eliminazione di una destinazione da un pacchetto
-	 * @param pacchetto Il pacchetto nel quale si vuole eliminare la destinazione
-	 * @param destinazione La destinazione da eliminare
-	 */
 	@Override
 	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
@@ -173,11 +137,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette l'aggiunta di un collegamento nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale aggiungere il collegamento
-	 * @param collegamento Il collegamento selezionato
-	 */
 	@Override
 	public void aggiuntaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
@@ -187,11 +146,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette l'eliminazione di un collegamento dal pacchetto
-	 * @param pacchetto Il pacchetto dal quale di vuole rimuovere il collegamento
-	 * @param collegamento Il collegamento da rimuovere
-	 */
 	@Override
 	public void modificaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
 		Pacchetti entity = this.convertiInEntita(pacchetto);

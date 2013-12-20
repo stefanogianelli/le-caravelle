@@ -31,10 +31,6 @@ public class GestoreHotelEJB implements GestoreHotel {
 
     }
 
-    /**
-     * Mostra l'elenco di tutti gli hotel presenti nel database
-     * @return L'elenco degli hotel
-     */
 	@Override
 	public List<HotelDTO> elencoHotel() {
 		List<Hotel> hotel = em.createNamedQuery("Hotel.elenco", Hotel.class).getResultList();
@@ -45,11 +41,6 @@ public class GestoreHotelEJB implements GestoreHotel {
 		return dto;
 	}
 	
-    /**
-     * Mostra l'elenco di tutti gli hotel in una città
-     * @param nomeCitta Il nome della città
-     * @return L'elenco degli hotel
-     */
 	@Override
 	public List<HotelDTO> elencoHotel(String nomeCitta) {
 		Query q = em.createNamedQuery("Hotel.elencoPerCitta", Hotel.class);
@@ -63,10 +54,6 @@ public class GestoreHotelEJB implements GestoreHotel {
 		return dto;
 	}	
 
-	/**
-	 * Crea un nuovo hotel nel database
-	 * @param hotel L'oggetto da salvare
-	 */
 	@Override
 	public void creaHotel(HotelDTO hotel) {
 		Hotel entity = new Hotel ();
@@ -83,10 +70,6 @@ public class GestoreHotelEJB implements GestoreHotel {
 		em.persist(entity);
 	}
 
-	/**
-	 * Permette di modificare i dati di un hotel
-	 * @param hotel L'hotel da modificare
-	 */
 	@Override
 	public void modificaDatiHotel(HotelDTO hotel) {
 		Hotel entity = this.convertiInEntita(hotel);
@@ -103,10 +86,6 @@ public class GestoreHotelEJB implements GestoreHotel {
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette l'eliminazione di un hotel dal database
-	 * @param hotel L'hotel da eliminare
-	 */
 	@Override
 	public void eliminaHotel(HotelDTO hotel) {
 		em.remove(this.convertiInEntita(hotel));

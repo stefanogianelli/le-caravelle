@@ -26,10 +26,6 @@ public class GestoreCittaEJB implements GestoreCitta {
        
     }
     
-    /**
-     * Ritorna l'elenco di tutte le città presenti nel database
-     * @return L'elenco delle città
-     */
 	@Override
 	public List<CittaDTO> elencoCitta() {
 		List<Citta> citta = em.createNamedQuery("Citta.elenco", Citta.class).getResultList();

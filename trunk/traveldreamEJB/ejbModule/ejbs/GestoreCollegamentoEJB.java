@@ -32,10 +32,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 
     }
 
-    /**
-     * Mostra l'elenco dei collegamenti disponibili
-     * @return L'elenco dei collegamenti
-     */
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti() {
 		List<Collegamenti> collegamenti = em.createNamedQuery("Collegamenti.elenco", Collegamenti.class).getResultList();
@@ -46,11 +42,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		return dto;
 	}
 	
-    /**
-     * Mostra l'elenco dei collegamenti disponibili per tipologia
-     * @param tipo La tipologia del collegamento
-     * @return L'elenco dei collegamenti
-     */
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo) {
 		Query q = em.createNamedQuery("Collegamenti.elencoPerTipo", Collegamenti.class);
@@ -64,10 +55,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		return dto;
 	}	
 
-	/**
-	 * Aggiunge un nuovo collegamento nel database
-	 * @param collegamento I dati del collegamento da aggiungere
-	 */
 	@Override
 	public void creaCollegamento(CollegamentoDTO collegamento) {
 		Collegamenti entity = new Collegamenti ();
@@ -85,10 +72,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		em.persist(entity);		
 	}
 
-	/**
-	 * Permette la modifica dei dati di un collegamento
-	 * @param collegamento Il collegamento da modiicare
-	 */
 	@Override
 	public void modificaDatiCollegamento(CollegamentoDTO collegamento) {
 		Collegamenti entity = this.convertiInEntita(collegamento);
@@ -106,10 +89,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette l'eliminazione di un collegamento dal database
-	 * @param collegamento Il collegamento da eliminare
-	 */
 	@Override
 	public void eliminaCollegamento(CollegamentoDTO collegamento){
 		em.remove(this.convertiInEntita(collegamento));		
