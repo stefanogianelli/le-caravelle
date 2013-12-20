@@ -45,9 +45,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	}
 	
 	@Override
-	public List<EscursioneDTO> elencoEscursioni(String nomeCitta) {
-		Query q = em.createNamedQuery("Escursioni.elencoPerCitta", Escursioni.class);
-		q.setParameter("citta", nomeCitta);
+	public List<EscursioneDTO> elencoEscursioni(String regione) {
+		Query q = em.createNamedQuery("Escursioni.elencoPerRegione", Escursioni.class);
+		q.setParameter("regione", regione);
 		@SuppressWarnings("unchecked")
 		List<Escursioni> escursioni = q.getResultList();
 		List<EscursioneDTO> dto = new ArrayList<EscursioneDTO>();
