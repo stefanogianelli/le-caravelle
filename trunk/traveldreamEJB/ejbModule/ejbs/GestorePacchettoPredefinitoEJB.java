@@ -14,6 +14,7 @@ import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.EscursioneInesistenteException;
 import entities.AttivitaPred;
 import entities.DatePartenza;
 import entities.Durate;
@@ -147,7 +148,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) {
+	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
@@ -161,7 +162,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) {
+	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);

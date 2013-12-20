@@ -9,6 +9,7 @@ import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.EscursioneInesistenteException;
 
 @Local
 public interface GestorePacchettoPredefinito {
@@ -73,15 +74,17 @@ public interface GestorePacchettoPredefinito {
 	 * Permette l'aggiunta di un'escursione nel pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere l'escursione
 	 * @param escursione L'escursione che si vuole aggiungere
+	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 */
-	void aggiuntaEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione);
+	void aggiuntaEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException;
 	
 	/**
 	 * Permette la rimozione di un'escursione da un pacchetto
 	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere l'escursione
 	 * @param escursione L'escursione da rimuovere
+	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 */
-	void rimuoviEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione);
+	void rimuoviEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException;
 	
 	/**
 	 * Permette il salvataggio di un pacchetto

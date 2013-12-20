@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.EscursioneInesistenteException;
 import entities.Escursioni;
 
 /**
@@ -56,7 +58,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	}	
 
 	@Override
-	public void creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException {
+	public void creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException, EntityExistsException {
 		Escursioni entity = new Escursioni ();
 		
 		entity.setCategoria(escursione.getCategoria());
@@ -71,7 +73,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	}
 
 	@Override
-	public void modificaDatiEscursione(EscursioneDTO escursione) throws CittaInesistenteException {
+	public void modificaDatiEscursione(EscursioneDTO escursione) throws EscursioneInesistenteException, CittaInesistenteException {
 		Escursioni entity = this.convertiInEntita(escursione);
 		
 		entity.setCategoria(escursione.getCategoria());
@@ -86,7 +88,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	}
 
 	@Override
-	public void eliminaEscursione(EscursioneDTO escursione) {
+	public void eliminaEscursione(EscursioneDTO escursione) throws EscursioneInesistenteException {
 		em.remove(this.convertiInEntita(escursione));
 	}
 
@@ -94,9 +96,14 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	 * Permette la conversione da un DTO alla rispettiva entità
 	 * @param escursione Il DTO dell'escursione
 	 * @return L'entità desiderata
+	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 */
-	protected Escursioni convertiInEntita (EscursioneDTO escursione) {
-		return em.find(Escursioni.class, escursione.getId());		
+	protected Escursioni convertiInEntita (EscursioneDTO escursione) throws EscursioneInesistenteException {
+		Escursioni escursioneEntity = em.find(Escursioni.class, escursione.getId());	
+		if (escursioneEntity != null)
+			return escursioneEntity;
+		else
+			throw new EscursioneInesistenteException ();
 	}
 	
 	/**
