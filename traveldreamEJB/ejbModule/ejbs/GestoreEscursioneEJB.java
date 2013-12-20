@@ -31,10 +31,6 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
     
     }
     
-    /**
-     * Mostra l'elenco di tutte escursioni presenti nel database
-     * @return L'elenco delle escursioni
-     */
 	@Override
 	public List<EscursioneDTO> elencoEscursioni() {
 		List<Escursioni> escursioni = em.createNamedQuery("Escursioni.elenco", Escursioni.class).getResultList();
@@ -45,11 +41,6 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		return dto;
 	}
 	
-    /**
-     * Mostra l'elenco di tutte escursioni in una città
-     * @param nomeCitta Il nome della città
-     * @return L'elenco delle escursioni
-     */
 	@Override
 	public List<EscursioneDTO> elencoEscursioni(String nomeCitta) {
 		Query q = em.createNamedQuery("Escursioni.elencoPerCitta", Escursioni.class);
@@ -63,10 +54,6 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		return dto;
 	}	
 
-	/**
-	 * Crea una nuova escursione nel database
-	 * @param escursione L'oggetto da salvare
-	 */
 	@Override
 	public void creaEscursione(EscursioneDTO escursione) {
 		Escursioni entity = new Escursioni ();
@@ -82,10 +69,6 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		em.persist(entity);		
 	}
 
-	/**
-	 * Permette di modificare i dati di una escursione
-	 * @param escursione L'escursione da modifciare
-	 */
 	@Override
 	public void modificaDatiEscursione(EscursioneDTO escursione) {
 		Escursioni entity = this.convertiInEntita(escursione);
@@ -101,10 +84,6 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		em.merge(entity);
 	}
 
-	/**
-	 * Permette l'eliminazione di una escursione dal database
-	 * @param escursione L'escursione da eliminare
-	 */
 	@Override
 	public void eliminaEscursione(EscursioneDTO escursione) {
 		em.remove(this.convertiInEntita(escursione));

@@ -44,21 +44,12 @@ public class GestoreProfiloEJB implements GestoreProfilo {
      
     }
     
-    /**
-     * Restituisce i dati dell'utente corrente
-     * @return Il DTO dell'utente corrente
-     */
 	@Override
 	public UtenteDTO getUtenteCorrente() {
 		String email = context.getCallerPrincipal().getName();
 		return this.convertiInDTO(em.find(Utenti.class, email));
 	}
 
-    /**
-     * Permette la creazione di un profilo utente
-     * @param datiUtente I dati dell'utente che si vuole registrare
-     * @throws MessagingException 
-     */
 	@Override
 	public void registrazioneUtente(String email) throws MessagingException {
 		List<Gruppi> gruppi = new ArrayList<Gruppi>();
@@ -74,10 +65,6 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		em.persist(utente);
 	}
 	
-	/**
-	 * Permette l'aggiunta dei dati personali di un utente
-	 * @param datiUtente I dati dell'utente
-	 */
 	@Override
 	public void aggiuntaDatiPersonali(UtenteDTO datiUtente) {
 		Utenti utente = this.convertiInEntita(datiUtente);
@@ -94,10 +81,6 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		em.merge(utente);
 	}
 	
-	/**
-	 * Permette la modifica dei dati personali dell'utente
-	 * @param datiUtente I dati dell'utente
-	 */
 	@Override
 	public void modificaDatiPersonali(UtenteDTO datiUtente) {
 		Utenti utente = this.convertiInEntita(datiUtente);
@@ -117,11 +100,6 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		em.merge(utente);
 	}	
 
-	/**
-	 * Permette il reset della password
-	 * @param datiUtente I dati dell'utente che ha richiesto il reset
-	 * @param MessagingException
-	 */
 	@Override
 	public void resetPassword(UtenteDTO datiUtente) throws MessagingException {
 		Utenti utente = this.convertiInEntita(datiUtente);
