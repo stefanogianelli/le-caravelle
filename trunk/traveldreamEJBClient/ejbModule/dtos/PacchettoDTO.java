@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import enums.TipoPacchetto;
-
 public class PacchettoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,9 +17,6 @@ public class PacchettoDTO implements Serializable {
 
 	@NotEmpty
 	private double prezzo;
-
-	@NotEmpty
-	private TipoPacchetto tipoPacchetto;
 
 	private List<DestinazioneDTO> destinazioni;
 
@@ -63,14 +58,6 @@ public class PacchettoDTO implements Serializable {
 
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
-	}
-
-	public TipoPacchetto getTipoPacchetto() {
-		return tipoPacchetto;
-	}
-
-	public void setTipoPacchetto(TipoPacchetto tipoPacchetto) {
-		this.tipoPacchetto = tipoPacchetto;
 	}
 
 	public List<DestinazioneDTO> getDestinazioni() {
