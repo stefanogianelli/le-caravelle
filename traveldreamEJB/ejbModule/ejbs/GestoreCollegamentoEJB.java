@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -58,7 +59,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	}	
 
 	@Override
-	public void creaCollegamento(CollegamentoDTO collegamento) throws CittaInesistenteException {
+	public void creaCollegamento(CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException {
 		Collegamenti entity = new Collegamenti ();
 		
 		entity.setDataPartenza(collegamento.getDataPartenza());
