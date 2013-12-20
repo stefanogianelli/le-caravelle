@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.CollegamentoInesistenteException;
 import entities.Collegamenti;
 import enums.TipoCollegamento;
 
@@ -79,7 +80,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	}
 
 	@Override
-	public void modificaDatiCollegamento(CollegamentoDTO collegamento) {
+	public void modificaDatiCollegamento(CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
 		try {
 			Collegamenti entity = this.convertiInEntita(collegamento);
 			
@@ -101,7 +102,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	}
 
 	@Override
-	public void eliminaCollegamento(CollegamentoDTO collegamento){
+	public void eliminaCollegamento(CollegamentoDTO collegamento) throws CollegamentoInesistenteException{
 		em.remove(this.convertiInEntita(collegamento));		
 	}
 	
@@ -109,9 +110,14 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	 * Permette la conversione da un DTO alla rispettiva entità
 	 * @param collegamento Il DTO del collegamento
 	 * @return L'entità desiderata
+	 * @throws CollegamentoInesistenteException Quando il collegamento non viene trovato nel database
 	 */
-	protected Collegamenti convertiInEntita (CollegamentoDTO collegamento) {
-		return em.find(Collegamenti.class, collegamento.getCodice());
+	protected Collegamenti convertiInEntita (CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
+		Collegamenti collegamentoEntity = em.find(Collegamenti.class, collegamento.getCodice());
+		if (collegamentoEntity != null)
+			return collegamentoEntity;
+		else
+			throw new CollegamentoInesistenteException ();
 	}
 	
 	/**

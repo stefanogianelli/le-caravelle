@@ -13,6 +13,7 @@ import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.CollegamentoInesistenteException;
 import entities.Amici;
 import entities.Destinazioni;
 import entities.Pacchetti;
@@ -195,20 +196,30 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 
 	@Override
 	public void aggiuntaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
-		Pacchetti entity = this.convertiInEntita(pacchetto);
+		try {
+			Pacchetti entity = this.convertiInEntita(pacchetto);		
 		
-		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
-		
-		em.merge(entity);
+			entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
+			
+			em.merge(entity);
+		} catch (CollegamentoInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 	@Override
 	public void modificaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
-		Pacchetti entity = this.convertiInEntita(pacchetto);
-		
-		entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
-		
-		em.merge(entity);	
+		try {
+			Pacchetti entity = this.convertiInEntita(pacchetto);
+			
+			entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
+			
+			em.merge(entity);
+		} catch (CollegamentoInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 	/**

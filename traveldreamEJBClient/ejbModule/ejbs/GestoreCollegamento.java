@@ -3,7 +3,9 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+
 import dtos.CollegamentoDTO;
+import eccezioni.CollegamentoInesistenteException;
 import enums.TipoCollegamento;
 
 @Local
@@ -32,12 +34,12 @@ public interface GestoreCollegamento {
 	 * Permette la modifica dei dati di un collegamento
 	 * @param collegamento Il collegamento da modiicare
 	 */
-	void modificaDatiCollegamento (CollegamentoDTO collegamento);
+	void modificaDatiCollegamento (CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un collegamento dal database
 	 * @param collegamento Il collegamento da eliminare
 	 */
-	void eliminaCollegamento (CollegamentoDTO collegamento);
+	void eliminaCollegamento (CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
 	
 }
