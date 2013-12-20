@@ -95,6 +95,26 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		
 		em.merge(entity);			
 	}
+	
+	@Override
+	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) {
+		Pacchetti entity = new Pacchetti();
+		
+		entity.setNome(pacchetto.getNome());
+		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		entity.setPrezzo(pacchetto.getPrezzo());
+		entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
+		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
+		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
+			destinazioni.add(this.destinazione.creaDestinazione(d));
+		}
+		entity.setDestinazioni(destinazioni);
+		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
+		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+		
+		em.persist(entity);
+	}
 
 	@Override
 	public void acquistaPacchetto(PacchettoDTO pacchetto) {
@@ -176,7 +196,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		pacchettoDTO.setNome(pacchetto.getNome());
 		pacchettoDTO.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		pacchettoDTO.setPrezzo(pacchetto.getPrezzo());
-		pacchettoDTO.setTipoPacchetto(pacchetto.getTipoPacchetto());
 		List<DestinazioneDTO> destinazioni = new ArrayList<DestinazioneDTO>();
 		for (Destinazioni d : pacchetto.getDestinazioni()) {
 			destinazioni.add(this.destinazione.convertiInDTO(d));

@@ -32,6 +32,12 @@ interface GestorePacchetto {
 	void salvaPacchetto (PacchettoDTO pacchetto);
 	
 	/**
+	 * Permette il salvataggiuo di un pacchetto predefinito
+	 * @param pacchetto I dati del pacchetto
+	 */
+	void salvaPacchettoPredefinito (PacchettoDTO pacchetto);
+	
+	/**
 	 * Permette l'acquisto di un pacchetto
 	 * @param pacchetto Il pacchetto da acquistare
 	 */
