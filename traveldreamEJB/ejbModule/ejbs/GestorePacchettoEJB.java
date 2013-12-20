@@ -14,6 +14,7 @@ import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import entities.Amici;
 import entities.Destinazioni;
@@ -167,7 +168,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 
 	@Override
-	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
+	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));

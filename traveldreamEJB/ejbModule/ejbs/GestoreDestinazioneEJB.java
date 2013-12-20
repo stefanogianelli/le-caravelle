@@ -13,6 +13,7 @@ import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import entities.Attivita;
@@ -79,7 +80,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 	
 	@Override
-	public void aggiuntaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException {
+	public void aggiuntaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException {
 		Destinazioni entity = this.convertiInEntita(destinazione);
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
 		
@@ -93,7 +94,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 
 	@Override
-	public void modificaDatiEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException {
+	public void modificaDatiEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException {
 		Destinazioni entity = this.convertiInEntita(destinazione);
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
@@ -109,7 +110,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 
 	@Override
-	public void eliminaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione) throws EscursioneInesistenteException {
+	public void eliminaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione) throws EscursioneInesistenteException, DestinazioneInesistenteException {
 		Destinazioni entity = this.convertiInEntita(destinazione);
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
@@ -128,9 +129,14 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 * Permette la conversione da un DTO alla rispettiva entità
 	 * @param destinazione Il DTO della destinazione
 	 * @return L'entità desiderata
+	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 */
-	protected Destinazioni convertiInEntita (DestinazioneDTO destinazione) {
-		return em.find(Destinazioni.class, destinazione.getId());		
+	protected Destinazioni convertiInEntita (DestinazioneDTO destinazione) throws DestinazioneInesistenteException {
+		Destinazioni destinazioneEntity = em.find(Destinazioni.class, destinazione.getId());
+		if (destinazioneEntity != null) 
+			return destinazioneEntity;
+		else
+			throw new DestinazioneInesistenteException ();
 	}	
 	
 	/**
