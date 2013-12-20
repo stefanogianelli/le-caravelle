@@ -16,6 +16,7 @@ import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.PacchettoInesistenteException;
 import entities.AttivitaPred;
 import entities.DatePartenza;
 import entities.Durate;
@@ -131,7 +132,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 	
 	@Override
-	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
+	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
@@ -140,7 +141,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
+	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
@@ -149,7 +150,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException {
+	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
@@ -163,7 +164,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException {
+	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
@@ -179,7 +180,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void salvaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException {
+	public void salvaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		entity.setNome(pacchetto.getNome());
@@ -190,7 +191,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void eliminaPacchetto(PacchettoPredefinitoDTO pacchetto) {
+	public void eliminaPacchetto(PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
 		em.remove(this.convertiInEntita(pacchetto));
 	}
 	
@@ -198,9 +199,14 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	 * Permette la conversione da un DTO alla rispettiva entità
 	 * @param pacchetto Il DTO del pacchetto predefinito
 	 * @return L'entità desiderata
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	protected PacchettiPredefiniti convertiInEntita (PacchettoPredefinitoDTO pacchetto) {
-		return em.find(PacchettiPredefiniti.class, pacchetto.getId());
+	protected PacchettiPredefiniti convertiInEntita (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
+		PacchettiPredefiniti pacchettoEntity = em.find(PacchettiPredefiniti.class, pacchetto.getId());
+		if (pacchettoEntity != null)
+			return pacchettoEntity;
+		else
+			throw new PacchettoInesistenteException ();
 	}
 	
 	/**
