@@ -51,7 +51,7 @@ public class HotelBean {
 	 */
 	public void creaHotel () {
 		try {
-			hotelBean.creaHotel(hotel);
+			hotelBean.creaHotel(this.getHotel());
 		} catch (EntityExistsException e) {
 			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "L'hotel è già presente nel database!", "L'hotel è già presente nel database!");
 			FacesContext.getCurrentInstance().addMessage(null, messaggio);

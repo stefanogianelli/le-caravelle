@@ -19,11 +19,11 @@ public interface GestoreEscursione {
 	List<EscursioneDTO> elencoEscursioni ();
 	
     /**
-     * Mostra l'elenco di tutte escursioni in una città
-     * @param nomeCitta Il nome della città
+     * Mostra l'elenco di tutte escursioni in una regione
+     * @param regione Il nome della regione
      * @return L'elenco delle escursioni
      */
-	List<EscursioneDTO> elencoEscursioni(String nomeCitta);
+	List<EscursioneDTO> elencoEscursioni(String regione);
 	
 	/**
 	 * Crea una nuova escursione nel database

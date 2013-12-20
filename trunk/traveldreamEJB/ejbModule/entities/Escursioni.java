@@ -17,7 +17,8 @@ import java.util.Date;
 @Entity
 @NamedQueries ({
 	@NamedQuery(name = "Escursioni.elenco", query = "SELECT e FROM Escursioni e"),
-	@NamedQuery(name = "Escursioni.getEscursione", query = "SELECT e FROM Escursioni e WHERE e.id = :id")
+	@NamedQuery(name = "Escursioni.getEscursione", query = "SELECT e FROM Escursioni e WHERE e.id = :id"),
+	@NamedQuery(name = "Escursioni.elencoPerRegione", query = "SELECT e FROM Escursioni e WHERE e.citta.regione = :regione")
 })
 public class Escursioni implements Serializable {
 	private static final long serialVersionUID = 1L;
