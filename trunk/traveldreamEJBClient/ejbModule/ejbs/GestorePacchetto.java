@@ -9,6 +9,7 @@ import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import enums.TipoPacchetto;
 
@@ -79,8 +80,9 @@ interface GestorePacchetto {
 	 * Permette l'eliminazione di una destinazione da un pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole eliminare la destinazione
 	 * @param destinazione La destinazione da eliminare
+	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 */
-	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione);
+	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di un collegamento nel pacchetto
