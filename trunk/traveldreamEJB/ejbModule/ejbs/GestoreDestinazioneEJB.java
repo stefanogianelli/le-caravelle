@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
+import eccezioni.CittaInesistenteException;
 import entities.Attivita;
 import entities.Destinazioni;
 import entities.Escursioni;
@@ -50,27 +51,38 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 * @param La destinazione creata
 	 */
 	protected Destinazioni creaDestinazione (DestinazioneDTO destinazione) {
-		Destinazioni entity = new Destinazioni();
-		
-		entity.setDataArrivo(destinazione.getDataArrivo());
-		entity.setDataPartenza(destinazione.getDataPartenza());
-		entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
-		entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
-		entity.setPacchetto(pacchetto.convertiInEntita(destinazione.getPacchetto()));
-		
-		return entity;
+		try {
+			Destinazioni entity = new Destinazioni();
+			
+			entity.setDataArrivo(destinazione.getDataArrivo());
+			entity.setDataPartenza(destinazione.getDataPartenza());
+			entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
+			entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
+			entity.setPacchetto(pacchetto.convertiInEntita(destinazione.getPacchetto()));
+			
+			return entity;
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public void modificaDatiDestinazione(DestinazioneDTO destinazione) {
-		Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
-		
-		entity.setDataArrivo(destinazione.getDataArrivo());
-		entity.setDataPartenza(destinazione.getDataPartenza());
-		entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
-		entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
-		
-		em.merge(entity);		
+		try {
+			Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
+			
+			entity.setDataArrivo(destinazione.getDataArrivo());
+			entity.setDataPartenza(destinazione.getDataPartenza());
+			entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
+			entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
+			
+			em.merge(entity);		
+		} catch (CittaInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
