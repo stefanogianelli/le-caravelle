@@ -84,7 +84,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		}
 		entity.setDestinazioni(destinazioni);		
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));	
-		//entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
 		em.persist(entity);
@@ -103,7 +102,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 	
 	@Override
-	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException {
+	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, EntityExistsException {
 		Pacchetti entity = new Pacchetti();
 		
 		entity.setNome(pacchetto.getNome());
@@ -116,7 +115,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		}
 		entity.setDestinazioni(destinazioni);
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		//entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
 		em.persist(entity);
@@ -147,7 +146,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		}
 		entity.setDestinazioni(destinazioni);
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		//entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
 		amico.addPacchetto(entity);	
