@@ -10,6 +10,7 @@ import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.EscursioneInesistenteException;
+import eccezioni.HotelInesistenteException;
 
 @Local
 public interface GestorePacchettoPredefinito {
@@ -23,8 +24,9 @@ public interface GestorePacchettoPredefinito {
 	/**
 	 * Permette la creazione di un nuovo pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	void creaPacchetto (PacchettoPredefinitoDTO pacchetto);
+	void creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di una nuova data di partenza nel pacchetto
@@ -89,8 +91,9 @@ public interface GestorePacchettoPredefinito {
 	/**
 	 * Permette il salvataggio di un pacchetto
 	 * @param pacchetto Il pacchetto da salvare
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	void salvaPacchetto (PacchettoPredefinitoDTO pacchetto);
+	void salvaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto

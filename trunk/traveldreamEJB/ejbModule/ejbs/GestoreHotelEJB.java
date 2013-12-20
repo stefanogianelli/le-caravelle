@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.HotelInesistenteException;
 import entities.Hotel;
 
 /**
@@ -56,7 +58,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 	}	
 
 	@Override
-	public void creaHotel(HotelDTO hotel) throws CittaInesistenteException {
+	public void creaHotel(HotelDTO hotel) throws CittaInesistenteException, EntityExistsException {
 		Hotel entity = new Hotel ();
 		
 		entity.setEmail(hotel.getEmail());
@@ -72,7 +74,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 	}
 
 	@Override
-	public void modificaDatiHotel(HotelDTO hotel) throws CittaInesistenteException {
+	public void modificaDatiHotel(HotelDTO hotel) throws CittaInesistenteException, HotelInesistenteException {
 		Hotel entity = this.convertiInEntita(hotel);
 		
 		entity.setEmail(hotel.getEmail());
@@ -88,7 +90,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 	}
 
 	@Override
-	public void eliminaHotel(HotelDTO hotel) {
+	public void eliminaHotel(HotelDTO hotel) throws HotelInesistenteException {
 		em.remove(this.convertiInEntita(hotel));
 	}
 	
@@ -96,9 +98,14 @@ public class GestoreHotelEJB implements GestoreHotel {
 	 * Permette la conversione da un DTO alla rispettiva entità
 	 * @param hotel Il DTO dell'hotel
 	 * @return L'entità desiderata
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	protected Hotel convertiInEntita (HotelDTO hotel) {
-		return em.find(Hotel.class, hotel.getId());		
+	protected Hotel convertiInEntita (HotelDTO hotel) throws HotelInesistenteException {
+		Hotel hotelEntity = em.find(Hotel.class, hotel.getId());
+		if (hotelEntity != null)
+			return hotelEntity;
+		else
+			throw new HotelInesistenteException ();
 	}	
 	
 	/**

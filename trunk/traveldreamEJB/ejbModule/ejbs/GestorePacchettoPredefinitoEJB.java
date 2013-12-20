@@ -15,6 +15,7 @@ import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.EscursioneInesistenteException;
+import eccezioni.HotelInesistenteException;
 import entities.AttivitaPred;
 import entities.DatePartenza;
 import entities.Durate;
@@ -57,7 +58,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void creaPacchetto(PacchettoPredefinitoDTO pacchetto) {
+	public void creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
 		
 		entity.setNome(pacchetto.getNome());
@@ -178,7 +179,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void salvaPacchetto(PacchettoPredefinitoDTO pacchetto) {
+	public void salvaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		entity.setNome(pacchetto.getNome());

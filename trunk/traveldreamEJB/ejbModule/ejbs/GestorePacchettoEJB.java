@@ -14,6 +14,7 @@ import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.HotelInesistenteException;
 import entities.Amici;
 import entities.Destinazioni;
 import entities.Pacchetti;
@@ -67,7 +68,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 	
 	@Override
-	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException {
+	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException {
 		Pacchetti entity = new Pacchetti();
 		
 		entity.setNome(pacchetto.getNome());
@@ -99,7 +100,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 	
 	@Override
-	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException {
+	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException {
 		Pacchetti entity = new Pacchetti();
 		
 		entity.setNome(pacchetto.getNome());
@@ -128,7 +129,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 
 	@Override
-	public void condividiPacchetto(PacchettoDTO pacchetto, String email) throws CittaInesistenteException {
+	public void condividiPacchetto(PacchettoDTO pacchetto, String email) throws CittaInesistenteException, HotelInesistenteException {
 		Amici amico = em.find(Amici.class, email);
 		
 		Pacchetti entity = new Pacchetti();
@@ -157,7 +158,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 
 	@Override
-	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException {
+	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));

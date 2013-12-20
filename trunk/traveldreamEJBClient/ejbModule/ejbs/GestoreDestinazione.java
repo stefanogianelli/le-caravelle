@@ -6,6 +6,7 @@ import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EscursioneInesistenteException;
+import eccezioni.HotelInesistenteException;
 
 @Local
 interface GestoreDestinazione {
@@ -14,8 +15,9 @@ interface GestoreDestinazione {
 	 * Permette la modifica dei dati di una destinazione
 	 * @param destinazione La destinazione da modificare
 	 * @throws CittaInesistenteException  Quando non viene trovata la città nel database
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	void modificaDatiDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException;
+	void modificaDatiDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di una escursione
