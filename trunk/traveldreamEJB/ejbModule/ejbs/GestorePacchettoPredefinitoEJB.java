@@ -13,6 +13,7 @@ import javax.persistence.Query;
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
+import eccezioni.CollegamentoInesistenteException;
 import entities.AttivitaPred;
 import entities.DatePartenza;
 import entities.Durate;
@@ -129,20 +130,31 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	
 	@Override
 	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
-		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+		try {
+			PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+			
+			entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
+			
+			em.merge(entity);		
+		} catch (CollegamentoInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		
-		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
-		
-		em.merge(entity);
 	}
 
 	@Override
 	public void rimuoviCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) {
-		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
-		
-		entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
-		
-		em.merge(entity);
+		try {
+			PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+			
+			entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
+			
+			em.merge(entity);
+		} catch (CollegamentoInesistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 
 	@Override
