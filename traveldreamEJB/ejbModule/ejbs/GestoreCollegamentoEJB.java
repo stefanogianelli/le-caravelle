@@ -58,47 +58,37 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 	}	
 
 	@Override
-	public void creaCollegamento(CollegamentoDTO collegamento) {
-		try {
-			Collegamenti entity = new Collegamenti ();
-			
-			entity.setDataPartenza(collegamento.getDataPartenza());
-			entity.setDestinazione(collegamento.getDestinazione());
-			entity.setOraArrivo(collegamento.getOraArrivo());
-			entity.setOraPartenza(collegamento.getOraPartenza());
-			entity.setOrigine(collegamento.getOrigine());
-			entity.setPrezzo(collegamento.getPrezzo());
-			entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-			entity.setCittaArrivo(citta.convertiInEntita(collegamento.getCittaArrivo()));
-			entity.setCittaPartenza(citta.convertiInEntita(collegamento.getCittaPartenza()));
-			
-			em.persist(entity);		
-		} catch (CittaInesistenteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void creaCollegamento(CollegamentoDTO collegamento) throws CittaInesistenteException {
+		Collegamenti entity = new Collegamenti ();
+		
+		entity.setDataPartenza(collegamento.getDataPartenza());
+		entity.setDestinazione(collegamento.getDestinazione());
+		entity.setOraArrivo(collegamento.getOraArrivo());
+		entity.setOraPartenza(collegamento.getOraPartenza());
+		entity.setOrigine(collegamento.getOrigine());
+		entity.setPrezzo(collegamento.getPrezzo());
+		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
+		entity.setCittaArrivo(citta.convertiInEntita(collegamento.getCittaArrivo()));
+		entity.setCittaPartenza(citta.convertiInEntita(collegamento.getCittaPartenza()));
+		
+		em.persist(entity);
 	}
 
 	@Override
-	public void modificaDatiCollegamento(CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
-		try {
-			Collegamenti entity = this.convertiInEntita(collegamento);
-			
-			entity.setDataPartenza(collegamento.getDataPartenza());
-			entity.setDestinazione(collegamento.getDestinazione());
-			entity.setOraArrivo(collegamento.getOraArrivo());
-			entity.setOraPartenza(collegamento.getOraPartenza());
-			entity.setOrigine(collegamento.getOrigine());
-			entity.setPrezzo(collegamento.getPrezzo());
-			entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-			entity.setCittaArrivo(citta.convertiInEntita(collegamento.getCittaArrivo()));
-			entity.setCittaPartenza(citta.convertiInEntita(collegamento.getCittaPartenza()));
-			
-			em.merge(entity);
-		} catch (CittaInesistenteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void modificaDatiCollegamento(CollegamentoDTO collegamento) throws CollegamentoInesistenteException, CittaInesistenteException {
+		Collegamenti entity = this.convertiInEntita(collegamento);
+		
+		entity.setDataPartenza(collegamento.getDataPartenza());
+		entity.setDestinazione(collegamento.getDestinazione());
+		entity.setOraArrivo(collegamento.getOraArrivo());
+		entity.setOraPartenza(collegamento.getOraPartenza());
+		entity.setOrigine(collegamento.getOrigine());
+		entity.setPrezzo(collegamento.getPrezzo());
+		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
+		entity.setCittaArrivo(citta.convertiInEntita(collegamento.getCittaArrivo()));
+		entity.setCittaPartenza(citta.convertiInEntita(collegamento.getCittaPartenza()));
+		
+		em.merge(entity);
 	}
 
 	@Override
