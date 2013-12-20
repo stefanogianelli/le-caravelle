@@ -47,8 +47,10 @@ interface GestorePacchetto {
 	 * @param pacchetto I dati del pacchetto
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws EntityExistsException Quando il pacchetto è già esistente nel database
 	 */
-	void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException;
+	void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, EntityExistsException;
 	
 	/**
 	 * Permette l'acquisto di un pacchetto
