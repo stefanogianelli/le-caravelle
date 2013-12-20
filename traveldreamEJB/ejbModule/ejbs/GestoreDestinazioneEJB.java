@@ -13,6 +13,7 @@ import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.EscursioneInesistenteException;
 import entities.Attivita;
 import entities.Destinazioni;
 import entities.Escursioni;
@@ -76,7 +77,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 	
 	@Override
-	public void aggiuntaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) {
+	public void aggiuntaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException {
 		Destinazioni entity = this.convertiInEntita(destinazione);
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
 		
@@ -90,7 +91,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 
 	@Override
-	public void modificaDatiEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) {
+	public void modificaDatiEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException {
 		Destinazioni entity = this.convertiInEntita(destinazione);
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
@@ -106,7 +107,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 
 	@Override
-	public void eliminaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione) {
+	public void eliminaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione) throws EscursioneInesistenteException {
 		Destinazioni entity = this.convertiInEntita(destinazione);
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);

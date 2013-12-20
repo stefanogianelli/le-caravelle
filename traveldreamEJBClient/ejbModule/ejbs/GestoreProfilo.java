@@ -36,7 +36,7 @@ public interface GestoreProfilo {
 	/**
 	 * Permette il reset della password
 	 * @param datiUtente I dati dell'utente che ha richiesto il reset
-	 * @param MessagingException
+	 * @throws MessagingException
 	 */
 	void resetPassword (UtenteDTO datiUtente) throws MessagingException;	
 }
