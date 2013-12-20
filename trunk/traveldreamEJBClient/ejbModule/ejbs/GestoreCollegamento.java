@@ -3,6 +3,7 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.persistence.EntityExistsException;
 
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
@@ -29,8 +30,9 @@ public interface GestoreCollegamento {
 	 * Aggiunge un nuovo collegamento nel database
 	 * @param collegamento I dati del collegamento da aggiungere
 	 * @throws CittaInesistenteException Quando non viene trovata la città nel database
+	 * @throws EntityExistsException Quando il collegamento è già esistente nel database
 	 */
-	void creaCollegamento (CollegamentoDTO collegamento) throws CittaInesistenteException;
+	void creaCollegamento (CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException;
 	
 	/**
 	 * Permette la modifica dei dati di un collegamento
