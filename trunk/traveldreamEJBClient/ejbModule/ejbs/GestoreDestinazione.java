@@ -10,7 +10,7 @@ import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 
 @Local
-interface GestoreDestinazione {
+public interface GestoreDestinazione {
 
 	/**
 	 * Permette la modifica dei dati di una destinazione

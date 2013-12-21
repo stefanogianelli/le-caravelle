@@ -16,7 +16,7 @@ import eccezioni.PacchettoInesistenteException;
 import enums.TipoPacchetto;
 
 @Local
-interface GestorePacchetto {
+public interface GestorePacchetto {
 
     /**
      * Mostra l'elenco dei pacchetti per tipologia
