@@ -1,5 +1,6 @@
 package ejbs;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -24,6 +25,15 @@ public interface GestoreEscursione {
      * @return L'elenco delle escursioni
      */
 	List<EscursioneDTO> elencoEscursioni(String regione);
+	
+	/**
+	 * Mostra l'elenco di escursioni in un regione nell'intervallo di tempo indicato
+	 * @param dataArrivo La data di arrivo nella destinazione
+	 * @param dataPartenza La data di partenza dalla destinazione
+	 * @param regione La regione della destinazione
+	 * @return L'elenco delle escursioni trovate
+	 */
+	List<EscursioneDTO> elencoEscursioni(Date dataArrivo, Date dataPartenza, String regione);
 	
 	/**
 	 * Crea una nuova escursione nel database

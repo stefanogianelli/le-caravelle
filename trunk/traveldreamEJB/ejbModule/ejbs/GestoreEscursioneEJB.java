@@ -1,6 +1,7 @@
 package ejbs;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -56,6 +57,21 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 		}
 		return dto;
 	}	
+	
+	@Override
+	public List<EscursioneDTO> elencoEscursioni(Date dataArrivo, Date dataPartenza, String regione) {
+		Query q = em.createNamedQuery("Escursioni.elencoPerPeriodo", Escursioni.class);
+		q.setParameter("dataArrivo", dataArrivo);
+		q.setParameter("dataPartenza", dataPartenza);
+		q.setParameter("regione", regione);
+		@SuppressWarnings("unchecked")
+		List<Escursioni> escursioni = q.getResultList();
+		List<EscursioneDTO> dto = new ArrayList<EscursioneDTO>();
+		for (Escursioni e : escursioni) {
+			dto.add(this.convertiInDTO(e));
+		}
+		return dto;
+	}
 
 	@Override
 	public void creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException, EntityExistsException {
