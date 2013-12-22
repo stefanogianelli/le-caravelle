@@ -86,6 +86,16 @@ public interface GestorePacchetto {
 	void aggiuntaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException;
 	
 	/**
+	 * Permette la modifica dei dati di una destinazione
+	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
+	 * @param destinazione I nuovi dati della destinazione
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 */
+	void modificaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException, HotelInesistenteException;
+	
+	/**
 	 * Permette l'eliminazione di una destinazione da un pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole eliminare la destinazione
 	 * @param destinazione La destinazione da eliminare
@@ -104,9 +114,9 @@ public interface GestorePacchetto {
 	void aggiuntaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
 	
 	/**
-	 * Permette l'eliminazione di un collegamento dal pacchetto
-	 * @param pacchetto Il pacchetto dal quale di vuole rimuovere il collegamento
-	 * @param collegamento Il collegamento da rimuovere
+	 * Permette la sostituzione di un collegamento con un altro
+	 * @param pacchetto Il pacchetto dal quale di vuole sostituire il collegamento
+	 * @param collegamento Il nuovo collegamento
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */

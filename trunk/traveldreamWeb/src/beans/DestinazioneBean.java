@@ -7,10 +7,8 @@ import javax.faces.bean.RequestScoped;
 import utils.JsfUtil;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
-import eccezioni.CittaInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EscursioneInesistenteException;
-import eccezioni.HotelInesistenteException;
 import ejbs.GestoreDestinazione;
 
 @ManagedBean(name="destinazione")
@@ -33,20 +31,6 @@ public class DestinazioneBean {
 
 	public void setDestinazione(DestinazioneDTO destinazione) {
 		this.destinazione = destinazione;
-	}
-	
-	/**
-	 * Permette la modifica dei dati di una destinazione
-	 * @param destinazione I dati della destinazione
-	 */
-	public void modificaDestinazione (DestinazioneDTO destinazione) {
-		try {
-			destinazioneBean.modificaDatiDestinazione(destinazione);
-		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta!");
-		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel inesistente!");
-		}
 	}
 	
 	/**
