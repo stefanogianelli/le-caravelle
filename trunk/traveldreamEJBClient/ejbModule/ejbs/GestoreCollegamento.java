@@ -1,5 +1,6 @@
 package ejbs;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -24,7 +25,17 @@ public interface GestoreCollegamento {
      * @param tipo La tipologia del collegamento
      * @return L'elenco dei collegamenti
      */
-	List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo);	
+	List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo);
+	
+	/**
+	 * Mostra l'elenco dei collegamenti disponibili tra due destinazioni nella data indicate e della tipologia selezionata
+	 * @param data La data del collegamento
+	 * @param idCittaPartenza L'identificativo della città di partenza
+	 * @param idCittaArrivo L'identificativo della città di arrivo
+	 * @param tipo La tipologia del collegamento
+	 * @return L'elenco dei collegamenti trovati
+	 */
+	List<CollegamentoDTO> elencoCollegamenti(Date data, String idCittaPartenza, String idCittaArrivo, TipoCollegamento tipo);
 	
 	/**
 	 * Aggiunge un nuovo collegamento nel database

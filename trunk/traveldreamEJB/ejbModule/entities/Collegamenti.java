@@ -17,7 +17,9 @@ import java.util.Date;
 @Entity
 @NamedQueries ({
 	@NamedQuery(name = "Collegamenti.elenco", query = "SELECT c FROM Collegamenti c"),
-	@NamedQuery(name = "Collegamenti.elencoPerTipo", query = "SELECT c FROM Collegamenti c WHERE c.tipoCollegamento = :tipo")
+	@NamedQuery(name = "Collegamenti.elencoPerTipo", query = "SELECT c FROM Collegamenti c WHERE c.tipoCollegamento = :tipo"),
+	@NamedQuery(name = "Collegamenti.elencoTraDestinazioni", 
+		query = "SELECT c FROM Collegamenti c WHERE (c.dataPartenza = :data AND c.cittaPartenza = :partenza AND c.cittaArrivo = :arrivo AND c.tipoCollegamento = :tipo) ORDER BY c.oraPartenza ASC")
 })
 public class Collegamenti implements Serializable {
 	private static final long serialVersionUID = 1L;
