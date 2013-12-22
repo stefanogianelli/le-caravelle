@@ -1,6 +1,7 @@
 package ejbs;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -57,6 +58,22 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		}
 		return dto;
 	}	
+	
+	@Override
+	public List<CollegamentoDTO> elencoCollegamenti(Date data, String idCittaPartenza, String idCittaArrivo, TipoCollegamento tipo) {
+		Query q = em.createNamedQuery("Collegamenti.elencoTraDestinazioni", Collegamenti.class);
+		q.setParameter("data", data);
+		q.setParameter("partenza", idCittaPartenza);
+		q.setParameter("arrivo", idCittaArrivo);
+		q.setParameter("tipo", tipo);
+		@SuppressWarnings("unchecked")
+		List<Collegamenti> collegamenti = q.getResultList();
+		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
+		for (Collegamenti c : collegamenti) {
+			dto.add(this.convertiInDTO(c));
+		}
+		return dto;
+	}
 
 	@Override
 	public void creaCollegamento(CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException {
