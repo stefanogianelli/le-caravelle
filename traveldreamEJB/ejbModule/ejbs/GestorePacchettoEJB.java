@@ -1,12 +1,14 @@
 package ejbs;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -19,6 +21,7 @@ import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.PacchettoInesistenteException;
 import entities.Amici;
+import entities.Collegamenti;
 import entities.Destinazioni;
 import entities.Pacchetti;
 import enums.TipoPacchetto;
@@ -163,6 +166,18 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
+		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
+		
+		em.merge(entity);
+	}
+	
+	@Override
+	public void modificaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException, HotelInesistenteException {
+		Pacchetti entity = this.convertiInEntita(pacchetto);
+		
+		this.destinazione.modificaDatiDestinazione(destinazione);
+		
+		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
 		
 		em.merge(entity);
 	}
@@ -172,6 +187,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));
+		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
 		
 		em.merge(entity);
 	}
@@ -189,9 +205,47 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	public void modificaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		entity.removeCollegamento(this.collegamento.convertiInEntita(collegamento));
+		Query q = em.createNamedQuery("Collegamenti.getCollegamentoDaData", Collegamenti.class);
+		q.setParameter("data", collegamento.getDataPartenza());
+		Collegamenti vecchioCollegamento = (Collegamenti) q.getSingleResult();
+		
+		entity.removeCollegamento(vecchioCollegamento);
+		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
 		
 		em.merge(entity);
+	}
+	
+	/**
+	 * Si occupa di rimuovere i collegemnti non piò corerenti.
+	 * Questo può accadere in caso di aggiunta nuova destinazione, modifica date di una destinazione o eliminazione di una destinazione.
+	 * @param dataArrivo La data nella quale rimuovere il collegamento di andata
+	 * @param dataPartenza La data nella quale rimuovere il collegamento di ritorno
+	 */
+	protected void rimuoviCollegamenti (Pacchetti pacchetto, Date dataArrivo, Date dataPartenza) {
+		Collegamenti andata, ritorno;
+		
+		Query q = em.createNamedQuery("Collegamenti.getCollegamentoDaData", Collegamenti.class);
+		q.setParameter("data", dataArrivo);
+		try {
+			andata = (Collegamenti) q.getSingleResult();
+		} catch (NoResultException e) {
+			andata = null;
+		}
+		
+		Query q1 = em.createNamedQuery("Collegamenti.getCollegamentoDaData", Collegamenti.class);
+		q1.setParameter("data", dataPartenza);
+		try {
+			ritorno = (Collegamenti) q1.getSingleResult();
+		} catch (NoResultException e) {
+			ritorno = null;
+		}
+		
+		if (andata != null)
+			pacchetto.removeCollegamento(andata);
+		if (ritorno != null)
+			pacchetto.removeCollegamento(ritorno);
+		
+		em.merge(pacchetto);
 	}
 
 	/**
