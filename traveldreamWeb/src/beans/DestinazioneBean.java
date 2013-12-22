@@ -57,7 +57,7 @@ public class DestinazioneBean {
 	 */
 	public void aggiuntaEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) {
 		try {
-			destinazioneBean.aggiuntaEscursione(destinazione, escursione, numeroPartecipanti);
+			destinazioneBean.aggiuntaEscursione(destinazione.getId(), escursione.getId(), numeroPartecipanti);
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {
@@ -73,7 +73,7 @@ public class DestinazioneBean {
 	 */
 	public void modificascursione (DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) {
 		try {
-			destinazioneBean.modificaDatiEscursione(destinazione, escursione, numeroPartecipanti);
+			destinazioneBean.modificaDatiEscursione(destinazione.getId(), escursione.getId(), numeroPartecipanti);
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {
@@ -88,7 +88,7 @@ public class DestinazioneBean {
 	 */
 	public void eliminaEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione) {
 		try {
-			destinazioneBean.eliminaEscursione(destinazione, escursione);
+			destinazioneBean.eliminaEscursione(destinazione.getId(), escursione.getId());
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {
