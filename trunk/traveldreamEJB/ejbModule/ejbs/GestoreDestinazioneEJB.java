@@ -11,7 +11,6 @@ import javax.persistence.Query;
 
 import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
-import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EscursioneInesistenteException;
@@ -78,9 +77,9 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 	
 	@Override
-	public void aggiuntaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException {
-		Destinazioni entity = this.convertiInEntita(destinazione);
-		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
+	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException {
+		Destinazioni entity = this.convertiInEntita(idDestinazione);
+		Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
 		
 		Attivita attivita = new Attivita();		
 		attivita.setEscursione(escursioneEntity);		
@@ -92,14 +91,10 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 
 	@Override
-	public void modificaDatiEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException {
-		Destinazioni entity = this.convertiInEntita(destinazione);
-		
-		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
-		
+	public void modificaDatiEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException {
 		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-		q.setParameter("destinazione", entity);
-		q.setParameter("escursione", escursioneEntity);
+		q.setParameter("destinazione", idDestinazione);
+		q.setParameter("escursione", idEscursione);
 		Attivita attivita = (Attivita) q.getSingleResult();
 
 		attivita.setNumPartecipanti(numeroPartecipanti);
@@ -108,14 +103,12 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	}
 
 	@Override
-	public void eliminaEscursione(DestinazioneDTO destinazione, EscursioneDTO escursione) throws EscursioneInesistenteException, DestinazioneInesistenteException {
-		Destinazioni entity = this.convertiInEntita(destinazione);
-		
-		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
+	public void eliminaEscursione(int idDestinazione, int idEscursione) throws EscursioneInesistenteException, DestinazioneInesistenteException {
+		Destinazioni entity = this.convertiInEntita(idDestinazione);
 		
 		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-		q.setParameter("destinazione", entity);
-		q.setParameter("escursione", escursioneEntity);
+		q.setParameter("destinazione", idDestinazione);
+		q.setParameter("escursione", idEscursione);
 		Attivita attivita = (Attivita) q.getSingleResult();
 		
 		entity.removeAttivita(attivita);
@@ -131,6 +124,20 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 */
 	protected Destinazioni convertiInEntita (DestinazioneDTO destinazione) throws DestinazioneInesistenteException {
 		Destinazioni destinazioneEntity = em.find(Destinazioni.class, destinazione.getId());
+		if (destinazioneEntity != null) 
+			return destinazioneEntity;
+		else
+			throw new DestinazioneInesistenteException ();
+	}	
+	
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param idDestinazione L'identificativo della destinazione
+	 * @return L'entità desiderata
+	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
+	 */
+	protected Destinazioni convertiInEntita (int idDestinazione) throws DestinazioneInesistenteException {
+		Destinazioni destinazioneEntity = em.find(Destinazioni.class, idDestinazione);
 		if (destinazioneEntity != null) 
 			return destinazioneEntity;
 		else
@@ -166,8 +173,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione {
 	 */
 	protected Attivita convertiInEntita (AttivitaDTO attivita) {
 		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-		q.setParameter("destinazione", attivita.getDestinazione());
-		q.setParameter("escursione", attivita.getEscursione());
+		q.setParameter("destinazione", attivita.getDestinazione().getId());
+		q.setParameter("escursione", attivita.getEscursione().getId());
 		return (Attivita) q.getSingleResult();
 	}
 	
