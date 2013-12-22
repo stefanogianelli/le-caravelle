@@ -123,6 +123,20 @@ public class GestoreEscursioneEJB implements GestoreEscursione {
 	}
 	
 	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param idEscursione L'identificativo dell'escursione
+	 * @return L'entità desiderata
+	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
+	 */
+	protected Escursioni convertiInEntita (int idEscursione) throws EscursioneInesistenteException {
+		Escursioni escursioneEntity = em.find(Escursioni.class, idEscursione);	
+		if (escursioneEntity != null)
+			return escursioneEntity;
+		else
+			throw new EscursioneInesistenteException ();
+	}
+	
+	/**
 	 * Permette la conversione da un'entità al rispettivo DTO
 	 * @param escursione L'oggetto da converitre
 	 * @return Il DTO risultante

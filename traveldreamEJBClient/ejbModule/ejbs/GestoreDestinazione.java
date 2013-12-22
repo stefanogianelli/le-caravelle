@@ -3,7 +3,6 @@ package ejbs;
 import javax.ejb.Local;
 
 import dtos.DestinazioneDTO;
-import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EscursioneInesistenteException;
@@ -22,30 +21,30 @@ public interface GestoreDestinazione {
 	
 	/**
 	 * Permette l'aggiunta di una escursione
-	 * @param destinazione L'identificativo della destinazione
-	 * @param escursione L'identificativo dell'escursione
+	 * @param idDestinazione L'identificativo della destinazione
+	 * @param idEscursione L'identificativo dell'escursione
 	 * @param numeroPartecipanti Il numero di partecipanti all'escursione.
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 */
-	void aggiuntaEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException;
+	void aggiuntaEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException;
 	
 	/**
 	 * Permette la modifica del numero di partecipanti ad una escursione
-	 * @param destinazione L'identificativo della destinazione
-	 * @param escursione L'identificativo dell'escursione
+	 * @param idDestinazione L'identificativo della destinazione
+	 * @param idEscursione L'identificativo dell'escursione
 	 * @param numeroPartecipanti Il numero di partecipanti all'escursione
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 */
-	void modificaDatiEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException;
+	void modificaDatiEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di una escursione
-	 * @param destinazione L'identificativo della destinazione
-	 * @param escursione L'identificativo dell'escursione
+	 * @param idDestinazione L'identificativo della destinazione
+	 * @param idEscursione L'identificativo dell'escursione
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 */
-	void eliminaEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione) throws EscursioneInesistenteException, DestinazioneInesistenteException;
+	void eliminaEscursione (int idDestinazione, int idEscursione) throws EscursioneInesistenteException, DestinazioneInesistenteException;
 }
