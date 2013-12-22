@@ -79,6 +79,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		
 		entity.setNome(pacchetto.getNome());
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		//TODO: implementare funzione per il calcolo del prezzo
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
 		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
@@ -166,6 +167,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
+		
 		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
 		
 		em.merge(entity);
@@ -187,6 +189,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));
+		
 		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
 		
 		em.merge(entity);
@@ -216,8 +219,9 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 	
 	/**
-	 * Si occupa di rimuovere i collegemnti non piò corerenti.
+	 * Si occupa di rimuovere i collegemnti non più coerenti.
 	 * Questo può accadere in caso di aggiunta nuova destinazione, modifica date di una destinazione o eliminazione di una destinazione.
+	 * @param pacchetto Il pacchetto nel quale rimuovere il/i collegamento/i
 	 * @param dataArrivo La data nella quale rimuovere il collegamento di andata
 	 * @param dataPartenza La data nella quale rimuovere il collegamento di ritorno
 	 */
