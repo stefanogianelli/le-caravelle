@@ -2,12 +2,11 @@ package beans;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
+import utils.JsfUtil;
 import dtos.UtenteDTO;
 import ejbs.GestoreProfilo;
 
@@ -48,8 +47,7 @@ public class ProfiloBean {
 		try {
 			profiloBean.registrazioneUtente(profilo.getEmail());
 		} catch (MessagingException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore!", "Errore!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Errore!");
 		}
 	}
 	
@@ -77,8 +75,7 @@ public class ProfiloBean {
 		try {
 			profiloBean.resetPassword(datiUtente);
 		} catch (MessagingException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore!", "Errore!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Errore!");
 		}
 	}
 

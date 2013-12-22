@@ -4,12 +4,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityExistsException;
 
+import utils.JsfUtil;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.HotelInesistenteException;
@@ -53,11 +52,9 @@ public class HotelBean {
 		try {
 			hotelBean.creaHotel(this.getHotel());
 		} catch (EntityExistsException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "L'hotel è già presente nel database!", "L'hotel è già presente nel database!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("L'hotel è già presente nel database!");
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		}
 	}
 	
@@ -69,11 +66,9 @@ public class HotelBean {
 		try {
 			hotelBean.modificaDatiHotel(hotel);
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hotel inesistente!", "Hotel inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Hotel sconosciuta!");
 		}
 	}
 	
@@ -85,8 +80,7 @@ public class HotelBean {
 		try {
 			hotelBean.eliminaHotel(hotel);
 		} catch (HotelInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hotel inesistente!", "Hotel inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Hotel sconosciuta!");
 		}
 	}
 }

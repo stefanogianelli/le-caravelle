@@ -2,11 +2,9 @@ package beans;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-
+import utils.JsfUtil;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
@@ -45,11 +43,9 @@ public class DestinazioneBean {
 		try {
 			destinazioneBean.modificaDatiDestinazione(destinazione);
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hotel inesistente!", "Hotel inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Hotel inesistente!");
 		}
 	}
 	
@@ -63,11 +59,9 @@ public class DestinazioneBean {
 		try {
 			destinazioneBean.aggiuntaEscursione(destinazione, escursione, numeroPartecipanti);
 		} catch (EscursioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escursione inesistente!", "Escursione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Destinazione inesistente!", "Destinazione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Destinazione inesistente!");
 		}
 	}
 	
@@ -81,11 +75,9 @@ public class DestinazioneBean {
 		try {
 			destinazioneBean.modificaDatiEscursione(destinazione, escursione, numeroPartecipanti);
 		} catch (EscursioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escursione inesistente!", "Escursione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Destinazione inesistente!", "Destinazione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Destinazione inesistente!");
 		}
 	}
 	
@@ -98,11 +90,9 @@ public class DestinazioneBean {
 		try {
 			destinazioneBean.eliminaEscursione(destinazione, escursione);
 		} catch (EscursioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escursione inesistente!", "Escursione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Destinazione inesistente!", "Destinazione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Destinazione inesistente!");
 		}
 	}
 }
