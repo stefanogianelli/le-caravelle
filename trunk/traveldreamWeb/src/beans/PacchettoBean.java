@@ -4,12 +4,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityExistsException;
 
+import utils.JsfUtil;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
@@ -55,14 +54,11 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.creaPacchettoPersonalizzato(pacchetto);
 		} catch (EntityExistsException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Il pacchetto è già presente nel database!", "Il pacchetto è già presente nel database!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hotel inesistente!", "Hotel inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Hotel inesistente!");
 		}
 	}
 	
@@ -74,11 +70,9 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.salvaPacchetto(pacchetto);
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (PacchettoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pacchetto inesistente!", "Pacchetto inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	
@@ -90,17 +84,13 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.salvaPacchettoPredefinito(pacchetto);
 		} catch (EntityExistsException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Il pacchetto è già presente nel database!", "Il pacchetto è già presente nel database!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hotel inesistente!", "Hotel inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Hotel inesistente!");
 		} catch (PacchettoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pacchetto inesistente!", "Pacchetto inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	
@@ -112,8 +102,7 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.acquistaPacchetto(pacchetto);
 		} catch (PacchettoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pacchetto inesistente!", "Pacchetto inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	
@@ -126,11 +115,9 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.condividiPacchetto(pacchetto, email);
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hotel inesistente!", "Hotel inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Hotel inesistente!");
 		}
 	}
 	
@@ -142,8 +129,7 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.eliminaPacchetto(pacchetto);
 		} catch (PacchettoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pacchetto inesistente!", "Pacchetto inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	
@@ -156,14 +142,11 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.aggiuntaDestinazione(pacchetto, destinazione);
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Hotel inesistente!", "Hotel inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Hotel inesistente!");
 		} catch (PacchettoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pacchetto inesistente!", "Pacchetto inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	
@@ -176,11 +159,9 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.eliminaDestinazione(pacchetto, destinazione);
 		} catch (DestinazioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Destinazione inesistente!", "Destinazione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Destinazione inesistente!");
 		} catch (PacchettoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pacchetto inesistente!", "Pacchetto inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	
@@ -193,11 +174,9 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.aggiuntaCollegamento(pacchetto, collegamento);
 		} catch (CollegamentoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Collegamento inesistente!", "Collegamento inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Collegamento inesistente!");
 		} catch (PacchettoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pacchetto inesistente!", "Pacchetto inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	
@@ -210,11 +189,9 @@ public class PacchettoBean {
 		try {
 			pacchettoBean.modificaCollegamento(pacchetto, collegamento);
 		} catch (CollegamentoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Collegamento inesistente!", "Collegamento inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Collegamento inesistente!");
 		} catch (PacchettoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pacchetto inesistente!", "Pacchetto inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 }

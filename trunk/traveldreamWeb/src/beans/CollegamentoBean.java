@@ -4,12 +4,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityExistsException;
 
+import utils.JsfUtil;
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -49,11 +48,9 @@ public class CollegamentoBean {
 		try {
 			collegamentoBean.creaCollegamento(this.getCollegamento());
 		} catch (EntityExistsException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Il collegamento è già presente nel database!", "Il collegamento è già presente nel database!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Il collegamento è già presente nel database!");
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		}
 	}
 	
@@ -65,11 +62,9 @@ public class CollegamentoBean {
 		try {
 			collegamentoBean.modificaDatiCollegamento(collegamento);
 		} catch (CollegamentoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Collegamento inesistente!", "Collegamento inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Collegamento inesistente!");
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Città sconosciuta!", "Città sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Città sconosciuta!");
 		}
 	}
 	
@@ -81,8 +76,7 @@ public class CollegamentoBean {
 		try {
 			collegamentoBean.eliminaCollegamento(collegamento);
 		} catch (CollegamentoInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Collegamento inesistente!", "Collegamento inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Collegamento inesistente!");
 		}
 	}
 }

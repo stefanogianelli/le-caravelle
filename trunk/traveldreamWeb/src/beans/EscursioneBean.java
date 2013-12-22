@@ -4,12 +4,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityExistsException;
 
+import utils.JsfUtil;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EscursioneInesistenteException;
@@ -53,11 +52,9 @@ public class EscursioneBean {
 		try {
 			escursioneBean.creaEscursione(getEscursione());
 		} catch (EntityExistsException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "L'escursione è già presente nel database!", "L'escursione è già presente nel database!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("L'escursione è già presente nel database!");
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Regione sconosciuta!", "Regione sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Regione sconosciuta!");
 		}
 	}
 	
@@ -69,11 +66,9 @@ public class EscursioneBean {
 		try {
 			escursioneBean.modificaDatiEscursione(escursione);
 		} catch (EscursioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escursione inesistente!", "Escursione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (CittaInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Regione sconosciuta!", "Regione sconosciuta!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Regione sconosciuta!");
 		}
 	}
 	
@@ -85,8 +80,7 @@ public class EscursioneBean {
 		try {
 			escursioneBean.eliminaEscursione(escursione);
 		} catch (EscursioneInesistenteException e) {
-			FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escursione inesistente!", "Escursione inesistente!");
-			FacesContext.getCurrentInstance().addMessage(null, messaggio);
+			JsfUtil.errorMessage("Escursione inesistente!");
 		}
 	}
 
