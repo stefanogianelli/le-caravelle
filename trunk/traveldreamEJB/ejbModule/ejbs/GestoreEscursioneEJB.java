@@ -133,6 +133,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	public EscursioneDTO convertiInDTO (Escursioni escursione) {
 		EscursioneDTO dto = new EscursioneDTO();
 		
+		dto.setId(escursione.getId());
 		dto.setCategoria(escursione.getCategoria());
 		dto.setData(escursione.getData());
 		dto.setDurata(escursione.getDurata());

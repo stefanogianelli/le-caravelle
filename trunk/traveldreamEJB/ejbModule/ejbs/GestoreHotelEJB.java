@@ -109,6 +109,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	public HotelDTO convertiInDTO (Hotel hotel) {
 		HotelDTO dto = new HotelDTO ();
 		
+		dto.setId(hotel.getId());
 		dto.setEmail(hotel.getEmail());
 		dto.setIndirizzo(hotel.getIndirizzo());
 		dto.setNome(hotel.getNome());
