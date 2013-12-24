@@ -1,5 +1,13 @@
 package ejbs;
 
+import interfaces.GestoreCittaLocal;
+import interfaces.GestoreCollegamentoLocal;
+import interfaces.GestoreDestinazioneLocal;
+import interfaces.GestoreHotelLocal;
+import interfaces.GestorePacchettoLocal;
+import interfaces.GestorePacchettoPredefinitoLocal;
+import interfaces.GestoreProfiloLocal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,13 +20,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import remote.GestoreCittaRemote;
-import remote.GestoreCollegamentoRemote;
-import remote.GestoreDestinazioneRemote;
-import remote.GestoreHotelRemote;
-import remote.GestorePacchettoPredefinitoRemote;
-import remote.GestorePacchettoRemote;
-import remote.GestoreProfiloRemote;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
@@ -37,28 +38,28 @@ import enums.TipoPacchetto;
  * Session Bean implementation class GestorePacchettoEJB
  */
 @Stateless
-public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoRemote {
+public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLocal {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreHotelRemote hotel;
+	private GestoreHotelLocal hotel;
 	
 	@EJB
-	private GestoreDestinazioneRemote destinazione;
+	private GestoreDestinazioneLocal destinazione;
 	
 	@EJB
-	private GestoreCollegamentoRemote collegamento;
+	private GestoreCollegamentoLocal collegamento;
 	
 	@EJB
-	private GestoreCittaRemote citta;
+	private GestoreCittaLocal citta;
 	
 	@EJB
-	private GestoreProfiloRemote profilo;
+	private GestoreProfiloLocal profilo;
 	
 	@EJB
-	private GestorePacchettoPredefinitoRemote predefinito;
+	private GestorePacchettoPredefinitoLocal predefinito;
 	
     /**
      * Default constructor. 

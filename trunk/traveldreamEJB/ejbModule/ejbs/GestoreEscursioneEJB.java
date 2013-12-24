@@ -1,5 +1,8 @@
 package ejbs;
 
+import interfaces.GestoreCittaLocal;
+import interfaces.GestoreEscursioneLocal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import remote.GestoreCittaRemote;
-import remote.GestoreEscursioneRemote;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EscursioneInesistenteException;
@@ -22,13 +23,13 @@ import entities.Escursioni;
  * Session Bean implementation class GestoreEscursioneEJB
  */
 @Stateless
-public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursioneRemote {
+public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursioneLocal {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreCittaRemote citta;
+	private GestoreCittaLocal citta;
 	
     /**
      * Default constructor. 

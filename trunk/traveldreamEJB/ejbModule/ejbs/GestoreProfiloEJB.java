@@ -1,5 +1,7 @@
 package ejbs;
 
+import interfaces.GestoreProfiloLocal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,6 @@ import javax.persistence.PersistenceContext;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import remote.EmailBeanLocal;
-import remote.GestoreProfiloRemote;
 import dtos.PersonaDTO;
 import dtos.UtenteDTO;
 import entities.Gruppi;
@@ -25,7 +26,7 @@ import entities.Utenti;
  * Session Bean implementation class GestoreProfiloEJB
  */
 @Stateless
-public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloRemote {
+public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	
 	private final int LUNGHEZZA_PASSWORD = 6;
 

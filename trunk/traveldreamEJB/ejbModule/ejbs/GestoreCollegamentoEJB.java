@@ -1,5 +1,8 @@
 package ejbs;
 
+import interfaces.GestoreCittaLocal;
+import interfaces.GestoreCollegamentoLocal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import remote.GestoreCittaRemote;
-import remote.GestoreCollegamentoRemote;
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -23,13 +24,13 @@ import enums.TipoCollegamento;
  * Session Bean implementation class GestoreCollegamentoEJB
  */
 @Stateless
-public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreCollegamentoRemote {
+public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreCollegamentoLocal {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreCittaRemote citta;
+	private GestoreCittaLocal citta;
 	
     /**
      * Default constructor. 
