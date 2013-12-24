@@ -5,62 +5,50 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
-<h:head>
+<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><ui:insert name="title">Default Title</ui:insert></title>
 	<h:outputStylesheet library="css" name="stile.css" />
-</h:head> 
+</head> 
 
-<h:body>
+<body>
+<div class="page-wrapper">
 
-	<div class="intestazione">
-	<pre>
-		<a href="login.xhtml">Accedi</a> | <a href="utente/areaCliente.xhtml">Area cliente</a>
-	</pre> </div>
-	
-	<hr></hr>
-	
-	<div class="link">
-	<p>
-		<a href="utente/creazionePacchetto.xhtml">Crea pacchetto</a> | <a href="pacchettiPredefiniti.xhtml">Scegli pacchetto</a>
-		 | <a href="lastMinute.xhtml">Last minute</a> | <a href="nostriCosigli.xhtml">I nostri consigli</a> |
-		  <a href="guidaDestinazioni.xhtml">Guida alle destinazioni</a>
-	</p> </div>
-	
-	<hr></hr>
-	
-	<div class="contenuto">
+	<div class="intro">
+		<div id="access">
+			<a href="login.xhtml" title="Login e registrazione">Accedi</a>  |  <a href="utente/areaCliente.xhtml">Area cliente</a>
+		</div>
 	</div>
 	
-	<hr></hr>
+	<div class="menu">
+		<a href="utente/creazionePacchetto.xhtml">Crea pacchetto</a> | <a href="pacchettiPredefiniti.xhtml">Scegli pacchetto</a> | <a href="lastMinute.xhtml">Last minute</a> | <a href="nostriCosigli.xhtml">I nostri consigli</a> |
+			  <a href="guidaDestinazioni.xhtml">Guida alle destinazioni</a>
+	</div>
+	
+	<ui:insert name="content">Content</ui:insert>
 	
 	<div class="footer">
-	
-		<div class="link">
-		<b><a href="newsletter.xhtml">Iscriviti alla newsletter</a></b>
-		<b>Link utili</b>
+
+		<div id="newsletter">
+			<a href="newsletter.xhtml">Iscriviti alla newsletter</a>
 		</div>
 		
 				
-		<div class="elenco">
+		<div class="link">
+		<h4>Link utili</h4>
 		<ul>
-		<li><a href="chiSiamo.xhtml">Chi siamo</a></li>
-		<li><a href="contatti.xhtml">Contatti</a></li>
-		<li><a href="mappaSito.xhtml">Mappa sito</a></li>
-		</ul> </div>
-		<div class="elenco">
-		<ul>
-		<li><a href="terminiCondizioni.xhtml">Termini e condizioni</a></li>
-		<li><a href="faq.xhtml">FAQ</a></li>
-		<li><a href="noteLegali.xhtml">Note legali</a></li>
-		</ul></div>
-		<div class="elenco">
-		<ul>
-		<li><a href="press.xhtml">Press</a></li>
-		<li><a href="lavora.xhtml">Lavora con noi</a></li>
-		</ul></div>
+			<li><a href="chiSiamo.xhtml">Chi siamo</a></li>
+			<li><a href="contatti.xhtml">Contatti</a></li>
+			<li><a href="mappaSito.xhtml">Mappa sito</a></li>
+			<li><a href="terminiCondizioni.xhtml">Termini e condizioni</a></li>
+			<li><a href="faq.xhtml">FAQ</a></li>
+			<li><a href="noteLegali.xhtml">Note legali</a></li>
+			<li><a href="press.xhtml">Press</a></li>
+			<li><a href="lavora.xhtml">Lavora con noi</a></li>
+		</ul>
+		</div>
 		
 	</div>
-	
-</h:body> 
+</div>
+</body> 
 </html>
