@@ -1,4 +1,4 @@
-package remote;
+package interfaces;
 
 import javax.ejb.Local;
 import javax.mail.MessagingException;
