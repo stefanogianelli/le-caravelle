@@ -1,5 +1,6 @@
 package ejbs;
 
+import interfaces.EmailBeanLocal;
 import interfaces.GestoreProfiloLocal;
 
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import remote.EmailBeanLocal;
 import dtos.PersonaDTO;
 import dtos.UtenteDTO;
 import entities.Gruppi;

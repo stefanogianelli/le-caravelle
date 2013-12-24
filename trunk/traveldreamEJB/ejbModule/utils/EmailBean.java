@@ -1,5 +1,7 @@
 package utils;
 
+import interfaces.EmailBeanLocal;
+
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.mail.Message;
@@ -9,8 +11,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import remote.EmailBeanLocal;
 
 /**
  * Session Bean implementation class EmailBean
