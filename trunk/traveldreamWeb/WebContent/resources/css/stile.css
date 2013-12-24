@@ -1,10 +1,117 @@
-intestazione {
-	font-family:Arial;
-	color: #666666;
-	font-size: 18px;
-	text-align:center;
-	vertical-aligb: center;
-	background-color: #ededed;
-	width: 1260px;
-	height: 115px;
+/* basic elements */
+html {
+	margin: 0;
+	padding: 0;
 	}
+body { 
+	font-family: Arial, Helvetica, sans-serif;
+	color: black; 
+	background-color: white; 
+	margin: 0; 
+	padding: 0;
+	}
+p { 
+	font-size: 22;
+	margin-top: 20px 20px; 
+	text-align: left;
+	}
+h1 { 
+	font: Impact;
+	font-size: 70;
+	margin: 40px 40px; 
+	color: #999999;
+	}
+h2 { 
+	font: Arial;
+	font-size: 44;
+	font-weight:bold;
+	margin: 40px 40px; 
+	color: #999999;
+	}
+h3 { 
+	font: Arial;
+	font-size: 30;
+	font-weight:bold;
+	margin: 20px 20px; 
+	color: #999999;
+	}
+h4 { 
+	font: Impact;
+	font-size: 27;
+	font-weight:bold;
+	margin: 20px 20px; 
+	color: white;
+	}
+a:link { 
+	font-size: 18;
+	font-weight: bold; 
+	text-decoration: none; 
+	color: white;
+	}
+a:hover { 
+	text-shadow:2px 2px black;
+	}
+
+/* specific divs */
+.page-wrapper { 
+	min-weight: 1260 px;
+	padding: 0 80px 0 80px;  
+	margin: 0; 
+	position: relative;
+	}
+	
+.intro {
+	background-color: #dcdcdc;
+	min-height: 115px;
+	width: 100%;
+	padding: 0;
+	margin: 0;	
+}
+
+.access {
+	text-align: center;
+	min-weight: 350px;
+	margin: 20px 20px;	
+}
+
+.access a:link {
+	color: #666666;
+}
+
+.access a:hover {
+	color: #dc0800;
+	text-shadow:2px 2px black;
+}
+
+.menu {
+	background-color: #999999;
+	min-height: 45px;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.footer {
+	background-color: #999999;
+	min-height: 330px;
+	width: 100%;
+	padding: 0;
+	margin: 0;	
+}
+
+.newsletter a:link {
+	font: Impact;
+	font-size: 27;
+	font-color: white;
+	font-weight:bold;
+	text-decoration: none;
+}
+
+.newsletter a:hover { 
+	text-shadow:2px 2px black;
+	}
+	
+.link li{
+	list-style-type: none;
+}
