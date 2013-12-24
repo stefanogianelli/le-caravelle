@@ -60,7 +60,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `traveldreamdb`.`citta` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`citta` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `regione` VARCHAR(45) NOT NULL,
   `nazione` VARCHAR(45) NOT NULL,
@@ -99,7 +99,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `traveldreamdb`.`pacchetti_predefiniti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti_predefiniti` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `prezzo` DOUBLE NOT NULL,
   `idHotel` INT NOT NULL,
@@ -119,7 +119,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `traveldreamdb`.`pacchetti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `numPartecipanti` INT NOT NULL DEFAULT 1,
   `prezzo` DOUBLE NOT NULL,
@@ -179,7 +179,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `traveldreamdb`.`collegamenti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`collegamenti` (
-  `codice` INT NOT NULL,
+  `codice` INT NOT NULL AUTO_INCREMENT,
   `tipoCollegamento` VARCHAR(45) NOT NULL,
   `origine` VARCHAR(45) NOT NULL,
   `destinazione` VARCHAR(45) NOT NULL,
@@ -260,7 +260,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `traveldreamdb`.`escursioni` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`escursioni` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `data` DATE NOT NULL,
   `ora` TIME NOT NULL,
@@ -284,7 +284,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `traveldreamdb`.`destinazioni` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`destinazioni` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `dataArrivo` DATE NOT NULL,
   `dataPartenza` DATE NOT NULL,
   `idPacchetto` INT NOT NULL,
