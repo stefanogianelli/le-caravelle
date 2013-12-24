@@ -10,6 +10,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import remote.GestoreCollegamentoRemote;
+import remote.GestoreEscursioneRemote;
+import remote.GestoreHotelRemote;
+import remote.GestorePacchettoPredefinitoRemote;
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
@@ -27,19 +31,19 @@ import entities.PacchettiPredefiniti;
  * Session Bean implementation class GestorePacchettoPredefinitoEJB
  */
 @Stateless
-public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefinito {
+public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefinito, GestorePacchettoPredefinitoRemote {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreHotelEJB hotel;
+	private GestoreHotelRemote hotel;
 	
 	@EJB
-	private GestoreCollegamentoEJB collegamento;
+	private GestoreCollegamentoRemote collegamento;
 	
 	@EJB
-	private GestoreEscursioneEJB escursione;
+	private GestoreEscursioneRemote escursione;
 	
     /**
      * Default constructor. 
@@ -195,13 +199,8 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		em.remove(this.convertiInEntita(pacchetto));
 	}
 	
-	/**
-	 * Permette la conversione da un DTO alla rispettiva entità
-	 * @param pacchetto Il DTO del pacchetto predefinito
-	 * @return L'entità desiderata
-	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 */
-	protected PacchettiPredefiniti convertiInEntita (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
+	@Override
+	public PacchettiPredefiniti convertiInEntita (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
 		PacchettiPredefiniti pacchettoEntity = em.find(PacchettiPredefiniti.class, pacchetto.getId());
 		if (pacchettoEntity != null)
 			return pacchettoEntity;
@@ -209,12 +208,8 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 			throw new PacchettoInesistenteException ();
 	}
 	
-	/**
-	 * Permette la conversione da un'entità al rispettivo DTO
-	 * @param pacchetto L'entità di partenza
-	 * @return Il relativo DTO
-	 */
-	protected PacchettoPredefinitoDTO convertiInDTO (PacchettiPredefiniti pacchetto) {
+	@Override
+	public PacchettoPredefinitoDTO convertiInDTO (PacchettiPredefiniti pacchetto) {
 		PacchettoPredefinitoDTO pacchettoDTO = new PacchettoPredefinitoDTO();
 		
 		pacchettoDTO.setId(pacchetto.getId());

@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import remote.GestoreCittaRemote;
+import remote.GestoreHotelRemote;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.HotelInesistenteException;
@@ -20,7 +21,7 @@ import entities.Hotel;
  * Session Bean implementation class GestoreHotelEJB
  */
 @Stateless
-public class GestoreHotelEJB implements GestoreHotel {
+public class GestoreHotelEJB implements GestoreHotel, GestoreHotelRemote {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -94,13 +95,8 @@ public class GestoreHotelEJB implements GestoreHotel {
 		em.remove(this.convertiInEntita(hotel));
 	}
 	
-	/**
-	 * Permette la conversione da un DTO alla rispettiva entità
-	 * @param hotel Il DTO dell'hotel
-	 * @return L'entità desiderata
-	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
-	 */
-	protected Hotel convertiInEntita (HotelDTO hotel) throws HotelInesistenteException {
+	@Override
+	public Hotel convertiInEntita (HotelDTO hotel) throws HotelInesistenteException {
 		Hotel hotelEntity = em.find(Hotel.class, hotel.getId());
 		if (hotelEntity != null)
 			return hotelEntity;
@@ -108,12 +104,8 @@ public class GestoreHotelEJB implements GestoreHotel {
 			throw new HotelInesistenteException ();
 	}	
 	
-	/**
-	 * Permette la conversione da un'entità hotel al rispettivo DTO
-	 * @param hotel L'oggetto da converitre
-	 * @return Il DTO risultante
-	 */
-	protected HotelDTO convertiInDTO (Hotel hotel) {
+	@Override
+	public HotelDTO convertiInDTO (Hotel hotel) {
 		HotelDTO dto = new HotelDTO ();
 		
 		dto.setEmail(hotel.getEmail());

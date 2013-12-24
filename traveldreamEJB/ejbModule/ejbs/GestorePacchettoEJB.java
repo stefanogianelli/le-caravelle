@@ -12,6 +12,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import remote.GestoreCittaRemote;
+import remote.GestoreCollegamentoRemote;
+import remote.GestoreDestinazioneRemote;
+import remote.GestoreHotelRemote;
+import remote.GestorePacchettoPredefinitoRemote;
+import remote.GestorePacchettoRemote;
+import remote.GestoreProfiloRemote;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
@@ -30,28 +37,28 @@ import enums.TipoPacchetto;
  * Session Bean implementation class GestorePacchettoEJB
  */
 @Stateless
-public class GestorePacchettoEJB implements GestorePacchetto {
+public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoRemote {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreHotelEJB hotel;
+	private GestoreHotelRemote hotel;
 	
 	@EJB
-	private GestoreDestinazioneEJB destinazione;
+	private GestoreDestinazioneRemote destinazione;
 	
 	@EJB
-	private GestoreCollegamentoEJB collegamento;
+	private GestoreCollegamentoRemote collegamento;
 	
 	@EJB
-	private GestoreCittaEJB citta;
+	private GestoreCittaRemote citta;
 	
 	@EJB
-	private GestoreProfiloEJB profilo;
+	private GestoreProfiloRemote profilo;
 	
 	@EJB
-	private GestorePacchettoPredefinitoEJB predefinito;
+	private GestorePacchettoPredefinitoRemote predefinito;
 	
     /**
      * Default constructor. 
@@ -225,7 +232,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	 * @param dataArrivo La data nella quale rimuovere il collegamento di andata
 	 * @param dataPartenza La data nella quale rimuovere il collegamento di ritorno
 	 */
-	protected void rimuoviCollegamenti (Pacchetti pacchetto, Date dataArrivo, Date dataPartenza) {
+	private void rimuoviCollegamenti (Pacchetti pacchetto, Date dataArrivo, Date dataPartenza) {
 		Collegamenti andata, ritorno;
 		
 		Query q = em.createNamedQuery("Collegamenti.getCollegamentoDaData", Collegamenti.class);
@@ -252,13 +259,8 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		em.merge(pacchetto);
 	}
 
-	/**
-	 * Permette la conversione da un DTO alla rispettiva entità
-	 * @param pacchetto Il DTO del pacchetto
-	 * @return L'entità desiderata
-	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 */
-	protected Pacchetti convertiInEntita (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
+	@Override
+	public Pacchetti convertiInEntita (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
 		Pacchetti pacchettoEntity = em.find(Pacchetti.class, pacchetto.getId());
 		if (pacchettoEntity != null)
 			return pacchettoEntity;
@@ -266,12 +268,8 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 			throw new PacchettoInesistenteException();
 	}
 	
-	/**
-	 * Permette la conversione da un'entità al rispettivo DTO
-	 * @param pacchetto L'entità di partenza
-	 * @return Il relativo DTO
-	 */
-	protected PacchettoDTO convertiInDTO (Pacchetti pacchetto) {
+	@Override
+	public PacchettoDTO convertiInDTO (Pacchetti pacchetto) {
 		PacchettoDTO pacchettoDTO = new PacchettoDTO();
 		
 		pacchettoDTO.setId(pacchetto.getId());
