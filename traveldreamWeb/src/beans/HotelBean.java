@@ -66,6 +66,7 @@ public class HotelBean {
 		System.out.println(getHotel().getCitta().getNazione());
 		try {
 			hotelBean.creaHotel(this.getHotel());
+			JsfUtil.infoMessage("Hotel aggiunto correttamente!");
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("L'hotel è già presente nel database!");
 		} catch (CittaInesistenteException e) {
