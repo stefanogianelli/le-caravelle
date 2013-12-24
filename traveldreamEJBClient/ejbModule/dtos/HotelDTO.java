@@ -19,10 +19,8 @@ public class HotelDTO implements Serializable {
 	@NotEmpty
 	private String nome;
 
-	@NotEmpty
 	private double prezzo;
 
-	@NotEmpty
 	private int stelle;
 
 	@NotEmpty
