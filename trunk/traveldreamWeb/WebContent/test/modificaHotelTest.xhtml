@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Modifica Hotel Test</title>
+</h:head> 
+<body> 
+	<f:event listener="#{hotel.elencoHotel()}" type="preRenderView" />
+	<h1>Elenco Hotel</h1>
+	<h:link value="indietro" outcome="hotelTest" />
+	<h:messages />
+	<h:form>
+		<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{h.nome}" rendered="#{not h.editable}" />
+				<h:inputText value="#{h.nome}" rendered="#{h.editable}" />		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Indirizzo</f:facet>
+				<h:outputText value="#{h.indirizzo}" rendered="#{not h.editable}" />
+				<h:inputText value="#{h.indirizzo}" rendered="#{h.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Città</f:facet>
+				<h:outputText value="#{h.citta.nome}" rendered="#{not h.editable}" />
+				<h:inputText value="#{hotel.nomeCitta}" rendered="#{h.editable}" />
+			</h:column>			
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				<h:outputText value="#{h.prezzo}" rendered="#{not h.editable}" />
+				<h:inputText value="#{h.prezzo}" rendered="#{h.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Stelle</f:facet>
+				<h:outputText value="#{h.stelle}" rendered="#{not h.editable}" />
+				<h:inputText value="#{h.stelle}" rendered="#{h.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">eMail</f:facet>
+				<h:outputText value="#{h.email}" rendered="#{not h.editable}" />
+				<h:inputText value="#{h.email}" rendered="#{h.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Telefono</f:facet>
+				<h:outputText value="#{h.telefono}" rendered="#{not h.editable}" />
+				<h:inputText value="#{h.telefono}" rendered="#{h.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Website</f:facet>
+				<h:outputText value="#{h.website}" rendered="#{not h.editable}" />
+				<h:inputText value="#{h.website}" rendered="#{h.editable}" />
+			</h:column>
+			<h:column>
+				<h:commandButton action="#{hotel.abilitaModifica(h)}" value="modifica" rendered="#{not h.editable}" />
+				<h:commandButton action="#{hotel.modificaHotel(h)}" value="salva" rendered="#{h.editable}" />
+				<h:commandButton action="#{hotel.disabilitaModifica(h)}" value="annulla" rendered="#{h.editable}" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</body> 
+</html>
