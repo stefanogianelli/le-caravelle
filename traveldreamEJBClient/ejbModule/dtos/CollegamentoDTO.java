@@ -14,31 +14,24 @@ public class CollegamentoDTO implements Serializable {
 
 	private int codice;
 
-	@NotEmpty
 	private Date dataPartenza;
 
 	@NotEmpty
 	private String destinazione;
 
-	@NotEmpty
 	private Time oraArrivo;
 
-	@NotEmpty
 	private Time oraPartenza;
 
 	@NotEmpty
 	private String origine;
 	
-	@NotEmpty
 	private double prezzo;
 
-	@NotEmpty
 	private TipoCollegamento tipoCollegamento;
 	
-	@NotEmpty
 	private CittaDTO cittaArrivo;
 	
-	@NotEmpty
 	private CittaDTO cittaPartenza;
 	
 	public int getCodice() {

@@ -1,27 +1,38 @@
 package beans;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import ejbs.GestoreCitta;
 import ejbs.GestoreCollegamento;
+import enums.TipoCollegamento;
 
 @ManagedBean(name="collegamento")
-@RequestScoped
+@ViewScoped
 public class CollegamentoBean {
 
 	@EJB
 	private GestoreCollegamento collegamentoBean;
 	
+	@EJB
+	private GestoreCitta cittaBean;
+	
 	private CollegamentoDTO collegamento;
+	private String cittaPartenza;
+	private String cittaArrivo;
+	private Date oraPartenza;
+	private Date oraArrivo;
 	
 	@PostConstruct
 	public void setUp () {
@@ -36,6 +47,46 @@ public class CollegamentoBean {
 		this.collegamento = collegamento;
 	}
 
+	public String getCittaPartenza() {
+		return cittaPartenza;
+	}
+
+	public void setCittaPartenza(String cittaPartenza) {
+		this.cittaPartenza = cittaPartenza;
+	}
+
+	public String getCittaArrivo() {
+		return cittaArrivo;
+	}
+
+	public void setCittaArrivo(String cittaArrivo) {
+		this.cittaArrivo = cittaArrivo;
+	}
+
+	public Date getOraPartenza() {
+		return oraPartenza;
+	}
+
+	public void setOraPartenza(Date oraPartenza) {
+		this.oraPartenza = oraPartenza;
+	}
+
+	public Date getOraArrivo() {
+		return oraArrivo;
+	}
+
+	public void setOraArrivo(Date oraArrivo) {
+		this.oraArrivo = oraArrivo;
+	}
+	
+	/**
+	 * Ritorna l'elenco delle tipologie di collegamento
+	 * @return Le tipologie di collegamento disponibili
+	 */
+	public TipoCollegamento [] getTipiCollegamento () {
+		return TipoCollegamento.values();
+	}
+
 	public List<CollegamentoDTO> cercaCollegamenti () {
 		//TODO: trovare modo furbo per ordinare le destinazioni e cercare i collegamenti tra le due città e nella data di riferimento ...
 		return null;
@@ -46,7 +97,12 @@ public class CollegamentoBean {
 	 */
 	public void creaCollegamento () {
 		try {
+			this.getCollegamento().setCittaPartenza(cittaBean.cercaCitta(cittaPartenza));
+			this.getCollegamento().setCittaArrivo(cittaBean.cercaCitta(cittaArrivo));
+			this.getCollegamento().setOraPartenza(new Time(this.getOraPartenza().getTime()));
+			this.getCollegamento().setOraArrivo(new Time(this.getOraArrivo().getTime()));
 			collegamentoBean.creaCollegamento(this.getCollegamento());
+			JsfUtil.infoMessage("Collegamento aggiunto correttamente!");
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("Il collegamento è già presente nel database!");
 		} catch (CittaInesistenteException e) {
