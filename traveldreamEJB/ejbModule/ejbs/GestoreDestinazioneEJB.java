@@ -1,5 +1,11 @@
 package ejbs;
 
+import interfaces.GestoreCittaLocal;
+import interfaces.GestoreDestinazioneLocal;
+import interfaces.GestoreEscursioneLocal;
+import interfaces.GestoreHotelLocal;
+import interfaces.GestorePacchettoLocal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import remote.GestoreCittaRemote;
-import remote.GestoreDestinazioneRemote;
-import remote.GestoreEscursioneRemote;
-import remote.GestoreHotelRemote;
-import remote.GestorePacchettoRemote;
 import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
 import eccezioni.CittaInesistenteException;
@@ -28,22 +29,22 @@ import entities.Escursioni;
  * Session Bean implementation class GestoreDestinazioneEJB
  */
 @Stateless
-public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDestinazioneRemote {
+public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDestinazioneLocal {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreHotelRemote hotel;
+	private GestoreHotelLocal hotel;
 	
 	@EJB
-	private GestorePacchettoRemote pacchetto;
+	private GestorePacchettoLocal pacchetto;
 	
 	@EJB
-	private GestoreEscursioneRemote escursione;
+	private GestoreEscursioneLocal escursione;
 	
 	@EJB
-	private GestoreCittaRemote citta;
+	private GestoreCittaLocal citta;
 	
     /**
      * Default constructor. 

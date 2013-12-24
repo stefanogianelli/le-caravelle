@@ -1,5 +1,7 @@
 package ejbs;
 
+import interfaces.GestoreCittaLocal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import remote.GestoreCittaRemote;
 import dtos.CittaDTO;
 import eccezioni.CittaInesistenteException;
 import entities.Citta;
@@ -17,7 +18,7 @@ import entities.Citta;
  * Session Bean implementation class GestoreCittaEJB
  */
 @Stateless
-public class GestoreCittaEJB implements GestoreCitta, GestoreCittaRemote {
+public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 
 	@PersistenceContext
 	private EntityManager em;

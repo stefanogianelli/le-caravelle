@@ -1,5 +1,10 @@
 package ejbs;
 
+import interfaces.GestoreCollegamentoLocal;
+import interfaces.GestoreEscursioneLocal;
+import interfaces.GestoreHotelLocal;
+import interfaces.GestorePacchettoPredefinitoLocal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,10 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import remote.GestoreCollegamentoRemote;
-import remote.GestoreEscursioneRemote;
-import remote.GestoreHotelRemote;
-import remote.GestorePacchettoPredefinitoRemote;
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
@@ -31,19 +32,19 @@ import entities.PacchettiPredefiniti;
  * Session Bean implementation class GestorePacchettoPredefinitoEJB
  */
 @Stateless
-public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefinito, GestorePacchettoPredefinitoRemote {
+public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefinito, GestorePacchettoPredefinitoLocal {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreHotelRemote hotel;
+	private GestoreHotelLocal hotel;
 	
 	@EJB
-	private GestoreCollegamentoRemote collegamento;
+	private GestoreCollegamentoLocal collegamento;
 	
 	@EJB
-	private GestoreEscursioneRemote escursione;
+	private GestoreEscursioneLocal escursione;
 	
     /**
      * Default constructor. 

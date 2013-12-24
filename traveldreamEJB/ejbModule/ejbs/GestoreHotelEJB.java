@@ -1,5 +1,8 @@
 package ejbs;
 
+import interfaces.GestoreCittaLocal;
+import interfaces.GestoreHotelLocal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import remote.GestoreCittaRemote;
-import remote.GestoreHotelRemote;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.HotelInesistenteException;
@@ -21,13 +22,13 @@ import entities.Hotel;
  * Session Bean implementation class GestoreHotelEJB
  */
 @Stateless
-public class GestoreHotelEJB implements GestoreHotel, GestoreHotelRemote {
+public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreCittaRemote citta;
+	private GestoreCittaLocal citta;
 	
     /**
      * Default constructor. 
