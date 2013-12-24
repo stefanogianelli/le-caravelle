@@ -67,7 +67,8 @@ public class HotelBean {
 	 */
 	public void cercaHotel () {
 		this.getElenco().addAll(hotelBean.elencoHotel(this.getNomeCitta()));
-		JsfUtil.infoMessage("Nessun risultato");
+		if (this.getElenco().isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
 	}
 
 	/**
