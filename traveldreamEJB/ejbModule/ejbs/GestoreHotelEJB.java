@@ -86,7 +86,8 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 		entity.setPrezzo(hotel.getPrezzo());
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
-		entity.setWebsite(hotel.getWebsite());		
+		entity.setWebsite(hotel.getWebsite());
+		entity.setCitta(citta.convertiInEntita(hotel.getCitta()));	
 		
 		em.merge(entity);
 	}

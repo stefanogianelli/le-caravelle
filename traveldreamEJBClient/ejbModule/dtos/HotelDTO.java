@@ -32,6 +32,8 @@ public class HotelDTO implements Serializable {
 	@NotEmpty
 	private CittaDTO citta;
 	
+	private boolean isEditable;
+	
 	public int getId() {
 		return id;
 	}
@@ -102,5 +104,13 @@ public class HotelDTO implements Serializable {
 
 	public void setCitta(CittaDTO citta) {
 		this.citta = citta;
+	}
+
+	public boolean isEditable() {
+		return isEditable;
+	}
+
+	public void setEditable(boolean isEditable) {
+		this.isEditable = isEditable;
 	}
 }
