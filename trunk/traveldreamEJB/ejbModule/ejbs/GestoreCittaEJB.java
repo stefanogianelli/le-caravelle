@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import remote.GestoreCittaRemote;
 import dtos.CittaDTO;
 import eccezioni.CittaInesistenteException;
 import entities.Citta;
@@ -16,7 +17,7 @@ import entities.Citta;
  * Session Bean implementation class GestoreCittaEJB
  */
 @Stateless
-public class GestoreCittaEJB implements GestoreCitta {
+public class GestoreCittaEJB implements GestoreCitta, GestoreCittaRemote {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -38,7 +39,8 @@ public class GestoreCittaEJB implements GestoreCitta {
 		return dto;
 	}
 	
-	protected Citta getCitta (String nome) {
+	@Override
+	public Citta getCitta (String nome) {
 		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
 		q.setParameter("nome", nome);
 		return (Citta) q.getSingleResult();
@@ -49,13 +51,8 @@ public class GestoreCittaEJB implements GestoreCitta {
 		return this.convertiInDTO(this.getCitta(nome));
 	}
     
-	/**
-	 * Permette la conversione da un DTO alla rispettiva entità
-	 * @param citta Il DTO della citta
-	 * @return L'entità desiderata
-	 * @throws CittaInesistenteException Se la città non viene trovata nel database
-	 */
-	protected Citta convertiInEntita (CittaDTO citta) throws CittaInesistenteException {
+	@Override
+	public Citta convertiInEntita (CittaDTO citta) throws CittaInesistenteException {
 		Citta cittaEntity = em.find(Citta.class, citta.getId());
 		if (cittaEntity != null)
 			return cittaEntity;
@@ -63,14 +60,11 @@ public class GestoreCittaEJB implements GestoreCitta {
 			throw new CittaInesistenteException ();
 	}	
 	
-	/**
-	 * Permette la conversione da un'entità al rispettivo DTO
-	 * @param citta L'entità di partenza
-	 * @return Il relativo DTO
-	 */
-	protected CittaDTO convertiInDTO (Citta citta) {
+	@Override
+	public CittaDTO convertiInDTO (Citta citta) {
 		CittaDTO dto = new CittaDTO();
 		
+		dto.setId(citta.getId());
 		dto.setNazione(citta.getNazione());
 		dto.setNome(citta.getNome());
 		dto.setRegione(citta.getRegione());

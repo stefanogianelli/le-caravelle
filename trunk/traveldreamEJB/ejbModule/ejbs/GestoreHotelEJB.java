@@ -3,16 +3,17 @@ package ejbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import remote.GestoreCittaRemote;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.HotelInesistenteException;
-import entities.Citta;
 import entities.Hotel;
 
 /**
@@ -24,8 +25,8 @@ public class GestoreHotelEJB implements GestoreHotel {
 	@PersistenceContext
 	private EntityManager em;
 	
-	//@EJB
-	//private GestoreCittaEJB citta;
+	@EJB
+	private GestoreCittaRemote citta;
 	
     /**
      * Default constructor. 
@@ -68,7 +69,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		//entity.setCitta(GestoreCittaEJB.convertiInEntita(hotel.getCitta()));		
+		entity.setCitta(citta.convertiInEntita(hotel.getCitta()));		
 		
 		em.persist(entity);
 	}
@@ -122,7 +123,7 @@ public class GestoreHotelEJB implements GestoreHotel {
 		dto.setStelle(hotel.getStelle());
 		dto.setTelefono(hotel.getTelefono());
 		dto.setWebsite(hotel.getWebsite());
-		//dto.setCitta(citta.convertiInDTO(hotel.getCitta()));
+		dto.setCitta(citta.convertiInDTO(hotel.getCitta()));
 		
 		return dto;
 	}
