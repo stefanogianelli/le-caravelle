@@ -12,6 +12,7 @@ import utils.JsfUtil;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.HotelInesistenteException;
+import ejbs.GestoreCitta;
 import ejbs.GestoreHotel;
 
 @ManagedBean(name="hotel")
@@ -21,7 +22,11 @@ public class HotelBean {
 	@EJB
 	private GestoreHotel hotelBean;
 	
+	@EJB
+	private GestoreCitta cittaBean;
+	
 	private HotelDTO hotel;
+	private String nomeCitta;
 	
 	@PostConstruct
 	public void setUp () {
@@ -36,6 +41,14 @@ public class HotelBean {
 		this.hotel = hotel;
 	}
 	
+	public String getNomeCitta() {
+		return nomeCitta;
+	}
+
+	public void setNomeCitta(String nomeCitta) {
+		this.nomeCitta = nomeCitta;
+	}
+
 	/**
 	 * Ricerca gli hotel nella città selezionata
 	 * @param citta Il nome della città
@@ -49,6 +62,7 @@ public class HotelBean {
 	 * Permette di creare un nuovo hotel
 	 */
 	public void creaHotel () {
+		//this.getHotel().setCitta(cittaBean.cercaCitta(nomeCitta));
 		try {
 			hotelBean.creaHotel(this.getHotel());
 		} catch (EntityExistsException e) {

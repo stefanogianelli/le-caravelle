@@ -14,4 +14,11 @@ public interface GestoreCitta {
 	 * @return L'elenco delle città
 	 */
 	List<CittaDTO> elencoCitta();
+	
+	/**
+	 * Permette di restituire il DTO della città associata ad un nome
+	 * @param nome Il nome della città
+	 * @return Il rispettivo DTO
+	 */
+	CittaDTO cercaCitta (String nome);
 }

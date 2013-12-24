@@ -74,7 +74,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `traveldreamdb`.`hotel` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`hotel` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `stelle` INT NOT NULL,
   `indirizzo` VARCHAR(45) NOT NULL,

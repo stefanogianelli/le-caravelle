@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import dtos.CittaDTO;
 import eccezioni.CittaInesistenteException;
@@ -35,6 +36,17 @@ public class GestoreCittaEJB implements GestoreCitta {
 			dto.add(this.convertiInDTO(c));
 		}
 		return dto;
+	}
+	
+	protected Citta getCitta (String nome) {
+		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
+		q.setParameter("nome", nome);
+		return (Citta) q.getSingleResult();
+	}
+	
+	@Override
+	public CittaDTO cercaCitta (String nome) {
+		return this.convertiInDTO(this.getCitta(nome));
 	}
     
 	/**
