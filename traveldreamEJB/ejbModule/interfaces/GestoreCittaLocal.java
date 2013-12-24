@@ -13,8 +13,9 @@ public interface GestoreCittaLocal {
 	 * Ritorna l'entità associata al nome fornito in input
 	 * @param nome Il nome della città
 	 * @return L'entità corrispondente
+	 * @throws CittaInesistenteException Se la città non viene trovata nel database
 	 */
-	Citta getCitta (String nome);
+	Citta getCitta (String nome) throws CittaInesistenteException;
 	
 	/**
 	 * Permette la conversione da un DTO alla rispettiva entità

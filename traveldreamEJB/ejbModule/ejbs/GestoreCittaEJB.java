@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -41,14 +42,18 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 	}
 	
 	@Override
-	public Citta getCitta (String nome) {
+	public Citta getCitta (String nome) throws CittaInesistenteException {
 		Query q = em.createNamedQuery("Citta.getCitta", Citta.class);
 		q.setParameter("nome", nome);
-		return (Citta) q.getSingleResult();
+		try {
+			return (Citta) q.getSingleResult();
+		} catch (NoResultException e) {
+			throw new CittaInesistenteException();
+		}
 	}
 	
 	@Override
-	public CittaDTO cercaCitta (String nome) {
+	public CittaDTO cercaCitta (String nome)  throws CittaInesistenteException {
 		return this.convertiInDTO(this.getCitta(nome));
 	}
     
