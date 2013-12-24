@@ -10,11 +10,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import remote.EmailBeanLocal;
+
 /**
  * Session Bean implementation class EmailBean
  */
 @Stateless
-public class EmailBean {
+public class EmailBean implements EmailBeanLocal {
 
 	@Resource(name = "mail/[email-account-name]")
 	private Session mailSession;
@@ -43,23 +45,13 @@ public class EmailBean {
     	Transport.send(msg);
     }
     
-    /**
-     * Invia l'email di benvenuto al nuovo utente. L'email contiene i dati riassuntivi per eseguire l'accesso al sito
-     * @param email L'indirizzo email a cui inviare il messaggio
-     * @param password La password generata
-     * @throws MessagingException
-     */
+    @Override
     public void inviaPassword (String email, String password) throws MessagingException {
     	String messaggio = "Benvenuto!\nDati d'accesso:\n- email: " + email + "\n- password: " + password;
     	this.inviaMessaggio(email, "Benvenuto in TravelDream!", messaggio);
     }
     
-    /**
-     * Invia l'email di reset della password. L'email contiene solo la nuova password generata
-     * @param email L'indirizzo email a cui inviare il messaggio
-     * @param password La password generata
-     * @throws MessagingException
-     */
+    @Override
     public void resetPassword (String email, String password) throws MessagingException {
     	String messaggio = "La tua nuova password è: " + password;
     	this.inviaMessaggio(email, "Reset Password", messaggio);

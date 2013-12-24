@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import remote.GestoreCittaRemote;
+import remote.GestoreCollegamentoRemote;
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -21,13 +23,13 @@ import enums.TipoCollegamento;
  * Session Bean implementation class GestoreCollegamentoEJB
  */
 @Stateless
-public class GestoreCollegamentoEJB implements GestoreCollegamento {
+public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreCollegamentoRemote {
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@EJB
-	private GestoreCittaEJB citta;
+	private GestoreCittaRemote citta;
 	
     /**
      * Default constructor. 
@@ -114,13 +116,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 		em.remove(this.convertiInEntita(collegamento));		
 	}
 	
-	/**
-	 * Permette la conversione da un DTO alla rispettiva entità
-	 * @param collegamento Il DTO del collegamento
-	 * @return L'entità desiderata
-	 * @throws CollegamentoInesistenteException Quando il collegamento non viene trovato nel database
-	 */
-	protected Collegamenti convertiInEntita (CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
+	@Override
+	public Collegamenti convertiInEntita (CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
 		Collegamenti collegamentoEntity = em.find(Collegamenti.class, collegamento.getCodice());
 		if (collegamentoEntity != null)
 			return collegamentoEntity;
@@ -128,12 +125,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento {
 			throw new CollegamentoInesistenteException ();
 	}
 	
-	/**
-	 * Permette la conversione da un'entità al rispettivo DTO
-	 * @param collegamento L'entità di partenza
-	 * @return Il relativo DTO
-	 */
-	protected CollegamentoDTO convertiInDTO (Collegamenti collegamento) {
+	@Override
+	public CollegamentoDTO convertiInDTO (Collegamenti collegamento) {
 		CollegamentoDTO dto = new CollegamentoDTO ();
 		
 		dto.setDataPartenza(collegamento.getDataPartenza());

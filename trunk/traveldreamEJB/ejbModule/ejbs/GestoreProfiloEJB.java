@@ -13,7 +13,8 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import utils.EmailBean;
+import remote.EmailBeanLocal;
+import remote.GestoreProfiloRemote;
 import dtos.PersonaDTO;
 import dtos.UtenteDTO;
 import entities.Gruppi;
@@ -24,7 +25,7 @@ import entities.Utenti;
  * Session Bean implementation class GestoreProfiloEJB
  */
 @Stateless
-public class GestoreProfiloEJB implements GestoreProfilo {
+public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloRemote {
 	
 	private final int LUNGHEZZA_PASSWORD = 6;
 
@@ -35,7 +36,7 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 	private EJBContext context;
 	
 	@EJB
-	private EmailBean email;
+	private EmailBeanLocal email;
 	
     /**
      * Default constructor. 
@@ -121,21 +122,13 @@ public class GestoreProfiloEJB implements GestoreProfilo {
 		return password;
 	}
 	
-	/**
-	 * Permette la conversione da un DTO alla rispettiva entità
-	 * @param utente Il DTO dell'utente
-	 * @return L'entità desiderata
-	 */
-	protected Utenti convertiInEntita (UtenteDTO utente) {
+	@Override
+	public Utenti convertiInEntita (UtenteDTO utente) {
 		return em.find(Utenti.class, utente.getEmail());
 	}
 	
-	/**
-	 * Permette la conversione da un'entità al rispettivo DTO
-	 * @param utente L'entità di partenza
-	 * @return Il relativo DTO
-	 */
-	protected UtenteDTO convertiInDTO (Utenti utente) {
+	@Override
+	public UtenteDTO convertiInDTO (Utenti utente) {
 		UtenteDTO utenteDTO = new UtenteDTO();
 		
 		utenteDTO.setEmail(utente.getEmail());
