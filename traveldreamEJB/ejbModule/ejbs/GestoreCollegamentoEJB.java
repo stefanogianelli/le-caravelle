@@ -130,6 +130,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	public CollegamentoDTO convertiInDTO (Collegamenti collegamento) {
 		CollegamentoDTO dto = new CollegamentoDTO ();
 		
+		dto.setCodice(collegamento.getCodice());
 		dto.setDataPartenza(collegamento.getDataPartenza());
 		dto.setDestinazione(collegamento.getDestinazione());
 		dto.setOraArrivo(collegamento.getOraArrivo());

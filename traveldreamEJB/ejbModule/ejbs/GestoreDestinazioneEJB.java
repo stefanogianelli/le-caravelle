@@ -139,6 +139,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	public DestinazioneDTO convertiInDTO (Destinazioni destinazione) {
 		DestinazioneDTO dto = new DestinazioneDTO();
 		
+		dto.setId(destinazione.getId());
 		dto.setDataArrivo(destinazione.getDataArrivo());
 		dto.setDataPartenza(destinazione.getDataPartenza());
 		dto.setPacchetto(pacchetto.convertiInDTO(destinazione.getPacchetto()));		
