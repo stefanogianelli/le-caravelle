@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dtos.CittaDTO;
+import eccezioni.CittaInesistenteException;
 
 @Local
 public interface GestoreCitta {
@@ -19,6 +20,7 @@ public interface GestoreCitta {
 	 * Permette di restituire il DTO della città associata ad un nome
 	 * @param nome Il nome della città
 	 * @return Il rispettivo DTO
+	 * @throws CittaInesistenteException Se la città non viene trovata nel database
 	 */
-	CittaDTO cercaCitta (String nome);
+	CittaDTO cercaCitta (String nome)  throws CittaInesistenteException;
 }

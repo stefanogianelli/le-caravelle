@@ -62,9 +62,8 @@ public class HotelBean {
 	 * Permette di creare un nuovo hotel
 	 */
 	public void creaHotel () {
-		this.getHotel().setCitta(cittaBean.cercaCitta(nomeCitta));
-		System.out.println(getHotel().getCitta().getNazione());
 		try {
+			this.getHotel().setCitta(cittaBean.cercaCitta(nomeCitta));
 			hotelBean.creaHotel(this.getHotel());
 			JsfUtil.infoMessage("Hotel aggiunto correttamente!");
 		} catch (EntityExistsException e) {
