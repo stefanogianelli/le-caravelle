@@ -5,50 +5,55 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
-<head>
+<h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><ui:insert name="title">Default Title</ui:insert></title>
 	<h:outputStylesheet library="css" name="stile.css" />
-</head> 
+</h:head> 
 
-<body>
+<h:body>
 <div class="page-wrapper">
 
 	<div class="intro">
-		<div id="access">
-			<a href="login.xhtml" title="Login e registrazione">Accedi</a>  |  <a href="utente/areaCliente.xhtml">Area cliente</a>
+		<div class="imgHome">
+		  <a href="/traveldreamWeb/homepage.xhtml">
+		  <img src="/resources/images/roma.jpg" width="50" height="50"></img>
+		  </a>
+		</div> 
+		<div class="access">
+			<a href="/traveldreamWeb/login.xhtml" title="Login e registrazione">Accedi</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a href="/traveldreamWeb/utente/areaCliente.xhtml">Area cliente</a>
 		</div>
 	</div>
 	
 	<div class="menu">
-		<a href="utente/creazionePacchetto.xhtml">Crea pacchetto</a> | <a href="pacchettiPredefiniti.xhtml">Scegli pacchetto</a> | <a href="lastMinute.xhtml">Last minute</a> | <a href="nostriCosigli.xhtml">I nostri consigli</a> |
-			  <a href="guidaDestinazioni.xhtml">Guida alle destinazioni</a>
+		<a href="/traveldreamWeb/utente/creazionePacchetto.xhtml">Crea pacchetto</a> | <a href="/traveldreamWeb/pacchettiPredefiniti.xhtml">Scegli pacchetto</a> | <a href="/traveldreamWeb/lastMinute.xhtml">Last minute</a> | <a href="/traveldreamWeb/nostriCosigli.xhtml">I nostri consigli</a> |
+			  <a href="/traveldreamWeb/guidaDestinazioni.xhtml">Guida alle destinazioni</a>
 	</div>
 	
-	<ui:insert name="content">Content</ui:insert>
+	<ui:insert name="content">content</ui:insert>
 	
 	<div class="footer">
 
 		<div id="newsletter">
-			<a href="newsletter.xhtml">Iscriviti alla newsletter</a>
+			<a href="/traveldreamWeb/newsletter.xhtml">Iscriviti alla newsletter</a>
 		</div>
 		
 				
 		<div class="link">
 		<h4>Link utili</h4>
 		<ul>
-			<li><a href="chiSiamo.xhtml">Chi siamo</a></li>
-			<li><a href="contatti.xhtml">Contatti</a></li>
-			<li><a href="mappaSito.xhtml">Mappa sito</a></li>
-			<li><a href="terminiCondizioni.xhtml">Termini e condizioni</a></li>
-			<li><a href="faq.xhtml">FAQ</a></li>
-			<li><a href="noteLegali.xhtml">Note legali</a></li>
-			<li><a href="press.xhtml">Press</a></li>
-			<li><a href="lavora.xhtml">Lavora con noi</a></li>
+			<li><a href="/traveldreamWeb/chiSiamo.xhtml">Chi siamo</a></li>
+			<li><a href="/traveldreamWeb/contatti.xhtml">Contatti</a></li>
+			<li><a href="/traveldreamWeb/mappaSito.xhtml">Mappa sito</a></li>
+			<li><a href="/traveldreamWeb/terminiCondizioni.xhtml">Termini e condizioni</a></li>
+			<li><a href="/traveldreamWeb/faq.xhtml">FAQ</a></li>
+			<li><a href="/traveldreamWeb/noteLegali.xhtml">Note legali</a></li>
+			<li><a href="/traveldreamWeb/press.xhtml">Press</a></li>
+			<li><a href="/traveldreamWeb/lavora.xhtml">Lavora con noi</a></li>
 		</ul>
 		</div>
 		
 	</div>
 </div>
-</body> 
+</h:body> 
 </html>

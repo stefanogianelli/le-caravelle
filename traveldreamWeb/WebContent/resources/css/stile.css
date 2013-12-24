@@ -3,43 +3,46 @@ html {
 	margin: 0;
 	padding: 0;
 	}
-body { 
+body {
+	margin: 0;
+	padding: 0;
 	font-family: Arial, Helvetica, sans-serif;
 	color: black; 
 	background-color: white; 
-	margin: 0; 
-	padding: 0;
 	}
 p { 
+	margin: 0;
+	padding: 0;
 	font-size: 22;
-	margin-top: 20px 20px; 
 	text-align: left;
 	}
 h1 { 
 	font: Impact;
 	font-size: 70;
-	margin: 40px 40px; 
 	color: #999999;
+	padding-left: 30px;
+	border:1px solid red;
 	}
 h2 { 
 	font: Arial;
 	font-size: 44;
-	font-weight:bold;
-	margin: 40px 40px; 
+	font-weight:bold; 
 	color: #999999;
+	padding-left: 30px;
+	border:1px solid red;
 	}
 h3 { 
 	font: Arial;
 	font-size: 30;
 	font-weight:bold;
-	margin: 20px 20px; 
 	color: #999999;
+	border:1px solid red;
+	text-align: center;
 	}
 h4 { 
 	font: Impact;
 	font-size: 27;
 	font-weight:bold;
-	margin: 20px 20px; 
 	color: white;
 	}
 a:link { 
@@ -49,29 +52,34 @@ a:link {
 	color: white;
 	}
 a:hover { 
-	text-shadow:2px 2px black;
+	color:black;
 	}
+
 
 /* specific divs */
 .page-wrapper { 
 	min-weight: 1260 px;
-	padding: 0 80px 0 80px;  
-	margin: 0; 
+	padding: 0 80px 0 80px; 
 	position: relative;
+	border:5px solid black;
 	}
 	
 .intro {
+	margin: 0;
+	padding: 0;
 	background-color: #dcdcdc;
 	min-height: 115px;
 	width: 100%;
-	padding: 0;
-	margin: 0;	
+	border-bottom:5px solid white;
+	display: block;
+	border:1px solid red;
 }
 
 .access {
-	text-align: center;
-	min-weight: 350px;
-	margin: 20px 20px;	
+	text-align: right;
+	padding: 40px 50px 0px 0px;
+	margin: 0;
+	border:1px solid red;
 }
 
 .access a:link {
@@ -84,20 +92,23 @@ a:hover {
 }
 
 .menu {
-	background-color: #999999;
-	min-height: 45px;
-	width: 100%;
-	padding: 0;
 	margin: 0;
+	background-color: #999999;
+	height: 45px;
+	width: 100%;
+	padding-top: 20px;
 	text-align: center;
+	border-bottom:5px solid white;
+	border:1px solid red;
 }
 
 .footer {
+	margin: 0;
+	padding: 0;
 	background-color: #999999;
 	min-height: 330px;
 	width: 100%;
-	padding: 0;
-	margin: 0;	
+	border:1px solid red;
 }
 
 .newsletter a:link {
@@ -115,3 +126,73 @@ a:hover {
 .link li{
 	list-style-type: none;
 }
+
+.crea {
+	margin: 0;
+	padding: 0;
+	background-color: #dcdcdc;
+	height: 560px;
+	width: 100%;
+	border-bottom:5px solid white;
+	border:1px solid red;
+}
+
+.scegli {
+	margin: 0;
+	padding: 0;
+	background-color: #dcdcdc;
+	min-height: 560px;
+	width: 100%;
+	border:1px solid red;	
+}
+
+.consigli {
+	background-color: white;
+	min-height: 400px;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border:1px solid red;	
+}
+.domande {
+	background-color: #dcdcdc;
+	min-height: 200px;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border:1px solid red;
+}
+.img
+  {
+  margin:5px;
+  padding: 5px;
+  border:1px solid #0000ff;
+  height:auto;
+  width:auto;
+  float:left;
+  text-align:center;
+  }
+.img img
+  {
+  display:inline;
+  margin:5px;
+  border:1px solid #ffffff;
+  }
+ 
+.img a:hover img
+  {
+  border:1px solid #0000ff;
+  }
+  
+ .imgHome
+  {
+  padding: 30px 0 0 50px;
+  height:auto;
+  width:auto;
+  float:left;
+  }
+ 
+.imgHome a:hover img
+  {
+  border:5px solid black;
+  }
