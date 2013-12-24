@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -27,10 +28,12 @@ public class HotelBean {
 	
 	private HotelDTO hotel;
 	private String nomeCitta;
+	private List<HotelDTO> elenco;
 	
 	@PostConstruct
 	public void setUp () {
 		hotel = new HotelDTO();
+		elenco = new ArrayList<HotelDTO>();
 	}
 
 	public HotelDTO getHotel() {
@@ -48,14 +51,23 @@ public class HotelBean {
 	public void setNomeCitta(String nomeCitta) {
 		this.nomeCitta = nomeCitta;
 	}
+	
+	public List<HotelDTO> getElenco() {
+		return elenco;
+	}
+
+	public void setElenco(List<HotelDTO> elenco) {
+		this.elenco = elenco;
+	}
 
 	/**
 	 * Ricerca gli hotel nella città selezionata
 	 * @param citta Il nome della città
 	 * @return L'elenco degli hotel trovati
 	 */
-	public List<HotelDTO> cercaHotel (String citta) {
-		return hotelBean.elencoHotel(citta);
+	public void cercaHotel () {
+		this.getElenco().addAll(hotelBean.elencoHotel(this.getNomeCitta()));
+		JsfUtil.infoMessage("Nessun risultato");
 	}
 
 	/**
