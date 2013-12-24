@@ -20,7 +20,7 @@ h1 {
 	font: Impact;
 	font-size: 70;
 	color: #999999;
-	padding-left: 30px;
+	padding-left: 40px;
 	border:1px solid red;
 	}
 h2 { 
@@ -28,10 +28,16 @@ h2 {
 	font-size: 44;
 	font-weight:bold; 
 	color: #999999;
-	padding-left: 30px;
+	padding-left: 40px;
 	border:1px solid red;
 	}
 h3 { 
+	font: Arial;
+	font-size: 44;
+	font-weight:bold; 
+	color: white;
+	}
+h4 { 
 	font: Arial;
 	font-size: 30;
 	font-weight:bold;
@@ -39,13 +45,13 @@ h3 {
 	border:1px solid red;
 	text-align: center;
 	}
-h4 { 
+h5 { 
 	font: Impact;
 	font-size: 27;
 	font-weight:bold;
 	color: white;
 	}
-a:link { 
+a:link, a:visited { 
 	font-size: 18;
 	font-weight: bold; 
 	text-decoration: none; 
@@ -55,7 +61,9 @@ a:hover {
 	color:black;
 	}
 
-
+form{
+	text-align: center;
+}
 /* specific divs */
 .page-wrapper { 
 	min-weight: 1260 px;
@@ -82,26 +90,27 @@ a:hover {
 	border:1px solid red;
 }
 
-.access a:link {
+.access a:link, a:visited {
 	color: #666666;
 }
 
 .access a:hover {
 	color: #dc0800;
-	text-shadow:2px 2px black;
 }
 
 .menu {
-	margin: 0;
 	background-color: #999999;
 	height: 45px;
 	width: 100%;
 	padding-top: 20px;
-	text-align: center;
+	text-align: justify;
 	border-bottom:5px solid white;
 	border:1px solid red;
 }
 
+.menu a{
+  display:inline;
+}
 .footer {
 	margin: 0;
 	padding: 0;
@@ -127,7 +136,7 @@ a:hover {
 	list-style-type: none;
 }
 
-.crea {
+.blocco {
 	margin: 0;
 	padding: 0;
 	background-color: #dcdcdc;
@@ -135,15 +144,6 @@ a:hover {
 	width: 100%;
 	border-bottom:5px solid white;
 	border:1px solid red;
-}
-
-.scegli {
-	margin: 0;
-	padding: 0;
-	background-color: #dcdcdc;
-	min-height: 560px;
-	width: 100%;
-	border:1px solid red;	
 }
 
 .consigli {
@@ -162,26 +162,28 @@ a:hover {
 	margin: 0;
 	border:1px solid red;
 }
+.domande li{
+	display:block;
+	float:right;
+}
 .img
   {
   margin:5px;
-  padding: 5px;
-  border:1px solid #0000ff;
+  padding: 0;
+  border:1px solid white;
   height:auto;
   width:auto;
   float:left;
   text-align:center;
+  background-color: #999999;
   }
-.img img
-  {
+.img img{
   display:inline;
-  margin:5px;
-  border:1px solid #ffffff;
   }
  
 .img a:hover img
   {
-  border:1px solid #0000ff;
+  border:1px solid black;
   }
   
  .imgHome
@@ -194,5 +196,6 @@ a:hover {
  
 .imgHome a:hover img
   {
-  border:5px solid black;
+  border:1px solid black;
   }
+  
