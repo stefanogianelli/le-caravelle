@@ -49,9 +49,9 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Categoria</f:facet>
-				<h:outputText value="#{e.categoria}" rendered="#{not e.editable}" />	
+				<h:outputText value="#{e.categoria.label}" rendered="#{not e.editable}" />	
 				<h:selectOneMenu value="#{e.categoria}" rendered="#{e.editable}">
-					<f:selectItems value="#{escursione.getCategorie()}" />
+					<f:selectItems value="#{escursione.getCategorie()}" var="cat" itemValue="#{cat}" itemLabel="#{cat.label}" />
 				</h:selectOneMenu>	
 			</h:column>
 			<h:column>

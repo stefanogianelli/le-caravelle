@@ -52,7 +52,7 @@
 		
 		<h:outputText for="tipoCollegamento" value="Tipo Collegamento: " />
 		<h:selectOneMenu value="#{collegamento.collegamento.tipoCollegamento}">
-			<f:selectItems value="#{collegamento.getTipiCollegamento()}" />
+			<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
 		</h:selectOneMenu><br />
 		
 		<h:commandButton value="Salva" action="#{collegamento.creaCollegamento()}" />
