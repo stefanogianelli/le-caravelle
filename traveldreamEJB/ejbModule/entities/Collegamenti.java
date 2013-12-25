@@ -19,10 +19,11 @@ import java.util.Date;
 	@NamedQuery(name = "Collegamenti.elenco", query = "SELECT c FROM Collegamenti c"),
 	@NamedQuery(name = "Collegamenti.elencoPerTipo", query = "SELECT c FROM Collegamenti c WHERE c.tipoCollegamento = :tipo"),
 	@NamedQuery(name = "Collegamenti.elencoTraDestinazioni", 
-		query = "SELECT c FROM Collegamenti c WHERE (c.dataPartenza = :data AND c.cittaPartenza.id = :partenza AND c.cittaArrivo.id = :arrivo AND c.tipoCollegamento = :tipo) ORDER BY c.oraPartenza ASC"),
+		query = "SELECT c FROM Collegamenti c WHERE (c.dataPartenza = :data AND c.cittaPartenza.nome = :partenza AND c.cittaArrivo.nome = :arrivo AND c.tipoCollegamento = :tipo) ORDER BY c.oraPartenza ASC"),
 	@NamedQuery(name = "Collegamenti.getCollegamentoDaData", query = "SELECT c FROM Collegamenti c WHERE c.dataPartenza = :data")
 })
 public class Collegamenti implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
