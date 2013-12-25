@@ -67,9 +67,6 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`citta` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-INSERT INTO citta (nome, regione, nazione) VALUES ('Milano', 'Lombardia', 'Italia');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Roma', 'Lazio', 'Italia');
-
 
 -- -----------------------------------------------------
 -- Table `traveldreamdb`.`hotel`
