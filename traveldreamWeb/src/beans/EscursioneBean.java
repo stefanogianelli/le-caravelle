@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
@@ -17,7 +17,7 @@ import ejbs.GestoreEscursione;
 import enums.CategoriaEscursione;
 
 @ManagedBean(name="escursione")
-@RequestScoped
+@ViewScoped
 public class EscursioneBean {
 	
 	@EJB
@@ -25,6 +25,7 @@ public class EscursioneBean {
 	
 	private EscursioneDTO escursione;
 	private List<EscursioneDTO> elenco;
+	private String regione;
 	
 	@PostConstruct
 	public void setUp () {
@@ -48,6 +49,14 @@ public class EscursioneBean {
 		this.elenco = elenco;
 	}
 	
+	public String getRegione() {
+		return regione;
+	}
+
+	public void setRegione(String regione) {
+		this.regione = regione;
+	}
+
 	/**
 	 * Fornisce l'elenco di categorie disponibili
 	 * @return Le categorie di un'escursione
@@ -55,14 +64,23 @@ public class EscursioneBean {
 	public CategoriaEscursione [] getCategorie () {
 		return CategoriaEscursione.values();
 	}
+	
+	/**
+	 * Elenca tutte le escursioni presenti nel database
+	 */
+	public void elencoEscursioni () {
+		if (this.getElenco().isEmpty())
+			this.getElenco().addAll(escursioneBean.elencoEscursioni());
+		if (this.getElenco().isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
+	}
 
 	/**
 	 * Ricerca le escursioni nella regione selezionata
-	 * @param regione Il nome della regione
 	 */
-	public void cercaEscursioni (String regione) {
+	public void cercaEscursioni () {
 		this.getElenco().clear();
-		this.getElenco().addAll(escursioneBean.elencoEscursioni(regione));
+		this.getElenco().addAll(escursioneBean.elencoEscursioni(this.getRegione()));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}
@@ -82,12 +100,30 @@ public class EscursioneBean {
 	}
 	
 	/**
+	 * Abilita la modifica di una escursione
+	 * @param escursione L'escursione da modificare
+	 */
+	public void abilitaModifica (EscursioneDTO escursione) {
+		escursione.setEditable(true);
+	}
+	
+	/**
+	 * Disabilita la modifica di un'escursione
+	 * @param escursione L'escursione della quale si vuole interrompere la modifica
+	 */
+	public void disabilitaModifica (EscursioneDTO escursione) {
+		escursione.setEditable(false);
+	}
+	
+	/**
 	 * Permette la modifica dei dati di una escursione
 	 * @param escursione I dati dell'escursione
 	 */
 	public void modificaEscursione (EscursioneDTO escursione) {
 		try {
 			escursioneBean.modificaDatiEscursione(escursione);
+			escursione.setEditable(false);
+			JsfUtil.infoMessage("Collegamento modificato correttamente!");
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (CittaInesistenteException e) {
@@ -102,6 +138,7 @@ public class EscursioneBean {
 	public void eliminaEscursione (EscursioneDTO escursione) {
 		try {
 			escursioneBean.eliminaEscursione(escursione);
+			JsfUtil.infoMessage("Escursione eliminata!");
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		}

@@ -170,6 +170,7 @@ public class CollegamentoBean {
 	public void eliminaCollegamento (CollegamentoDTO collegamento) {
 		try {
 			collegamentoBean.eliminaCollegamento(collegamento);
+			JsfUtil.infoMessage("Collegamento eliminato!");
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente!");
 		}
