@@ -28,7 +28,7 @@
 		
 		<h:outputText for="oraPartenza" value="Ora Partenza: " />
 		<h:inputText id="oraPartenza" value="#{collegamento.collegamento.oraPartenza}">
-			<f:convertDateTime type="time" pattern="h:mm" timeZone="Europe/Rome" />
+			<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
 		</h:inputText>
 		<h:message for="oraPartenza"/><br />
 		
@@ -42,7 +42,7 @@
 		
 		<h:outputText for="oraArrivo" value="Ora Arrivo:" />
 		<h:inputText id="oraArrivo" value="#{collegamento.collegamento.oraArrivo}">
-			<f:convertDateTime type="time" pattern="h:mm" timeZone="Europe/Rome" />
+			<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
 		</h:inputText>
 		<h:message for="oraArrivo"/><br />
 		
