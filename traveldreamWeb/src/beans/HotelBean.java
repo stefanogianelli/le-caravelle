@@ -83,7 +83,6 @@ public class HotelBean {
 	 */
 	public void creaHotel () {
 		try {
-			this.getHotel().setCitta(cittaBean.cercaCitta(nomeCitta));
 			hotelBean.creaHotel(this.getHotel());
 			JsfUtil.infoMessage("Hotel aggiunto correttamente!");
 		} catch (EntityExistsException e) {
@@ -99,7 +98,6 @@ public class HotelBean {
 	 */
 	public void abilitaModifica (HotelDTO hotel) {
 		hotel.setEditable(true);
-		this.setNomeCitta(hotel.getCitta().getNome());
 	}
 	
 	/**
@@ -116,7 +114,6 @@ public class HotelBean {
 	 */
 	public void modificaHotel (HotelDTO hotel) {
 		try {
-			hotel.setCitta(cittaBean.cercaCitta(this.getNomeCitta()));
 			hotelBean.modificaDatiHotel(hotel);
 			hotel.setEditable(false);
 			JsfUtil.infoMessage("Hotel modificato correttamente!");
