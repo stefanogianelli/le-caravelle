@@ -12,14 +12,69 @@
 	<h:link value="indietro" outcome="collegamentoTest" />
 	<h:form>
 		<h:outputText value="Data Partenza:" />
-		<h:inputText value="#{collegamento.cittaPartenza}" />
+		<h:inputText value="#{collegamento.dataPartenza}">
+			<f:convertDateTime pattern="dd/MM/yyyy" />
+		</h:inputText>
 	
 		<h:outputText value="Citta Partenza:" />
 		<h:inputText value="#{collegamento.cittaPartenza}" />
 		
 		<h:outputText value="Citta Arrivo" />
 		<h:inputText value="#{collegamento.cittaArrivo}" />
+		
+		<h:outputText value="Tipo Collegamento: " />
+		<h:selectOneMenu value="#{collegamento.tipo}">
+			<f:selectItems value="#{collegamento.getTipiCollegamento()}" />
+		</h:selectOneMenu>
+		
+		<h:commandButton value="cerca" action="#{collegamento.cercaCollegamenti()}" />
 	</h:form>
 	<h:messages />
+	<h:dataTable value="#{collegamento.elenco}" var="c" rendered="#{collegamento.elenco.size() > 0}" style="text-align:center;">
+		<h:column>
+			<f:facet name="header">Data Partenza</f:facet>
+			<h:outputText value="#{c.dataPartenza}"> 
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">Città Partenza</f:facet>
+			#{c.cittaPartenza.nome} (#{c.cittaPartenza.nazione})
+		</h:column>
+		<h:column>
+			<f:facet name="header">Origine</f:facet>
+			#{c.origine}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Ora Partenza</f:facet>
+			<h:outputText value="#{c.oraPartenza}">
+				<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+			</h:outputText>			
+		</h:column>
+		<h:column>
+			<f:facet name="header">Città Arrivo</f:facet>
+			#{c.cittaArrivo.nome} (#{c.cittaArrivo.nazione})
+		</h:column>
+		<h:column>
+			<f:facet name="header">Destinazione</f:facet>
+			#{c.destinazione}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Ora Arrivo</f:facet>
+			<h:outputText value="#{c.oraArrivo}">
+				<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+			</h:outputText>			
+		</h:column>
+		<h:column>
+			<f:facet name="header">Prezzo</f:facet>
+			<h:outputText value="#{c.prezzo}">			
+				<f:convertNumber type="currency" currencySymbol="€" locale="it-IT" />
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">Tipo Collegamento</f:facet>
+			#{c.tipoCollegamento}
+		</h:column>
+	</h:dataTable>
 </body> 
 </html>

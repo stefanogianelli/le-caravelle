@@ -64,11 +64,11 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	}	
 	
 	@Override
-	public List<CollegamentoDTO> elencoCollegamenti(Date data, String idCittaPartenza, String idCittaArrivo, TipoCollegamento tipo) {
+	public List<CollegamentoDTO> elencoCollegamenti(Date data, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
 		Query q = em.createNamedQuery("Collegamenti.elencoTraDestinazioni", Collegamenti.class);
 		q.setParameter("data", data);
-		q.setParameter("partenza", idCittaPartenza);
-		q.setParameter("arrivo", idCittaArrivo);
+		q.setParameter("partenza", cittaPartenza);
+		q.setParameter("arrivo", cittaArrivo);
 		q.setParameter("tipo", tipo);
 		@SuppressWarnings("unchecked")
 		List<Collegamenti> collegamenti = q.getResultList();
