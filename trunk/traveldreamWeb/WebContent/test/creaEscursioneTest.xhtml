@@ -38,7 +38,7 @@
 		
 		<h:outputText for="" value="Categoria: " />
 		<h:selectOneMenu value="#{escursione.escursione.categoria}">
-			<f:selectItems value="#{escursione.getCategorie()}" />
+			<f:selectItems value="#{escursione.getCategorie()}" var="cat" itemValue="#{cat}" itemLabel="#{cat.label}" />
 		</h:selectOneMenu><br />
 		
 		<h:outputText for="prezzo" value="Prezzo: " />

@@ -68,9 +68,9 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Tipo Collegamento</f:facet>
-				<h:outputText value="#{c.tipoCollegamento}" rendered="#{not c.editable}" />
+				<h:outputText value="#{c.tipoCollegamento.label}" rendered="#{not c.editable}" />
 				<h:selectOneMenu value="#{c.tipoCollegamento}" rendered="#{c.editable}" >
-					<f:selectItems value="#{collegamento.getTipiCollegamento()}" />
+					<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
 				</h:selectOneMenu>	
 			</h:column>
 			
