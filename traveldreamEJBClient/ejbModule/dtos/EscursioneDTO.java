@@ -1,7 +1,6 @@
 package dtos;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -14,26 +13,27 @@ public class EscursioneDTO implements Serializable {
 
 	private int id;
 
-	@NotEmpty
 	private CategoriaEscursione categoria;
 
-	@NotEmpty
 	private Date data;
 
-	@NotEmpty
 	private int durata;
 
 	@NotEmpty
 	private String nome;
 
-	@NotEmpty
-	private Time ora;
+	private Date ora;
 
-	@NotEmpty
 	private double prezzo;
 
-	@NotEmpty
 	private CittaDTO citta;
+	
+	/*
+	 * Utilizzato per la creazione / modifica
+	 */
+	private String cittaText;
+	
+	private boolean editable;
 
 	public int getId() {
 		return id;
@@ -75,11 +75,11 @@ public class EscursioneDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public Time getOra() {
+	public Date getOra() {
 		return ora;
 	}
 
-	public void setOra(Time ora) {
+	public void setOra(Date ora) {
 		this.ora = ora;
 	}
 
@@ -97,5 +97,21 @@ public class EscursioneDTO implements Serializable {
 
 	public void setCitta(CittaDTO citta) {
 		this.citta = citta;
+	}
+
+	public String getCittaText() {
+		return cittaText;
+	}
+
+	public void setCittaText(String cittaText) {
+		this.cittaText = cittaText;
+	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 }

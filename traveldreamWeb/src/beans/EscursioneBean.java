@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EscursioneInesistenteException;
 import ejbs.GestoreEscursione;
+import enums.CategoriaEscursione;
 
 @ManagedBean(name="escursione")
 @RequestScoped
@@ -22,10 +24,12 @@ public class EscursioneBean {
 	private GestoreEscursione escursioneBean;
 	
 	private EscursioneDTO escursione;
+	private List<EscursioneDTO> elenco;
 	
 	@PostConstruct
 	public void setUp () {
 		escursione = new EscursioneDTO();
+		elenco = new ArrayList<EscursioneDTO>();
 	}
 	
 	public EscursioneDTO getEscursione() {
@@ -36,13 +40,31 @@ public class EscursioneBean {
 		this.escursione = escursione;
 	}
 
+	public List<EscursioneDTO> getElenco() {
+		return elenco;
+	}
+
+	public void setElenco(List<EscursioneDTO> elenco) {
+		this.elenco = elenco;
+	}
+	
+	/**
+	 * Fornisce l'elenco di categorie disponibili
+	 * @return Le categorie di un'escursione
+	 */
+	public CategoriaEscursione [] getCategorie () {
+		return CategoriaEscursione.values();
+	}
+
 	/**
 	 * Ricerca le escursioni nella regione selezionata
 	 * @param regione Il nome della regione
-	 * @return L'elenco delle escursioni trovate
 	 */
-	public List<EscursioneDTO> cercaEscursioni (String regione) {
-		return escursioneBean.elencoEscursioni(regione);
+	public void cercaEscursioni (String regione) {
+		this.getElenco().clear();
+		this.getElenco().addAll(escursioneBean.elencoEscursioni(regione));
+		if (this.getElenco().isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
 	}
 	
 	/**
@@ -50,7 +72,8 @@ public class EscursioneBean {
 	 */
 	public void creaEscursione () {
 		try {
-			escursioneBean.creaEscursione(getEscursione());
+			escursioneBean.creaEscursione(this.getEscursione());
+			JsfUtil.infoMessage("Escursione creata con successo!");
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("L'escursione è già presente nel database!");
 		} catch (CittaInesistenteException e) {

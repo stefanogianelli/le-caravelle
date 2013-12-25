@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Crea Escursione Test</title>
+</h:head> 
+<body> 
+	<h1>Creazione Escursione</h1>
+	<h:link value="indietro" outcome="escursioneTest" />
+	<h:messages />
+	<h:form>
+		<h:outputText for="nome" value="Nome: " />
+		<h:inputText id="nome" value="#{escursione.escursione.nome}" />
+		<h:message for="nome"/><br />
+		
+		<h:outputText for="citta" value="Città: " />
+		<h:inputText id="citta" value="#{escursione.escursione.cittaText}" />
+		<h:message for="citta"/><br />
+		
+		<h:outputText for="data" value="Data: " />
+		<h:inputText id="data" value="#{escursione.escursione.data}">
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+		</h:inputText>
+		<h:message for="data"/><br />
+		
+		<h:outputText for="ora" value="Ora: " />
+		<h:inputText id="ora" value="#{escursione.escursione.ora}">
+			<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:inputText>
+		<h:message for="ora"/><br />
+		
+		<h:outputText for="durata" value="Durata: " />
+		<h:inputText id="durata" value="#{escursione.escursione.durata}" />
+		<h:message for="durata"/><br />
+		
+		<h:outputText for="" value="Categoria: " />
+		<h:selectOneMenu value="#{escursione.escursione.categoria}">
+			<f:selectItems value="#{escursione.getCategorie()}" />
+		</h:selectOneMenu><br />
+		
+		<h:outputText for="prezzo" value="Prezzo: " />
+		<h:inputText id="prezzo" value="#{escursione.escursione.prezzo}" />
+		<h:message for="prezzo"/><br />
+		
+		<h:commandButton action="#{escursione.creaEscursione()}" value="Salva" />
+	</h:form>
+</body> 
+</html>
