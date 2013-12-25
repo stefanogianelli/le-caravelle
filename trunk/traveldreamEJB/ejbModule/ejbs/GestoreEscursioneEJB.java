@@ -3,6 +3,7 @@ package ejbs;
 import interfaces.GestoreCittaLocal;
 import interfaces.GestoreEscursioneLocal;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,9 +85,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 		entity.setData(escursione.getData());
 		entity.setDurata(escursione.getDurata());
 		entity.setNome(escursione.getNome());
-		entity.setOra(escursione.getOra());
+		entity.setOra(new Time(escursione.getOra().getTime()));
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.convertiInEntita(escursione.getCitta()));
+		entity.setCitta(citta.getCitta(escursione.getCittaText()));
 		
 		em.persist(entity);
 	}
@@ -99,9 +100,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 		entity.setData(escursione.getData());
 		entity.setDurata(escursione.getDurata());
 		entity.setNome(escursione.getNome());
-		entity.setOra(escursione.getOra());
+		entity.setOra(new Time(escursione.getOra().getTime()));
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.convertiInEntita(escursione.getCitta()));
+		entity.setCitta(citta.getCitta(escursione.getCittaText()));
 		
 		em.merge(entity);
 	}
@@ -141,6 +142,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 		dto.setOra(escursione.getOra());
 		dto.setPrezzo(escursione.getPrezzo());
 		dto.setCitta(citta.convertiInDTO(escursione.getCitta()));
+		dto.setCittaText(escursione.getCitta().getNome());
 		
 		return dto;
 	}
