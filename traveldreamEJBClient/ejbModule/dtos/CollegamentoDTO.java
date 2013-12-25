@@ -40,6 +40,11 @@ public class CollegamentoDTO implements Serializable {
 	
 	private String cittaArrivoText;
 	
+	/*
+	 * Utilizzato per la modifica del collegamento
+	 */
+	private boolean editable;
+	
 	public int getCodice() {
 		return codice;
 	}
@@ -134,6 +139,14 @@ public class CollegamentoDTO implements Serializable {
 
 	public void setCittaArrivoText(String cittaArrivoText) {
 		this.cittaArrivoText = cittaArrivoText;
+	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 	
 }

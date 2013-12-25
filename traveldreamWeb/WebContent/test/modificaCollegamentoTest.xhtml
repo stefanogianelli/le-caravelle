@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Modifica Collegamento Test</title>
+</h:head> 
+<body> 
+	<f:event listener="#{collegamento.elencoCollegamenti()}" type="preRenderView" />
+	<h1>Elenco Collegamenti</h1>
+	<h:link value="indietro" outcome="collegamentoTest" />
+	<h:messages />
+	<h:form>
+		<h:dataTable value="#{collegamento.elenco}" var="c" rendered="#{collegamento.elenco.size() > 0}" style="text-align: center;">
+			<h:column>
+				<f:facet name="header">Data Partenza</f:facet>
+				<h:outputText value="#{c.dataPartenza}" rendered="#{not c.editable}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+				<h:inputText value="#{c.dataPartenza}" rendered="#{c.editable}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:inputText>		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Città Partenza</f:facet>
+				<h:outputText value="#{c.cittaPartenzaText}" rendered="#{not c.editable}" />
+				<h:inputText value="#{c.cittaPartenzaText}" rendered="#{c.editable}" />		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Origine</f:facet>
+				<h:outputText value="#{c.origine}" rendered="#{not c.editable}" />
+				<h:inputText value="#{c.origine}" rendered="#{c.editable}" />		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ora Partenza</f:facet>
+				<h:outputText value="#{c.oraPartenza}" rendered="#{not c.editable}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:outputText>
+				<h:inputText value="#{c.oraPartenza}" rendered="#{c.editable}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:inputText>		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Città Arrivo</f:facet>
+				<h:outputText value="#{c.cittaArrivoText}" rendered="#{not c.editable}" />
+				<h:inputText value="#{c.cittaArrivoText}" rendered="#{c.editable}" />		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Destinazione</f:facet>
+				<h:outputText value="#{c.destinazione}" rendered="#{not c.editable}" />
+				<h:inputText value="#{c.destinazione}" rendered="#{c.editable}" />		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ora Arrivo</f:facet>
+				<h:outputText value="#{c.oraArrivo}" rendered="#{not c.editable}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:outputText>
+				<h:inputText value="#{c.oraArrivo}" rendered="#{c.editable}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:inputText>		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				<h:outputText value="#{c.prezzo}" rendered="#{not c.editable}" />
+				<h:inputText value="#{c.prezzo}" rendered="#{c.editable}" />		
+			</h:column>
+			<h:column>
+				<f:facet name="header">Tipo Collegamento</f:facet>
+				<h:outputText value="#{c.tipoCollegamento}" rendered="#{not c.editable}" />
+				<h:selectOneMenu value="#{c.tipoCollegamento}" rendered="#{c.editable}" >
+					<f:selectItems value="#{collegamento.getTipiCollegamento()}" />
+				</h:selectOneMenu>	
+			</h:column>
+			
+			<h:column>
+				<h:commandButton action="#{collegamento.abilitaModifica(c)}" value="modifica" rendered="#{not c.editable}" />
+				<h:commandButton action="#{collegamento.eliminaCollegamento(c)}" value="elimina" rendered="#{not c.editable}" />
+				<h:commandButton action="#{collegamento.modificaCollegamento(c)}" value="salva" rendered="#{c.editable}" />
+				<h:commandButton action="#{collegamento.disabilitaModifica(c)}" value="annulla" rendered="#{c.editable}" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</body> 
+</html>

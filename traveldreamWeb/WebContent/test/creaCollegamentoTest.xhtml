@@ -14,7 +14,7 @@
 	<h:form>
 		<h:outputText for="dataPartenza" value="Data Partenza: " />
 		<h:inputText id="dataPartenza" value="#{collegamento.collegamento.dataPartenza}">
-			<f:convertDateTime pattern="dd/MM/yyyy" />
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 		</h:inputText>
 		<h:message for="dataPartenza"/><br />
 		

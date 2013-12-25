@@ -13,7 +13,7 @@
 	<h:link value="indietro" outcome="hotelTest" />
 	<h:messages />
 	<h:form>
-		<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">
+		<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}" style="text-align: center;">
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
 				<h:outputText value="#{h.nome}" rendered="#{not h.editable}" />
@@ -54,8 +54,10 @@
 				<h:outputText value="#{h.website}" rendered="#{not h.editable}" />
 				<h:inputText value="#{h.website}" rendered="#{h.editable}" />
 			</h:column>
+			
 			<h:column>
 				<h:commandButton action="#{hotel.abilitaModifica(h)}" value="modifica" rendered="#{not h.editable}" />
+				<h:commandButton action="#{hotel.eliminaHotel(h)}" value="elimina" rendered="#{not h.editable}" />
 				<h:commandButton action="#{hotel.modificaHotel(h)}" value="salva" rendered="#{h.editable}" />
 				<h:commandButton action="#{hotel.disabilitaModifica(h)}" value="annulla" rendered="#{h.editable}" />
 			</h:column>
