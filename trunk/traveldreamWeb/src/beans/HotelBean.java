@@ -66,6 +66,8 @@ public class HotelBean {
 	public void elencoHotel () {
 		if (this.getElenco().isEmpty())
 			this.getElenco().addAll(hotelBean.elencoHotel());
+		if (this.getElenco().isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
 	}
 
 	/**
@@ -131,6 +133,7 @@ public class HotelBean {
 	public void eliminaHotel (HotelDTO hotel) {
 		try {
 			hotelBean.eliminaHotel(hotel);
+			JsfUtil.infoMessage("Hotel eliminato!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel sconosciuta!");
 		}

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Elenco Escursioni Test</title>
+</h:head> 
+<body> 
+	<h1>Elenco Escursioni</h1>
+	<h:link value="indietro" outcome="escursioneTest" />
+	<h:form>
+		<h:outputText value="Scegli una regione:" />
+		<h:inputText value="#{escursione.regione}" />
+		<h:commandButton value="Cerca" action="#{escursione.cercaEscursioni()}" />	
+	</h:form>
+	<h:messages />
+	<h:dataTable value="#{escursione.elenco}" var="e" rendered="#{escursione.elenco.size() > 0}" style="text-align: center;">
+		<h:column>
+			<f:facet name="header">Nome</f:facet>
+			<h:outputText value="#{e.nome}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Città</f:facet>
+			<h:outputText value="#{e.citta.nome}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Data</f:facet>
+			<h:outputText value="#{e.data}">
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">Ora</f:facet>
+			<h:outputText value="#{e.ora}">
+				<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">Durata</f:facet>
+			<h:outputText value="#{e.durata}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Categoria</f:facet>
+			<h:outputText value="#{e.categoria}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Prezzo</f:facet>
+			<h:outputText value="#{e.prezzo}" />
+		</h:column>
+	</h:dataTable>	
+</body> 
+</html>
