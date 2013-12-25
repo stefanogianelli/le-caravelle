@@ -71,7 +71,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.convertiInEntita(hotel.getCitta()));		
+		entity.setCitta(citta.getCitta(hotel.getNomeCitta()));		
 		
 		em.persist(entity);
 	}
@@ -87,7 +87,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.convertiInEntita(hotel.getCitta()));	
+		entity.setCitta(citta.getCitta(hotel.getNomeCitta()));	
 		
 		em.merge(entity);
 	}
@@ -119,6 +119,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 		dto.setTelefono(hotel.getTelefono());
 		dto.setWebsite(hotel.getWebsite());
 		dto.setCitta(citta.convertiInDTO(hotel.getCitta()));
+		dto.setNomeCitta(hotel.getCitta().getNome());
 		
 		return dto;
 	}
