@@ -11,48 +11,38 @@ body {
 	background-color: white; 
 	}
 p { 
-	margin: 0;
-	padding: 0;
 	font-size: 22;
-	text-align: left;
+	text-align: center;
+	color:black;
 	}
+
 h1 { 
-	font: Impact;
-	font-size: 70;
+	font-family: Impact;
+	font-size: 70px;
 	color: #999999;
-	padding-left: 40px;
+	margin: 30px 40px;
 	border:1px solid red;
+	text-align:left;
 	}
 h2 { 
-	font: Arial;
-	font-size: 44;
+	font-family: Arial;
+	font-size: 44px;
 	font-weight:bold; 
 	color: #999999;
-	padding-left: 40px;
 	border:1px solid red;
+	margin: 30px 40px;
 	}
 h3 { 
-	font: Arial;
-	font-size: 44;
-	font-weight:bold; 
-	color: white;
-	}
-h4 { 
-	font: Arial;
-	font-size: 30;
+	font-family: Arial;
+	font-size: 30px;
 	font-weight:bold;
 	color: #999999;
 	border:1px solid red;
 	text-align: center;
-	}
-h5 { 
-	font: Impact;
-	font-size: 27;
-	font-weight:bold;
-	color: white;
+	margin: 30px 50px;
 	}
 a:link, a:visited { 
-	font-size: 18;
+	font-size: 22px;
 	font-weight: bold; 
 	text-decoration: none; 
 	color: white;
@@ -64,53 +54,76 @@ a:hover {
 form{
 	text-align: center;
 }
+select{
+	text-align: center;
+	position: absolute;
+	left: 50%;
+	margin-left: -175px;
+	height: 30px;
+	width: 350px;
+}
 /* specific divs */
 .page-wrapper { 
-	min-weight: 1260 px;
+	min-width: 1260px;
 	padding: 0 80px 0 80px; 
 	position: relative;
 	border:5px solid black;
 	}
-	
+
+/* template*/	
 .intro {
 	margin: 0;
-	padding: 0;
 	background-color: #dcdcdc;
-	min-height: 115px;
+	height: 85px;
 	width: 100%;
 	border-bottom:5px solid white;
 	display: block;
 	border:1px solid red;
 }
-
-.access {
-	text-align: right;
-	padding: 40px 50px 0px 0px;
-	margin: 0;
-	border:1px solid red;
+.access{
+	margin-left: 854px;
 }
-
-.access a:link, a:visited {
+.access a{
+	margin-top: 25px;
 	color: #666666;
+	display:block;
+	width:150px;
+	text-align: center;
+	float: left;
+	border-left:1px solid black;
+	border-right:1px solid black;
 }
-
 .access a:hover {
 	color: #dc0800;
 }
-
+ .imgHome
+  {
+  margin: 10px 0 0 50px;
+  height:auto;
+  width:auto;
+  float:left;
+  }
+.imgHome a:hover img
+  {
+  border:1px solid black;
+  }
 .menu {
 	background-color: #999999;
-	height: 45px;
+	height: 35px;
 	width: 100%;
-	padding-top: 20px;
-	text-align: justify;
+	padding-top: 10px;
 	border-bottom:5px solid white;
 	border:1px solid red;
 }
-
 .menu a{
-  display:inline;
+	display:block;
+	width:250px;
+	text-align: center;
+	float: left;
+	border-left:1px solid black;
+	border-right:1px solid black;
 }
+
 .footer {
 	margin: 0;
 	padding: 0;
@@ -119,28 +132,53 @@ form{
 	width: 100%;
 	border:1px solid red;
 }
-
-.newsletter a:link {
-	font: Impact;
+#newsletter a:link {
+	font-family: Impact;
 	font-size: 27;
-	font-color: white;
+	color: white;
 	font-weight:bold;
 	text-decoration: none;
 }
-
-.newsletter a:hover { 
-	text-shadow:2px 2px black;
+#newsletter a:hover { 
+	font-color:black;
 	}
-	
-.link li{
-	list-style-type: none;
+.link{
+	display:block;
+	width:280px;
+	height: 200px;
+	text-align: left;
+	float: left;
+	padding-left: 30px;
+	border:1px solid red;
+	padding-top: 20px;
+}
+.link a{
+	display:block;
+	width:280px;
+	padding-top: 20px;
+}
+#linkUtili{
+	font-family: Impact;
+	font-size: 27px;
+	color: white;
+	font-weight:bold;
+	padding-top: 20px;
+	padding-left:340px;
 }
 
+/*Homepage*/
+#linkPacc{
+	font-family: Impact;
+	font-size: 50px;
+	text-align: center;
+	color:white;
+	padding: 10px;
+}
 .blocco {
 	margin: 0;
 	padding: 0;
 	background-color: #dcdcdc;
-	height: 560px;
+	height: 540px;
 	width: 100%;
 	border-bottom:5px solid white;
 	border:1px solid red;
@@ -148,27 +186,40 @@ form{
 
 .consigli {
 	background-color: white;
-	min-height: 400px;
+	min-height: 540px;
 	width: 100%;
 	padding: 0;
 	margin: 0;
 	border:1px solid red;	
 }
-.domande {
-	background-color: #dcdcdc;
-	min-height: 200px;
-	width: 100%;
-	padding: 0;
-	margin: 0;
-	border:1px solid red;
+.domande{
+	background-color: #ededed;
+	height: 200px;
+	widht:100%;
+	border-bottom:5px solid white;
 }
-.domande li{
+.domande ul li{
 	display:block;
-	float:right;
+	width:600px;
+	height: 150px;
+	text-align: center;
+	float: left;
+	border:1px solid red;
+	padding-top: 30px;
+}
+.domande ul li a{
+	display:block;
+	width:600px;
+	padding-top: 30px;
+	font-size: 30px;
+	font-family: Arial;
+	font-weight:bold;
+	color: #999999;
+	text-decoration: none;
 }
 .img
   {
-  margin:5px;
+  margin: 20px 20px 0px 40px;
   padding: 0;
   border:1px solid white;
   height:auto;
@@ -186,16 +237,6 @@ form{
   border:1px solid black;
   }
   
- .imgHome
-  {
-  padding: 30px 0 0 50px;
-  height:auto;
-  width:auto;
-  float:left;
-  }
- 
-.imgHome a:hover img
-  {
-  border:1px solid black;
-  }
+
+
   
