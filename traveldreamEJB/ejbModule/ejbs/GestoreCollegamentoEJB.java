@@ -3,6 +3,7 @@ package ejbs;
 import interfaces.GestoreCittaLocal;
 import interfaces.GestoreCollegamentoLocal;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,13 +85,13 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		
 		entity.setDataPartenza(collegamento.getDataPartenza());
 		entity.setDestinazione(collegamento.getDestinazione());
-		entity.setOraArrivo(collegamento.getOraArrivo());
-		entity.setOraPartenza(collegamento.getOraPartenza());
+		entity.setOraArrivo(new Time(collegamento.getOraArrivo().getTime()));
+		entity.setOraPartenza(new Time(collegamento.getOraPartenza().getTime()));
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(citta.convertiInEntita(collegamento.getCittaArrivo()));
-		entity.setCittaPartenza(citta.convertiInEntita(collegamento.getCittaPartenza()));
+		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivoText()));
+		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenzaText()));
 		
 		em.persist(entity);
 	}
@@ -101,13 +102,13 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		
 		entity.setDataPartenza(collegamento.getDataPartenza());
 		entity.setDestinazione(collegamento.getDestinazione());
-		entity.setOraArrivo(collegamento.getOraArrivo());
-		entity.setOraPartenza(collegamento.getOraPartenza());
+		entity.setOraArrivo(new Time(collegamento.getOraArrivo().getTime()));
+		entity.setOraPartenza(new Time(collegamento.getOraPartenza().getTime()));
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(citta.convertiInEntita(collegamento.getCittaArrivo()));
-		entity.setCittaPartenza(citta.convertiInEntita(collegamento.getCittaPartenza()));
+		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivoText()));
+		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenzaText()));
 		
 		em.merge(entity);
 	}
@@ -140,6 +141,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		dto.setTipoCollegamento(collegamento.getTipoCollegamento());
 		dto.setCittaArrivo(citta.convertiInDTO(collegamento.getCittaArrivo()));
 		dto.setCittaPartenza(citta.convertiInDTO(collegamento.getCittaPartenza()));
+		dto.setCittaArrivoText(collegamento.getCittaArrivo().getNome());
+		dto.setCittaPartenzaText(collegamento.getCittaPartenza().getNome());
 		
 		return dto;
 	}

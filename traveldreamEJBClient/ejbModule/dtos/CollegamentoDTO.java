@@ -1,7 +1,6 @@
 package dtos;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -19,9 +18,9 @@ public class CollegamentoDTO implements Serializable {
 	@NotEmpty
 	private String destinazione;
 
-	private Time oraArrivo;
+	private Date oraArrivo;
 
-	private Time oraPartenza;
+	private Date oraPartenza;
 
 	@NotEmpty
 	private String origine;
@@ -33,6 +32,13 @@ public class CollegamentoDTO implements Serializable {
 	private CittaDTO cittaArrivo;
 	
 	private CittaDTO cittaPartenza;
+	
+	/*
+	 * Utilizzati per la creazione di un collegamento
+	 */
+	private String cittaPartenzaText;
+	
+	private String cittaArrivoText;
 	
 	public int getCodice() {
 		return codice;
@@ -58,19 +64,19 @@ public class CollegamentoDTO implements Serializable {
 		this.destinazione = destinazione;
 	}
 
-	public Time getOraArrivo() {
+	public Date getOraArrivo() {
 		return oraArrivo;
 	}
 
-	public void setOraArrivo(Time oraArrivo) {
+	public void setOraArrivo(Date oraArrivo) {
 		this.oraArrivo = oraArrivo;
 	}
 
-	public Time getOraPartenza() {
+	public Date getOraPartenza() {
 		return oraPartenza;
 	}
 
-	public void setOraPartenza(Time oraPartenza) {
+	public void setOraPartenza(Date oraPartenza) {
 		this.oraPartenza = oraPartenza;
 	}
 
@@ -112,6 +118,22 @@ public class CollegamentoDTO implements Serializable {
 
 	public void setCittaPartenza(CittaDTO cittaPartenza) {
 		this.cittaPartenza = cittaPartenza;
+	}
+
+	public String getCittaPartenzaText() {
+		return cittaPartenzaText;
+	}
+
+	public void setCittaPartenzaText(String cittaPartenzaText) {
+		this.cittaPartenzaText = cittaPartenzaText;
+	}
+
+	public String getCittaArrivoText() {
+		return cittaArrivoText;
+	}
+
+	public void setCittaArrivoText(String cittaArrivoText) {
+		this.cittaArrivoText = cittaArrivoText;
 	}
 	
 }
