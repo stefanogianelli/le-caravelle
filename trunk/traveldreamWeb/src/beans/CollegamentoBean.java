@@ -96,6 +96,16 @@ public class CollegamentoBean {
 	public TipoCollegamento [] getTipiCollegamento () {
 		return TipoCollegamento.values();
 	}
+	
+	/**
+	 * Elenca tutti i collegamenti presenti nel database
+	 */
+	public void elencoCollegamenti () {
+		if (this.getElenco().isEmpty())
+			this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti());
+		if (this.getElenco().isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
+	}
 
 	/**
 	 * Ricerca i collegamenti disponibili tra due destinazioni nella data indicata
@@ -122,12 +132,30 @@ public class CollegamentoBean {
 	}
 	
 	/**
+	 * Abilita la modifica di un collegamento
+	 * @param collegamento Il collegamento da modificare
+	 */
+	public void abilitaModifica (CollegamentoDTO collegamento) {
+		collegamento.setEditable(true);
+	}
+	
+	/**
+	 * Disabilita la modifica di un collegamento
+	 * @param collegamento Il collegamento del quale disabilitare la modifica
+	 */
+	public void disabilitaModifica (CollegamentoDTO collegamento) {
+		collegamento.setEditable(false);
+	}
+	
+	/**
 	 * Permette la modifica dei dati di un collegamento esistente
 	 * @param collegamento I dati del collegamento
 	 */
 	public void modificaCollegamento (CollegamentoDTO collegamento) {
 		try {
 			collegamentoBean.modificaDatiCollegamento(collegamento);
+			collegamento.setEditable(false);
+			JsfUtil.infoMessage("Collegamento modificato correttamente!");
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente!");
 		} catch (CittaInesistenteException e) {
