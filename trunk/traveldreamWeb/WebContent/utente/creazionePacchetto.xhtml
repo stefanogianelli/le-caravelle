@@ -5,6 +5,79 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Crea pacchetto</ui:define>
+
+<ui:define name="content">
+
+	<div class="blocco">
+        <h1>Crea il tuo pacchetto</h1>
+        <h2>Aggiungi destinazione</h2>
+        <h3>Seleziona la destinazione</h3>
+		 <select>
+		  <option value="Milano">Milano</option> 	<!-- Da collegare al database -->
+		</select>
+	</div>
+	
+	<div class="blocco">
+		<div class="data">
+			<h3>Data di arrivo</h3>
+		</div>
+		<div class="data">
+			<h3>Data di partenza</h3>
+		</div>
+		<br></br>
+		
+        <h3>Seleziona la città di partenza</h3>
+		 <select>
+		  <option value="Milano">Milano</option> 	<!-- Da collegare al database -->
+		</select>
+		<br></br>
+		
+        <h3>Seleziona il numero di partecipanti</h3>
+		 <select>
+		  <option value="1">1</option> 	<!-- Da collegare al database -->
+		  <option value="2">2</option>
+		  <option value="3">3</option>
+		</select>
+		<br></br>
+	</div>
+	
+	<div class="listaHotel"> <!-- Da collegare al database -->
+		<h2>Scegli l'hotel</h2>
+		<div class="hotel">
+			<img src="../resources/images/madonnina.jpg" width="230px" height="135px"></img>
+			<p><b>Hotel La Madonnina</b></p>
+			<p>3 stelle</p>
+			<p>Via Mazzini 10</p>
+		</div>
+
+		<div class="hotel">
+			<img src="../resources/images/starhotel.jpg" width="230px" height="135px"></img>
+			<p><b>Starhotel Rosa</b></p>
+			<p>4 stelle</p>
+			<p>Piazza Fontana 3</p>
+		</div>
+		
+		<div class="hotel">
+			<img src="../resources/images/fenice.jpg" width="230px" height="135px"></img>
+			<p><b>Hotel Fenice</b></p>
+			<p>3 stelle</p>
+			<p>Corso Buenos Aires 2</p>
+		</div>
+		
+		<div class="hotel">
+			<img src="../resources/images/michelangelo.jpg" width="230px" height="135px"></img>
+			<p><b>Hotel Michelangelo</b></p>
+			<p>4 stelle</p>
+			<p>Piazza Luigi di Savoia 6</p>
+		</div>
+		
+	</div>
+
+</ui:define>
+
+	
 	</ui:composition>
 </html>
