@@ -11,7 +11,6 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
-import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -35,8 +34,6 @@ public class CollegamentoBean {
 	@PostConstruct
 	public void setUp () {
 		collegamento = new CollegamentoDTO();
-		collegamento.setCittaPartenza(new CittaDTO());
-		collegamento.setCittaArrivo(new CittaDTO());
 		elenco = new ArrayList<CollegamentoDTO>();
 	}
 	

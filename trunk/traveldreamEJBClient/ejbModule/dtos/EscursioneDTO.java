@@ -32,6 +32,10 @@ public class EscursioneDTO implements Serializable {
 	 * Utilizzato per la modifica
 	 */	
 	private boolean editable;
+	
+	public EscursioneDTO () {
+		citta = new CittaDTO();
+	}
 
 	public int getId() {
 		return id;

@@ -15,6 +15,10 @@ public class UtenteDTO implements Serializable {
 	
 	private PersonaDTO persona;
 	
+	public UtenteDTO () {
+		persona = new PersonaDTO();
+	}
+	
 	public String getEmail() {
 		return email;
 	}

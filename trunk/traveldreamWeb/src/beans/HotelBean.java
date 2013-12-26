@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import utils.JsfUtil;
-import dtos.CittaDTO;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EntitaEsistenteException;
@@ -33,7 +32,6 @@ public class HotelBean {
 	@PostConstruct
 	public void setUp () {
 		hotel = new HotelDTO();
-		hotel.setCitta(new CittaDTO());
 		elenco = new ArrayList<HotelDTO>();
 	}
 

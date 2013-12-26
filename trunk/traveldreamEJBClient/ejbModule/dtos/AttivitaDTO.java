@@ -11,6 +11,11 @@ public class AttivitaDTO implements Serializable {
 	private EscursioneDTO escursione;
 	
 	private int numeroPartecipanti;
+	
+	public AttivitaDTO () {
+		destinazione = new DestinazioneDTO();
+		escursione = new EscursioneDTO();
+	}
 
 	public DestinazioneDTO getDestinazione() {
 		return destinazione;

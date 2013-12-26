@@ -38,6 +38,11 @@ public class CollegamentoDTO implements Serializable {
 	 */
 	private boolean editable;
 	
+	public CollegamentoDTO () {
+		cittaArrivo = new CittaDTO();
+		cittaPartenza = new CittaDTO();
+	}
+	
 	public int getCodice() {
 		return codice;
 	}
