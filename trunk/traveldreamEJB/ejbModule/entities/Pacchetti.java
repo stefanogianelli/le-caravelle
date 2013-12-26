@@ -32,7 +32,7 @@ import enums.TipoPacchetto;
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
 @NamedQueries ({
 	@NamedQuery(name="Pacchetti.elenco", query="SELECT p FROM Pacchetti p"),
-	@NamedQuery(name="Pacchetti.getPacchettiPerTipo", query="SELECT p FROM Pacchetti p WHERE p.tipoPacchetto = :tipo")
+	@NamedQuery(name="Pacchetti.getPacchettiPerTipo", query="SELECT p FROM Pacchetti p WHERE p.utente.email = :utente AND p.tipoPacchetto = :tipo")
 })
 public class Pacchetti implements Serializable {
 	private static final long serialVersionUID = 1L;

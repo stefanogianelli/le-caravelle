@@ -33,6 +33,9 @@ public class PacchettoBean {
 	
 	private PacchettoDTO pacchetto;
 	private DestinazioneDTO destinazione;
+	private List<PacchettoDTO> elenco;
+	private String email;
+	private TipoPacchetto tipo;
 	
 	@PostConstruct
 	public void setUp () {
@@ -41,6 +44,7 @@ public class PacchettoBean {
 		pacchetto.setDestinazioni(new ArrayList<DestinazioneDTO>());
 		destinazione = new DestinazioneDTO();
 		destinazione.setCitta(new CittaDTO());
+		elenco = new ArrayList<PacchettoDTO>();
 	}
 
 	public PacchettoDTO getPacchetto() {
@@ -51,16 +55,52 @@ public class PacchettoBean {
 		this.pacchetto = pacchetto;
 	}
 	
-	public List<PacchettoDTO> cercaPacchetti (TipoPacchetto tipo) {
-		return pacchettoBean.elencoPacchetti(tipo);
-	}
-	
 	public DestinazioneDTO getDestinazione() {
 		return destinazione;
 	}
 
 	public void setDestinazione(DestinazioneDTO destinazione) {
 		this.destinazione = destinazione;
+	}
+
+	public List<PacchettoDTO> getElenco() {
+		return elenco;
+	}
+
+	public void setElenco(List<PacchettoDTO> elenco) {
+		this.elenco = elenco;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public TipoPacchetto getTipo () {
+		return tipo;
+	}
+
+	public void setTipo(TipoPacchetto tipo) {
+		this.tipo = tipo;
+	}
+	
+	public TipoPacchetto [] getTipoPacchetti () {
+		return TipoPacchetto.values();
+	}
+
+	/**
+	 * Ricerca tutti i pacchetti posseduti da un utente dello stesso tipo
+	 * @param email L'indirizzo email dell'utente
+	 * @param tipo La tipologia di pacchetto
+	 */
+	public void cercaPacchetto () {
+		this.getElenco().clear();
+		this.getElenco().addAll(pacchettoBean.elencoPacchetti(this.getEmail(), this.getTipo()));
+		if (this.getElenco().isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
 	}
 
 	/**

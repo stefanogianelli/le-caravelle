@@ -19,11 +19,12 @@ import enums.TipoPacchetto;
 public interface GestorePacchetto {
 
     /**
-     * Mostra l'elenco dei pacchetti per tipologia
+     * Mostra l'elenco dei pacchetti per tipologia posseduti da un utente
+     * @param email L'indirizzo email dell'utente
      * @param tipo La tipologia di pacchetto da cercare
      * @return L'elenco dei pacchetti
      */
-	List<PacchettoDTO> elencoPacchetti (TipoPacchetto tipo);
+	List<PacchettoDTO> elencoPacchetti (String email, TipoPacchetto tipo);
 	
 	/**
 	 * Permette la creazione di un nuovo pacchetto personalizzato
