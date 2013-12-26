@@ -15,6 +15,7 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome", "citta"})})
 @NamedQueries ({
 	@NamedQuery(name = "Escursioni.elenco", query = "SELECT e FROM Escursioni e"),
 	@NamedQuery(name = "Escursioni.getEscursione", query = "SELECT e FROM Escursioni e WHERE e.id = :id"),
