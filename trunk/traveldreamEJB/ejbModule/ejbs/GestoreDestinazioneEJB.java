@@ -60,7 +60,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
 		entity.setDataPartenza(destinazione.getDataPartenza());
-		entity.setCitta(citta.convertiInEntita(destinazione.getCitta()));
+		entity.setCitta(citta.getCitta(destinazione.getCitta().getNome()));
 		entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
 		
 		return entity;

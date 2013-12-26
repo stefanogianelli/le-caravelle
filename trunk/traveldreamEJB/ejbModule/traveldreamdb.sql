@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `traveldreamdb`.`utenti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`utenti` (
   `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(64) NOT NULL,
   `persone_nome` VARCHAR(45) NULL,
   `persone_cognome` VARCHAR(45) NULL,
   `persone_dataNascita` DATE NULL,

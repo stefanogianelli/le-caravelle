@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Crea Pacchetto Test</title>
+</h:head> 
+<body> 
+	<h1>Creazione Pacchetto</h1>
+	<h:link value="indietro" outcome="pacchettoTest" />
+	<h:messages />
+	<h:form>
+		<h:outputText for="nome" value="Nome: " />
+		<h:inputText id="nome" value="#{pacchetto.pacchetto.nome}" />
+		<h:message for="nome"/><br />
+		
+		<h:outputText for="part" value="Partecipanti: " />
+		<h:inputText id="part" value="#{pacchetto.pacchetto.numPartecipanti}" />
+		<h:message for="part"/><br />
+		
+		<h:outputText for="prezzo" value="Prezzo: " />
+		<h:inputText id="prezzo" value="#{pacchetto.pacchetto.prezzo}" />
+		<h:message for="prezzo"/><br />
+		
+		<h:outputText for="partenza" value="Città Partenza: " />
+		<h:inputText id="partenza" value="#{pacchetto.pacchetto.citta.nome}" />
+		<h:message for="partenza"/><br />
+		
+		<h:outputText for="dataArrivo" value="Data Arrivo: " />
+		<h:inputText id="dataArrivo" value="#{pacchetto.destinazione.dataArrivo}">
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+		</h:inputText>
+		<h:message for="dataArrivo"/><br />
+		
+		<h:outputText for="dataPartenza" value="Data Partenza: " />
+		<h:inputText id="dataPartenza" value="#{pacchetto.destinazione.dataPartenza}">
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+		</h:inputText>
+		<h:message for="dataPartenza"/><br />
+		
+		<h:outputText for="dest" value="Destinazione: " />
+		<h:inputText id="dest" value="#{hotel.nomeCitta}" />
+		<h:message for="dest"/><br />
+		
+		<h:commandButton action="#{hotel.cercaHotel()}" value="Cerca" />
+		
+		<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				#{h.nome}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Indirizzo</f:facet>
+				#{h.indirizzo} - #{h.citta.nome} (#{h.citta.nazione})
+			</h:column>	
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				#{h.prezzo}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Stelle</f:facet>
+				#{h.stelle}
+			</h:column>
+			<h:column>
+				<f:facet name="header">eMail</f:facet>
+				#{h.email}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Telefono</f:facet>
+				#{h.telefono}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Website</f:facet>
+				#{h.website}
+			</h:column>
+			<h:column>
+				<h:commandButton action="#{pacchetto.sceltaHotel(h)}" value="Scegli" />
+			</h:column>
+		</h:dataTable>		
+		<h:commandButton action="#{pacchetto.creaPacchetto()}" value="Salva" />
+	</h:form>
+</body> 
+</html>

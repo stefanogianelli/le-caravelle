@@ -1,17 +1,21 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
+import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
+import dtos.HotelDTO;
 import dtos.PacchettoDTO;
+import dtos.UtenteDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
@@ -21,17 +25,22 @@ import ejbs.GestorePacchetto;
 import enums.TipoPacchetto;
 
 @ManagedBean(name="pacchetto")
-@RequestScoped
+@ViewScoped
 public class PacchettoBean {
 
 	@EJB
 	private GestorePacchetto pacchettoBean;
 	
 	private PacchettoDTO pacchetto;
+	private DestinazioneDTO destinazione;
 	
 	@PostConstruct
 	public void setUp () {
 		pacchetto = new PacchettoDTO();
+		pacchetto.setCitta(new CittaDTO());
+		pacchetto.setDestinazioni(new ArrayList<DestinazioneDTO>());
+		destinazione = new DestinazioneDTO();
+		destinazione.setCitta(new CittaDTO());
 	}
 
 	public PacchettoDTO getPacchetto() {
@@ -46,13 +55,38 @@ public class PacchettoBean {
 		return pacchettoBean.elencoPacchetti(tipo);
 	}
 	
+	public DestinazioneDTO getDestinazione() {
+		return destinazione;
+	}
+
+	public void setDestinazione(DestinazioneDTO destinazione) {
+		this.destinazione = destinazione;
+	}
+
+	/**
+	 * Aggiunge un hotel nella destinazione
+	 * @param hotel L'hotel scelto
+	 */
+	public void sceltaHotel (HotelDTO hotel) {
+		this.getDestinazione().setHotel(hotel);
+		this.getDestinazione().setCitta(hotel.getCitta());
+		JsfUtil.infoMessage("Aggiunto hotel " + hotel.getNome()); 
+	}
+
 	/**
 	 * Permette la creazione di un nuovo pacchetto
-	 * @param pacchetto I dati del pacchetto
 	 */
-	public void creaPacchetto (PacchettoDTO pacchetto) {
+	public void creaPacchetto () {
 		try {
-			pacchettoBean.creaPacchettoPersonalizzato(pacchetto);
+			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
+			/*
+			 * Utente usato per test
+			 */
+			UtenteDTO utente = new UtenteDTO();
+			utente.setEmail("stefano@gmail.com");
+			this.getPacchetto().setUtente(utente);
+			pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
+			JsfUtil.infoMessage("Pacchetto creato correttamente!");
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {
