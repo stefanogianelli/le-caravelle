@@ -11,9 +11,10 @@ import javax.persistence.*;
 @Entity
 @NamedQueries ({
 	@NamedQuery(name = "Hotel.elenco", query = "SELECT h FROM Hotel h"),
-	@NamedQuery(name = "Hotel.getHotel", query = "SELECT h FROM Hotel h WHERE h.nome = :nome"),
+	@NamedQuery(name = "Hotel.getHotel", query = "SELECT h FROM Hotel h WHERE h.nome = :nome AND h.citta.nome = :citta"),
 	@NamedQuery(name = "Hotel.elencoPerCitta", query = "SELECT h FROM Hotel h WHERE h.citta.nome = :citta")
 })	
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome", "citta"})})
 public class Hotel implements Serializable {
 	private static final long serialVersionUID = 1L;
 

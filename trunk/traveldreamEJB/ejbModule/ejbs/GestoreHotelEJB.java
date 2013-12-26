@@ -8,13 +8,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.EntitaEsistenteException;
 import eccezioni.HotelInesistenteException;
 import entities.Hotel;
 
@@ -61,7 +61,13 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	}	
 
 	@Override
-	public void creaHotel(HotelDTO hotel) throws CittaInesistenteException, EntityExistsException {
+	public void creaHotel(HotelDTO hotel) throws CittaInesistenteException, EntitaEsistenteException {
+		Query q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
+		q.setParameter("nome", hotel.getNome());
+		q.setParameter("citta", hotel.getCitta().getNome());
+		if (q.getResultList().size() > 0)
+			throw new EntitaEsistenteException ();
+		
 		Hotel entity = new Hotel ();
 		
 		entity.setEmail(hotel.getEmail());

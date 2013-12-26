@@ -7,12 +7,12 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
 import dtos.CittaDTO;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.EntitaEsistenteException;
 import eccezioni.HotelInesistenteException;
 import ejbs.GestoreCitta;
 import ejbs.GestoreHotel;
@@ -89,7 +89,7 @@ public class HotelBean {
 		try {
 			hotelBean.creaHotel(this.getHotel());
 			JsfUtil.infoMessage("Hotel aggiunto correttamente!");
-		} catch (EntityExistsException e) {
+		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("L'hotel è già presente nel database!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
