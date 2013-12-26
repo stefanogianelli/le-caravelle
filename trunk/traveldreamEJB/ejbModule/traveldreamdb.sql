@@ -64,7 +64,8 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`citta` (
   `nome` VARCHAR(45) NOT NULL,
   `regione` VARCHAR(45) NOT NULL,
   `nazione` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE (`nome`, `nazione`))
 ENGINE = InnoDB;
 
 
@@ -85,8 +86,8 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`hotel` (
   `citta` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE (`nome`, `citta`),
-  INDEX `fk_Hotel_Citt√†1_idx` (`citta` ASC),
-  CONSTRAINT `fk_Hotel_Citt√†1`
+  INDEX `fk_Hotel_Citta†1_idx` (`citta` ASC),
+  CONSTRAINT `fk_Hotel_Citta†1`
     FOREIGN KEY (`citta`)
     REFERENCES `traveldreamdb`.`citta` (`id`)
     ON DELETE NO ACTION
@@ -101,7 +102,7 @@ DROP TABLE IF EXISTS `traveldreamdb`.`pacchetti_predefiniti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti_predefiniti` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL UNIQUE,
   `prezzo` DOUBLE NOT NULL,
   `idHotel` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -121,7 +122,7 @@ DROP TABLE IF EXISTS `traveldreamdb`.`pacchetti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL UNIQUE,
   `numPartecipanti` INT NOT NULL DEFAULT 1,
   `prezzo` DOUBLE NOT NULL,
   `tipoPacchetto` VARCHAR(45) NOT NULL,
@@ -129,10 +130,10 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti` (
   `idPred` INT NULL,
   `emailUtente` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Pacchetto_Citt√†2_idx` (`idCittaOrigine` ASC),
+  INDEX `fk_Pacchetto_Citta†2_idx` (`idCittaOrigine` ASC),
   INDEX `fk_Pacchetto_PacchettoPredefinito1_idx` (`idPred` ASC),
   INDEX `fk_pacchetti_utenti1_idx` (`emailUtente` ASC),
-  CONSTRAINT `fk_Pacchetto_Citt√†2`
+  CONSTRAINT `fk_Pacchetto_Citta†2`
     FOREIGN KEY (`idCittaOrigine`)
     REFERENCES `traveldreamdb`.`citta` (`id`)
     ON DELETE NO ACTION
@@ -191,14 +192,14 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`collegamenti` (
   `cittaArrivo` INT NOT NULL,
   `cittaPartenza` INT NOT NULL,
   PRIMARY KEY (`codice`),
-  INDEX `fk_Collegamento_Citt√†1_idx` (`cittaArrivo` ASC),
-  INDEX `fk_Collegamento_Citt√†2_idx` (`cittaPartenza` ASC),
-  CONSTRAINT `fk_Collegamento_Citt√†1`
+  INDEX `fk_Collegamento_Citta†1_idx` (`cittaArrivo` ASC),
+  INDEX `fk_Collegamento_Citta†2_idx` (`cittaPartenza` ASC),
+  CONSTRAINT `fk_Collegamento_Citta†1`
     FOREIGN KEY (`cittaArrivo`)
     REFERENCES `traveldreamdb`.`citta` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Collegamento_Citt√†2`
+  CONSTRAINT `fk_Collegamento_Citta†2`
     FOREIGN KEY (`cittaPartenza`)
     REFERENCES `traveldreamdb`.`citta` (`id`)
     ON DELETE NO ACTION
@@ -270,8 +271,9 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`escursioni` (
   `prezzo` DOUBLE NOT NULL,
   `idCitta` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Escursione_Citt√†2_idx` (`idCitta` ASC),
-  CONSTRAINT `fk_Escursione_Citt√†2`
+  UNIQUE (`nome`, `idCitta`),
+  INDEX `fk_Escursione_Citta†2_idx` (`idCitta` ASC),
+  CONSTRAINT `fk_Escursione_Citta†2`
     FOREIGN KEY (`idCitta`)
     REFERENCES `traveldreamdb`.`citta` (`id`)
     ON DELETE NO ACTION
@@ -294,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`destinazioni` (
   PRIMARY KEY (`id`),
   INDEX `fk_Destinazione_Pacchetto2_idx` (`idPacchetto` ASC),
   INDEX `fk_Destinazione_Hotel2_idx` (`idHotel` ASC),
-  INDEX `fk_Destinazione_Citt√†2_idx` (`citta` ASC),
+  INDEX `fk_Destinazione_Citta†2_idx` (`citta` ASC),
   CONSTRAINT `fk_Destinazione_Pacchetto2`
     FOREIGN KEY (`idPacchetto`)
     REFERENCES `traveldreamdb`.`pacchetti` (`id`)
@@ -305,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`destinazioni` (
     REFERENCES `traveldreamdb`.`hotel` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Destinazione_Citt√†2`
+  CONSTRAINT `fk_Destinazione_Citta†2`
     FOREIGN KEY (`citta`)
     REFERENCES `traveldreamdb`.`citta` (`id`)
     ON DELETE NO ACTION
@@ -323,14 +325,14 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`attivita` (
   `idDestinazione` INT NOT NULL,
   `idEscursione` INT NULL,
   PRIMARY KEY (`idDestinazione`, `idEscursione`),
-  INDEX `fk_Attivit√†_Destinazione2_idx` (`idDestinazione` ASC),
-  INDEX `fk_Attivit√†_Escursione2_idx` (`idEscursione` ASC),
-  CONSTRAINT `fk_Attivit√†_Destinazione2`
+  INDEX `fk_Attivita†_Destinazione2_idx` (`idDestinazione` ASC),
+  INDEX `fk_Attivita†_Escursione2_idx` (`idEscursione` ASC),
+  CONSTRAINT `fk_Attivita†_Destinazione2`
     FOREIGN KEY (`idDestinazione`)
     REFERENCES `traveldreamdb`.`destinazioni` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Attivit√†_Escursione2`
+  CONSTRAINT `fk_Attivita†_Escursione2`
     FOREIGN KEY (`idEscursione`)
     REFERENCES `traveldreamdb`.`escursioni` (`id`)
     ON DELETE NO ACTION
@@ -347,14 +349,14 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`citta_origine_pred` (
   `idPacchettoPredefinito` INT NOT NULL,
   `idCitta` INT NOT NULL,
   PRIMARY KEY (`idPacchettoPredefinito`, `idCitta`),
-  INDEX `fk_Citt√†OriginePred_PacchettoPredefinito1_idx` (`idPacchettoPredefinito` ASC),
-  INDEX `fk_Citt√†OriginePred_Citt√†1_idx` (`idCitta` ASC),
-  CONSTRAINT `fk_Citt√†OriginePred_PacchettoPredefinito1`
+  INDEX `fk_Citta†OriginePred_PacchettoPredefinito1_idx` (`idPacchettoPredefinito` ASC),
+  INDEX `fk_Citta†OriginePred_Citta†1_idx` (`idCitta` ASC),
+  CONSTRAINT `fk_Citta†OriginePred_PacchettoPredefinito1`
     FOREIGN KEY (`idPacchettoPredefinito`)
     REFERENCES `traveldreamdb`.`pacchetti_predefiniti` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Citt√†OriginePred_Citt√†1`
+  CONSTRAINT `fk_Citta†OriginePred_Citta†1`
     FOREIGN KEY (`idCitta`)
     REFERENCES `traveldreamdb`.`citta` (`id`)
     ON DELETE NO ACTION
@@ -394,14 +396,14 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`attivita_pred` (
   `idEscursione` INT NOT NULL,
   `idPacchettoPredefinito` INT NOT NULL,
   PRIMARY KEY (`idEscursione`, `idPacchettoPredefinito`),
-  INDEX `fk_Attivit√†Pred_Escursione1_idx` (`idEscursione` ASC),
-  INDEX `fk_Attivit√†Pred_PacchettoPredefinito2_idx` (`idPacchettoPredefinito` ASC),
-  CONSTRAINT `fk_Attivit√†Pred_Escursione1`
+  INDEX `fk_Attivita†Pred_Escursione1_idx` (`idEscursione` ASC),
+  INDEX `fk_Attivita†Pred_PacchettoPredefinito2_idx` (`idPacchettoPredefinito` ASC),
+  CONSTRAINT `fk_Attivita†Pred_Escursione1`
     FOREIGN KEY (`idEscursione`)
     REFERENCES `traveldreamdb`.`escursioni` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Attivit√†Pred_PacchettoPredefinito2`
+  CONSTRAINT `fk_Attivita†Pred_PacchettoPredefinito2`
     FOREIGN KEY (`idPacchettoPredefinito`)
     REFERENCES `traveldreamdb`.`pacchetti_predefiniti` (`id`)
     ON DELETE NO ACTION

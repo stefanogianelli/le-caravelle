@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 	@NamedQuery(name = "Citta.elenco", query = "SELECT c FROM Citta c"),
 	@NamedQuery(name = "Citta.getCitta", query = "SELECT c FROM Citta c WHERE c.nome = :nome")
 })
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome", "nazione"})})
 public class Citta implements Serializable {
 	private static final long serialVersionUID = 1L;
 

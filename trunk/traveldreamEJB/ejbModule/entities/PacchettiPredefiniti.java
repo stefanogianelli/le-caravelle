@@ -12,7 +12,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="pacchetti_predefiniti")
+@Table(name="pacchetti_predefiniti", uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
 @NamedQuery(name="PacchettiPredefiniti.elenco", query="SELECT p FROM PacchettiPredefiniti p")
 public class PacchettiPredefiniti implements Serializable {
 	private static final long serialVersionUID = 1L;

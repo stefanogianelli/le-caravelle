@@ -14,6 +14,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
 @NamedQueries ({
 	@NamedQuery(name="Pacchetti.elenco", query="SELECT p FROM Pacchetti p"),
 	@NamedQuery(name="Pacchetti.getPacchettiPerTipo", query="SELECT p FROM Pacchetti p WHERE p.tipoPacchetto = :tipo")
