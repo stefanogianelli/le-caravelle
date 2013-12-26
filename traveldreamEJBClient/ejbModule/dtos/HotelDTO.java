@@ -36,6 +36,10 @@ public class HotelDTO implements Serializable {
 	 */	
 	private boolean isEditable;
 	
+	public HotelDTO () {
+		citta = new CittaDTO();
+	}
+	
 	public int getId() {
 		return id;
 	}

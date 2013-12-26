@@ -1,10 +1,18 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 
 /**
@@ -44,6 +52,7 @@ public class Persone implements Serializable {
 	private List<Pacchetti> pacchetti;
 
 	public Persone() {
+		pacchetti = new ArrayList<Pacchetti>();
 	}
 
 	public PersonePK getId() {

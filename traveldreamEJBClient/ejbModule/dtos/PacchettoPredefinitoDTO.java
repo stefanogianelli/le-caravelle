@@ -1,6 +1,7 @@
 package dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,17 +16,19 @@ public class PacchettoPredefinitoDTO implements Serializable {
 	@NotEmpty
 	private String nome;
 
-	@NotEmpty
 	private double prezzo;
 
-	@NotEmpty
 	private List<Date> datePartenza;
 
-	@NotEmpty
 	private List<Integer> durate;
 
-	@NotEmpty
 	private HotelDTO hotel;
+	
+	public PacchettoPredefinitoDTO () {
+		datePartenza = new ArrayList<Date>();
+		durate = new ArrayList<Integer>();
+		hotel = new HotelDTO();
+	}
 
 	public int getId() {
 		return id;

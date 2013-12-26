@@ -1,6 +1,7 @@
 package dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,11 @@ public class DestinazioneDTO implements Serializable {
 	private List<AttivitaDTO> attivita;
 	
 	private PacchettoDTO pacchetto;
+	
+	public DestinazioneDTO () {
+		citta = new CittaDTO();
+		attivita = new ArrayList<AttivitaDTO>();
+	}
 
 	public int getId() {
 		return id;

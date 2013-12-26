@@ -1,6 +1,7 @@
 package dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PacchettoDTO implements Serializable {
@@ -22,6 +23,11 @@ public class PacchettoDTO implements Serializable {
 	private PacchettoPredefinitoDTO pacchettoPredefinito;
 
 	private UtenteDTO utente;
+	
+	public PacchettoDTO () {
+		destinazioni = new ArrayList<DestinazioneDTO>();
+		citta = new CittaDTO();
+	}
 
 	public int getId() {
 		return id;

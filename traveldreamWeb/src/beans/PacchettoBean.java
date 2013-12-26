@@ -10,7 +10,6 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
-import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.HotelDTO;
@@ -38,10 +37,7 @@ public class PacchettoBean {
 	@PostConstruct
 	public void setUp () {
 		pacchetto = new PacchettoDTO();
-		pacchetto.setCitta(new CittaDTO());
-		pacchetto.setDestinazioni(new ArrayList<DestinazioneDTO>());
 		destinazione = new DestinazioneDTO();
-		destinazione.setCitta(new CittaDTO());
 		elenco = new ArrayList<PacchettoDTO>();
 	}
 
@@ -107,6 +103,7 @@ public class PacchettoBean {
 			UtenteDTO utente = new UtenteDTO();
 			utente.setEmail("stefano@gmail.com");
 			this.getPacchetto().setUtente(utente);
+			
 			pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
 			JsfUtil.infoMessage("Pacchetto creato correttamente!");
 		} catch (EntityExistsException e) {
