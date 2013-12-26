@@ -217,8 +217,7 @@ select{
 	color: #999999;
 	text-decoration: none;
 }
-.img
-  {
+.pacchetto {
   margin: 20px 20px 0px 40px;
   padding: 0;
   border:1px solid white;
@@ -228,15 +227,40 @@ select{
   text-align:center;
   background-color: #999999;
   }
-.img img{
+.pacchetto img{
   display:inline;
   }
  
-.img a:hover img
-  {
+.pacchetto a:hover img {
   border:1px solid black;
   }
   
-
-
-  
+/*Creazione pacchetto*/
+.data{
+	width: 620px;
+	display:block;
+	float:left;
+	text-align:center;
+}
+.listaHotel{
+	background-color: white;
+	min-height: 540px;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border:1px solid red;	
+}
+.hotel
+  {
+  margin: 20px 25px;
+  padding: 10px;
+  border:1px solid black;
+  height:auto;
+  width:auto;
+  float:left;
+  text-align:center;
+  background-color: white;
+}
+ .hotel img{
+  display:inline;
+}
