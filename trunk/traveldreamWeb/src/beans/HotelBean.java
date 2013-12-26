@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
+import dtos.CittaDTO;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.HotelInesistenteException;
@@ -33,6 +34,7 @@ public class HotelBean {
 	@PostConstruct
 	public void setUp () {
 		hotel = new HotelDTO();
+		hotel.setCitta(new CittaDTO());
 		elenco = new ArrayList<HotelDTO>();
 	}
 

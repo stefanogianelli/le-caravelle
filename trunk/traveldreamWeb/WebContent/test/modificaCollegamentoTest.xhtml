@@ -25,8 +25,8 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Città Partenza</f:facet>
-				<h:outputText value="#{c.cittaPartenzaText}" rendered="#{not c.editable}" />
-				<h:inputText value="#{c.cittaPartenzaText}" rendered="#{c.editable}" />		
+				<h:outputText value="#{c.cittaPartenza.nome}" rendered="#{not c.editable}" />
+				<h:inputText value="#{c.cittaPartenza.nome}" rendered="#{c.editable}" />		
 			</h:column>
 			<h:column>
 				<f:facet name="header">Origine</f:facet>
@@ -44,8 +44,8 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Città Arrivo</f:facet>
-				<h:outputText value="#{c.cittaArrivoText}" rendered="#{not c.editable}" />
-				<h:inputText value="#{c.cittaArrivoText}" rendered="#{c.editable}" />		
+				<h:outputText value="#{c.cittaArrivo.nome}" rendered="#{not c.editable}" />
+				<h:inputText value="#{c.cittaArrivo.nome}" rendered="#{c.editable}" />		
 			</h:column>
 			<h:column>
 				<f:facet name="header">Destinazione</f:facet>

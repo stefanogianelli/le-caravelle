@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
+import dtos.CittaDTO;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EscursioneInesistenteException;
@@ -30,6 +31,7 @@ public class EscursioneBean {
 	@PostConstruct
 	public void setUp () {
 		escursione = new EscursioneDTO();
+		escursione.setCitta(new CittaDTO());
 		elenco = new ArrayList<EscursioneDTO>();
 	}
 	
