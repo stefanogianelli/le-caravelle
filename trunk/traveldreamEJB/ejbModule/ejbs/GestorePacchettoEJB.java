@@ -107,7 +107,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		entity.setNome(pacchetto.getNome());
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
+		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
 		
 		em.merge(entity);
 	}
