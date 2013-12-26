@@ -4,29 +4,22 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 public class DestinazioneDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private int id;
 
-	@NotEmpty
 	private Date dataArrivo;
 	
-	@NotEmpty
 	private Date dataPartenza;
 	
-	@NotEmpty
 	private CittaDTO citta;
 	
-	@NotEmpty
 	private HotelDTO hotel;
 	
 	private List<AttivitaDTO> attivita;
 	
-	@NotEmpty
 	private PacchettoDTO pacchetto;
 
 	public int getId() {

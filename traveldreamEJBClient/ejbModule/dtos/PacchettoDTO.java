@@ -3,8 +3,6 @@ package dtos;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 public class PacchettoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -15,17 +13,14 @@ public class PacchettoDTO implements Serializable {
 
 	private int numPartecipanti;
 
-	@NotEmpty
 	private double prezzo;
 
 	private List<DestinazioneDTO> destinazioni;
 
-	@NotEmpty
 	private CittaDTO citta;
 
 	private PacchettoPredefinitoDTO pacchettoPredefinito;
 
-	@NotEmpty
 	private UtenteDTO utente;
 
 	public int getId() {

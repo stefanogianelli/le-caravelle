@@ -90,12 +90,10 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		//TODO: implementare funzione per il calcolo del prezzo
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
-		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.creaDestinazione(d));
+			entity.addDestinazione(this.destinazione.creaDestinazione(d));
 		}
-		entity.setDestinazioni(destinazioni);		
-		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));	
+		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));	
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
 		em.persist(entity);
