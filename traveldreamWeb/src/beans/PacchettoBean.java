@@ -34,8 +34,6 @@ public class PacchettoBean {
 	private PacchettoDTO pacchetto;
 	private DestinazioneDTO destinazione;
 	private List<PacchettoDTO> elenco;
-	private String email;
-	private TipoPacchetto tipo;
 	
 	@PostConstruct
 	public void setUp () {
@@ -71,22 +69,6 @@ public class PacchettoBean {
 		this.elenco = elenco;
 	}
 	
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public TipoPacchetto getTipo () {
-		return tipo;
-	}
-
-	public void setTipo(TipoPacchetto tipo) {
-		this.tipo = tipo;
-	}
-	
 	public TipoPacchetto [] getTipoPacchetti () {
 		return TipoPacchetto.values();
 	}
@@ -96,9 +78,9 @@ public class PacchettoBean {
 	 * @param email L'indirizzo email dell'utente
 	 * @param tipo La tipologia di pacchetto
 	 */
-	public void cercaPacchetto () {
+	public void cercaPacchetto (String email, TipoPacchetto tipo) {
 		this.getElenco().clear();
-		this.getElenco().addAll(pacchettoBean.elencoPacchetti(this.getEmail(), this.getTipo()));
+		this.getElenco().addAll(pacchettoBean.elencoPacchetti(email, tipo));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}

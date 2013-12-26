@@ -28,7 +28,6 @@ public class HotelBean {
 	private GestoreCitta cittaBean;
 	
 	private HotelDTO hotel;
-	private String nomeCitta;
 	private List<HotelDTO> elenco;
 	
 	@PostConstruct
@@ -44,14 +43,6 @@ public class HotelBean {
 
 	public void setHotel(HotelDTO hotel) {
 		this.hotel = hotel;
-	}
-	
-	public String getNomeCitta() {
-		return nomeCitta;
-	}
-
-	public void setNomeCitta(String nomeCitta) {
-		this.nomeCitta = nomeCitta;
 	}
 	
 	public List<HotelDTO> getElenco() {
@@ -74,10 +65,11 @@ public class HotelBean {
 
 	/**
 	 * Ricerca gli hotel nella città selezionata
+	 * @param citta Il nome della città
 	 */
-	public void cercaHotel () {
+	public void cercaHotel (String citta) {
 		this.getElenco().clear();
-		this.getElenco().addAll(hotelBean.elencoHotel(this.getNomeCitta()));
+		this.getElenco().addAll(hotelBean.elencoHotel(citta));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}

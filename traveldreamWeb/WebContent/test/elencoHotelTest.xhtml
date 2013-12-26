@@ -12,11 +12,11 @@
 	<h:link value="indietro" outcome="hotelTest" />
 	<h:form>
 		<h:outputText value="Scegli una città:" />
-		<h:inputText value="#{hotel.nomeCitta}" />
-		<h:commandButton value="Cerca" action="#{hotel.cercaHotel()}" update="risultati" />
+		<h:inputText binding="#{nomeCitta}" />
+		<h:commandButton value="Cerca" action="#{hotel.cercaHotel(nomeCitta.value)}" />
 	</h:form>
 	<h:messages />
-	<h:dataTable id="risultati" value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">
+	<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">
 		<h:column>
 			<f:facet name="header">Nome</f:facet>
 			#{h.nome}

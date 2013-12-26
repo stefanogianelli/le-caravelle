@@ -12,14 +12,14 @@
 	<h:link value="indietro" outcome="pacchettoTest" />
 	<h:form>
 		<h:outputText value="email:" />
-		<h:inputText value="#{pacchetto.email}" />
+		<h:inputText binding="#{email}" />
 		
 		<h:outputText value="Scegli una tipologia: " />
-		<h:selectOneMenu value="#{pacchetto.tipo}">
+		<h:selectOneMenu binding="#{tipo}">
 			<f:selectItems value="#{pacchetto.getTipoPacchetti()}" />
 		</h:selectOneMenu>
 		
-		<h:commandButton value="Cerca" action="#{pacchetto.cercaPacchetto()}" />
+		<h:commandButton value="Cerca" action="#{pacchetto.cercaPacchetto(email.value, tipo.value)}" />
 	</h:form>
 	<h:messages />
 	
@@ -38,7 +38,7 @@
 			Al <h:outputText value="#{d.dataPartenza}">
 				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 			</h:outputText><br />	
-			<h:outputText value="Hotel: #{d.hotel.nome} a #{d.citta.nome} (#{d.citta.nazione})" />
+			<h:outputText value="#{d.hotel.nome} a #{d.citta.nome} (#{d.citta.nazione})" />
 			<br />
 		</ui:repeat>
 		<br />

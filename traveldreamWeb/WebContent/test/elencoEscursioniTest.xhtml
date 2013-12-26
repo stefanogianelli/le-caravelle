@@ -12,8 +12,8 @@
 	<h:link value="indietro" outcome="escursioneTest" />
 	<h:form>
 		<h:outputText value="Scegli una regione:" />
-		<h:inputText value="#{escursione.regione}" />
-		<h:commandButton value="Cerca" action="#{escursione.cercaEscursioni()}" />	
+		<h:inputText binding="#{regione}" />
+		<h:commandButton value="Cerca" action="#{escursione.cercaEscursioni(regione.value)}" />	
 	</h:form>
 	<h:messages />
 	<h:dataTable value="#{escursione.elenco}" var="e" rendered="#{escursione.elenco.size() > 0}" style="text-align: center;">
