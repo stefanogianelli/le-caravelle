@@ -41,10 +41,10 @@
 		<h:message for="dataPartenza"/><br />
 		
 		<h:outputText for="dest" value="Destinazione: " />
-		<h:inputText id="dest" value="#{hotel.nomeCitta}" />
+		<h:inputText id="dest" binding="#{nomeCitta}" />
 		<h:message for="dest"/><br />
 		
-		<h:commandButton action="#{hotel.cercaHotel()}" value="Cerca" />
+		<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" value="Cerca" />
 		
 		<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}" style="text-align: center;">
 			<h:column>

@@ -12,22 +12,22 @@
 	<h:link value="indietro" outcome="collegamentoTest" />
 	<h:form>
 		<h:outputText value="Data Partenza:" />
-		<h:inputText value="#{collegamento.dataPartenza}">
+		<h:inputText binding="#{dataPartenza}">
 			<f:convertDateTime pattern="dd/MM/yyyy" />
 		</h:inputText>
 	
 		<h:outputText value="Citta Partenza:" />
-		<h:inputText value="#{collegamento.cittaPartenza}" />
+		<h:inputText binding="#{cittaPartenza}" />
 		
 		<h:outputText value="Citta Arrivo" />
-		<h:inputText value="#{collegamento.cittaArrivo}" />
+		<h:inputText binding="#{cittaArrivo}" />
 		
 		<h:outputText value="Tipo Collegamento: " />
-		<h:selectOneMenu value="#{collegamento.tipo}">
+		<h:selectOneMenu binding="#{tipo}">
 			<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
 		</h:selectOneMenu>
 		
-		<h:commandButton value="cerca" action="#{collegamento.cercaCollegamenti()}" />
+		<h:commandButton value="cerca" action="#{collegamento.cercaCollegamenti(dataPartenza.value,cittaPartenza.value, cittaArrivo.value, tipo.value)}" />
 	</h:form>
 	<h:messages />
 	<h:dataTable value="#{collegamento.elenco}" var="c" rendered="#{collegamento.elenco.size() > 0}" style="text-align:center;">

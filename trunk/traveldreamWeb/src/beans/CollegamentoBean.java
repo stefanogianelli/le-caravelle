@@ -31,10 +31,6 @@ public class CollegamentoBean {
 	
 	private CollegamentoDTO collegamento;
 	private List<CollegamentoDTO> elenco;
-	private Date dataPartenza;
-	private String cittaPartenza;
-	private String cittaArrivo;
-	private TipoCollegamento tipo;
 	
 	@PostConstruct
 	public void setUp () {
@@ -60,38 +56,6 @@ public class CollegamentoBean {
 		this.elenco = elenco;
 	}
 
-	public Date getDataPartenza() {
-		return dataPartenza;
-	}
-
-	public void setDataPartenza(Date dataPartenza) {
-		this.dataPartenza = dataPartenza;
-	}
-
-	public String getCittaPartenza() {
-		return cittaPartenza;
-	}
-
-	public void setCittaPartenza(String cittaPartenza) {
-		this.cittaPartenza = cittaPartenza;
-	}
-
-	public String getCittaArrivo() {
-		return cittaArrivo;
-	}
-
-	public void setCittaArrivo(String cittaArrivo) {
-		this.cittaArrivo = cittaArrivo;
-	}
-	
-	public TipoCollegamento getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoCollegamento tipo) {
-		this.tipo = tipo;
-	}
-
 	/**
 	 * Ritorna l'elenco delle tipologie di collegamento
 	 * @return Le tipologie di collegamento disponibili
@@ -113,9 +77,9 @@ public class CollegamentoBean {
 	/**
 	 * Ricerca i collegamenti disponibili tra due destinazioni nella data indicata
 	 */
-	public void cercaCollegamenti () {
+	public void cercaCollegamenti (Date dataPartenza, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
 		this.getElenco().clear();
-		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(getDataPartenza(), getCittaPartenza(), getCittaArrivo(), getTipo()));
+		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(dataPartenza, cittaPartenza, cittaArrivo, tipo));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}

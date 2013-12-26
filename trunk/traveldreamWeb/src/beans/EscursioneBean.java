@@ -26,7 +26,6 @@ public class EscursioneBean {
 	
 	private EscursioneDTO escursione;
 	private List<EscursioneDTO> elenco;
-	private String regione;
 	
 	@PostConstruct
 	public void setUp () {
@@ -50,14 +49,6 @@ public class EscursioneBean {
 	public void setElenco(List<EscursioneDTO> elenco) {
 		this.elenco = elenco;
 	}
-	
-	public String getRegione() {
-		return regione;
-	}
-
-	public void setRegione(String regione) {
-		this.regione = regione;
-	}
 
 	/**
 	 * Fornisce l'elenco di categorie disponibili
@@ -80,9 +71,9 @@ public class EscursioneBean {
 	/**
 	 * Ricerca le escursioni nella regione selezionata
 	 */
-	public void cercaEscursioni () {
+	public void cercaEscursioni (String regione) {
 		this.getElenco().clear();
-		this.getElenco().addAll(escursioneBean.elencoEscursioni(this.getRegione()));
+		this.getElenco().addAll(escursioneBean.elencoEscursioni(regione));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}
