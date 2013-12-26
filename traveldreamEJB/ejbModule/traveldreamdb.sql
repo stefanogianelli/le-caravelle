@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`hotel` (
   `prezzo` DOUBLE NOT NULL,
   `citta` INT NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE (`nome`, `citta`),
   INDEX `fk_Hotel_Città1_idx` (`citta` ASC),
   CONSTRAINT `fk_Hotel_Città1`
     FOREIGN KEY (`citta`)
