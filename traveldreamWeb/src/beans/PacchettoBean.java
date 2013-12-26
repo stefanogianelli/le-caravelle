@@ -68,7 +68,15 @@ public class PacchettoBean {
 	public TipoPacchetto [] getTipoPacchetti () {
 		return TipoPacchetto.values();
 	}
-
+	
+	/**
+	 * Ricerca tutti i pacchetti personalizzati posseduti dall'utente
+	 * @param email L'indirizzo email dell'utente
+	 */
+	public void cercaPacchetto (String email) {
+		this.cercaPacchetto(email, TipoPacchetto.PERSONALIZZATO);
+	}
+	
 	/**
 	 * Ricerca tutti i pacchetti posseduti da un utente dello stesso tipo
 	 * @param email L'indirizzo email dell'utente
@@ -116,12 +124,30 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Permette la modifica di un pacchetto
+	 * @param pacchetto Il pacchetto da modificare
+	 */
+	public void abilitaModifica (PacchettoDTO pacchetto) {
+		pacchetto.setEditable(true);
+	}
+	
+	/**
+	 * Disabilita la modifica di un pacchetto
+	 * @param pacchetto Il pacchetto del quale si vuole interrompere la modifica
+	 */
+	public void disabilitaModifica (PacchettoDTO pacchetto) {
+		pacchetto.setEditable(false);
+	}
+	
+	/**
 	 * Permette il salvataggio delle modifiche fatte nel pacchetto
 	 * @param pacchetto I dati del pacchetto
 	 */
 	public void salvaPacchetto (PacchettoDTO pacchetto) {
 		try {
 			pacchettoBean.salvaPacchetto(pacchetto);
+			pacchetto.setEditable(false);
+			JsfUtil.infoMessage("Pacchetto modificato correttamente!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (PacchettoInesistenteException e) {

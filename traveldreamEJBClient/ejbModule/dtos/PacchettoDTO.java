@@ -24,6 +24,11 @@ public class PacchettoDTO implements Serializable {
 
 	private UtenteDTO utente;
 	
+	/*
+	 * Utilizzato per la modifica
+	 */
+	private boolean editable;
+	
 	public PacchettoDTO () {
 		destinazioni = new ArrayList<DestinazioneDTO>();
 		citta = new CittaDTO();
@@ -91,5 +96,13 @@ public class PacchettoDTO implements Serializable {
 
 	public void setUtente(UtenteDTO utente) {
 		this.utente = utente;
+	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 }
