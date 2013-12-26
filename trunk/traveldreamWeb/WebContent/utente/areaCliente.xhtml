@@ -5,6 +5,53 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
-	</ui:composition>
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Area cliente</ui:define>
+
+<ui:define name="content">
+
+<div class="bloccoBianco">
+	<h1>I miei viaggi</h1>
+</div>
+
+<div class="blocco">
+	<h1>I miei pacchetti</h1>
+		<div class="pacchetto">
+		  <a href="/traveldreamWeb/cuba.xhtml">
+		  <img src="/resources/images/cuba.jpg" width="288px" height="174px"></img>
+		  </a>
+		  <div id="linkPacc">Cuba</div> 
+		</div>
+
+		<div class="pacchetto">
+		  <a href="/traveldreamWeb/barcellona.xhtml">
+		  <img src="/resources/images/barcellona.jpg" width="288px" height="174px"></img>
+		  </a>
+		  <div id="linkPacc">Un finde loco</div>	  
+		</div>
+</div>
+
+<div class="bloccoBianco">
+	<h1>Pacchetti condivisi</h1>
+		<div class="pacchetto">
+		  <a href="/traveldreamWeb/barcellona.xhtml">
+		  <img src="/resources/images/barcellona.jpg" width="288px" height="174px"></img>
+		  </a>
+		  <div id="linkPacc">Un finde loco</div> 
+		</div>
+</div>
+
+<div class="blocco">
+	<h1>I miei ricordi</h1>
+		<div class="pacchetto">
+		  <a href="/traveldreamWeb/roma.xhtml">
+		  <img src="/resources/images/roma.jpg" width="288px" height="174px"></img>
+		  </a>	  
+		  <div id="linkPacc">Dolce vita</div>	  
+		</div>
+</div>
+
+</ui:define>
+</ui:composition>
 </html>
