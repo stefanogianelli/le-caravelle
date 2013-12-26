@@ -69,8 +69,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
     }
 
 	@Override
-	public List<PacchettoDTO> elencoPacchetti(TipoPacchetto tipo) {		
+	public List<PacchettoDTO> elencoPacchetti(String email, TipoPacchetto tipo) {		
 		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
+		q.setParameter("utente", email);
 		q.setParameter("tipo", tipo);
 		@SuppressWarnings("unchecked")
 		List<Pacchetti> pacchetti = q.getResultList();
@@ -281,7 +282,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		}
 		pacchettoDTO.setDestinazioni(destinazioni);
 		pacchettoDTO.setCitta(citta.convertiInDTO(pacchetto.getCitta()));
-		pacchettoDTO.setPacchettoPredefinito(this.predefinito.convertiInDTO(pacchetto.getPacchettoPredefinito()));
+		if (pacchetto.getPacchettoPredefinito() != null)
+			pacchettoDTO.setPacchettoPredefinito(this.predefinito.convertiInDTO(pacchetto.getPacchettoPredefinito()));
 		pacchettoDTO.setUtente(profilo.convertiInDTO(pacchetto.getUtente()));
 		
 		return pacchettoDTO;

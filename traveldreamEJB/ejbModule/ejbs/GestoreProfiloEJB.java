@@ -133,16 +133,18 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		UtenteDTO utenteDTO = new UtenteDTO();
 		
 		utenteDTO.setEmail(utente.getEmail());
-		utenteDTO.setPassword(utenteDTO.getPassword());
+		utenteDTO.setPassword(utente.getPassword());
 		
-		PersonaDTO personaDTO = new PersonaDTO();
-		personaDTO.setNome(utente.getPersona().getId().getNome());
-		personaDTO.setCognome(utente.getPersona().getId().getCognome());
-		personaDTO.setDataNascita(utente.getPersona().getId().getDataNascita());
-		personaDTO.setDocumentoIdentita(utente.getPersona().getDocumentoIdentita());
-		personaDTO.setTelefono(utente.getPersona().getTelefono());
-		
-		utenteDTO.setPersona(personaDTO);;
+		if (utente.getPersona() != null) {
+			PersonaDTO personaDTO = new PersonaDTO();
+			personaDTO.setNome(utente.getPersona().getId().getNome());
+			personaDTO.setCognome(utente.getPersona().getId().getCognome());
+			personaDTO.setDataNascita(utente.getPersona().getId().getDataNascita());
+			personaDTO.setDocumentoIdentita(utente.getPersona().getDocumentoIdentita());
+			personaDTO.setTelefono(utente.getPersona().getTelefono());
+			
+			utenteDTO.setPersona(personaDTO);
+		}
 		
 		return utenteDTO;
 	}

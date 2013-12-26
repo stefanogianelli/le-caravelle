@@ -141,8 +141,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		
 		dto.setId(destinazione.getId());
 		dto.setDataArrivo(destinazione.getDataArrivo());
-		dto.setDataPartenza(destinazione.getDataPartenza());
-		dto.setPacchetto(pacchetto.convertiInDTO(destinazione.getPacchetto()));		
+		dto.setDataPartenza(destinazione.getDataPartenza());	
 		dto.setHotel(hotel.convertiInDTO(destinazione.getHotel()));
 		List<AttivitaDTO> attivitaDTO = new ArrayList<AttivitaDTO>();
 		for (Attivita a : destinazione.getAttivita()) {
