@@ -5,6 +5,37 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
-	</ui:composition>
+<ui:composition template="/template.xhtml">
+<ui:define name="title">I miei pacchetti</ui:define>
+
+<ui:define name="content">
+
+<h1>I miei pacchetti</h1>
+
+<div class="mioBloccoBianco">
+	<div class="pacchetto">
+		 <a href="/traveldreamWeb/cuba.xhtml">
+		 <img src="/resources/images/cuba.jpg" width="288px" height="174px"></img>
+		 </a>
+		 <div id="linkPacc">Cuba</div> 
+	</div>
+		
+	<div class="descr">
+		<h2>Cuba</h2>
+		<p>Dal 10/07/2014 al 24/07/2014</p>
+		<br></br>
+		<p>Prezzo: 2500 euro</p>
+	</div>
+</div>
+<div class="mioBlocco">
+</div>
+
+<div class="mioBloccoBianco">
+</div>
+
+<div class="mioBlocco">
+</div>
+
+</ui:define>
+</ui:composition>
 </html>
