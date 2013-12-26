@@ -90,8 +90,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivoText()));
-		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenzaText()));
+		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivo().getNome()));
+		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenza().getNome()));
 		
 		em.persist(entity);
 	}
@@ -107,8 +107,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		entity.setOrigine(collegamento.getOrigine());
 		entity.setPrezzo(collegamento.getPrezzo());
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
-		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivoText()));
-		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenzaText()));
+		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivo().getNome()));
+		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenza().getNome()));
 		
 		em.merge(entity);
 	}
@@ -141,8 +141,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		dto.setTipoCollegamento(collegamento.getTipoCollegamento());
 		dto.setCittaArrivo(citta.convertiInDTO(collegamento.getCittaArrivo()));
 		dto.setCittaPartenza(citta.convertiInDTO(collegamento.getCittaPartenza()));
-		dto.setCittaArrivoText(collegamento.getCittaArrivo().getNome());
-		dto.setCittaPartenzaText(collegamento.getCittaPartenza().getNome());
 		
 		return dto;
 	}

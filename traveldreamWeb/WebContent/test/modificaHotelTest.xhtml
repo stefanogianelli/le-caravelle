@@ -26,8 +26,8 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Città</f:facet>
-				<h:outputText value="#{h.nomeCitta}" rendered="#{not h.editable}" />
-				<h:inputText value="#{h.nomeCitta}" rendered="#{h.editable}" />
+				<h:outputText value="#{h.citta.nome}" rendered="#{not h.editable}" />
+				<h:inputText value="#{h.citta.nome}" rendered="#{h.editable}" />
 			</h:column>			
 			<h:column>
 				<f:facet name="header">Prezzo</f:facet>
