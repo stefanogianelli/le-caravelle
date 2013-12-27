@@ -104,9 +104,13 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	public void salvaPacchetto(PacchettoDTO pacchetto) throws CittaInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
+		//se viene cambiata la città di partenza rimuovo il primo e ultimo collegamento
+		if (entity.getCitta().getNome() != pacchetto.getCitta().getNome() && !entity.getDestinazioni().isEmpty())
+			this.rimuoviCollegamenti(entity, entity.getDestinazioni().get(0).getDataArrivo(), entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza());
+			
 		entity.setNome(pacchetto.getNome());
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		entity.setPrezzo(pacchetto.getPrezzo());
+		entity.setPrezzo(pacchetto.getPrezzo());	
 		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
 		
 		em.merge(entity);
