@@ -78,13 +78,13 @@ public interface GestorePacchetto {
 	
 	/**
 	 * Permette l'aggiunta di una nuova destinazione nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale aggiungere la destinazione
+	 * @param idPacchetto L'dentificativo del pacchetto nel quale aggiungere la destinazione
 	 * @param destinazione La destinazione da aggiungere
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void aggiuntaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException;
+	void aggiuntaDestinazione (int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette la modifica dei dati di una destinazione

@@ -8,17 +8,20 @@
 	<title>Modifica Pacchetto Test</title>
 </h:head> 
 <body>
+	<f:metadata>
+		<f:viewParam name="email" binding="#{emailr}" />
+	</f:metadata>
 	<h1>Elenco Pacchetti</h1>
 	<h:link value="indietro" outcome="pacchettoTest" />
 	<h:form>
 		<h:outputText value="email:" />
-		<h:inputText value="#{modificaPacchetto.email}" />
-	
-		<h:commandButton value="Cerca" action="#{modificaPacchetto.cercaPacchetto()}" />
+		<h:inputText binding="#{email}" />
+
+		<h:commandButton value="Cerca" action="#{pacchetto.cercaPacchetto(email.value)}" />
 	</h:form>
 	<h:messages />
 	<h:form>
-		<ui:repeat value="#{modificaPacchetto.elenco}" var="p" rendered="#{modificaPacchetto.elenco.size() > 0}">
+		<ui:repeat value="#{pacchetto.elenco}" var="p" rendered="#{pacchetto.elenco.size() > 0}">
 			<h4>Pacchetto:</h4>
 			Nome:&nbsp;
 			<h:outputText value="#{p.nome}" rendered="#{not p.editable}" /><br />
@@ -36,10 +39,10 @@
 			<h:outputText value="#{p.prezzo}" rendered="#{not p.editable}" />
 			<h:inputText value="#{p.prezzo}" rendered="#{p.editable}" /><br />
 			
-			<h:commandButton action="#{modificaPacchetto.abilitaModifica(p)}" value="modifica" rendered="#{not p.editable}" />
-			<h:commandButton action="#{modificaPacchetto.eliminaPacchetto(p)}" value="elimina" rendered="#{not p.editable}" />
-			<h:commandButton action="#{modificaPacchetto.salvaPacchetto(p)}" value="salva" rendered="#{p.editable}" />
-			<h:commandButton action="#{modificaPacchetto.disabilitaModifica(p)}" value="annulla" rendered="#{p.editable}" />			
+			<h:commandButton action="#{pacchetto.abilitaModifica(p)}" value="modifica" rendered="#{not p.editable}" />
+			<h:commandButton action="#{pacchetto.eliminaPacchetto(p)}" value="elimina" rendered="#{not p.editable}" />
+			<h:commandButton action="#{pacchetto.salvaPacchetto(p)}" value="salva" rendered="#{p.editable}" />
+			<h:commandButton action="#{pacchetto.disabilitaModifica(p)}" value="annulla" rendered="#{p.editable}" />			
 			<br />
 			
 			<h4>Destinazioni:</h4>
@@ -54,7 +57,9 @@
 				<h:commandButton value="elimina destinazione" action="#{modificaPacchetto.eliminaDestinazione(p, d)}" />
 				<br />
 			</ui:repeat>
-			<h:commandButton value="aggiunta destinazione" action="#{modificaPacchetto.aggiuntaDestinazione(p)}" />
+			<h:link value="aggiunta destinazione" outcome="aggiuntaDestinazioneTest?faces-redirect=true">
+				<f:param name="id-pacchetto" value="#{p.id}" />
+			</h:link>
 			<br />
 		</ui:repeat>
 	</h:form>

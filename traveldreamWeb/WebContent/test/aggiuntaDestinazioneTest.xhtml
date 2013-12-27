@@ -8,18 +8,22 @@
 	<title>Aggiunta Destinazione Test</title>
 </h:head> 
 <body> 
+	<f:metadata>
+		<f:viewParam name="id-pacchetto" binding="#{id}" />
+	</f:metadata>
+	
 	<h1>Aggiunta Destinazione</h1>
 	<h:link value="torna al pacchetto" outcome="modificaPacchettoTest" />
 	<h:messages />
 	<h:form>
 		<h:outputText for="dataArrivo" value="Data Arrivo: " />
-		<h:inputText id="dataArrivo" value="#{modificaPacchetto.destinazione.dataArrivo}">
+		<h:inputText id="dataArrivo" value="#{pacchetto.destinazione.dataArrivo}">
 			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 		</h:inputText>
 		<h:message for="dataArrivo"/><br />
 		
 		<h:outputText for="dataPartenza" value="Data Partenza: " />
-		<h:inputText id="dataPartenza" value="#{modificaPacchetto.destinazione.dataPartenza}">
+		<h:inputText id="dataPartenza" value="#{pacchetto.destinazione.dataPartenza}">
 			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 		</h:inputText>
 		<h:message for="dataPartenza"/><br />
@@ -60,10 +64,10 @@
 				#{h.website}
 			</h:column>
 			<h:column>
-				<h:commandButton action="#{modificaPacchetto.sceltaHotel(h)}" value="Scegli" />
+				<h:commandButton action="#{pacchetto.sceltaHotel(h)}" value="Scegli" />
 			</h:column>
 		</h:dataTable>		
-		<h:commandButton action="#{modificaPacchetto.salvaDestinazione()}" value="Salva" />
+		<h:commandButton action="#{pacchetto.salvaDestinazione(id.value)}" value="Salva" />
 	</h:form>
 </body> 
 </html>
