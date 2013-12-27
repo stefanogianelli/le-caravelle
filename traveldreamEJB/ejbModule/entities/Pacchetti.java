@@ -56,16 +56,17 @@ public class Pacchetti implements Serializable {
 	@OrderBy("dataArrivo ASC")
 	private List<Destinazioni> destinazioni;
 	
-	@ManyToMany
+	@ManyToMany(cascade={CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinTable(
 			name="mezzi_trasporto"
 			, joinColumns={
-				@JoinColumn(name="idCollegamento")
-				}
-			, inverseJoinColumns={
 				@JoinColumn(name="idPacchetto")
 				}
+			, inverseJoinColumns={
+				@JoinColumn(name="idCollegamento")
+				}
 			)	
+	@OrderBy("oraPartenza ASC")
 	private List<Collegamenti> collegamenti;
 
 	@ManyToOne

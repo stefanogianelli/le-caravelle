@@ -17,6 +17,8 @@ public class PacchettoDTO implements Serializable {
 	private double prezzo;
 
 	private List<DestinazioneDTO> destinazioni;
+	
+	private List<CollegamentoDTO> collegamenti;
 
 	private CittaDTO citta;
 
@@ -31,6 +33,7 @@ public class PacchettoDTO implements Serializable {
 	
 	public PacchettoDTO () {
 		destinazioni = new ArrayList<DestinazioneDTO>();
+		collegamenti = new ArrayList<CollegamentoDTO>();
 		citta = new CittaDTO();
 	}
 
@@ -72,6 +75,14 @@ public class PacchettoDTO implements Serializable {
 
 	public void setDestinazioni(List<DestinazioneDTO> destinazioni) {
 		this.destinazioni = destinazioni;
+	}
+
+	public List<CollegamentoDTO> getCollegamenti() {
+		return collegamenti;
+	}
+
+	public void setCollegamenti(List<CollegamentoDTO> collegamenti) {
+		this.collegamenti = collegamenti;
 	}
 
 	public CittaDTO getCitta() {
