@@ -25,6 +25,8 @@ import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.DataException;
+import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.PacchettoInesistenteException;
@@ -174,14 +176,17 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void aggiuntaDestinazione(int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException {
+	public void aggiuntaDestinazione(int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, DataException {
 		Pacchetti entity = this.convertiInEntita(idPacchetto);
 		
-		entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
-		
-		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
-		
-		em.merge(entity);
+		//controllo le date della destinazione
+		if (destinazione.getDataPartenza().compareTo(entity.getDestinazioni().get(0).getDataArrivo()) == 0 || destinazione.getDataArrivo().compareTo(entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza()) == 0) {
+			entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
+			this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
+			
+			em.merge(entity);
+		} else
+			throw new DataException();
 	}
 	
 	@Override
@@ -196,14 +201,15 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException {
+	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException, DeleteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));
-		
-		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
-		
-		em.merge(entity);
+		if (entity.getDestinazioni().size() > 1) {
+			entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));			
+			this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());			
+			em.merge(entity);
+		} else
+			throw new DeleteException();
 	}
 
 	@Override

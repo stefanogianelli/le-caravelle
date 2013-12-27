@@ -17,6 +17,8 @@ import dtos.PacchettoDTO;
 import dtos.UtenteDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.DataException;
+import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.PacchettoInesistenteException;
@@ -229,6 +231,8 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Hotel inesistente!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (DataException e) {
+			JsfUtil.errorMessage("Date non valide");
 		}
 	}
 	
@@ -244,6 +248,8 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Destinazione inesistente!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (DeleteException e) {
+			JsfUtil.errorMessage("Impossibile eliminare la destinazione!");
 		}
 	}
 	
