@@ -96,16 +96,6 @@ public class PacchettoBean {
 	}
 
 	/**
-	 * Aggiunge un hotel nella destinazione
-	 * @param hotel L'hotel scelto
-	 */
-	public void sceltaHotel (HotelDTO hotel) {
-		this.getDestinazione().setHotel(hotel);
-		this.getDestinazione().setCitta(hotel.getCitta());
-		JsfUtil.infoMessage("Aggiunto hotel " + hotel.getNome()); 
-	}
-
-	/**
 	 * Permette la creazione di un nuovo pacchetto
 	 */
 	public void creaPacchetto () {
@@ -221,8 +211,10 @@ public class PacchettoBean {
 	/**
 	 * Salva la nuova destinazione nel database
 	 */
-	public void salvaDestinazione (int id) {
+	public void salvaDestinazione (int id, HotelDTO hotel) {
 		try {
+			this.getDestinazione().setHotel(hotel);
+			this.getDestinazione().setCitta(hotel.getCitta());
 			pacchettoBean.aggiuntaDestinazione(id, this.getDestinazione());
 			JsfUtil.infoMessage("Destinazione aggiunta!"); 
 		} catch (CittaInesistenteException e) {

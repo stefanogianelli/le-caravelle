@@ -64,10 +64,9 @@
 				#{h.website}
 			</h:column>
 			<h:column>
-				<h:commandButton action="#{pacchetto.sceltaHotel(h)}" value="Scegli" />
+				<h:commandButton action="#{pacchetto.salvaDestinazione(id.value, h)}" value="Scegli" />
 			</h:column>
-		</h:dataTable>		
-		<h:commandButton action="#{pacchetto.salvaDestinazione(id.value)}" value="Salva" />
+		</h:dataTable>
 	</h:form>
 </body> 
 </html>
