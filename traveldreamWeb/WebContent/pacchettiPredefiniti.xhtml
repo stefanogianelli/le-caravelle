@@ -4,6 +4,53 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
-	</ui:composition>
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Pacchetti predefiniti</ui:define>
+
+<ui:define name="content">
+
+<h1>Scegli il tuo pacchetto</h1>
+
+<div class="mioBloccoBianco">
+	<div class="pacchetto">
+		 <a href="/traveldreamWeb/cuba.xhtml">
+		 <img src="/resources/images/cuba.jpg" width="288px" height="174px"></img>
+		 </a>
+		 <div id="linkPacc">Cuba</div> 
+	</div>
+		
+	<div class="descr">
+		<h2>Cuba</h2>
+		<br></br>
+		<div id="prezzo">
+		2500 euro
+		</div>
+	</div>
+</div>
+<div class="mioBlocco">
+	<div class="pacchetto">
+		 <a href="/traveldreamWeb/cuba.xhtml">
+		 <img src="/resources/images/cuba.jpg" width="288px" height="174px"></img>
+		 </a>
+		 <div id="linkPacc">Cuba</div> 
+	</div>
+		
+	<div class="descr">
+		<h2>Cuba</h2>
+		<br></br>
+		<div id="prezzo">
+		2500 euro
+		</div>
+	</div>
+</div>
+
+<div class="mioBloccoBianco">
+</div>
+
+<div class="mioBlocco">
+</div>
+
+</ui:define>
+</ui:composition>
 </html>

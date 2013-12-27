@@ -5,6 +5,26 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
-	</ui:composition>
+<ui:composition template="/template.xhtml">
+<ui:define name="title">Dettagli collegamento</ui:define>
+
+<ui:define name="content">
+
+<div class="bloccoDett">
+	<p>Città di partenza: cittàPartenza</p>
+	<p>Città di arrivo: cittàArrivo</p>
+	<br></br>
+	<p>Data: data</p>
+	<p>Ora di partenza: oraPartenza</p>
+	<p>Ora di arrivo: oraArrivo</p>
+	<br></br>
+	<p>Tipo di collegamento: tipoCollegamento</p>
+	<p>Origine: origine</p>
+	<p>Destinazione: destinazione</p>
+	<br></br>
+	<p>Prezzo: prezzo</p>
+</div>
+
+</ui:define>
+</ui:composition>
 </html>

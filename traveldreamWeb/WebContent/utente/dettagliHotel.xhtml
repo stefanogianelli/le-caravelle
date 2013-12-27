@@ -2,9 +2,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
-	</ui:composition>
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Dettagli hotel</ui:define>
+
+<ui:define name="content">
+
+<div class="bloccoDett">
+	<h2>Hotel La Madonnina</h2>
+	<p>3 stelle</p>
+	<img src="/resources/images/madonnina.jpg" width="195px" height="113px"></img>
+	<p>Prezzo a notte: prezzo</p>
+	<br></br>
+	<p>Indirizzo: Via Mazzini 10</p>
+	<p>Città: città</p>
+	<br></br>
+	<p>Telefono: telefono</p>
+	<p>Website: website</p>
+	<p>Email: email</p>
+
+</div>
+</ui:define>
+
+</ui:composition>
 </html>
