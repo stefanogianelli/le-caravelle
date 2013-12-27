@@ -328,11 +328,10 @@ select{
 
 .descr {
 	width: auto;
-	margin: 20px 0 0 0;
+	margin: 20px 0 0 40px;
 	border:1px solid red;
 	display: block;
 	float: left;
-	margin-left: 40px;
 }
 .descr h2{
 	margin: 0;
@@ -341,8 +340,8 @@ select{
 	margin: 10px 0;
 }
 #prezzo{
-	margin:0;
-	font-size: 30px;
+	margin: 0;
+	font-size: 34px;
 	text-align: left;
 	color:black;
 	border: 1px solid red;
@@ -360,4 +359,46 @@ select{
 	background-color:white;
 	padding:5px;
 	margin:30px 0 10px 40px;
+}
+/*Dettagli pacchetto*/
+.bloccoPacc {
+	background-color: white;
+	height: 300px;
+	width: 100%;
+	border-top:1px solid white;
+	border:1px solid red;
+}
+
+.bloccoPacc img{
+	float: left;
+	margin: 30px 0 0 40px;
+}
+.bloccoPaccVolo {
+	background-color: white;
+	height: 200px;
+	width: 100%;
+	border-top:1px solid white;
+	border:1px solid red;
+}
+.hotelPacc
+  {
+  margin: 20px 40px;
+  border:1px solid black;
+  width:944px;
+  display:block;
+  float:left;
+  background-color: white;
+}
+.hotelPacc img{
+	margin:5px;
+}
+.descrHotel {
+	margin: 0px 20px;
+	border:1px solid red;
+	display: block;
+	float: left;
+}
+.descrHotel p{
+	margin: 5px 0;
+	font-size:22px;
 }
