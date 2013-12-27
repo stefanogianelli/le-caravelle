@@ -249,12 +249,13 @@ public class PacchettoBean {
 	
 	/**
 	 * Permette di aggiungere un collegamento nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale aggiungere il collegamento
+	 * @param id L'identificativo pacchetto nel quale aggiungere il collegamento
 	 * @param collegamento Il collegamento scelto
 	 */
-	public void aggiuntaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
+	public void aggiuntaCollegamento (int id, CollegamentoDTO collegamento) {
 		try {
-			pacchettoBean.aggiuntaCollegamento(pacchetto, collegamento);
+			pacchettoBean.aggiuntaCollegamento(id, collegamento);
+			JsfUtil.infoMessage("Collegamento aggiunto!");
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente!");
 		} catch (PacchettoInesistenteException e) {

@@ -203,8 +203,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void aggiuntaCollegamento(PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
-		Pacchetti entity = this.convertiInEntita(pacchetto);		
+	public void aggiuntaCollegamento(int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
+		Pacchetti entity = this.convertiInEntita(idPacchetto);
 	
 		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
 		
@@ -289,6 +289,11 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			destinazioni.add(this.destinazione.convertiInDTO(d));
 		}
 		pacchettoDTO.setDestinazioni(destinazioni);
+		List<CollegamentoDTO> collegamenti = new ArrayList<CollegamentoDTO>();
+		for (Collegamenti c : pacchetto.getCollegamenti()) {
+			collegamenti.add(collegamento.convertiInDTO(c));
+		}
+		pacchettoDTO.setCollegamenti(collegamenti);
 		pacchettoDTO.setCitta(citta.convertiInDTO(pacchetto.getCitta()));
 		if (pacchetto.getPacchettoPredefinito() != null)
 			pacchettoDTO.setPacchettoPredefinito(this.predefinito.convertiInDTO(pacchetto.getPacchettoPredefinito()));
