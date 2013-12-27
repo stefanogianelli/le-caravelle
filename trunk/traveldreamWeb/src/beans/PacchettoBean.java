@@ -17,6 +17,7 @@ import dtos.PacchettoDTO;
 import dtos.UtenteDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.PacchettoInesistenteException;
 import ejbs.GestorePacchetto;
@@ -63,10 +64,22 @@ public class PacchettoBean {
 	public void setElenco(List<PacchettoDTO> elenco) {
 		this.elenco = elenco;
 	}
-	
+
+	/**
+	 * Restituisce le tipologie di pacchetto disponibili
+	 * @return Le tipologie di pacchetto
+	 */
 	public TipoPacchetto [] getTipoPacchetti () {
 		return TipoPacchetto.values();
 	}
+	
+	/**
+	 * Ricerca tutti i pacchetti personalizzati posseduti dall'utente
+	 * @param email L'indirizzo email dell'utente
+	 */
+	public void cercaPacchetto (String email) {
+		this.cercaPacchetto(email, TipoPacchetto.PERSONALIZZATO);
+	}	
 	
 	/**
 	 * Ricerca tutti i pacchetti posseduti da un utente dello stesso tipo
@@ -115,6 +128,50 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Permette la modifica di un pacchetto
+	 * @param pacchetto Il pacchetto da modificare
+	 */
+	public void abilitaModifica (PacchettoDTO pacchetto) {
+		pacchetto.setEditable(true);
+	}
+	
+	/**
+	 * Disabilita la modifica di un pacchetto
+	 * @param pacchetto Il pacchetto del quale si vuole interrompere la modifica
+	 */
+	public void disabilitaModifica (PacchettoDTO pacchetto) {
+		pacchetto.setEditable(false);
+	}
+	
+	/**
+	 * Permette il salvataggio delle modifiche fatte nel pacchetto
+	 * @param pacchetto I dati del pacchetto
+	 */
+	public void salvaPacchetto (PacchettoDTO pacchetto) {
+		try {
+			pacchettoBean.salvaPacchetto(pacchetto);
+			pacchetto.setEditable(false);
+			JsfUtil.infoMessage("Pacchetto modificato correttamente!");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città sconosciuta!");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
+	
+	/**
+	 * Permette l'eliminazione di un pacchetto
+	 * @param pacchetto Il pacchetto che si desidera eliminare
+	 */
+	public void eliminaPacchetto (PacchettoDTO pacchetto) {
+		try {
+			pacchettoBean.eliminaPacchetto(pacchetto);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
+	
+	/**
 	 * Permette la creazione di un pacchetto a partire da un pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
 	 */
@@ -156,6 +213,37 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel inesistente!");
+		}
+	}
+	
+	/**
+	 * Salva la nuova destinazione nel database
+	 */
+	public void salvaDestinazione (int id) {
+		try {
+			pacchettoBean.aggiuntaDestinazione(id, this.getDestinazione());
+			JsfUtil.infoMessage("Destinazione aggiunta!"); 
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città sconosciuta!");
+		} catch (HotelInesistenteException e) {
+			JsfUtil.errorMessage("Hotel inesistente!");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
+	
+	/**
+	 * Permette di eliminare una destinazione da un pacchetto
+	 * @param destinazione La destinazione da eliminare
+	 */
+	public void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
+		try {
+			pacchettoBean.eliminaDestinazione(pacchetto, destinazione);
+			JsfUtil.infoMessage("Destinazione eliminata!"); 
+		} catch (DestinazioneInesistenteException e) {
+			JsfUtil.errorMessage("Destinazione inesistente!");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	

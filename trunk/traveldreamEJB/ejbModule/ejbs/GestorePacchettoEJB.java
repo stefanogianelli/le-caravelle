@@ -170,8 +170,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void aggiuntaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException {
-		Pacchetti entity = this.convertiInEntita(pacchetto);
+	public void aggiuntaDestinazione(int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException {
+		Pacchetti entity = this.convertiInEntita(idPacchetto);
 		
 		entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
 		
@@ -262,6 +262,14 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	@Override
 	public Pacchetti convertiInEntita (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
 		Pacchetti pacchettoEntity = em.find(Pacchetti.class, pacchetto.getId());
+		if (pacchettoEntity != null)
+			return pacchettoEntity;
+		else
+			throw new PacchettoInesistenteException();
+	}
+	
+	public Pacchetti convertiInEntita (int idPacchetto) throws PacchettoInesistenteException {
+		Pacchetti pacchettoEntity = em.find(Pacchetti.class, idPacchetto);
 		if (pacchettoEntity != null)
 			return pacchettoEntity;
 		else
