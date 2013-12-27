@@ -257,7 +257,7 @@ select{
   display:inline;
 }
 .hotel p{
-	font-size: 22px;
+	font-size: 20px;
 	text-align:center;
 	margin:5px 0;
 }
@@ -345,6 +345,7 @@ select{
 	font-size:20px;
 	margin:0;
 }
+/*pagine di dettagli*/
 .bloccoDett {
 	background-color: #dcdcdc;
 	height: 1635px;
