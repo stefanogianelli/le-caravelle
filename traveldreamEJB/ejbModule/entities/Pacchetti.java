@@ -66,7 +66,7 @@ public class Pacchetti implements Serializable {
 				@JoinColumn(name="idCollegamento")
 				}
 			)	
-	@OrderBy("oraPartenza ASC")
+	@OrderBy("dataPartenza ASC")
 	private List<Collegamenti> collegamenti;
 
 	@ManyToOne

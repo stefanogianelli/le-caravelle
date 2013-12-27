@@ -10,6 +10,8 @@ import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.DataException;
+import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.PacchettoInesistenteException;
@@ -83,8 +85,9 @@ public interface GestorePacchetto {
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @trhows DataException Quando le date della destinazione non sono valide
 	 */
-	void aggiuntaDestinazione (int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException;
+	void aggiuntaDestinazione (int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, DataException;
 	
 	/**
 	 * Permette la modifica dei dati di una destinazione
@@ -102,8 +105,9 @@ public interface GestorePacchetto {
 	 * @param destinazione La destinazione da eliminare
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws DeleteException Quando non è possibile cancellare la destinazione (per esempio, quando ne è rimasta solo una nel pacchetto)
 	 */
-	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException;
+	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException, DeleteException;
 	
 	/**
 	 * Permette l'aggiunta di un collegamento nel pacchetto
