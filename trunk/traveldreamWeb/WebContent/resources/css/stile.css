@@ -402,3 +402,7 @@ select{
 	margin: 5px 0;
 	font-size:22px;
 }
+.campo p{
+	display:block;
+	float:left;
+}
