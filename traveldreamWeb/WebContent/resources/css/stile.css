@@ -13,10 +13,11 @@ body {
 	width: 1024px;
 	}
 p { 
-	font-size: 22;
-	text-align: center;
+	font-size: 26px;
+	text-align: left;
 	color:black;
 	border: 1px solid red;
+	margin: 30px 40px 0 40px;
 	}
 
 h1 { 
@@ -255,6 +256,11 @@ select{
  .hotel img{
   display:inline;
 }
+.hotel p{
+	font-size: 22px;
+	text-align:center;
+	margin:5px 0;
+}
 /*Aggiunta collegamento*/
 .volo{
 	background-color: #dcdcdc;
@@ -338,4 +344,14 @@ select{
 	text-align:left;
 	font-size:20px;
 	margin:0;
+}
+.bloccoDett {
+	background-color: #dcdcdc;
+	height: 1635px;
+	width: 100%;
+	border-top:1px solid #dcdcdc;
+	border-bottom:5px solid white;
+}
+.bloccoDett img{
+	margin:30px 0 0 40px;
 }
