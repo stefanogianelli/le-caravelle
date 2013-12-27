@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -51,7 +52,8 @@ public class Pacchetti implements Serializable {
 	private TipoPacchetto tipoPacchetto;
 
 	//relazione bidirezionale one-to-many con l'entità Destinazioni
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchetto")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy="pacchetto", orphanRemoval=true)
+	@OrderBy("dataArrivo ASC")
 	private List<Destinazioni> destinazioni;
 	
 	@ManyToMany
@@ -146,7 +148,6 @@ public class Pacchetti implements Serializable {
 
 	public Destinazioni removeDestinazione(Destinazioni destinazione) {
 		getDestinazioni().remove(destinazione);
-		destinazione.setPacchetto(null);
 
 		return destinazione;
 	}
