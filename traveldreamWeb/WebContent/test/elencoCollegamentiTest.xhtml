@@ -13,7 +13,7 @@
 	<h:form>
 		<h:outputText value="Data Partenza:" />
 		<h:inputText binding="#{dataPartenza}">
-			<f:convertDateTime pattern="dd/MM/yyyy" />
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 		</h:inputText>
 	
 		<h:outputText value="Citta Partenza:" />
@@ -34,7 +34,7 @@
 		<h:column>
 			<f:facet name="header">Data Partenza</f:facet>
 			<h:outputText value="#{c.dataPartenza}"> 
-				<f:convertDateTime pattern="dd/MM/yyyy" />
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 			</h:outputText>
 		</h:column>
 		<h:column>
