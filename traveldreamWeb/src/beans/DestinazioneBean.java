@@ -6,7 +6,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import utils.JsfUtil;
-import dtos.CittaDTO;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
 import eccezioni.DestinazioneInesistenteException;
@@ -25,7 +24,6 @@ public class DestinazioneBean {
 	@PostConstruct
 	public void setUp () {
 		destinazione = new DestinazioneDTO();
-		destinazione.setCitta(new CittaDTO());
 	}
 
 	public DestinazioneDTO getDestinazione() {

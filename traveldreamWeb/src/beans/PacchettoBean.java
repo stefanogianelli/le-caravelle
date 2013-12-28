@@ -98,7 +98,7 @@ public class PacchettoBean {
 	/**
 	 * Permette la creazione di un nuovo pacchetto
 	 */
-	public void creaPacchetto () {
+	public void creaPacchetto (HotelDTO hotel) {
 		try {
 			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
 			/*
@@ -108,6 +108,8 @@ public class PacchettoBean {
 			utente.setEmail("stefano@gmail.com");
 			this.getPacchetto().setUtente(utente);
 			
+			this.getDestinazione().setHotel(hotel);
+			this.getDestinazione().setCitta(hotel.getCitta());
 			pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
 			JsfUtil.infoMessage("Pacchetto creato correttamente!");
 		} catch (EntityExistsException e) {
@@ -158,6 +160,7 @@ public class PacchettoBean {
 	public void eliminaPacchetto (PacchettoDTO pacchetto) {
 		try {
 			pacchettoBean.eliminaPacchetto(pacchetto);
+			JsfUtil.infoMessage("Pacchetto eliminato!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
