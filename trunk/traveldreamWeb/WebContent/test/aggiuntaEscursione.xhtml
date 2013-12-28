@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Aggiunta Escursione</title>
+</h:head> 
+<body> 
+	<f:metadata>
+		<f:viewParam name="idPacchetto" binding="#{id}" />
+		<f:viewParam name="idDestinazione" binding="#{idDestinazione}" />
+		<f:viewParam name="regione" binding="#{regione}" />
+		<f:event listener="#{escursione.cercaEscursioni(regione)}" type="preRenderView" />
+	</f:metadata>
+	
+	<h1>Aggiunta Escursione</h1>
+	<h:link value="torna al pacchetto" outcome="dettagliPacchetto">
+		<f:param name="idPacchetto" value="#{id.value}"/>
+	</h:link>
+	<h:messages />
+	<h:form>
+		<h:outputText value="Numero Partecipanti: " />
+		<h:inputText value="#{destinazione.partecipanti}" />
+		<h:dataTable value="#{escursione.elenco}" var="e" rendered="#{escursione.elenco.size() > 0}" style="text-align: center;">
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{e.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Città</f:facet>
+				<h:outputText value="#{e.citta.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Data</f:facet>
+				<h:outputText value="#{e.data}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ora</f:facet>
+				<h:outputText value="#{e.ora}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Durata</f:facet>
+				<h:outputText value="#{e.durata}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Categoria</f:facet>
+				<h:outputText value="#{e.categoria.label}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				<h:outputText value="#{e.prezzo}">
+					<f:convertNumber type="currency" currencySymbol="€" locale="it-IT" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<h:commandButton action="#{destinazione.aggiuntaEscursione(id.value,idDestinazione,e)}" value="Scegli" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+	<h:outputText value="Nessuna escursione disponibile" rendered="#{escursione.elenco.size() == 0}" />
+</body> 
+</html>

@@ -19,6 +19,7 @@ import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
+import eccezioni.EscursioneEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import entities.Attivita;
@@ -70,17 +71,24 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	}
 	
 	@Override
-	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException {
+	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EscursioneEsistenteException {
 		Destinazioni entity = this.convertiInEntita(idDestinazione);
 		Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
 		
-		Attivita attivita = new Attivita();		
-		attivita.setEscursione(escursioneEntity);		
-		attivita.setNumPartecipanti(numeroPartecipanti);
+		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+		q.setParameter("destinazione", entity);
+		q.setParameter("escursione", escursioneEntity);
 		
-		entity.addAttivita(attivita);
-		
-		em.persist(entity);		
+		if (q.getResultList().isEmpty()) {
+			Attivita attivita = new Attivita();		
+			attivita.setEscursione(escursioneEntity);		
+			attivita.setNumPartecipanti(numeroPartecipanti);
+			
+			entity.addAttivita(attivita);
+			
+			em.merge(entity);		
+		} else
+			throw new EscursioneEsistenteException();
 	}
 
 	@Override
@@ -106,7 +114,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		
 		entity.removeAttivita(attivita);
 		
-		em.remove(entity);
+		em.merge(entity);
 	}
 	
 	@Override
@@ -157,7 +165,6 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	public AttivitaDTO convertiInDTO (Attivita attivita) {
 		AttivitaDTO attivitaDTO = new AttivitaDTO();
 		
-		attivitaDTO.setDestinazione(this.convertiInDTO(attivita.getDestinazione()));
 		attivitaDTO.setEscursione(escursione.convertiInDTO(attivita.getEscursione()));
 		attivitaDTO.setNumeroPartecipanti(attivita.getNumPartecipanti());
 		
