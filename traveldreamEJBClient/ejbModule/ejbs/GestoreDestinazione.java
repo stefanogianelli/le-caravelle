@@ -3,6 +3,7 @@ package ejbs;
 import javax.ejb.Local;
 
 import eccezioni.DestinazioneInesistenteException;
+import eccezioni.EscursioneEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 
 @Local
@@ -15,8 +16,9 @@ public interface GestoreDestinazione {
 	 * @param numeroPartecipanti Il numero di partecipanti all'escursione.
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
+	 * @throws EscursioneEsistenteException Quando l'escursione è già stata inserita
 	 */
-	void aggiuntaEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException;
+	void aggiuntaEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EscursioneEsistenteException;
 	
 	/**
 	 * Permette la modifica del numero di partecipanti ad una escursione

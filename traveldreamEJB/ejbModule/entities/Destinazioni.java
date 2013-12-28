@@ -50,7 +50,7 @@ public class Destinazioni implements Serializable {
 	private Hotel hotel;	
 
 	//relazione bidirezionale one-to-many con l'entità Attivita
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="destinazione")
+	@OneToMany(cascade={CascadeType.MERGE}, mappedBy="destinazione", orphanRemoval=true)
 	private List<Attivita> attivita;
 	
 	@ManyToOne
@@ -126,7 +126,6 @@ public class Destinazioni implements Serializable {
 
 	public Attivita removeAttivita(Attivita attivita) {
 		getAttivita().remove(attivita);
-		attivita.setDestinazione(null);
 
 		return attivita;
 	}

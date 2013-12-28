@@ -31,8 +31,10 @@ public class Attivita implements Serializable {
 	private Escursioni escursione;
 
 	public Attivita() {
+		id = new AttivitaPK();
 	}
 
+	
 	public AttivitaPK getId() {
 		return this.id;
 	}
