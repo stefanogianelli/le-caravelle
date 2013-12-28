@@ -9,36 +9,30 @@
 </h:head> 
 <body> 
 	<f:metadata>
-		<f:viewParam name="id-pacchetto" binding="#{id}" />
+		<f:viewParam name="idPacchetto" binding="#{id}" />
+		<f:viewParam name="dataPartenza" binding="#{dataPartenza}">
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+		</f:viewParam>
+		<f:viewParam name="cittaPartenza" binding="#{cittaPartenza}" />
+		<f:viewParam name="cittaArrivo" binding="#{cittaArrivo}" />
 	</f:metadata>
 	
 	<h1>Elenco collegamenti</h1>
 	<h:link value="torna al pacchetto" outcome="modificaPacchettoTest" />
 	<h:messages />
-	<h:form>
-		<h:outputText value="Data Partenza:" />
-		<h:inputText binding="#{dataPartenza}">
-			<f:convertDateTime pattern="dd/MM/yyyy" />
-		</h:inputText>
-	
-		<h:outputText value="Citta Partenza:" />
-		<h:inputText binding="#{cittaPartenza}" />
-		
-		<h:outputText value="Citta Arrivo" />
-		<h:inputText binding="#{cittaArrivo}" />
-		
+	<h:form>		
 		<h:outputText value="Tipo Collegamento: " />
 		<h:selectOneMenu binding="#{tipo}">
 			<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
 		</h:selectOneMenu>
 		
-		<h:commandButton value="cerca" action="#{collegamento.cercaCollegamenti(dataPartenza.value,cittaPartenza.value, cittaArrivo.value, tipo.value)}" />
+		<h:commandButton value="cerca" action="#{collegamento.cercaCollegamenti(dataPartenza,cittaPartenza, cittaArrivo, tipo.value)}" />
 	
 		<h:dataTable value="#{collegamento.elenco}" var="c" rendered="#{collegamento.elenco.size() > 0}" style="text-align:center;">
 			<h:column>
 				<f:facet name="header">Data Partenza</f:facet>
 				<h:outputText value="#{c.dataPartenza}"> 
-					<f:convertDateTime pattern="dd/MM/yyyy" />
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText>
 			</h:column>
 			<h:column>

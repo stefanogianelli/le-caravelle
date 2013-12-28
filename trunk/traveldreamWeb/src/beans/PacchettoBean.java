@@ -1,6 +1,8 @@
 package beans;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -222,6 +224,32 @@ public class PacchettoBean {
 	 */
 	
 	/**
+	 * Verifica se la destinazione desiderata è l'ultima (in ordine di data di partenza)
+	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
+	 * @param destinazione La destinazione da controllare
+	 * @return true se la destinazione è l'ultima, false altrimenti
+	 */
+	public boolean isUltimaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
+		if (pacchetto.getDestinazioni().indexOf(destinazione) == (pacchetto.getDestinazioni().size() - 1)) {
+			return true;
+		} else
+			return false;
+	}
+	
+	/**
+	 * Restituisce la città di partenza della destinazione preceedente, se esiste, altrimenti la città di partenza del pacchetto
+	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
+	 * @param destinazione La destinazione desiderata
+	 * @return La città di partenza richiesta
+	 */
+	public String getCittaPartenza (PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
+		if (pacchetto.getDestinazioni().indexOf(destinazione) == 0)
+			return pacchetto.getCitta().getNome();
+		else
+			return pacchetto.getDestinazioni().get(pacchetto.getDestinazioni().indexOf(destinazione) - 1).getCitta().getNome();
+	}
+	
+	/**
 	 * Salva la nuova destinazione nel database
 	 */
 	public void salvaDestinazione (int id, HotelDTO hotel) {
@@ -263,6 +291,34 @@ public class PacchettoBean {
 	 */
 	
 	/**
+	 * Controlla se nel pacchetto esiste un collegamento nella data desiderata
+	 * @param pacchetto Il pacchetto nel quale cercare
+	 * @param data La data desiderata
+	 * @return true se viene trovato il collegamento, false altrimenti
+	 */
+	public boolean esisteCollegamento (PacchettoDTO pacchetto, Date data) {
+		for (CollegamentoDTO c : pacchetto.getCollegamenti()) {
+			if (data.compareTo(c.getDataPartenza()) == 0)
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Restituisce il collegamento, se esistente, nel pacchetto nella data desiderata
+	 * @param pacchetto Il pacchetto di riferimento
+	 * @param data La data desiderata
+	 * @return Il collegamento, se esiste, null altrimenti
+	 */
+	public CollegamentoDTO getCollegamento (PacchettoDTO pacchetto, Date data) {
+		for (CollegamentoDTO c : pacchetto.getCollegamenti()) {
+			if (data.compareTo(c.getDataPartenza()) == 0)
+				return c;
+		}
+		return null;
+	}
+	
+	/**
 	 * Permette di aggiungere un collegamento nel pacchetto
 	 * @param id L'identificativo pacchetto nel quale aggiungere il collegamento
 	 * @param collegamento Il collegamento scelto
@@ -291,5 +347,14 @@ public class PacchettoBean {
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
+	}
+	
+	/**
+	 * Si occupa di formattare la data in dd/MM/yyyy (es.: 28/12/2013)
+	 * @param data La data da formattare
+	 * @return La stringa del formato desiderato
+	 */
+	public String getData (Date data) {
+		return new SimpleDateFormat("dd/MM/yyy").format(data);
 	}
 }

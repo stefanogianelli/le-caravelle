@@ -52,11 +52,11 @@ public class Pacchetti implements Serializable {
 	private TipoPacchetto tipoPacchetto;
 
 	//relazione bidirezionale one-to-many con l'entità Destinazioni
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy="pacchetto", orphanRemoval=true)
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="pacchetto", orphanRemoval=true)
 	@OrderBy("dataArrivo ASC")
 	private List<Destinazioni> destinazioni;
 	
-	@ManyToMany(cascade={CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToMany(cascade={CascadeType.MERGE})
 	@JoinTable(
 			name="mezzi_trasporto"
 			, joinColumns={
