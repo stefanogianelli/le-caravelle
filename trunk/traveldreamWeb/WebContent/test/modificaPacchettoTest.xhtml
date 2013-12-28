@@ -61,9 +61,15 @@
 			
 			<h4>Collegamenti</h4>
 			<ui:repeat var="c" value="#{p.collegamenti}">
-				Il <h:outputText value="#{c.dataPartenza}">
+				Il
+				<h:outputText value="#{c.dataPartenza}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText> da #{c.cittaPartenza.nome} a #{c.cittaArrivo.nome}
+				</h:outputText>
+				alle
+				<h:outputText value="#{c.oraPartenza}">
+					<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:outputText>
+				da #{c.cittaPartenza.nome} (#{c.origine}) a #{c.cittaArrivo.nome} (#{c.destinazione})
 				<br />
 			</ui:repeat>
 			<h:link value="aggiunta collegamento" outcome="aggiuntaCollegamentoTest?faces-redirect=true">
