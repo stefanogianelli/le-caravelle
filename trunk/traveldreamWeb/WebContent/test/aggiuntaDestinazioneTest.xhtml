@@ -28,7 +28,9 @@
 		<h:message for="dataPartenza"/><br />
 		
 		<h:outputText for="dest" value="Destinazione: " />
-		<h:inputText id="dest" binding="#{nomeCitta}" />
+		<h:selectOneMenu id="dest" binding="#{nomeCitta}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>		
 		<h:message for="dest"/><br />
 		
 		<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" value="Cerca" />
@@ -48,7 +50,7 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Stelle</f:facet>
-				#{h.stelle}
+				<p:rating value="#{h.stelle}" readonly="true" stars="5" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">eMail</f:facet>

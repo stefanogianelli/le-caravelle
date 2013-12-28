@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <h:head>
@@ -17,13 +18,13 @@
 		<h:message for="nome"/><br />
 		
 		<h:outputText for="citta" value="Città: " />
-		<h:inputText id="citta" value="#{escursione.escursione.citta.nome}" />
+		<h:selectOneMenu id="citta" value="#{escursione.escursione.citta.nome}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>	
 		<h:message for="citta"/><br />
 		
 		<h:outputText for="data" value="Data: " />
-		<h:inputText id="data" value="#{escursione.escursione.data}">
-			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-		</h:inputText>
+		<p:calendar id="data" value="#{escursione.escursione.data}" locale="it" />
 		<h:message for="data"/><br />
 		
 		<h:outputText for="ora" value="Ora: " />

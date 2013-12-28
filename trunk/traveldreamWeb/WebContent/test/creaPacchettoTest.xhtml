@@ -22,7 +22,9 @@
 		<h:message for="part"/><br />
 		
 		<h:outputText for="partenza" value="Città Partenza: " />
-		<h:inputText id="partenza" value="#{pacchetto.pacchetto.citta.nome}" />
+		<h:selectOneMenu id="partenza" value="#{pacchetto.pacchetto.citta.nome}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>
 		<h:message for="partenza"/><br />
 		
 		<h:outputText for="dataArrivo" value="Data Arrivo: " />
@@ -34,7 +36,9 @@
 		<h:message for="dataPartenza"/><br />
 		
 		<h:outputText for="dest" value="Destinazione: " />
-		<h:inputText id="dest" binding="#{nomeCitta}" />
+		<h:selectOneMenu id="dest" binding="#{nomeCitta}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>		
 		<h:message for="dest"/><br />
 		
 		<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" value="Cerca" />
