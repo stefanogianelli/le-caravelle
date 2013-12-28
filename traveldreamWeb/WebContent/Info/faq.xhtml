@@ -4,6 +4,44 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
-	</ui:composition>
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Faq</ui:define>
+
+<ui:define name="content">
+
+<div class="info">
+<h1>Domande frequenti</h1>
+<p><b>Cos'è un pacchetto predefinito?</b></p>
+<p>è un pacchetto “costruito” da un dipendente di TravelDream con una o più destinazioni, un hotel per
+ogni destinazione ed i collegamenti (in un primo momento soltanto aereo) tra queste. L’utente può filtrare
+i pacchetti predefiniti, visualizzarli, salvarli, acquistarli e condividerli, ma non modificarli (solo aggiungere escursioni). 
+</p><br></br>
+<p><b>Cos'è un pacchetto personalizzato?</b></p>
+<p>è un pacchetto creato in maniera autonoma dall’utente. Può essere costituito da una o più destinazioni e
+ deve contenere necessariamente un hotel per destinazione e tutti i collegamenti tra 
+ queste per poter essere salvato; l’utente può aggiungere facoltativamente escursioni. L’utente 
+ ha la possibilità di modificare in qualsiasi momento i vari prodotti che costituiscono il pacchetto 
+ (fino all’effettivo momento dell’acquisto).
+</p><br></br>
+<p><b>Cos'è un pacchetto condiviso?</b></p>
+<p>è un pacchetto predefinito o personalizzato che l’utente decide di condividere con un amico.
+L’amico può visualizzare il pacchetto (tramite il link che riceve via email dal sistema), salvarlo
+(se è registrato al sito TravelDream) e successivamente modificarlo e/o acquistarlo.
+</p><br></br>
+<p><b>Cos'è un pacchetto acquistato?</b></p>
+<p>dopo il pagamento il pacchetto sarà mantenuto nella sezione “I miei pacchetti”, ma presenterà un “tick”
+che lo segnala come già acquistato e non sarà più modificabile dall’utente.</p><br></br>
+<p><b>Cos'è un collegamento?</b></p>
+<p>è il mezzo di trasporto che collega due destinazioni all’interno di un pacchetto. In un primo momento saranno disponibili
+solamente collegamenti aerei, ma successivamente verranno proposti anche collegamenti ferroviari e il noleggio auto.</p><br></br>
+<p><b>Cos'è una destinazione?</b></p>
+<p>è la parte del pacchetto contenente la città di destinazione, le date di arrivo e partenza nella città e l’hotel selezionato
+dall’utente. Può contenere anche escursioni in città o in luoghi di interesse limitrofi.</p>
+<p><b>Cosa sono I miei ricordi?</b></p>
+<p>finiscono automaticamente in questa sezione i pacchetti acquistati in passato, cioè la cui data di ritorno è antecedente
+rispetto alla data odierna.</p>
+</div>
+</ui:define>
+</ui:composition>
 </html>
