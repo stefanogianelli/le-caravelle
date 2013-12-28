@@ -79,9 +79,12 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	
 	@Override
 	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException {
-		Pacchetti entity = new Pacchetti();
-		
-		entity.setNome(pacchetto.getNome());
+		Pacchetti entity = new Pacchetti();		
+
+		if (!pacchetto.getNome().isEmpty())
+			entity.setNome(pacchetto.getNome());
+		else
+			entity.setNome("Pacchetto" + Math.random());
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());		
 		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {

@@ -106,20 +106,28 @@ public class PacchettoBean {
 	 * @param hotel L'hotel scelto da aggiungere alla destinazione di default
 	 */
 	public void creaPacchetto (HotelDTO hotel) {
-		try {			
-			/*
-			 * Utente usato per test
-			 * Da sostituire con l'utente correntemente loggato nel sistema
-			 */
-			UtenteDTO utente = new UtenteDTO();
-			utente.setEmail("stefano@gmail.com");
-			this.getPacchetto().setUtente(utente);
-			
-			this.getDestinazione().setHotel(hotel);
-			this.getDestinazione().setCitta(hotel.getCitta());
-			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
-			pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
-			JsfUtil.infoMessage("Pacchetto creato correttamente!");
+		try {	
+			if (!hotel.getCitta().getNome().equalsIgnoreCase(getPacchetto().getCitta().getNome())) {
+				if (getDestinazione().getDataArrivo().before(getDestinazione().getDataPartenza())) {
+					/*
+					 * Utente usato per test
+					 * Da sostituire con l'utente correntemente loggato nel sistema
+					 */
+					UtenteDTO utente = new UtenteDTO();
+					utente.setEmail("stefano@gmail.com");
+					this.getPacchetto().setUtente(utente);
+					
+					this.getDestinazione().setHotel(hotel);
+					this.getDestinazione().setCitta(hotel.getCitta());
+					this.getPacchetto().getDestinazioni().add(this.getDestinazione());
+					pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
+					JsfUtil.infoMessage("Pacchetto creato correttamente!");
+				} else {
+					JsfUtil.errorMessage("La data di partenza deve essere precedente alla data di partenza!");
+				}
+			} else {
+				JsfUtil.errorMessage("La città di partenza e la destinazione non possono essere uguali!");
+			}
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {

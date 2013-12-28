@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <h:head>
@@ -25,15 +26,11 @@
 		<h:message for="partenza"/><br />
 		
 		<h:outputText for="dataArrivo" value="Data Arrivo: " />
-		<h:inputText id="dataArrivo" value="#{pacchetto.destinazione.dataArrivo}">
-			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-		</h:inputText>
+		<p:calendar value="#{pacchetto.destinazione.dataArrivo}" id="dataArrivo" locale="it" />
 		<h:message for="dataArrivo"/><br />
 		
 		<h:outputText for="dataPartenza" value="Data Partenza: " />
-		<h:inputText id="dataPartenza" value="#{pacchetto.destinazione.dataPartenza}">
-			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-		</h:inputText>
+		<p:calendar value="#{pacchetto.destinazione.dataPartenza}" id="dataPartenza" locale="it" />
 		<h:message for="dataPartenza"/><br />
 		
 		<h:outputText for="dest" value="Destinazione: " />
