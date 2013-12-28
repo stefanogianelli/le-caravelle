@@ -64,6 +64,19 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	private GestorePacchettoPredefinitoLocal predefinito;
 	
 	@Override
+	public PacchettoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException {
+		Query q = em.createNamedQuery("Pacchetti.getPacchettoDaId", Pacchetti.class);
+		q.setParameter("id", idPacchetto);
+		Pacchetti pacchetto;
+		try {
+			pacchetto = (Pacchetti) q.getSingleResult();
+		} catch (NoResultException e) {
+			throw new PacchettoInesistenteException();
+		}
+		return this.convertiInDTO(pacchetto);
+	}
+	
+	@Override
 	public List<PacchettoDTO> elencoPacchetti(String email, TipoPacchetto tipo) {		
 		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
 		q.setParameter("utente", email);
@@ -78,7 +91,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
-	public void creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException {
+	public int creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException {
 		Pacchetti entity = new Pacchetti();		
 
 		if (!pacchetto.getNome().isEmpty())
@@ -95,6 +108,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		entity.setPrezzo(this.calcolaPrezzo(entity));
 		
 		em.persist(entity);
+		em.flush();
+		
+		return entity.getId();
 	}
 
 	@Override

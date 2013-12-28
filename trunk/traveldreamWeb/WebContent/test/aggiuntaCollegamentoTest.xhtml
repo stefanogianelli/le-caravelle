@@ -18,7 +18,9 @@
 	</f:metadata>
 	
 	<h1>Elenco collegamenti</h1>
-	<h:link value="torna al pacchetto" outcome="modificaPacchettoTest" />
+	<h:link value="torna al pacchetto" outcome="dettagliPacchetto">
+		<f:param name="idPacchetto" value="#{id.value}"/>
+	</h:link>
 	<h:messages />
 	<h:form>		
 		<h:outputText value="Tipo Collegamento: " />

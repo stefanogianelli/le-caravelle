@@ -37,6 +37,7 @@ public class PacchettoBean {
 	private PacchettoDTO pacchetto;
 	private DestinazioneDTO destinazione;
 	private List<PacchettoDTO> elenco;
+	private boolean editable;
 	
 	@PostConstruct
 	public void setUp () {
@@ -68,6 +69,14 @@ public class PacchettoBean {
 	public void setElenco(List<PacchettoDTO> elenco) {
 		this.elenco = elenco;
 	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
 	
 	/*
 	 * Metodi relativi alla gestione del pacchetto
@@ -79,6 +88,14 @@ public class PacchettoBean {
 	 */
 	public TipoPacchetto [] getTipoPacchetti () {
 		return TipoPacchetto.values();
+	}
+	
+	public void getPacchetto (int id) {
+		try {
+			this.setPacchetto(pacchettoBean.getPacchetto(id));
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
 	}
 	
 	/**
@@ -104,8 +121,9 @@ public class PacchettoBean {
 	/**
 	 * Permette la creazione di un nuovo pacchetto
 	 * @param hotel L'hotel scelto da aggiungere alla destinazione di default
+	 * @return L'indirizzo della pagina con i dettagli del pacchetto creato
 	 */
-	public void creaPacchetto (HotelDTO hotel) {
+	public String creaPacchetto (HotelDTO hotel) {
 		try {	
 			if (!hotel.getCitta().getNome().equalsIgnoreCase(getPacchetto().getCitta().getNome())) {
 				if (getDestinazione().getDataArrivo().before(getDestinazione().getDataPartenza())) {
@@ -120,8 +138,8 @@ public class PacchettoBean {
 					this.getDestinazione().setHotel(hotel);
 					this.getDestinazione().setCitta(hotel.getCitta());
 					this.getPacchetto().getDestinazioni().add(this.getDestinazione());
-					pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
-					JsfUtil.infoMessage("Pacchetto creato correttamente!");
+					int id = pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
+					return "dettagliPacchetto?idPacchetto=" + id + "&faces-redirect=true";
 				} else {
 					JsfUtil.errorMessage("La data di partenza deve essere precedente alla data di partenza!");
 				}
@@ -135,32 +153,30 @@ public class PacchettoBean {
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel inesistente!");
 		}
+		return null;
 	}
 	
 	/**
 	 * Permette la modifica di un pacchetto
-	 * @param pacchetto Il pacchetto da modificare
 	 */
-	public void abilitaModifica (PacchettoDTO pacchetto) {
-		pacchetto.setEditable(true);
+	public void abilitaModifica () {
+		this.setEditable(true);
 	}
 	
 	/**
 	 * Disabilita la modifica di un pacchetto
-	 * @param pacchetto Il pacchetto del quale si vuole interrompere la modifica
 	 */
-	public void disabilitaModifica (PacchettoDTO pacchetto) {
-		pacchetto.setEditable(false);
+	public void disabilitaModifica () {
+		this.setEditable(false);
 	}
 	
 	/**
 	 * Permette il salvataggio delle modifiche fatte nel pacchetto
-	 * @param pacchetto I dati del pacchetto
 	 */
-	public void salvaPacchetto (PacchettoDTO pacchetto) {
+	public void salvaPacchetto () {
 		try {
-			pacchettoBean.salvaPacchetto(pacchetto);
-			pacchetto.setEditable(false);
+			pacchettoBean.salvaPacchetto(this.getPacchetto());
+			this.disabilitaModifica();
 			JsfUtil.infoMessage("Pacchetto modificato correttamente!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
@@ -171,24 +187,24 @@ public class PacchettoBean {
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
-	 * @param pacchetto Il pacchetto che si desidera eliminare
+	 * @return L'indirizzo della pagina dell'elenco pacchetti
 	 */
-	public void eliminaPacchetto (PacchettoDTO pacchetto) {
+	public String eliminaPacchetto () {
 		try {
-			pacchettoBean.eliminaPacchetto(pacchetto);
-			JsfUtil.infoMessage("Pacchetto eliminato!");
+			pacchettoBean.eliminaPacchetto(this.getPacchetto());
+			return "elencoPacchettiTest?faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
+		return null;
 	}
 	
 	/**
 	 * Permette la creazione di un pacchetto a partire da un pacchetto predefinito
-	 * @param pacchetto I dati del pacchetto
 	 */
-	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) {
+	public void salvaPacchettoPredefinito () {
 		try {
-			pacchettoBean.salvaPacchettoPredefinito(pacchetto);
+			pacchettoBean.salvaPacchettoPredefinito(this.getPacchetto());
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {
@@ -202,11 +218,10 @@ public class PacchettoBean {
 	
 	/**
 	 * Permette l'acquisto di un pacchetto
-	 * @param pacchetto Il pacchetto da acquistare
 	 */
-	public void acquistaPacchetto (PacchettoDTO pacchetto) {
+	public void acquistaPacchetto () {
 		try {
-			pacchettoBean.acquistaPacchetto(pacchetto);
+			pacchettoBean.acquistaPacchetto(this.getPacchetto());
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
@@ -214,12 +229,11 @@ public class PacchettoBean {
 	
 	/**
 	 * Permette la condivisione di un pacchetto con un amico
-	 * @param pacchetto Il pacchetto che si desidera condividere
 	 * @param email L'email dell'amico con il quale condividere il pacchetto
 	 */
-	public void condividiPacchetto (PacchettoDTO pacchetto, String email) {
+	public void condividiPacchetto (String email) {
 		try {
-			pacchettoBean.condividiPacchetto(pacchetto, email);
+			pacchettoBean.condividiPacchetto(this.getPacchetto(), email);
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
@@ -233,12 +247,11 @@ public class PacchettoBean {
 	
 	/**
 	 * Verifica se la destinazione desiderata è l'ultima (in ordine di data di partenza)
-	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
 	 * @param destinazione La destinazione da controllare
 	 * @return true se la destinazione è l'ultima, false altrimenti
 	 */
-	public boolean isUltimaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
-		if (pacchetto.getDestinazioni().indexOf(destinazione) == (pacchetto.getDestinazioni().size() - 1)) {
+	public boolean isUltimaDestinazione (DestinazioneDTO destinazione) {
+		if (this.getPacchetto().getDestinazioni().indexOf(destinazione) == (this.getPacchetto().getDestinazioni().size() - 1)) {
 			return true;
 		} else
 			return false;
@@ -246,26 +259,26 @@ public class PacchettoBean {
 	
 	/**
 	 * Restituisce la città di partenza della destinazione preceedente, se esiste, altrimenti la città di partenza del pacchetto
-	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
 	 * @param destinazione La destinazione desiderata
 	 * @return La città di partenza richiesta
 	 */
-	public String getCittaPartenza (PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
-		if (pacchetto.getDestinazioni().indexOf(destinazione) == 0)
-			return pacchetto.getCitta().getNome();
+	public String getCittaPartenza (DestinazioneDTO destinazione) {
+		if (this.getPacchetto().getDestinazioni().indexOf(destinazione) == 0)
+			return this.getPacchetto().getCitta().getNome();
 		else
-			return pacchetto.getDestinazioni().get(pacchetto.getDestinazioni().indexOf(destinazione) - 1).getCitta().getNome();
+			return this.getPacchetto().getDestinazioni().get(this.getPacchetto().getDestinazioni().indexOf(destinazione) - 1).getCitta().getNome();
 	}
 	
 	/**
 	 * Salva la nuova destinazione nel database
+	 * @return L'indirizzo della pagina con i dettagli del pacchetto
 	 */
-	public void salvaDestinazione (int id, HotelDTO hotel) {
+	public String salvaDestinazione (int id, HotelDTO hotel) {
 		try {
 			this.getDestinazione().setHotel(hotel);
 			this.getDestinazione().setCitta(hotel.getCitta());
 			pacchettoBean.aggiuntaDestinazione(id, this.getDestinazione());
-			JsfUtil.infoMessage("Destinazione aggiunta!"); 
+			return "dettagliPacchetto?idPacchetto=" + id + "&faces-redirect=true";
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
@@ -275,16 +288,18 @@ public class PacchettoBean {
 		} catch (DataException e) {
 			JsfUtil.errorMessage("Date non valide");
 		}
+		return null;
 	}
 	
 	/**
 	 * Permette di eliminare una destinazione da un pacchetto
 	 * @param destinazione La destinazione da eliminare
+	 * @return L'indirizzo della pagina elenco pacchetti
 	 */
-	public void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) {
+	public String eliminaDestinazione (DestinazioneDTO destinazione) {
 		try {
-			pacchettoBean.eliminaDestinazione(pacchetto, destinazione);
-			JsfUtil.infoMessage("Destinazione eliminata!"); 
+			pacchettoBean.eliminaDestinazione(this.getPacchetto(), destinazione);
+			return "elencoPacchettiTest?faces-redirect=true"; 
 		} catch (DestinazioneInesistenteException e) {
 			JsfUtil.errorMessage("Destinazione inesistente!");
 		} catch (PacchettoInesistenteException e) {
@@ -292,6 +307,7 @@ public class PacchettoBean {
 		} catch (DeleteException e) {
 			JsfUtil.errorMessage("Impossibile eliminare la destinazione!");
 		}
+		return null;
 	}
 	
 	/*
@@ -300,12 +316,11 @@ public class PacchettoBean {
 	
 	/**
 	 * Controlla se nel pacchetto esiste un collegamento nella data desiderata
-	 * @param pacchetto Il pacchetto nel quale cercare
 	 * @param data La data desiderata
 	 * @return true se viene trovato il collegamento, false altrimenti
 	 */
-	public boolean esisteCollegamento (PacchettoDTO pacchetto, Date data) {
-		for (CollegamentoDTO c : pacchetto.getCollegamenti()) {
+	public boolean esisteCollegamento (Date data) {
+		for (CollegamentoDTO c : this.getPacchetto().getCollegamenti()) {
 			if (data.compareTo(c.getDataPartenza()) == 0)
 				return true;
 		}
@@ -314,12 +329,11 @@ public class PacchettoBean {
 	
 	/**
 	 * Restituisce il collegamento, se esistente, nel pacchetto nella data desiderata
-	 * @param pacchetto Il pacchetto di riferimento
 	 * @param data La data desiderata
 	 * @return Il collegamento, se esiste, null altrimenti
 	 */
-	public CollegamentoDTO getCollegamento (PacchettoDTO pacchetto, Date data) {
-		for (CollegamentoDTO c : pacchetto.getCollegamenti()) {
+	public CollegamentoDTO getCollegamento (Date data) {
+		for (CollegamentoDTO c : this.getPacchetto().getCollegamenti()) {
 			if (data.compareTo(c.getDataPartenza()) == 0)
 				return c;
 		}
@@ -330,16 +344,18 @@ public class PacchettoBean {
 	 * Permette di aggiungere un collegamento nel pacchetto
 	 * @param id L'identificativo pacchetto nel quale aggiungere il collegamento
 	 * @param collegamento Il collegamento scelto
+	 * @return L'indirizzo della pagina con i dettagli del pacchetto
 	 */
-	public void aggiuntaCollegamento (int id, CollegamentoDTO collegamento) {
+	public String aggiuntaCollegamento (int id, CollegamentoDTO collegamento) {
 		try {
 			pacchettoBean.aggiuntaCollegamento(id, collegamento);
-			JsfUtil.infoMessage("Collegamento aggiunto!");
+			return "dettagliPacchetto?idPacchetto=" + id + "&faces-redirect=true";
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
+		return null;
 	}
 	
 	/**
