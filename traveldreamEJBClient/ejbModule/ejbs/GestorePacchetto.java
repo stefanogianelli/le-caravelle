@@ -20,6 +20,14 @@ import enums.TipoPacchetto;
 @Local
 public interface GestorePacchetto {
 
+	/**
+	 * Resituisce il pacchetto associato all'identificativo inserito
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @return Il pacchetto corrispondente
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	PacchettoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException;
+	
     /**
      * Mostra l'elenco dei pacchetti per tipologia posseduti da un utente
      * @param email L'indirizzo email dell'utente
@@ -34,8 +42,9 @@ public interface GestorePacchetto {
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws EntityExistsException Quando il pacchetto è già esistente nel database
+	 * @return L'identificativo del pacchetto creato
 	 */
-	void creaPacchettoPersonalizzato (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException;
+	int creaPacchettoPersonalizzato (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException;
 	
 	/**
 	 * Permette il salvataggio di un pacchetto personalizzato
