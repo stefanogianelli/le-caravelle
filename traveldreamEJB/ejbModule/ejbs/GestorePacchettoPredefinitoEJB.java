@@ -45,13 +45,6 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	
 	@EJB
 	private GestoreEscursioneLocal escursione;
-	
-    /**
-     * Default constructor. 
-     */
-    public GestorePacchettoPredefinitoEJB() {
-        
-    }
     
 	@Override
 	public List<PacchettoPredefinitoDTO> elencoPacchetti() {

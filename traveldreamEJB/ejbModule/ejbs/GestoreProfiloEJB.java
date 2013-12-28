@@ -39,13 +39,6 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	@EJB
 	private EmailBeanLocal email;
 	
-    /**
-     * Default constructor. 
-     */
-    public GestoreProfiloEJB() {
-     
-    }
-    
 	@Override
 	public UtenteDTO getUtenteCorrente() {
 		String email = context.getCallerPrincipal().getName();

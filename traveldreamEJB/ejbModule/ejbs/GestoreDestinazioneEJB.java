@@ -46,14 +46,6 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	@EJB
 	private GestoreCittaLocal citta;
 	
-    /**
-     * Default constructor. 
-     */
-    public GestoreDestinazioneEJB() {
-        
-    }
-
-
     @Override
     public Destinazioni creaDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException {
 		Destinazioni entity = new Destinazioni();
