@@ -72,6 +72,7 @@ select{
 	width: 1024px;
 	padding: 0; 
 	position: relative;
+	background-color: white;
 	}
 
 /* template*/	
@@ -428,4 +429,21 @@ select{
 	width: 100%;
 	border-top:1px solid #669999;
 	border-bottom:5px solid white;
+}
+/*Pagine info*/
+.info {
+	background-color:white;
+	height:1635px;
+	width:100%;
+}
+.info p{
+	font-size:22px;
+	text-align:justify;
+}
+.info ul li{
+	font-size:22px;
+	text-align:justify;
+	color:black;
+	border: 1px solid red;
+	margin: 20px 40px 0 40px;
 }
