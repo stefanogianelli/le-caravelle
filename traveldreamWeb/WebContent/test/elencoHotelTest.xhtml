@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <h:head>
@@ -31,7 +32,7 @@
 		</h:column>
 		<h:column>
 			<f:facet name="header">Stelle</f:facet>
-			#{h.stelle}
+			<p:rating value="#{h.stelle}" readonly="true" stars="5" />
 		</h:column>
 		<h:column>
 			<f:facet name="header">eMail</f:facet>

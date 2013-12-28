@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <h:head>
@@ -13,13 +14,13 @@
 	<h:messages />
 	<h:form>
 		<h:outputText for="dataPartenza" value="Data Partenza: " />
-		<h:inputText id="dataPartenza" value="#{collegamento.collegamento.dataPartenza}">
-			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-		</h:inputText>
+		<p:calendar id="dataPartenza" value="#{collegamento.collegamento.dataPartenza}" locale="it" />
 		<h:message for="dataPartenza"/><br />
 		
 		<h:outputText for="cittaPartenza" value="Città Partenza: " />
-		<h:inputText id="cittaPartenza" value="#{collegamento.collegamento.cittaPartenza.nome}" />
+		<h:selectOneMenu id="cittaPartenza" value="#{collegamento.collegamento.cittaPartenza.nome}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>	
 		<h:message for="cittaPartenza"/><br />
 		
 		<h:outputText for="origine" value="Origine: " />
@@ -33,7 +34,9 @@
 		<h:message for="oraPartenza"/><br />
 		
 		<h:outputText for="cittaArrivo" value="Città Arrivo: " />
-		<h:inputText id="cittaArrivo" value="#{collegamento.collegamento.cittaArrivo.nome}" />
+		<h:selectOneMenu id="cittaArrivo" value="#{collegamento.collegamento.cittaArrivo.nome}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>	
 		<h:message for="cittaArrivo"/><br />
 		
 		<h:outputText for="destinazione" value="Destinazione: " />
