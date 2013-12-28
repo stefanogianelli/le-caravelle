@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Min;
+
 public class PacchettoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -12,6 +14,7 @@ public class PacchettoDTO implements Serializable {
 
 	private String nome;
 
+	@Min(1)
 	private int numPartecipanti;
 
 	private double prezzo;
@@ -32,6 +35,7 @@ public class PacchettoDTO implements Serializable {
 	private boolean editable;
 	
 	public PacchettoDTO () {
+		numPartecipanti = 1;
 		destinazioni = new ArrayList<DestinazioneDTO>();
 		collegamenti = new ArrayList<CollegamentoDTO>();
 		citta = new CittaDTO();

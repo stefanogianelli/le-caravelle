@@ -5,14 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Future;
+
 public class DestinazioneDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private int id;
 
+	@Future
 	private Date dataArrivo;
 	
+	@Future
 	private Date dataPartenza;
 	
 	private CittaDTO citta;
