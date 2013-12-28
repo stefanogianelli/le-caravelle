@@ -31,14 +31,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	
 	@EJB
 	private GestoreCittaLocal citta;
-	
-    /**
-     * Default constructor. 
-     */
-    public GestoreEscursioneEJB() {
-    
-    }
-    
+	   
 	@Override
 	public List<EscursioneDTO> elencoEscursioni() {
 		List<Escursioni> escursioni = em.createNamedQuery("Escursioni.elenco", Escursioni.class).getResultList();

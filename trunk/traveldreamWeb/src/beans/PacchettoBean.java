@@ -66,6 +66,10 @@ public class PacchettoBean {
 	public void setElenco(List<PacchettoDTO> elenco) {
 		this.elenco = elenco;
 	}
+	
+	/*
+	 * Metodi relativi alla gestione del pacchetto
+	 */
 
 	/**
 	 * Restituisce le tipologie di pacchetto disponibili
@@ -97,12 +101,13 @@ public class PacchettoBean {
 
 	/**
 	 * Permette la creazione di un nuovo pacchetto
+	 * @param hotel L'hotel scelto da aggiungere alla destinazione di default
 	 */
 	public void creaPacchetto (HotelDTO hotel) {
-		try {
-			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
+		try {			
 			/*
 			 * Utente usato per test
+			 * Da sostituire con l'utente correntemente loggato nel sistema
 			 */
 			UtenteDTO utente = new UtenteDTO();
 			utente.setEmail("stefano@gmail.com");
@@ -110,6 +115,7 @@ public class PacchettoBean {
 			
 			this.getDestinazione().setHotel(hotel);
 			this.getDestinazione().setCitta(hotel.getCitta());
+			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
 			pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
 			JsfUtil.infoMessage("Pacchetto creato correttamente!");
 		} catch (EntityExistsException e) {
@@ -211,6 +217,10 @@ public class PacchettoBean {
 		}
 	}
 	
+	/*
+	 * Metodi relativi alla gestione delle destinazioni
+	 */
+	
 	/**
 	 * Salva la nuova destinazione nel database
 	 */
@@ -247,6 +257,10 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Impossibile eliminare la destinazione!");
 		}
 	}
+	
+	/*
+	 * Metodi relativi alla gestione dei collegamenti
+	 */
 	
 	/**
 	 * Permette di aggiungere un collegamento nel pacchetto

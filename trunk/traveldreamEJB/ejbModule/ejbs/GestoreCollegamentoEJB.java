@@ -33,13 +33,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	@EJB
 	private GestoreCittaLocal citta;
 	
-    /**
-     * Default constructor. 
-     */
-    public GestoreCollegamentoEJB() {
-
-    }
-
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti() {
 		List<Collegamenti> collegamenti = em.createNamedQuery("Collegamenti.elenco", Collegamenti.class).getResultList();

@@ -63,13 +63,6 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	@EJB
 	private GestorePacchettoPredefinitoLocal predefinito;
 	
-    /**
-     * Default constructor. 
-     */
-    public GestorePacchettoEJB() {
-        
-    }
-
 	@Override
 	public List<PacchettoDTO> elencoPacchetti(String email, TipoPacchetto tipo) {		
 		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
@@ -107,7 +100,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		//se viene cambiata la città di partenza rimuovo il primo e ultimo collegamento
-		if (entity.getCitta().getNome() != pacchetto.getCitta().getNome() && !entity.getDestinazioni().isEmpty())
+		if (!entity.getCitta().getNome().equals(pacchetto.getCitta().getNome()) && !entity.getDestinazioni().isEmpty())
 			this.rimuoviCollegamenti(entity, entity.getDestinazioni().get(0).getDataArrivo(), entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza());
 			
 		entity.setNome(pacchetto.getNome());
@@ -277,7 +270,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		else
 			throw new PacchettoInesistenteException();
 	}
-	
+
+	@Override
 	public Pacchetti convertiInEntita (int idPacchetto) throws PacchettoInesistenteException {
 		Pacchetti pacchettoEntity = em.find(Pacchetti.class, idPacchetto);
 		if (pacchettoEntity != null)

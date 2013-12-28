@@ -29,13 +29,6 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	
 	@EJB
 	private GestoreCittaLocal citta;
-	
-    /**
-     * Default constructor. 
-     */
-    public GestoreHotelEJB() {
-
-    }
 
 	@Override
 	public List<HotelDTO> elencoHotel() {

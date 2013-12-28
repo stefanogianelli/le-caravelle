@@ -23,13 +23,6 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 
 	@PersistenceContext
 	private EntityManager em;
-	
-    /**
-     * Default constructor. 
-     */
-    public GestoreCittaEJB() {
-       
-    }
     
 	@Override
 	public List<CittaDTO> elencoCitta() {
