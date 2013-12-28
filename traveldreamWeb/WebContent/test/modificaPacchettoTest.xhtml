@@ -33,8 +33,7 @@
 			<h:inputText value="#{p.numPartecipanti}" rendered="#{p.editable}" /><br />
 			
 			Prezzo:&nbsp;
-			<h:outputText value="#{p.prezzo}" rendered="#{not p.editable}" />
-			<h:inputText value="#{p.prezzo}" rendered="#{p.editable}" /><br />
+			<h:outputText value="#{p.prezzo}" /><br />
 			
 			<h:commandButton action="#{pacchetto.abilitaModifica(p)}" value="modifica" rendered="#{not p.editable}" />
 			<h:commandButton action="#{pacchetto.eliminaPacchetto(p)}" value="elimina" rendered="#{not p.editable}" />

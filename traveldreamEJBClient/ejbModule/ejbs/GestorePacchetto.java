@@ -117,13 +117,5 @@ public interface GestorePacchetto {
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
 	void aggiuntaCollegamento (int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
-	
-	/**
-	 * Permette la sostituzione di un collegamento con un altro
-	 * @param pacchetto Il pacchetto dal quale di vuole sostituire il collegamento
-	 * @param collegamento Il nuovo collegamento
-	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
-	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 */
-	void modificaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
+
 }
