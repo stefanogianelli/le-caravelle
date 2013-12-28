@@ -1,16 +1,20 @@
 /* basic elements */
 html {
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
 	width: 1024px;
 	}
 body {
-	margin: 0;
+	margin: 0 auto;
 	padding: 0;
 	font-family: Arial, Helvetica, sans-serif;
 	color: black; 
 	background-color: white;
 	width: 1024px;
+	background-image:url('/resources/images/pascua.jpg');
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:center;
 	}
 p { 
 	font-size: 26px;
@@ -45,16 +49,13 @@ h3 {
 	text-align: center;
 	margin: 30px 50px;
 	}
-a:link, a:visited { 
-	font-size: 18px;
-	font-weight: bold; 
-	text-decoration: none; 
-	color: white;
-	}
+a:link, a:visited{
+	color: #999999;
+	text-decoration:none;
+}
 a:hover { 
-	font-size: 125%;
+	color: #003333;
 	}
-
 form{
 	text-align: center;
 }
@@ -71,7 +72,6 @@ select{
 	width: 1024px;
 	padding: 0; 
 	position: relative;
-	border:5px solid black;
 	}
 
 /* template*/	
@@ -90,24 +90,25 @@ select{
 	margin-top: 40px;
 	color: #666666;
 	display:block;
-	width:200px;
+	width:250px;
 	text-align: center;
 	float: left;
+	font-size: 18px;
+	font-weight: bold; 
+	text-decoration: none;
 }
 .access a:hover {
-	color: #dc0800;
+	color: #FF3333;
 	font-size: 30px;
 }
- .imgHome
-  {
-  margin: 10px 0 0 50px;
+ .imgHome{
+  margin: 20px 0 0 40px;
   height:auto;
   width:auto;
   float:left;
   }
-.imgHome a:hover img
-  {
-  border:1px solid black;
+.imgHome a:hover img{
+  border:1px solid #003333;
   }
 .menu {
 	background-color: #999999;
@@ -121,8 +122,14 @@ select{
 	width:200px;
 	text-align: center;
 	float: left;
+	font-size: 18px;
+	font-weight: bold; 
+	text-decoration: none; 
+	color: white;
 }
-
+.menu a:hover{
+	font-size:125%;
+}
 .footer {
 	margin: 0;
 	padding: 0;
@@ -152,6 +159,13 @@ select{
 	display:block;
 	width:220px;
 	padding-top: 20px;
+	font-size: 18px;
+	font-weight: bold; 
+	text-decoration: none; 
+	color: white;
+}
+.link a:hover{
+	font-size:125%;
 }
 #linkUtili{
 	font-family: Impact;
@@ -169,6 +183,12 @@ select{
 	color:white;
 	padding: 10px;
 }
+#linkPacc a:link{
+	color:white;
+}
+#linkPacc a:hover{ 
+	color: #003333;
+	}
 .blocco {
 	background-color: #dcdcdc;
 	height: 545px;
@@ -209,7 +229,7 @@ select{
 	text-decoration: none;
 }
 .domande ul li a:hover{
-	color:black;
+	color: #003333;
 }
 .pacchetto {
   margin: 20px 0px 0px 40px;
@@ -223,7 +243,7 @@ select{
   }
  
 .pacchetto a:hover img {
-  border:1px solid black;
+  border:1px solid #003333;
   }
   
 /*Creazione pacchetto*/
@@ -355,7 +375,7 @@ select{
 	border-bottom:5px solid white;
 }
 .bloccoDett img{
-	border: 1px solid black;
+	border: 1px solid #003333;
 	background-color:white;
 	padding:5px;
 	margin:30px 0 10px 40px;
@@ -402,7 +422,10 @@ select{
 	margin: 5px 0;
 	font-size:22px;
 }
-.campo p{
-	display:block;
-	float:left;
+.bloccoRicerca {
+	background-color: #669999;
+	height: 250px;
+	width: 100%;
+	border-top:1px solid #669999;
+	border-bottom:5px solid white;
 }
