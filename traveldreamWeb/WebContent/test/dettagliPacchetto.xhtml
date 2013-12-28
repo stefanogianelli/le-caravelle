@@ -88,6 +88,16 @@
 								<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 							</h:outputText>
 							(partecipanti: #{e.numeroPartecipanti})
+							<h:form>
+								<h:panelGroup rendered="#{e.destinazione.id != destinazione.attivita.destinazione.id or e.escursione.id != destinazione.attivita.escursione.id}">
+									<h:commandButton action="#{destinazione.abilitaModifica(e)}" value="modifica" />
+								</h:panelGroup>
+								<h:panelGroup rendered="#{e.destinazione.id == destinazione.attivita.destinazione.id and e.escursione.id == destinazione.attivita.escursione.id}">								
+									<h:inputText value="#{e.numeroPartecipanti}" />
+									<h:commandButton action="#{destinazione.modificaEscursione(e)}" value="salva" />
+									<h:commandButton action="#{destinazione.disabilitaModifica()}" value="annulla" />
+								</h:panelGroup>		
+							</h:form>					
 						</li>
 					</ui:repeat>
 				</ul>
