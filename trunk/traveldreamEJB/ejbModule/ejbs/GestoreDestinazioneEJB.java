@@ -22,6 +22,7 @@ import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EscursioneEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.NumeroPartecipantiException;
 import entities.Attivita;
 import entities.Destinazioni;
 import entities.Escursioni;
@@ -71,43 +72,46 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	}
 	
 	@Override
-	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EscursioneEsistenteException {
+	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EscursioneEsistenteException, NumeroPartecipantiException {
 		Destinazioni entity = this.convertiInEntita(idDestinazione);
-		Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
 		
-		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-		q.setParameter("destinazione", entity);
-		q.setParameter("escursione", escursioneEntity);
-		
-		if (q.getResultList().isEmpty()) {
-			Attivita attivita = new Attivita();		
-			attivita.setEscursione(escursioneEntity);		
-			attivita.setNumPartecipanti(numeroPartecipanti);
+		if (numeroPartecipanti <= entity.getPacchetto().getNumPartecipanti()) {
+			Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
 			
-			entity.addAttivita(attivita);
+			Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+			q.setParameter("destinazione", entity);
+			q.setParameter("escursione", escursioneEntity);
 			
-			em.merge(entity);		
+			if (q.getResultList().isEmpty()) {
+				Attivita attivita = new Attivita();		
+				attivita.setEscursione(escursioneEntity);		
+				attivita.setNumPartecipanti(numeroPartecipanti);
+				
+				entity.addAttivita(attivita);
+				
+				em.merge(entity);		
+			} else
+				throw new EscursioneEsistenteException();
 		} else
-			throw new EscursioneEsistenteException();
+			throw new NumeroPartecipantiException();
 	}
 
 	@Override
-	public void modificaDatiEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException {
-		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-		q.setParameter("destinazione", idDestinazione);
-		q.setParameter("escursione", idEscursione);
-		Attivita attivita = (Attivita) q.getSingleResult();
+	public void modificaDatiEscursione(AttivitaDTO attivita) throws EscursioneInesistenteException, DestinazioneInesistenteException, NumeroPartecipantiException {
+		Attivita attivitaEntity = this.convertiInEntita(attivita);
 
-		attivita.setNumPartecipanti(numeroPartecipanti);
-		
-		em.merge(attivita);		
+		if (attivita.getNumeroPartecipanti() <= attivitaEntity.getDestinazione().getPacchetto().getNumPartecipanti()) {
+			attivitaEntity.setNumPartecipanti(attivita.getNumeroPartecipanti());		
+			em.merge(attivitaEntity);		
+		} else
+			throw new NumeroPartecipantiException();
 	}
 
 	@Override
 	public void eliminaEscursione(int idDestinazione, int idEscursione) throws EscursioneInesistenteException, DestinazioneInesistenteException {
 		Destinazioni entity = this.convertiInEntita(idDestinazione);
 		
-		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+		Query q = em.createNamedQuery("Attivita.getAttivitaDaId", Attivita.class);
 		q.setParameter("destinazione", idDestinazione);
 		q.setParameter("escursione", idEscursione);
 		Attivita attivita = (Attivita) q.getSingleResult();
@@ -146,6 +150,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		List<AttivitaDTO> attivitaDTO = new ArrayList<AttivitaDTO>();
 		for (Attivita a : destinazione.getAttivita()) {
 			attivitaDTO.add(this.convertiInDTO(a));
+			attivitaDTO.get(attivitaDTO.size() - 1).setDestinazione(dto);
 		}
 		dto.setAttivita(attivitaDTO);
 		dto.setCitta(citta.convertiInDTO(destinazione.getCitta()));
@@ -155,7 +160,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	
 	@Override
 	public Attivita convertiInEntita (AttivitaDTO attivita) {
-		Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+		Query q = em.createNamedQuery("Attivita.getAttivitaDaId", Attivita.class);
 		q.setParameter("destinazione", attivita.getDestinazione().getId());
 		q.setParameter("escursione", attivita.getEscursione().getId());
 		return (Attivita) q.getSingleResult();

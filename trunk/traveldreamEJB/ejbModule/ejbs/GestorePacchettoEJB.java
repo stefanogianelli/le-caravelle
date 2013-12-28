@@ -336,6 +336,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		List<DestinazioneDTO> destinazioni = new ArrayList<DestinazioneDTO>();
 		for (Destinazioni d : pacchetto.getDestinazioni()) {
 			destinazioni.add(this.destinazione.convertiInDTO(d));
+			destinazioni.get(destinazioni.size() - 1).setPacchetto(pacchettoDTO);
 		}
 		pacchettoDTO.setDestinazioni(destinazioni);
 		List<CollegamentoDTO> collegamenti = new ArrayList<CollegamentoDTO>();
