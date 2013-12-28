@@ -335,21 +335,6 @@ public class PacchettoBean {
 	}
 	
 	/**
-	 * Permette la sostituzione di un collegamento con un altro
-	 * @param pacchetto Il pacchetto nel quale effettuare la sostituzione
-	 * @param collegamento IL nuovo collegamento scelto
-	 */
-	public void modificaCollegamento (PacchettoDTO pacchetto, CollegamentoDTO collegamento) {
-		try {
-			pacchettoBean.modificaCollegamento(pacchetto, collegamento);
-		} catch (CollegamentoInesistenteException e) {
-			JsfUtil.errorMessage("Collegamento inesistente!");
-		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
-		}
-	}
-	
-	/**
 	 * Si occupa di formattare la data in dd/MM/yyyy (es.: 28/12/2013)
 	 * @param data La data da formattare
 	 * @return La stringa del formato desiderato
