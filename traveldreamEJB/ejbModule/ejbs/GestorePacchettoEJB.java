@@ -296,16 +296,22 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	 */
 	private double calcolaPrezzo (Pacchetti pacchetto) {
 		double totale = 0.0;
+		double esc = 0.0;
 		//sommo il costo degli hotel delle varie destinazioni
 		for (Destinazioni d : pacchetto.getDestinazioni()) {
-			totale += d.getHotel().getPrezzo();
-			//TODO: costo delle escursioni
+			totale += d.getHotel().getPrezzo()*(int)( (d.getDataPartenza().getTime() - d.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24));
+			//calcolo il costo delle escursioni inserite nella destinazione
+			for (Attivita a : d.getAttivita()) {
+				esc += a.getEscursione().getPrezzo()*a.getNumPartecipanti();
+			}
 		}
 		//sommo il costo dei vari collegamenti inseriti
 		for (Collegamenti c : pacchetto.getCollegamenti())
 			totale += c.getPrezzo();
 		//moltiplico per il numero di partecipanti
 		totale *= pacchetto.getNumPartecipanti();
+		//aggiungo il costo delle escursioni
+		totale += esc;
 		
 		return totale;
 	}
