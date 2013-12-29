@@ -81,6 +81,10 @@ public class PacchettoBean {
 		return TipoPacchetto.values();
 	}
 	
+	/**
+	 * Cerca il pacchetto corrispondente all'identificativo
+	 * @param id L'identificativo del pacchetto
+	 */
 	public void getPacchetto (int id) {
 		try {
 			this.setPacchetto(pacchettoBean.getPacchetto(id));

@@ -17,6 +17,14 @@ import eccezioni.PacchettoInesistenteException;
 public interface GestorePacchettoPredefinito {
 	
 	/**
+	 * Resituisce il pacchetto associato all'identificativo inserito
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @return Il pacchetto corrispondente
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	PacchettoPredefinitoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException;
+	
+	/**
 	 * Mostra l'elenco dei pacchetti predefiniti
 	 * @return L'elenco dei pacchetti predefiniti
 	 */
