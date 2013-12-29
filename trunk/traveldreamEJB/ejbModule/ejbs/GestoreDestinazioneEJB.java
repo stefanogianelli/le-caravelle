@@ -88,6 +88,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 				attivita.setNumPartecipanti(numeroPartecipanti);
 				
 				entity.addAttivita(attivita);
+				//aggiorno il prezzo del pacchetto
+				entity.getPacchetto().setPrezzo(entity.getPacchetto().getPrezzo() + escursioneEntity.getPrezzo()*numeroPartecipanti);
 				
 				em.merge(entity);		
 			} else
@@ -101,8 +103,13 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		Attivita attivitaEntity = this.convertiInEntita(attivita);
 
 		if (attivita.getNumeroPartecipanti() <= attivitaEntity.getDestinazione().getPacchetto().getNumPartecipanti()) {
+			//aggiorno il prezzo del pacchetto
+			if (attivita.getNumeroPartecipanti() > attivitaEntity.getNumPartecipanti())
+				attivitaEntity.getDestinazione().getPacchetto().setPrezzo(attivitaEntity.getDestinazione().getPacchetto().getPrezzo() + attivitaEntity.getEscursione().getPrezzo() * (attivita.getNumeroPartecipanti() - attivitaEntity.getNumPartecipanti()));
+			else
+				attivitaEntity.getDestinazione().getPacchetto().setPrezzo(attivitaEntity.getDestinazione().getPacchetto().getPrezzo() - attivitaEntity.getEscursione().getPrezzo() * (attivitaEntity.getNumPartecipanti() - attivita.getNumeroPartecipanti()));
 			attivitaEntity.setNumPartecipanti(attivita.getNumeroPartecipanti());		
-			em.merge(attivitaEntity);		
+			em.merge(attivitaEntity.getDestinazione().getPacchetto());		
 		} else
 			throw new NumeroPartecipantiException();
 	}
@@ -111,9 +118,13 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	public void eliminaEscursione(AttivitaDTO attivita) throws EscursioneInesistenteException, DestinazioneInesistenteException {
 		Attivita attivitaEntity = this.convertiInEntita(attivita);
 		Destinazioni destinazione = attivitaEntity.getDestinazione();
+		
+		//aggiorno il prezzo del pacchetto
+		destinazione.getPacchetto().setPrezzo(destinazione.getPacchetto().getPrezzo() - attivitaEntity.getEscursione().getPrezzo()*attivitaEntity.getNumPartecipanti());
+		
 		destinazione.removeAttivita(attivitaEntity);
 		
-		em.merge(destinazione);
+		em.merge(destinazione.getPacchetto());
 	}
 	
 	@Override
