@@ -28,6 +28,7 @@ public class DatePartenza implements Serializable {
 	private PacchettiPredefiniti pacchettoPredefinito;
 
 	public DatePartenza() {
+		id = new DatePartenzaPK();
 	}
 
 	public DatePartenzaPK getId() {

@@ -84,7 +84,7 @@ public class Pacchetti implements Serializable {
 	private Utenti utente;
 	
 	//relazione bidirezionale many-to-many con l'entità Persone
-	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchetti")
+	@ManyToMany(cascade={CascadeType.PERSIST}, mappedBy="pacchetti")
 	private List<Persone> datiPartecipanti;
 
 	public Pacchetti() {

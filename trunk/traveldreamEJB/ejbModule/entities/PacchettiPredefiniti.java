@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -38,30 +39,31 @@ public class PacchettiPredefiniti implements Serializable {
 	private double prezzo;
 
 	//relazione bidirezionale one-to-many con l'entità DatePartenza	
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchettoPredefinito")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="pacchettoPredefinito", orphanRemoval=true)
 	private List<DatePartenza> datePartenza;
 
 	//relazione bidirezionale one-to-many con l'entità Durate
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchettoPredefinito")
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="pacchettoPredefinito", orphanRemoval=true)
 	private List<Durate> durate;
 
 	@ManyToOne
 	@JoinColumn(name="idHotel")
 	private Hotel hotel;
 	
-	@ManyToMany
+	@ManyToMany(cascade={CascadeType.MERGE})
 	@JoinTable(
 			name="mezzi_trasporto_pred"
 			, joinColumns={
-				@JoinColumn(name="idCollegamento")
-				}
-			, inverseJoinColumns={
 				@JoinColumn(name="idPacchettoPredefinito")
 				}
+			, inverseJoinColumns={
+				@JoinColumn(name="idCollegamento")
+				}
 			)
+	@OrderBy("dataPartenza ASC")
 	private List<Collegamenti> collegamenti;
 	
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy="pacchetto")
+	@OneToMany(cascade={CascadeType.MERGE}, mappedBy="pacchetto", orphanRemoval=true)
 	private List<AttivitaPred> attivita;
 
 	public PacchettiPredefiniti() {
