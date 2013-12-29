@@ -26,10 +26,16 @@
             </p:inplace><br />
 			
 			Partenza:&nbsp;
-			<p:inplace id="partenza" label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true">  
+			<p:inplace id="partenza" label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true" rendered="#{not pacchetto.isTipoPredefinito()}">  
 				<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza()}" update="prezzo" />
                 <h:selectOneMenu value="#{pacchetto.pacchetto.citta.nome}">
 					<f:selectItems value="#{citta.nomiCitta}" />
+				</h:selectOneMenu>	  
+            </p:inplace>
+            <p:inplace id="partenzaPred" label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true" rendered="#{pacchetto.isTipoPredefinito()}">  
+				<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza()}" />
+                <h:selectOneMenu value="#{pacchetto.pacchetto.citta.nome}">
+					<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
 				</h:selectOneMenu>	  
             </p:inplace><br />
 			
@@ -81,7 +87,7 @@
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText><br />	
 				<h:outputText value="#{d.hotel.nome} a #{d.citta.nome} (#{d.citta.nazione})" />
-				<h:form>
+				<h:form rendered="#{not pacchetto.isTipoPredefinito()}">
 					<h:commandButton value="elimina destinazione" action="#{pacchetto.eliminaDestinazione(d)}" />
 				</h:form>
 				<br />
@@ -112,7 +118,7 @@
 					</ul>
 				</h:panelGroup>
 				<!-- Aggiunta Escursione -->
-				<h:panelGroup>
+				<h:panelGroup rendered="#{not pacchetto.isTipoPredefinito()}">
 					<h:link value="aggiunta escursione" outcome="aggiuntaEscursione">
 						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 						<f:param name="idDestinazione" value="#{d.id}" />
@@ -145,7 +151,7 @@
 				<br /><br />
 			</h:panelGroup>
 		</ui:repeat>
-		<h:link value="aggiunta destinazione" outcome="aggiuntaDestinazioneTest">
+		<h:link value="aggiunta destinazione" outcome="aggiuntaDestinazioneTest" rendered="#{not pacchetto.isTipoPredefinito()}">
 			<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 		</h:link>
 	</h:panelGroup>

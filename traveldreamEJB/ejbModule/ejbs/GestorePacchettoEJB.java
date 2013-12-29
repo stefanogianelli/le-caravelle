@@ -134,7 +134,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		}
 		
 		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
-		entity.setPrezzo(this.calcolaPrezzo(entity));
+		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
+			entity.setPrezzo(this.calcolaPrezzo(entity));
 		
 		em.merge(entity);
 	}
@@ -151,7 +152,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 					a.setNumPartecipanti(entity.getNumPartecipanti());
 			}
 		}
-		entity.setPrezzo(this.calcolaPrezzo(entity));
+		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
+			entity.setPrezzo(this.calcolaPrezzo(entity));
 		
 		em.merge(entity);		
 	}
@@ -266,7 +268,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		
 		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
 		//aggiorno il prezzo del pacchetto
-		entity.setPrezzo(entity.getPrezzo() + collegamento.getPrezzo()*entity.getNumPartecipanti());
+		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
+			entity.setPrezzo(entity.getPrezzo() + collegamento.getPrezzo()*entity.getNumPartecipanti());
 		
 		em.merge(entity);
 	}
@@ -326,12 +329,14 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		
 		if (andata != null) {			
 			//aggiorno il prezzo del pacchetto
-			pacchetto.setPrezzo(pacchetto.getPrezzo() - andata.getPrezzo()*pacchetto.getNumPartecipanti());
+			if (pacchetto.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
+				pacchetto.setPrezzo(pacchetto.getPrezzo() - andata.getPrezzo()*pacchetto.getNumPartecipanti());
 			pacchetto.removeCollegamento(andata);
 		}
 		if (ritorno != null) {
 			//aggiorno il prezzo del pacchetto
-			pacchetto.setPrezzo(pacchetto.getPrezzo() - ritorno.getPrezzo()*pacchetto.getNumPartecipanti());
+			if (pacchetto.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
+				pacchetto.setPrezzo(pacchetto.getPrezzo() - ritorno.getPrezzo()*pacchetto.getNumPartecipanti());
 			pacchetto.removeCollegamento(ritorno);
 		}
 		
@@ -364,6 +369,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		pacchettoDTO.setNome(pacchetto.getNome());
 		pacchettoDTO.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		pacchettoDTO.setPrezzo(pacchetto.getPrezzo());
+		pacchettoDTO.setTipoPacchetto(pacchetto.getTipoPacchetto());
 		List<DestinazioneDTO> destinazioni = new ArrayList<DestinazioneDTO>();
 		for (Destinazioni d : pacchetto.getDestinazioni()) {
 			destinazioni.add(this.destinazione.convertiInDTO(d));
