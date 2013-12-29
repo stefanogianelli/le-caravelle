@@ -8,6 +8,7 @@ import javax.persistence.EntityExistsException;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
+import eccezioni.AcquistoException;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DeleteException;
@@ -82,8 +83,9 @@ public interface GestorePacchetto {
 	 * Permette l'acquisto di un pacchetto
 	 * @param pacchetto Il pacchetto da acquistare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws AcquistoException Quando non è possibile acquistare il pacchetto (perchè incompleto)
 	 */
-	void acquistaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
+	void acquistaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException, AcquistoException;
 	
 	/**
 	 * Permette la condivisione di un pacchetto

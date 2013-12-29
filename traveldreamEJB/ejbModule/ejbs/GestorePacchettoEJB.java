@@ -23,6 +23,7 @@ import javax.persistence.Query;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
+import eccezioni.AcquistoException;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DeleteException;
@@ -177,12 +178,19 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void acquistaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException {
+	public void acquistaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException, AcquistoException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
+		int numeroDestinazioni = entity.getDestinazioni().size() + 1;
+		int numeroCollegamenti = entity.getCollegamenti().size() + 1;
 		
-		em.merge(entity);
+		//controllo che il pacchetto sia completo
+		if (numeroCollegamenti == numeroDestinazioni + 1) {
+			entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
+			
+			em.merge(entity);
+		} else
+			throw new AcquistoException();
 	}
 
 	@Override
