@@ -34,10 +34,9 @@ public interface GestoreDestinazione {
 	
 	/**
 	 * Permette l'eliminazione di una escursione
-	 * @param idDestinazione L'identificativo della destinazione
-	 * @param idEscursione L'identificativo dell'escursione
+	 * @param attivita L'attivita da rimuovere
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 */
-	void eliminaEscursione (int idDestinazione, int idEscursione) throws EscursioneInesistenteException, DestinazioneInesistenteException;
+	void eliminaEscursione (AttivitaDTO attivita) throws EscursioneInesistenteException, DestinazioneInesistenteException;
 }
