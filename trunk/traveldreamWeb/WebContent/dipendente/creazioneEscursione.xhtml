@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <ui:composition template="templateDip.xhtml">
@@ -12,19 +13,21 @@
 
 <div class="bloccoDett">
 
+<h1>Nuova escursione</h1>
+<br></br>
 	<h:form>
 		<p><h:outputText for="nome" styleClass="name-input" value="Nome escursione: " />
 		<h:inputText id="nome" styleClass="text-input" value="#{escursione.escursione.nome}" />
 		<h:message for="nome"/><br /></p>
-		
+		<br></br>
 		<p><h:outputText for="citta" styleClass="name-input" value="Città: " />
 		<h:selectOneMenu id="citta" styleClass="menu-input" value="#{escursione.escursione.citta.nome}">
 			<f:selectItems value="#{citta.nomiCitta}" />
 		</h:selectOneMenu>
 		<h:message for="citta"/><br /></p>
-		
+		<br></br>
 		<p><h:outputText for="data" styleClass="name-input" value="Data: " />
-		<p:calendar id="data" value="#{escursione.escursione.data}" locale="it" />
+		<p:calendar id="data" styleClass="data-input" value="#{escursione.escursione.data}" locale="it" />
 		<h:message for="data"/><br /></p>
 		
 		<p><h:outputText for="ora" styleClass="name-input" value="Ora: " />
@@ -36,17 +39,18 @@
 		<p><h:outputText for="durata" styleClass="name-input" value="Durata: " />
 		<h:inputText id="durata" styleClass="text-input" value="#{escursione.escursione.durata}" />
 		<h:message for="durata"/><br /></p>
-		
+		<br></br>
+		<p><h:outputText for="prezzo" styleClass="name-input" value="Prezzo: " />
+		<h:inputText id="prezzo" styleClass="text-input" value="#{escursione.escursione.prezzo}" />
+		<h:message for="prezzo"/><br /></p>
+		<br></br>
 		<p><h:outputText for="" styleClass="name-input" value="Categoria: " />
 		<h:selectOneMenu styleClass="menu-input" value="#{escursione.escursione.categoria}">
 			<f:selectItems value="#{escursione.getCategorie()}" var="cat" itemValue="#{cat}" itemLabel="#{cat.label}" />
 		</h:selectOneMenu><br /></p>
+	
 		
-		<p><h:outputText for="prezzo" styleClass="name-input" value="Prezzo: " />
-		<h:inputText id="prezzo" styleClass="text-input" value="#{escursione.escursione.prezzo}" />
-		<h:message for="prezzo"/><br /></p>
-		
-		<h:commandButton action="#{escursione.creaEscursione()}" value="Salva" />
+		<h:commandButton action="#{escursione.creaEscursione()}" styleClass="button" value="Salva" />
 	</h:form>
 	
 </div>

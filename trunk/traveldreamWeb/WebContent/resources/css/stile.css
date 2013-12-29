@@ -57,23 +57,35 @@ a:hover {
 	color: #003333;
 	}
 .menu-input{
-	height:30px;
-	width:500px;
+	height:32px;
+	width:503px;
 	font-size: 26px;
 	text-align: left;
 	color:black;
 	border: 1px solid red;
+	position: absolute;
 	margin: 0 auto 20px -230px;
 	left:50%;
 }
 .text-input{
-	height:30px;
+	height:28px;
 	width:500px;
 	font-size: 26px;
 	text-align: left;
 	color:black;
-	border: 1px solid red;
-	margin: 0 auto 20px 20px;
+	position: absolute;
+	margin: 0 auto 20px -230px;
+	left:50%;
+}
+.data-input{
+	height:auto;
+	width:500px;
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	position: absolute;
+	margin: 0 auto 20px -150px;
+	left:50%;
 }
 .name-input{
 	height:30px;
@@ -82,6 +94,16 @@ a:hover {
 	color:black;
 	border: 1px solid red;
 	margin-bottom:20px;
+}
+.button{
+	height:50px;
+	width:100px;
+	position: absolute;
+	margin:40px auto auto -50px;
+	left: 50%;
+	font-size:26px;
+	font-family:arial;
+	text-align:center;
 }
 select{
 	text-align: center;
@@ -160,7 +182,7 @@ select{
 	margin: 0;
 	padding: 0;
 	background-color: #999999;
-	height: 330px;
+	height: 260px;
 	width: 100%;
 }
 #newsletter a:link {
