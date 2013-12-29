@@ -25,10 +25,10 @@ import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
-import eccezioni.DataException;
 import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 import entities.Amici;
 import entities.Attivita;
@@ -114,22 +114,6 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		return entity.getId();
 	}
 
-	@Override
-	public void salvaPacchetto(PacchettoDTO pacchetto) throws CittaInesistenteException, PacchettoInesistenteException {
-		Pacchetti entity = this.convertiInEntita(pacchetto);
-		
-		//se viene cambiata la città di partenza rimuovo il primo e ultimo collegamento
-		if (!entity.getCitta().getNome().equals(pacchetto.getCitta().getNome()) && !entity.getDestinazioni().isEmpty())
-			this.rimuoviCollegamenti(entity, entity.getDestinazioni().get(0).getDataArrivo(), entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza());
-			
-		entity.setNome(pacchetto.getNome());
-		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		entity.setPrezzo(this.calcolaPrezzo(entity));	
-		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
-		
-		em.merge(entity);
-	}
-	
 	@Override
 	public void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
@@ -230,7 +214,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void aggiuntaDestinazione(int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, DataException {
+	public void aggiuntaDestinazione(int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException {
 		Pacchetti entity = this.convertiInEntita(idPacchetto);
 		
 		//controllo le date della destinazione
@@ -242,7 +226,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			
 			em.merge(entity);
 		} else
-			throw new DataException();
+			throw new InsertException();
 	}
 	
 	@Override

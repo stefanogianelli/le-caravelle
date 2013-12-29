@@ -20,8 +20,10 @@ import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.DeleteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 import entities.AttivitaPred;
 import entities.DatePartenza;
@@ -92,55 +94,75 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 	
 	@Override
-	public void aggiuntaDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) {
-		PacchettiPredefiniti entity = new PacchettiPredefiniti();
-		
-		DatePartenza dataPartenza = new DatePartenza();
-		dataPartenza.setData(data);
-		
-		entity.addDataPartenza(dataPartenza);
-		
-		em.merge(entity);
-	}
-
-	@Override
-	public void rimuoviDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) {
-		PacchettiPredefiniti entity = new PacchettiPredefiniti();
+	public void aggiuntaDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException, InsertException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);		
 		
 		Query q = em.createNamedQuery("DatePartenza.getDataPartenza", DatePartenza.class);
 		q.setParameter("pacchetto", entity);
 		q.setParameter("data", data);
-		DatePartenza dataPartenza = (DatePartenza) q.getSingleResult();
 		
-		entity.removeDataPartenza(dataPartenza);
-		
-		em.merge(entity);
+		if (q.getResultList().isEmpty()) {
+			DatePartenza dataPartenza = new DatePartenza();
+			dataPartenza.setData(data);
+			
+			entity.addDataPartenza(dataPartenza);
+			
+			em.merge(entity);
+		} else
+			throw new InsertException();
 	}
 
 	@Override
-	public void aggiuntaDurata(PacchettoPredefinitoDTO pacchetto, int durata) {
-		PacchettiPredefiniti entity = new PacchettiPredefiniti();
+	public void rimuoviDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException, DeleteException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
-		Durate nuovaDurata = new Durate();
-		nuovaDurata.setDurata(durata);
-		
-		entity.addDurata(nuovaDurata);
-		
-		em.merge(entity);
+		if (entity.getDatePartenza().size() > 1) {
+			Query q = em.createNamedQuery("DatePartenza.getDataPartenza", DatePartenza.class);
+			q.setParameter("pacchetto", entity);
+			q.setParameter("data", data);
+			DatePartenza dataPartenza = (DatePartenza) q.getSingleResult();
+			
+			entity.removeDataPartenza(dataPartenza);
+			
+			em.merge(entity);
+		} else
+			throw new DeleteException();
 	}
 
 	@Override
-	public void rimuoviDurata(PacchettoPredefinitoDTO pacchetto, int durata) {
-		PacchettiPredefiniti entity = new PacchettiPredefiniti();
+	public void aggiuntaDurata(PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException, InsertException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
-		Query q = em.createNamedQuery("DatePartenza.getDataPartenza", DatePartenza.class);
+		Query q = em.createNamedQuery("Durate.getDurata", Durate.class);
 		q.setParameter("pacchetto", entity);
 		q.setParameter("durata", durata);
-		Durate d = (Durate) q.getSingleResult();
 		
-		entity.removeDurata(d);
+		if (q.getResultList().isEmpty()) {
+			Durate nuovaDurata = new Durate();
+			nuovaDurata.setDurata(durata);
+			
+			entity.addDurata(nuovaDurata);
+			
+			em.merge(entity);
+		} else
+			throw new InsertException();
+	}
+
+	@Override
+	public void rimuoviDurata(PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException, DeleteException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
-		em.merge(entity);	
+		if (entity.getDurate().size() > 1) {
+			Query q = em.createNamedQuery("Durate.getDurata", Durate.class);
+			q.setParameter("pacchetto", entity);
+			q.setParameter("durata", durata);
+			Durate d = (Durate) q.getSingleResult();
+			
+			entity.removeDurata(d);
+			
+			em.merge(entity);
+		} else
+			throw new DeleteException();
 	}
 	
 	@Override
@@ -192,14 +214,30 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void salvaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, PacchettoInesistenteException {
+	public void modificaNomePacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		entity.setNome(pacchetto.getNome());
+		
+		em.merge(entity);
+	}
+	
+	@Override
+	public void modificaPrezzo (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+		
 		entity.setPrezzo(pacchetto.getPrezzo());
+		
+		em.merge(entity);
+	}
+	
+	@Override
+	public void modificaHotel (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException, HotelInesistenteException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+		
 		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
 		
-		em.merge(entity);		
+		em.merge(entity);
 	}
 
 	@Override
