@@ -13,6 +13,11 @@
 <h1>Elenco escursioni</h1>
 
 <div class="bloccoRicerca">
+
+<h:form>
+<h:commandButton value="Nuova escursione" styleClass="search-button" action="nuovaEscursione" />
+</h:form>
+
 </div>
 
 <div class="mioBloccoBianco">
@@ -22,15 +27,14 @@
 		<br></br>
 		<div id="prezzo">Città</div>	
 	</div>
+	
+	<h:form>
+		<h:commandButton value="Dettagli escursione" styleClass="detail-button" action="dettagliEscursione" />
+	</h:form>
+
 </div>
 
 <div class="mioBlocco">
-	<div class="descr">
-		<h2>Nome escursione</h2>
-		<p>Data</p>
-		<br></br>
-		<div id="prezzo">Città</div>	
-	</div>
 </div>
 
 <div class="mioBloccoBianco">
