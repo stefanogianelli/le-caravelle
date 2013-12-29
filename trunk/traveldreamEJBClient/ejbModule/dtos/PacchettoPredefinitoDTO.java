@@ -17,6 +17,8 @@ public class PacchettoPredefinitoDTO implements Serializable {
 	private String nome;
 
 	private double prezzo;
+	
+	private List<CittaDTO> cittaPartenza;
 
 	private List<Date> datePartenza;
 
@@ -25,6 +27,7 @@ public class PacchettoPredefinitoDTO implements Serializable {
 	private HotelDTO hotel;
 	
 	public PacchettoPredefinitoDTO () {
+		cittaPartenza = new ArrayList<CittaDTO>();
 		datePartenza = new ArrayList<Date>();
 		durate = new ArrayList<Integer>();
 		hotel = new HotelDTO();
@@ -52,6 +55,14 @@ public class PacchettoPredefinitoDTO implements Serializable {
 
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
+	}
+
+	public List<CittaDTO> getCittaPartenza() {
+		return cittaPartenza;
+	}
+
+	public void setCittaPartenza(List<CittaDTO> cittaPartenza) {
+		this.cittaPartenza = cittaPartenza;
 	}
 
 	public List<Date> getDatePartenza() {

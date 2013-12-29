@@ -10,8 +10,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import utils.JsfUtil;
+import dtos.CittaDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
+import eccezioni.CittaInesistenteException;
 import eccezioni.DeleteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
@@ -86,6 +88,12 @@ public class PacchettoPredefinitoBean {
 		this.getPacchetto().getDurate().add(durata);
 	}
 	
+	public void aggiuntaCitta (String nome) {
+		CittaDTO citta = new CittaDTO();
+		citta.setNome(nome);
+		this.getPacchetto().getCittaPartenza().add(citta);
+	}
+	
 	/**
 	 * Crea un nuovo pacchetto predefinito
 	 * @param hotel L'hotel da aggiungere al pacchetto
@@ -97,6 +105,8 @@ public class PacchettoPredefinitoBean {
 			JsfUtil.infoMessage("Pacchetto creato!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel inesistente!");
+		} catch (CittaInesistenteException w) {
+			JsfUtil.errorMessage("Città inesistente!");
 		}
 	}
 	
@@ -119,6 +129,34 @@ public class PacchettoPredefinitoBean {
 			pacchettoBean.modificaPrezzo(getPacchetto());
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
+	
+	/**
+	 * Permette di aggiungere una città di partenza nel pacchetto
+	 * @param nome Il nome della città
+	 */
+	public void salvaCitta (String nome) {
+		try {
+			pacchettoBean.aggiuntaCittaPartenza(getPacchetto(), nome);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città inesistente!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Città già inserita!");
+		}
+	}
+	
+	public void rimuoviCitta (CittaDTO citta) {
+		try {
+			pacchettoBean.rimuoviCittaPartenza(getPacchetto(), citta);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città inesistente!");
+		} catch (DeleteException e) {
+			JsfUtil.errorMessage("Impossibile eliminare la città!");
 		}
 	}
 	

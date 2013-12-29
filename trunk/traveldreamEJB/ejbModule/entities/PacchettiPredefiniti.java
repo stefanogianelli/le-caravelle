@@ -41,6 +41,18 @@ public class PacchettiPredefiniti implements Serializable {
 	private String nome;
 
 	private double prezzo;
+	
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(
+			name="citta_origine_pred"
+			, joinColumns={
+				@JoinColumn(name="idPacchettoPredefinito")
+				}
+			, inverseJoinColumns={
+				@JoinColumn(name="idCitta")
+				}
+			)
+	private List<Citta> cittaPartenza;
 
 	//relazione bidirezionale one-to-many con l'entità DatePartenza	
 	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="pacchettoPredefinito", orphanRemoval=true)
@@ -71,6 +83,7 @@ public class PacchettiPredefiniti implements Serializable {
 	private List<AttivitaPred> attivita;
 
 	public PacchettiPredefiniti() {
+		cittaPartenza = new ArrayList<Citta>();
 		datePartenza = new ArrayList<DatePartenza>();
 		durate = new ArrayList<Durate>();
 		collegamenti = new ArrayList<Collegamenti>();
@@ -99,6 +112,26 @@ public class PacchettiPredefiniti implements Serializable {
 
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
+	}
+
+	public List<Citta> getCittaPartenza() {
+		return cittaPartenza;
+	}
+
+	public void setCittaPartenza(List<Citta> cittaPartenza) {
+		this.cittaPartenza = cittaPartenza;
+	}
+	
+	public Citta addCitta (Citta citta) {
+		this.getCittaPartenza().add(citta);
+		
+		return citta;
+	}
+	
+	public Citta removeCitta (Citta citta) {
+		this.getCittaPartenza().remove(citta);
+		
+		return citta;
 	}
 
 	public List<DatePartenza> getDatePartenza() {
@@ -188,7 +221,6 @@ public class PacchettiPredefiniti implements Serializable {
 	
 	public AttivitaPred removeAttivita (AttivitaPred attivita) {
 		this.getAttivita().remove(attivita);
-		attivita.setPacchetto(null);
 		
 		return attivita;
 	}
