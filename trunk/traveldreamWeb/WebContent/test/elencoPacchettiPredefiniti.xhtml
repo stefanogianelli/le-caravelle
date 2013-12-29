@@ -15,9 +15,13 @@
 		<ul>
 			<ui:repeat value="#{pacchettoPredefinito.elenco}" var="p">
 				<li>
-					<h:link value="#{p.nome}" outcome="dettagliPacchettoPredefinito">
+					#{p.nome}&nbsp;
+					<h:link value="modifica" outcome="dettagliPacchettoPredefinito">
 						<f:param name="idPacchetto" value="#{p.id}"/>
-					</h:link>
+					</h:link>&nbsp;-&nbsp;
+					<h:link value="scegli" outcome="sceltaPacchettoPredefinito">
+						<f:param name="idPacchetto" value="#{p.id}"/>
+					</h:link>					
 				</li>
 			</ui:repeat>
 		</ul>

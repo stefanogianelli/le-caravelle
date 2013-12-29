@@ -164,12 +164,10 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
-		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.creaDestinazione(d));
+			entity.addDestinazione(this.destinazione.creaDestinazione(d));
 		}
-		entity.setDestinazioni(destinazioni);
-		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
+		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
 		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		

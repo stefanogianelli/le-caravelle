@@ -88,6 +88,9 @@
 					</h:outputText>
 					<h:outputText value=" da #{col.cittaPartenza.nome} a #{col.cittaArrivo.nome}" />
 				</h:column>
+				<h:column>
+					<h:commandButton value="elimina" action="#{pacchettoPredefinito.rimuoviCollegamento(col)}" />
+				</h:column>
 			</h:dataTable><br />
 			<h:link value="aggiunta collegamento" outcome="aggiuntaCollegamentoPredefinito">
 				<f:param name="idPacchetto" value="#{id.value}" />
