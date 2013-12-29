@@ -15,14 +15,15 @@
 		</f:viewParam>
 		<f:viewParam name="cittaPartenza" binding="#{cittaPartenza}" />
 		<f:viewParam name="cittaArrivo" binding="#{cittaArrivo}" />
+		<f:event listener="#{pacchetto.getPacchetto(id.value)}" type="preRenderView" />
 	</f:metadata>
 	
 	<h1>Elenco collegamenti</h1>
 	<h:link value="torna al pacchetto" outcome="dettagliPacchetto">
 		<f:param name="idPacchetto" value="#{id.value}"/>
 	</h:link>
-	<h:messages />
-	<h:form>		
+	<h:messages />	
+	<h:form rendered="#{not pacchetto.isTipoPredefinito()}">		
 		<h:outputText value="Tipo Collegamento: " />
 		<h:selectOneMenu binding="#{tipo}">
 			<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
@@ -79,6 +80,58 @@
 				<h:commandButton action="#{pacchetto.aggiuntaCollegamento(id.value, c)}" value="scegli" />
 			</h:column>
 		</h:dataTable>
+	</h:form>
+	
+	<h:form rendered="#{pacchetto.isTipoPredefinito()}">
+		<h:dataTable value="#{pacchetto.predefinito.collegamenti}" var="c" rendered="#{pacchetto.predefinito.collegamenti.size() > 0}" style="text-align:center;">
+			<h:column>
+				<f:facet name="header">Data Partenza</f:facet>
+				<h:outputText value="#{c.dataPartenza}"> 
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Città Partenza</f:facet>
+				#{c.cittaPartenza.nome} (#{c.cittaPartenza.nazione})
+			</h:column>
+			<h:column>
+				<f:facet name="header">Origine</f:facet>
+				#{c.origine}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ora Partenza</f:facet>
+				<h:outputText value="#{c.oraPartenza}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:outputText>			
+			</h:column>
+			<h:column>
+				<f:facet name="header">Città Arrivo</f:facet>
+				#{c.cittaArrivo.nome} (#{c.cittaArrivo.nazione})
+			</h:column>
+			<h:column>
+				<f:facet name="header">Destinazione</f:facet>
+				#{c.destinazione}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ora Arrivo</f:facet>
+				<h:outputText value="#{c.oraArrivo}">
+					<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:outputText>			
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				<h:outputText value="#{c.prezzo}">			
+					<f:convertNumber type="currency" currencySymbol="€" locale="it-IT" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Tipo Collegamento</f:facet>
+				#{c.tipoCollegamento.label}
+			</h:column>
+			<h:column>
+				<h:commandButton action="#{pacchetto.aggiuntaCollegamento(id.value, c)}" value="scegli" />
+			</h:column>
+		</h:dataTable>	
 	</h:form>
 </body> 
 </html>
