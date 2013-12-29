@@ -147,6 +147,24 @@ public class PacchettoPredefinitoBean {
 	}
 	
 	/**
+	 * Permette di modificare l'hotel inserito nel pacchetto
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @param hotel L'hotel da inserire
+	 * @return L'indirizzo della pagina dettagli del pacchetto
+	 */
+	public String modificaHotel (int idPacchetto, HotelDTO hotel) {
+		try {
+			pacchettoBean.modificaHotel(idPacchetto, hotel);
+			return "dettagliPacchettoPredefinito?idPacchetto=" + idPacchetto + "&faces-redirect=true";
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (HotelInesistenteException e) {
+			JsfUtil.errorMessage("Hotel inesistente!");
+		}
+		return null;
+	}
+	
+	/**
 	 * Permette di aggiungere una città di partenza nel pacchetto
 	 * @param nome Il nome della città
 	 */

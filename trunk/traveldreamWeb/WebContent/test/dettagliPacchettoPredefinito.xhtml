@@ -74,7 +74,11 @@
 			<h:commandButton value="salva durata" action="#{pacchettoPredefinito.salvaDurata(durataEntry.value)}" />
 			<h:message for="durata" /><br /><br />
 			
-			<h:outputText value="#{pacchettoPredefinito.pacchetto.hotel.nome}" /><br /><br />
+			<h:outputText value="#{pacchettoPredefinito.pacchetto.hotel.nome}" /><br />
+			<h:link value="modifica hotel" outcome="aggiuntaHotelPredefinito">
+				<f:param name="idPacchetto" value="#{id.value}"/>
+			</h:link>			
+			<br /><br />
 			<h:commandButton value="elimina pacchetto" action="#{pacchettoPredefinito.eliminaPacchetto()}" />
 		</h:panelGroup>
 	</h:form>

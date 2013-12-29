@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Aggiunta Hotel Predefinito</title>
+</h:head> 
+<body> 
+	<f:metadata>
+		<f:viewParam name="idPacchetto" binding="#{idPacchetto}"/>
+	</f:metadata>
+	
+	<h:link value="indietro" outcome="dettagliPacchettoPredefinito">
+		<f:param name="idPacchetto" value="#{idPacchetto}" />
+	</h:link><br />
+	<h:messages /><br />
+	
+	<h:form>
+	<h:outputText for="dest" value="Destinazione: " />
+	<h:selectOneMenu id="dest" binding="#{nomeCitta}">
+		<f:selectItems value="#{citta.nomiCitta}" />
+	</h:selectOneMenu>		
+	<h:message for="dest"/><br />
+	
+	<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" value="Cerca" />
+	
+	<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}" style="text-align: center;">
+		<h:column>
+			<f:facet name="header">Nome</f:facet>
+			#{h.nome}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Indirizzo</f:facet>
+			#{h.indirizzo} - #{h.citta.nome} (#{h.citta.nazione})
+		</h:column>	
+		<h:column>
+			<f:facet name="header">Prezzo</f:facet>
+			#{h.prezzo}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Stelle</f:facet>
+			<p:rating value="#{h.stelle}" readonly="true" stars="5" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">eMail</f:facet>
+			#{h.email}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Telefono</f:facet>
+			#{h.telefono}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Website</f:facet>
+			#{h.website}
+		</h:column>
+		<h:column>
+			<h:commandButton action="#{pacchettoPredefinito.modificaHotel(idPacchetto, h)}" value="Scegli" />
+		</h:column>
+	</h:dataTable>	
+	</h:form>	
+</body> 
+</html>
