@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.constraints.Min;
 
+import enums.TipoPacchetto;
+
 public class PacchettoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,6 +30,8 @@ public class PacchettoDTO implements Serializable {
 	private PacchettoPredefinitoDTO pacchettoPredefinito;
 
 	private UtenteDTO utente;
+	
+	private TipoPacchetto tipoPacchetto;
 	
 	public PacchettoDTO () {
 		numPartecipanti = 1;
@@ -106,5 +110,13 @@ public class PacchettoDTO implements Serializable {
 
 	public void setUtente(UtenteDTO utente) {
 		this.utente = utente;
+	}
+
+	public TipoPacchetto getTipoPacchetto() {
+		return tipoPacchetto;
+	}
+
+	public void setTipoPacchetto(TipoPacchetto tipoPacchetto) {
+		this.tipoPacchetto = tipoPacchetto;
 	}
 }

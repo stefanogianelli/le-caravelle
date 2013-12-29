@@ -104,6 +104,8 @@ public class PacchettoBean {
 	public void getPacchetto (int id) {
 		try {
 			this.setPacchetto(pacchettoBean.getPacchetto(id));
+			if (this.isTipoPredefinito())
+				this.setPredefinito(this.getPacchetto().getPacchettoPredefinito());
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
@@ -415,5 +417,16 @@ public class PacchettoBean {
 	 */
 	public String getData (Date data) {
 		return new SimpleDateFormat("dd/MM/yyy").format(data);
+	}
+	
+	/**
+	 * Verificata se il pacchetto corrente è di tipo predefinito
+	 * @return true se il pacchetto è predefinito, false altrimenti
+	 */
+	public boolean isTipoPredefinito () {
+		if (this.getPacchetto().getTipoPacchetto() == TipoPacchetto.PREDEFINITO)
+			return true;
+		else
+			return false;
 	}
 }
