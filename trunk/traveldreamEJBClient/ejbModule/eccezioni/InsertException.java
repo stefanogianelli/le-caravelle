@@ -1,14 +1,14 @@
 package eccezioni;
 
-public class DataException extends Exception {
+public class InsertException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 	
-	public DataException () {
+	public InsertException () {
 		super();
 	}
 	
-	public DataException (String messaggio) {
+	public InsertException (String messaggio) {
 		super(messaggio);
 	}
 

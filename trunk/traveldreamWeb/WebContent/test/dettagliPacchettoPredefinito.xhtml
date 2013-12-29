@@ -15,30 +15,52 @@
 	</f:metadata>
 	<h1>Pacchetto Predefinito</h1>
 	<h:link value="indietro" outcome="elencoPacchettiPredefiniti" />
-	<h:messages /><br />
+	<h:messages /><br /><br />
 	
-	<h:panelGroup>
-		<h:outputText value="Nome: #{pacchettoPredefinito.pacchetto.nome}" /><br /><br />
-		
-		<h:outputText for="prezzo" value="Prezzo: #{pacchettoPredefinito.pacchetto.prezzo}" /><br /><br />
-		
-		<h:outputText value="Date Partenza:" />
-		<h:dataTable value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="data">  
-			<h:column>
-				<h:outputText value="#{data}">
-   					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-   				</h:outputText>
-			</h:column>
-		</h:dataTable><br />
-		
-		<h:outputText value="Durate:" />
-		<h:dataTable value="#{pacchettoPredefinito.pacchetto.durate}" var="durata">  
-			<h:column>
-				<h:outputText value="#{durata}" />
-			</h:column>
-		</h:dataTable><br />
-		
-		<h:outputText value="#{pacchettoPredefinito.pacchetto.hotel.nome}" />
-	</h:panelGroup>
+	<h:form>
+		<h:panelGroup>
+			<h:outputText value="Nome: " />
+			<p:inplace editor="true">  
+				<p:ajax event="save" listener="#{pacchettoPredefinito.modificaNomePacchetto()}" />
+	            <p:inputText value="#{pacchettoPredefinito.pacchetto.nome}" required="true"/>  
+	         </p:inplace><br /><br />
+			
+			<h:outputText value="Prezzo: " />
+			<p:inplace editor="true">  
+				<p:ajax event="save" listener="#{pacchettoPredefinito.modificaPrezzoPacchetto()}" />
+	            <p:inputText value="#{pacchettoPredefinito.pacchetto.prezzo}" required="true"/>  
+	         </p:inplace><br /><br />
+			
+			<h:outputText value="Date Partenza:" />
+			<h:dataTable value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="data">  
+				<h:column>
+					<h:outputText value="#{data}">
+	   					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+	   				</h:outputText>
+				</h:column>
+				<h:column>
+					<h:commandButton value="elimina" action="#{pacchettoPredefinito.rimuoviDataPartenza(data)}" />
+				</h:column>
+			</h:dataTable>
+			<p:calendar id="data" binding="#{dataEntry}" locale="it" />
+			<h:commandButton value="salva data" action="#{pacchettoPredefinito.salvaData(dataEntry.value)}" />
+			<h:message for="data" /><br />
+			
+			<h:outputText value="Durate:" />
+			<h:dataTable value="#{pacchettoPredefinito.pacchetto.durate}" var="durata">  
+				<h:column>
+					<h:outputText value="#{durata}" />
+				</h:column>
+				<h:column>
+					<h:commandButton value="elimina" action="#{pacchettoPredefinito.rimuoviDurata(durata)}" />
+				</h:column>
+			</h:dataTable>
+			<h:inputText id="durata" binding="#{durataEntry}" />
+			<h:commandButton value="salva durata" action="#{pacchettoPredefinito.salvaDurata(durataEntry.value)}" />
+			<h:message for="durata" /><br />
+			
+			<h:outputText value="#{pacchettoPredefinito.pacchetto.hotel.nome}" />
+		</h:panelGroup>
+	</h:form>
 </body> 
 </html>

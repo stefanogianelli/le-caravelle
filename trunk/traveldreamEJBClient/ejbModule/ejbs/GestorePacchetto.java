@@ -10,10 +10,10 @@ import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
-import eccezioni.DataException;
 import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 import enums.TipoPacchetto;
 
@@ -45,14 +45,6 @@ public interface GestorePacchetto {
 	 * @return L'identificativo del pacchetto creato
 	 */
 	int creaPacchettoPersonalizzato (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException;
-	
-	/**
-	 * Permette il salvataggio di un pacchetto personalizzato
-	 * @param pacchetto I dati del pacchetto
-	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
-	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 */
-	void salvaPacchetto (PacchettoDTO pacchetto) throws CittaInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Modifica il nome di un pacchetto
@@ -116,9 +108,9 @@ public interface GestorePacchetto {
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @trhows DataException Quando le date della destinazione non sono valide
+	 * @trhows InsertException Quando le date della destinazione non sono valide
 	 */
-	void aggiuntaDestinazione (int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, DataException;
+	void aggiuntaDestinazione (int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Permette la modifica dei dati di una destinazione

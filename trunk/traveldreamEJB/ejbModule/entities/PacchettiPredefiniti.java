@@ -118,7 +118,6 @@ public class PacchettiPredefiniti implements Serializable {
 
 	public DatePartenza removeDataPartenza(DatePartenza dataPartenza) {
 		getDatePartenza().remove(dataPartenza);
-		dataPartenza.setPacchettoPredefinito(null);
 
 		return dataPartenza;
 	}
@@ -139,8 +138,7 @@ public class PacchettiPredefiniti implements Serializable {
 	}
 
 	public Durate removeDurata(Durate durata) {
-		getDurate().remove(durate);
-		durata.setPacchettoPredefinito(null);
+		getDurate().remove(durata);
 
 		return durata;
 	}

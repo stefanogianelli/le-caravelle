@@ -12,7 +12,9 @@ import javax.faces.bean.ViewScoped;
 import utils.JsfUtil;
 import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
+import eccezioni.DeleteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 import ejbs.GestorePacchettoPredefinito;
 
@@ -95,6 +97,84 @@ public class PacchettoPredefinitoBean {
 			JsfUtil.infoMessage("Pacchetto creato!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel inesistente!");
+		}
+	}
+	
+	/**
+	 * Permette la modifica del nome del pacchetto
+	 */
+	public void modificaNomePacchetto () {
+		try {
+			pacchettoBean.modificaNomePacchetto(getPacchetto());
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
+	
+	/**
+	 * Permette la modifica del prezzo del pacchetto
+	 */
+	public void modificaPrezzoPacchetto () {
+		try {
+			pacchettoBean.modificaPrezzo(getPacchetto());
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
+	
+	/**
+	 * Permette di aggiungere una data di partenza nel pacchetto
+	 * @param data
+	 */
+	public void salvaData (Date data) {
+		try {
+			pacchettoBean.aggiuntaDataPartenza(getPacchetto(), data);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Data già presente!");
+		}
+	}
+	
+	/**
+	 * Permette di rimuovere una data di partenza dal pacchetto
+	 * @param data La data da rimuovere
+	 */
+	public void rimuoviDataPartenza (Date data) {
+		try {
+			pacchettoBean.rimuoviDataPartenza(getPacchetto(), data);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (DeleteException e) {
+			JsfUtil.errorMessage("Impossibile rimuovere la data!");
+		}
+	}
+	
+	/**
+	 * Permette di aggiungere una durata nel pacchetto
+	 * @param durata La durata da aggiungere
+	 */
+	public void salvaDurata (int durata) {
+		try {
+			pacchettoBean.aggiuntaDurata(getPacchetto(), durata);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Durata già esistente!");
+		}
+	}
+	
+	/**
+	 * Permette di rimuovere una durata dal pacchetto
+	 * @param durata La durata da rimuovere
+	 */
+	public void rimuoviDurata (int durata) {
+		try {
+			pacchettoBean.rimuoviDurata(getPacchetto(), durata);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (DeleteException e) {
+			JsfUtil.errorMessage("Impossibile rimuovere la durata!");
 		}
 	}
 }

@@ -9,8 +9,10 @@ import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.DeleteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 
 @Local
@@ -41,29 +43,37 @@ public interface GestorePacchettoPredefinito {
 	 * Permette l'aggiunta di una nuova data di partenza nel pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere la data
 	 * @param data La data che si vuole aggiungere
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws InsertException Quando la data è già presente nel database
 	 */
-	void aggiuntaDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data);
+	void aggiuntaDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Permette la rimozione di una data da un pacchetto
 	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere la data
 	 * @param data La data che si vuole eliminare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws DeleteException Quando non è possibile cancellare la data (per esempio, quando ne è rimasta solo una nel pacchetto)
 	 */
-	void rimuoviDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data);
+	void rimuoviDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException, DeleteException;
 	
 	/**
 	 * Permette di aggiungere una nuova durata in un pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere la durata
 	 * @param durata La durata da aggiungere
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws InsertException Quando la durata esiste già nel database
 	 */
-	void aggiuntaDurata (PacchettoPredefinitoDTO pacchetto, int durata);
+	void aggiuntaDurata (PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Permette di eliminare una durata da un pacchetto
 	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere la durata
 	 * @param durata La durata che si vuole rimuovere
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws DeleteException Quando non è possibile cancellare la durata (per esempio, quando ne è rimasta solo una nel pacchetto)
 	 */
-	void rimuoviDurata (PacchettoPredefinitoDTO pacchetto, int durata);
+	void rimuoviDurata (PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException, DeleteException;
 	
 	/**
 	 * Permette l'aggiunta di un collegamento nel pacchetto
@@ -102,12 +112,26 @@ public interface GestorePacchettoPredefinito {
 	void rimuoviEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException;
 	
 	/**
-	 * Permette il salvataggio di un pacchetto
+	 * Permette la modifica del nome del pacchetto
 	 * @param pacchetto Il pacchetto da salvare
-	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void salvaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, PacchettoInesistenteException;
+	void modificaNomePacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException;
+	
+	/**
+	 * Permette la modifica del prezzo del pacchetto
+	 * @param pacchetto Il pacchetto da salvare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	void modificaPrezzo (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException;
+	
+	/**
+	 * Permette la modifica dell'hotel
+	 * @param pacchetto Il pacchetto da salvare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 */
+	void modificaHotel (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException, HotelInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto

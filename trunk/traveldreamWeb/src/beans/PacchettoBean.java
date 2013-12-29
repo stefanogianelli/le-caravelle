@@ -19,10 +19,10 @@ import dtos.PacchettoDTO;
 import dtos.UtenteDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
-import eccezioni.DataException;
 import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 import ejbs.GestorePacchetto;
 import enums.TipoPacchetto;
@@ -286,7 +286,7 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Hotel inesistente!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
-		} catch (DataException e) {
+		} catch (InsertException e) {
 			JsfUtil.errorMessage("Date non valide");
 		}
 		return null;
