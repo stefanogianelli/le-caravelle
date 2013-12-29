@@ -20,6 +20,7 @@ import javax.persistence.Query;
 import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
+import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -267,10 +268,10 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 	
 	@Override
-	public void modificaHotel (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException, HotelInesistenteException {
-		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+	public void modificaHotel (int idPacchetto, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException {
+		PacchettiPredefiniti entity = this.convertiInEntita(idPacchetto);
 		
-		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
+		entity.setHotel(this.hotel.convertiInEntita(hotel));
 		
 		em.merge(entity);
 	}
@@ -283,6 +284,15 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	@Override
 	public PacchettiPredefiniti convertiInEntita (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
 		PacchettiPredefiniti pacchettoEntity = em.find(PacchettiPredefiniti.class, pacchetto.getId());
+		if (pacchettoEntity != null)
+			return pacchettoEntity;
+		else
+			throw new PacchettoInesistenteException ();
+	}
+	
+	@Override
+	public PacchettiPredefiniti convertiInEntita (int idPacchetto) throws PacchettoInesistenteException {
+		PacchettiPredefiniti pacchettoEntity = em.find(PacchettiPredefiniti.class, idPacchetto);
 		if (pacchettoEntity != null)
 			return pacchettoEntity;
 		else

@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
+import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -150,11 +151,12 @@ public interface GestorePacchettoPredefinito {
 	
 	/**
 	 * Permette la modifica dell'hotel
-	 * @param pacchetto Il pacchetto da salvare
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @param hotel L'hotel da inserire
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	void modificaHotel (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException, HotelInesistenteException;
+	void modificaHotel (int idPacchetto, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
