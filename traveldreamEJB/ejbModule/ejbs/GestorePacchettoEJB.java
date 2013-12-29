@@ -237,7 +237,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		if (destinazione.getDataPartenza().compareTo(entity.getDestinazioni().get(0).getDataArrivo()) == 0 || destinazione.getDataArrivo().compareTo(entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza()) == 0) {
 			entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
 			//aggiorno il prezzo del pacchetto
-			entity.setPrezzo(entity.getPrezzo() + destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti());
+			entity.setPrezzo(entity.getPrezzo() + destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti()*(int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24)));
 			this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
 			
 			em.merge(entity);
@@ -260,10 +260,10 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException, DeleteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		if (entity.getDestinazioni().size() > 1) {
-			entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));	
+		if (entity.getDestinazioni().size() > 1) {			
 			//aggiorno il prezzo del pacchetto
-			entity.setPrezzo(entity.getPrezzo() - destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti());
+			entity.setPrezzo(entity.getPrezzo() - destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti()*(int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24)));
+			entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));	
 			this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());			
 			em.merge(entity);
 		} else

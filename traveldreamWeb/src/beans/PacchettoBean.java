@@ -291,12 +291,11 @@ public class PacchettoBean {
 	/**
 	 * Permette di eliminare una destinazione da un pacchetto
 	 * @param destinazione La destinazione da eliminare
-	 * @return L'indirizzo della pagina elenco pacchetti
 	 */
-	public String eliminaDestinazione (DestinazioneDTO destinazione) {
+	public void eliminaDestinazione (DestinazioneDTO destinazione) {
 		try {
 			pacchettoBean.eliminaDestinazione(this.getPacchetto(), destinazione);
-			return "elencoPacchettiTest?faces-redirect=true"; 
+			JsfUtil.infoMessage("Destinazione rimossa!");
 		} catch (DestinazioneInesistenteException e) {
 			JsfUtil.errorMessage("Destinazione inesistente!");
 		} catch (PacchettoInesistenteException e) {
@@ -304,7 +303,6 @@ public class PacchettoBean {
 		} catch (DeleteException e) {
 			JsfUtil.errorMessage("Impossibile eliminare la destinazione!");
 		}
-		return null;
 	}
 	
 	/*
