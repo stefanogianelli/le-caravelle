@@ -20,13 +20,14 @@
 	<h:form>
 		<h:panelGroup>
 			Nome:&nbsp;
-			<p:inplace id="nome" editor="true">  
+			<p:inplace id="nome" editor="true" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}">  
 				<p:ajax event="save" listener="#{pacchetto.modificaNomePacchetto()}" />
             	<p:inputText value="#{pacchetto.pacchetto.nome}" required="true"/>  
-            </p:inplace><br />
+            </p:inplace>
+            <h:outputText value="#{pacchetto.pacchetto.nome}" rendered="#{(not pacchetto.isTipoPersonalizzato()) and (not pacchetto.isTipoPredefinito())}" /><br />
 			
 			Partenza:&nbsp;
-			<p:inplace id="partenza" label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true" rendered="#{not pacchetto.isTipoPredefinito()}">  
+			<p:inplace id="partenza" label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true" rendered="#{pacchetto.isTipoPersonalizzato()}">  
 				<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza()}" update="prezzo" />
                 <h:selectOneMenu value="#{pacchetto.pacchetto.citta.nome}">
 					<f:selectItems value="#{citta.nomiCitta}" />
@@ -37,18 +38,20 @@
                 <h:selectOneMenu value="#{pacchetto.pacchetto.citta.nome}">
 					<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
 				</h:selectOneMenu>	  
-            </p:inplace><br />
+            </p:inplace>
+            <h:outputText value="#{pacchetto.pacchetto.citta.nome}" rendered="#{(not pacchetto.isTipoPersonalizzato()) and (not pacchetto.isTipoPredefinito())}" /><br />
 			
 			Partecipanti:&nbsp;
-			<p:inplace id="partecipanti" editor="true">  
+			<p:inplace id="partecipanti" editor="true" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}">  
 				<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" update="prezzo,:destinazioni" />
             	<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true"/>  
-            </p:inplace><br />
+            </p:inplace>
+            <h:outputText value="#{pacchetto.pacchetto.numPartecipanti}" rendered="#{(not pacchetto.isTipoPersonalizzato()) and (not pacchetto.isTipoPredefinito())}" /><br />
 			
 			Prezzo:&nbsp;
 			<h:outputText id="prezzo" value="#{pacchetto.pacchetto.prezzo}" /><br />
 			
-			<h:commandButton action="#{pacchetto.eliminaPacchetto()}" value="elimina" />
+			<h:commandButton action="#{pacchetto.eliminaPacchetto()}" value="elimina" rendered="#{pacchetto.isTipoPersonalizzato() and pacchetto.isTipoPredefinito()}" />
 		</h:panelGroup>
 	</h:form>
 		
@@ -88,7 +91,7 @@
 				</h:outputText><br />	
 				<h:outputText value="#{d.hotel.nome} a #{d.citta.nome} (#{d.citta.nazione})" />
 				<h:form rendered="#{not pacchetto.isTipoPredefinito()}">
-					<h:commandButton value="elimina destinazione" action="#{pacchetto.eliminaDestinazione(d)}" />
+					<h:commandButton value="elimina destinazione" action="#{pacchetto.eliminaDestinazione(d)}" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
 				</h:form>
 				<br />
 				<!-- Informazioni sulle escursioni -->
@@ -118,7 +121,7 @@
 					</ul>
 				</h:panelGroup>
 				<!-- Aggiunta Escursione -->
-				<h:panelGroup rendered="#{not pacchetto.isTipoPredefinito()}">
+				<h:panelGroup rendered="#{pacchetto.isTipoPersonalizzato()}">
 					<h:link value="aggiunta escursione" outcome="aggiuntaEscursione">
 						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 						<f:param name="idDestinazione" value="#{d.id}" />
@@ -151,9 +154,12 @@
 				<br /><br />
 			</h:panelGroup>
 		</ui:repeat>
-		<h:link value="aggiunta destinazione" outcome="aggiuntaDestinazioneTest" rendered="#{not pacchetto.isTipoPredefinito()}">
+		<h:link value="aggiunta destinazione" outcome="aggiuntaDestinazioneTest" rendered="#{pacchetto.isTipoPersonalizzato()}">
 			<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-		</h:link>
+		</h:link><br />
+		<h:form>
+			<h:commandButton action="#{pacchetto.acquistaPacchetto()}" value="acquista" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
+		</h:form>
 	</h:panelGroup>
 </body> 
 </html>

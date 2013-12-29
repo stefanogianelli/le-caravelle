@@ -20,6 +20,7 @@ import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import dtos.PacchettoPredefinitoDTO;
 import dtos.UtenteDTO;
+import eccezioni.AcquistoException;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DeleteException;
@@ -278,6 +279,8 @@ public class PacchettoBean {
 			pacchettoBean.acquistaPacchetto(this.getPacchetto());
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (AcquistoException e) {
+			JsfUtil.errorMessage("Pacchetto incompleto!");
 		}
 	}
 	
@@ -428,5 +431,16 @@ public class PacchettoBean {
 			return true;
 		else
 			return false;
+	}
+
+	/**
+	 * Verificata se il pacchetto corrente è di tipo personalizzato
+	 * @return true se il pacchetto è personalizzato, false altrimenti
+	 */
+	public boolean isTipoPersonalizzato () {
+		if (this.getPacchetto().getTipoPacchetto() == TipoPacchetto.PERSONALIZZATO)
+			return true;
+		else
+			return false;		
 	}
 }
