@@ -11,9 +11,11 @@ import javax.faces.bean.ViewScoped;
 
 import utils.JsfUtil;
 import dtos.CittaDTO;
+import dtos.CollegamentoDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DeleteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
@@ -246,5 +248,25 @@ public class PacchettoPredefinitoBean {
 		} catch (DeleteException e) {
 			JsfUtil.errorMessage("Impossibile rimuovere la durata!");
 		}
+	}
+	
+	/**
+	 * Permette di aggiungere un collegamento nel pacchetto
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @param collegamento Il collegamento
+	 * @return L'indirizzo della pagina di dettaglio del pacchetto
+	 */
+	public String aggiuntaCollegamento (int idPacchetto, CollegamentoDTO collegamento) {
+		try {
+			pacchettoBean.aggiuntaCollegamento(idPacchetto, collegamento);
+			return "dettagliPacchettoPredefinito?idPacchetto=" + idPacchetto + "&faces-redirect=true";
+		} catch (CollegamentoInesistenteException e) {
+			JsfUtil.errorMessage("Collegamento inesistente!");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Collegamento già esistente!");
+		}
+		return null;
 	}
 }

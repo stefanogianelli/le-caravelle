@@ -31,6 +31,7 @@ import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 import entities.AttivitaPred;
 import entities.Citta;
+import entities.Collegamenti;
 import entities.DatePartenza;
 import entities.Durate;
 import entities.Escursioni;
@@ -202,8 +203,13 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 	
 	@Override
-	public void aggiuntaCollegamento(PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
-		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+	public void aggiuntaCollegamento(int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException, InsertException {
+		PacchettiPredefiniti entity = this.convertiInEntita(idPacchetto);
+		
+		for (Collegamenti c : entity.getCollegamenti()) {
+			if (c.getCodice() == collegamento.getCodice())
+				throw new InsertException();
+		}
 		
 		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
 		
@@ -321,6 +327,11 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 			durate.add(d.getId().getDurata());
 		}
 		pacchettoDTO.setDurate(durate);
+		List<CollegamentoDTO> collegamenti = new ArrayList<CollegamentoDTO>();
+		for (Collegamenti c : pacchetto.getCollegamenti()) {
+			collegamenti.add(this.collegamento.convertiInDTO(c));
+		}
+		pacchettoDTO.setCollegamenti(collegamenti);
 		pacchettoDTO.setHotel(hotel.convertiInDTO(pacchetto.getHotel()));
 		
 		return pacchettoDTO;

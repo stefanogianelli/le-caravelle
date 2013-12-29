@@ -26,11 +26,14 @@ public class PacchettoPredefinitoDTO implements Serializable {
 
 	private HotelDTO hotel;
 	
+	private List<CollegamentoDTO> collegamenti;
+	
 	public PacchettoPredefinitoDTO () {
 		cittaPartenza = new ArrayList<CittaDTO>();
 		datePartenza = new ArrayList<Date>();
 		durate = new ArrayList<Integer>();
 		hotel = new HotelDTO();
+		collegamenti = new ArrayList<CollegamentoDTO>();
 	}
 
 	public int getId() {
@@ -87,5 +90,13 @@ public class PacchettoPredefinitoDTO implements Serializable {
 
 	public void setHotel(HotelDTO hotel) {
 		this.hotel = hotel;
+	}
+
+	public List<CollegamentoDTO> getCollegamenti() {
+		return collegamenti;
+	}
+
+	public void setCollegamenti(List<CollegamentoDTO> collegamenti) {
+		this.collegamenti = collegamenti;
 	}
 }
