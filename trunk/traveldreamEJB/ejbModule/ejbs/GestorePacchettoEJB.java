@@ -31,6 +31,7 @@ import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.PacchettoInesistenteException;
 import entities.Amici;
+import entities.Attivita;
 import entities.Collegamenti;
 import entities.Destinazioni;
 import entities.Pacchetti;
@@ -159,6 +160,13 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		//aggiorno il numero di partecipanti delle (eventuali) escursioni
+		for (Destinazioni d : entity.getDestinazioni()) {
+			for (Attivita a : d.getAttivita()) {
+				if (a.getNumPartecipanti() > entity.getNumPartecipanti())
+					a.setNumPartecipanti(entity.getNumPartecipanti());
+			}
+		}
 		entity.setPrezzo(this.calcolaPrezzo(entity));
 		
 		em.merge(entity);		
