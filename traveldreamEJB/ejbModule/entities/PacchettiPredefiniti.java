@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -26,7 +27,10 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="pacchetti_predefiniti", uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
-@NamedQuery(name="PacchettiPredefiniti.elenco", query="SELECT p FROM PacchettiPredefiniti p")
+@NamedQueries ({
+	@NamedQuery(name="PacchettiPredefiniti.elenco", query="SELECT p FROM PacchettiPredefiniti p"),
+	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaId", query="SELECT p FROM PacchettiPredefiniti p WHERE p.id = :id")
+})
 public class PacchettiPredefiniti implements Serializable {
 	private static final long serialVersionUID = 1L;
 

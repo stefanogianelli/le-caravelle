@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Elenco Pacchetti Predefiniti</title>
+</h:head> 
+<body> 
+	<f:event listener="#{pacchettoPredefinito.elencoPacchetti()}" type="preRenderView" />
+	<h1>Elenco Pacchetti Predefiniti</h1>
+	<h:link value="indietro" outcome="pacchettoPredefinitoTest" />
+	<h:panelGroup rendered="#{pacchettoPredefinito.elenco.size() > 0}">
+		<ul>
+			<ui:repeat value="#{pacchettoPredefinito.elenco}" var="p">
+				<li>
+					<h:link value="#{p.nome}" outcome="dettagliPacchettoPredefinito">
+						<f:param name="idPacchetto" value="#{p.id}"/>
+					</h:link>
+				</li>
+			</ui:repeat>
+		</ul>
+	</h:panelGroup>
+</body> 
+</html>

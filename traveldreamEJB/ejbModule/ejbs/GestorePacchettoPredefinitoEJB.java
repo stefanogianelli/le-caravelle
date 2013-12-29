@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -45,6 +46,19 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	
 	@EJB
 	private GestoreEscursioneLocal escursione;
+	
+	@Override
+	public PacchettoPredefinitoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException {
+		Query q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaId", PacchettiPredefiniti.class);
+		q.setParameter("id", idPacchetto);
+		PacchettiPredefiniti pacchetto;
+		try {
+			pacchetto = (PacchettiPredefiniti) q.getSingleResult();
+		} catch (NoResultException e) {
+			throw new PacchettoInesistenteException();
+		}
+		return this.convertiInDTO(pacchetto);		
+	}
     
 	@Override
 	public List<PacchettoPredefinitoDTO> elencoPacchetti() {

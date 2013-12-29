@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<h:head>
+	<title>Dettagli Pacchetto Predefinito</title>
+</h:head> 
+<body>
+	<f:metadata>
+		<f:viewParam name="idPacchetto" binding="#{id}" />
+		<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
+	</f:metadata>
+	<h1>Pacchetto Predefinito</h1>
+	<h:link value="indietro" outcome="elencoPacchettiPredefiniti" />
+	<h:messages /><br />
+	
+	<h:panelGroup>
+		<h:outputText value="Nome: #{pacchettoPredefinito.pacchetto.nome}" /><br /><br />
+		
+		<h:outputText for="prezzo" value="Prezzo: #{pacchettoPredefinito.pacchetto.prezzo}" /><br /><br />
+		
+		<h:outputText value="Date Partenza:" />
+		<h:dataTable value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="data">  
+			<h:column>
+				<h:outputText value="#{data}">
+   					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+   				</h:outputText>
+			</h:column>
+		</h:dataTable><br />
+		
+		<h:outputText value="Durate:" />
+		<h:dataTable value="#{pacchettoPredefinito.pacchetto.durate}" var="durata">  
+			<h:column>
+				<h:outputText value="#{durata}" />
+			</h:column>
+		</h:dataTable><br />
+		
+		<h:outputText value="#{pacchettoPredefinito.pacchetto.hotel.nome}" />
+	</h:panelGroup>
+</body> 
+</html>
