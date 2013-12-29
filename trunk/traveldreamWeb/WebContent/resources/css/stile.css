@@ -62,7 +62,6 @@ a:hover {
 	font-size: 26px;
 	text-align: left;
 	color:black;
-	border: 1px solid red;
 	position: absolute;
 	margin: 0 auto 20px -230px;
 	left:50%;
@@ -79,13 +78,22 @@ a:hover {
 }
 .data-input{
 	height:auto;
-	width:500px;
 	font-size: 26px;
 	text-align: left;
 	color:black;
 	position: absolute;
-	margin: 0 auto 20px -150px;
+	margin: -6px auto 20px -150px;
 	left:50%;
+}
+.stelle-input{
+	height:auto;
+	width:auto;
+	background-color:white;
+	position: absolute;
+	margin: -31px auto 0 -20px;
+	padding:5px;
+	left:50%;
+	border:1px solid red;
 }
 .name-input{
 	height:30px;
@@ -99,7 +107,7 @@ a:hover {
 	height:50px;
 	width:100px;
 	position: absolute;
-	margin:40px auto auto -50px;
+	margin:40px auto auto -20px;
 	left: 50%;
 	font-size:26px;
 	font-family:arial;

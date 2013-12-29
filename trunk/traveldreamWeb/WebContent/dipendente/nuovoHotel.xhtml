@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Nuovo hotel</ui:define>
+
+<ui:define name="content">
+
+<div class="bloccoDett">
+
+<h1>Nuovo hotel</h1>
+<br></br>
+
+	<h:form>
+		<p><h:outputText for="nome" styleClass="name-input" value="Nome hotel: " />
+		<h:inputText id="nome" styleClass="text-input" value="#{hotel.hotel.nome}" />
+		<h:message for="nome"/><br /></p>
+		
+		<p><h:outputText for="stelle" styleClass="name-input" value="Stelle: " /></p>
+		<p:rating id="stelle" styleClass="stelle-input" value="#{hotel.hotel.stelle}" stars="5" cancel="false" />
+		<h:message for="stelle"/><br />
+		
+		<p><h:outputText for="prezzo" styleClass="name-input" value="Prezzo a notte: " />
+		<h:inputText id="prezzo" styleClass="text-input" value="#{hotel.hotel.prezzo}" />
+		<h:message for="prezzo"/><br /></p>
+		<br></br>
+		
+		<p><h:outputText for="indirizzo" styleClass="name-input" value="Indirizzo: " />
+		<h:inputText id="indirizzo" styleClass="text-input" value="#{hotel.hotel.indirizzo}" />
+		<h:message for="indirizzo"/><br /></p>
+		
+		<p><h:outputText for="citta" styleClass="name-input" value="Città: " />
+		<h:selectOneMenu id="citta" styleClass="menu-input" value="#{hotel.hotel.citta.nome}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>	
+		<h:message for="citta"/><br /></p>
+		<br></br>
+		
+		<p><h:outputText for="telefono" styleClass="name-input" value="Telefono:" />
+		<h:inputText id="telefono" styleClass="text-input" value="#{hotel.hotel.telefono}" />
+		<h:message for="telefono"/><br /></p>
+		
+		<p><h:outputText for="website" styleClass="name-input" value="Website: " />
+		<h:inputText id="website" styleClass="text-input" value="#{hotel.hotel.website}" />
+		<h:message for="website"/><br /></p>
+		
+		<p><h:outputText for="email" styleClass="name-input" value="Email: " />
+		<h:inputText id="email" styleClass="text-input" value="#{hotel.hotel.email}" />
+		<h:message for="email"/><br /></p>
+		
+		<h:commandButton action="#{hotel.creaHotel()}" styleClass="button" value="Salva" />
+	</h:form>
+
+</div>
+</ui:define>
+</ui:composition>
+</html>
