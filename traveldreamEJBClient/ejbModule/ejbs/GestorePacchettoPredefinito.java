@@ -101,12 +101,13 @@ public interface GestorePacchettoPredefinito {
 	
 	/**
 	 * Permette l'aggiunta di un collegamento nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere il collegamento
+	 * @param idPacchetto L'identificativo del pacchetto nel quale si vuole aggiungere il collegamento
 	 * @param collegamento Il collegamento da aggiungere
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws InsertException Quando il collegamento è già presente nel pacchetto
 	 */
-	void aggiuntaCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
+	void aggiuntaCollegamento (int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Permette la rimozione di un collegamento da un pacchetto

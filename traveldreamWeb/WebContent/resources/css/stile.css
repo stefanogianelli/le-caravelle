@@ -11,7 +11,7 @@ body {
 	color: black; 
 	background-color: white;
 	width: 1024px;
-	background-image:url('/resources/images/pascua.jpg');
+	background-image:url('pascua.jpg.xhtml?ln=images');
 	background-repeat:no-repeat;
 	background-attachment:fixed;
 	background-position:center;
