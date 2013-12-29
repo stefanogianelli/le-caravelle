@@ -13,13 +13,23 @@
 	<h:link value="indietro" outcome="pacchettoPredefinitoTest" />
 	<h:messages />
 	<h:form>
-		<h:outputText for="nome" value="Nome:" />
+		<h:outputText for="nome" value="Nome: " />
 		<h:inputText id="nome" value="#{pacchettoPredefinito.pacchetto.nome}" />
 		<h:message for="nome"/><br />
 		
-		<h:outputText for="prezzo" value="Prezzo:" />
+		<h:outputText for="prezzo" value="Prezzo: " />
 		<h:inputText id="prezzo" value="#{pacchettoPredefinito.pacchetto.prezzo}" />
 		<h:message for="prezzo"/><br />
+		
+		<h:outputText for="partenza" value="Città Partenza: " />
+		<p:dataList id="elencoCitta" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta">  
+   			<h:outputText value="#{citta.nome}" />
+		</p:dataList>		
+		<h:selectOneMenu id="partenza" binding="#{cittaText}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>
+		<h:commandButton value="salva citta" action="#{pacchettoPredefinito.aggiuntaCitta(cittaText.value)}" />
+		<h:message for="partenza"/><br />
 		
 		<h:outputText for="data" value="Date Partenza:" />
 		<p:dataList id="elencoDate" value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="data" type="ordered">  

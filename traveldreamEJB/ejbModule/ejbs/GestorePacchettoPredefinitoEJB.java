@@ -1,5 +1,6 @@
 package ejbs;
 
+import interfaces.GestoreCittaLocal;
 import interfaces.GestoreCollegamentoLocal;
 import interfaces.GestoreEscursioneLocal;
 import interfaces.GestoreHotelLocal;
@@ -16,9 +17,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
+import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DeleteException;
 import eccezioni.EscursioneInesistenteException;
@@ -26,6 +29,7 @@ import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 import entities.AttivitaPred;
+import entities.Citta;
 import entities.DatePartenza;
 import entities.Durate;
 import entities.Escursioni;
@@ -48,6 +52,9 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	
 	@EJB
 	private GestoreEscursioneLocal escursione;
+	
+	@EJB
+	private GestoreCittaLocal citta;
 	
 	@Override
 	public PacchettoPredefinitoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException {
@@ -73,11 +80,14 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException {
+	public void creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
 		
 		entity.setNome(pacchetto.getNome());
 		entity.setPrezzo(pacchetto.getPrezzo());
+		for (CittaDTO c : pacchetto.getCittaPartenza()) {
+			entity.addCitta(citta.getCitta(c.getNome()));
+		}
 		for (Date d : pacchetto.getDatePartenza()) {
 			DatePartenza data = new DatePartenza();
 			data.setData(d);			
@@ -91,6 +101,31 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
 		
 		em.persist(entity);		
+	}
+	
+	@Override
+	public void aggiuntaCittaPartenza (PacchettoPredefinitoDTO pacchetto, String nomeCitta) throws PacchettoInesistenteException, CittaInesistenteException, InsertException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+		
+		for (Citta c : entity.getCittaPartenza()) {
+			if (c.getNome().equalsIgnoreCase(nomeCitta))
+				throw new InsertException();
+		}
+
+		entity.addCitta(citta.getCitta(nomeCitta));
+			
+		em.merge(entity);
+	}
+	
+	@Override
+	public void rimuoviCittaPartenza (PacchettoPredefinitoDTO pacchetto, CittaDTO citta) throws PacchettoInesistenteException, CittaInesistenteException, DeleteException {
+		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+		
+		if (entity.getCittaPartenza().size() > 1) {
+			entity.removeCitta(this.citta.convertiInEntita(citta));
+			em.merge(entity);
+		} else
+			throw new DeleteException();
 	}
 	
 	@Override
@@ -261,6 +296,11 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		pacchettoDTO.setId(pacchetto.getId());
 		pacchettoDTO.setNome(pacchetto.getNome());
 		pacchettoDTO.setPrezzo(pacchetto.getPrezzo());
+		List<CittaDTO> cittaPartenza = new ArrayList<CittaDTO>();
+		for (Citta c : pacchetto.getCittaPartenza()) {
+			cittaPartenza.add(citta.convertiInDTO(c));
+		}
+		pacchettoDTO.setCittaPartenza(cittaPartenza);
 		List<Date> datePartenza = new ArrayList<Date>();
 		for (DatePartenza d : pacchetto.getDatePartenza()) {
 			datePartenza.add(d.getId().getData());

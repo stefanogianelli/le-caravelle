@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import dtos.EscursioneDTO;
 import dtos.PacchettoPredefinitoDTO;
+import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DeleteException;
 import eccezioni.EscursioneInesistenteException;
@@ -36,8 +38,29 @@ public interface GestorePacchettoPredefinito {
 	 * Permette la creazione di un nuovo pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 */
-	void creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException;
+	void creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException;
+	
+	/**
+	 * Permette di aggiungere una città di partenza nel pacchetto
+	 * @param pacchetto Il pacchetto nel quale aggiungere la città
+	 * @param nomeCitta Il nome della città
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 * @throws InsertException Quando la città è già stata inserita
+	 */
+	void aggiuntaCittaPartenza (PacchettoPredefinitoDTO pacchetto, String nomeCitta) throws PacchettoInesistenteException, CittaInesistenteException, InsertException;
+	
+	/**
+	 * Permette di rimuovere una città di partenza dal pacchetto
+	 * @param pacchetto Il pacchetto dal quale rimuovere la città
+	 * @param citta La città da rimuovere
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 * @throws DeleteException Quando non è possibile rimuovere la città (nel caso sia l'unica rimasta nel pacchetto)
+	 */
+	void rimuoviCittaPartenza (PacchettoPredefinitoDTO pacchetto, CittaDTO citta) throws PacchettoInesistenteException, CittaInesistenteException, DeleteException;
 	
 	/**
 	 * Permette l'aggiunta di una nuova data di partenza nel pacchetto
