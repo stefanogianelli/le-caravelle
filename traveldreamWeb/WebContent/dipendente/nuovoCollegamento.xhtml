@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Nuovo collegamento</ui:define>
+
+<ui:define name="content">
+
+<div class="bloccoDett">
+
+<h1>Nuovo collegamento</h1>
+<br></br>
+
+	<h:form>
+	
+		<p><h:outputText for="cittaPartenza" styleClass="name-input" value="Città di partenza: " />
+		<h:selectOneMenu id="cittaPartenza" styleClass="menu-input" value="#{collegamento.collegamento.cittaPartenza.nome}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>	
+		<h:message for="cittaPartenza"/><br /></p>
+		
+		<p><h:outputText for="cittaArrivo" styleClass="name-input" value="Città di arrivo: " />
+		<h:selectOneMenu id="cittaArrivo" styleClass="menu-input" value="#{collegamento.collegamento.cittaArrivo.nome}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>	
+		<h:message for="cittaArrivo"/><br /></p>
+		<br></br>
+		
+		<p><h:outputText for="dataPartenza" styleClass="name-input" value="Data: " />
+		<p:calendar id="dataPartenza" styleClass="data-input" value="#{collegamento.collegamento.dataPartenza}" locale="it" />
+		<h:message for="dataPartenza"/><br /></p>
+
+		<p><h:outputText for="oraPartenza" styleClass="name-input" value="Ora di partenza: " />
+		<h:inputText id="oraPartenza" styleClass="text-input" value="#{collegamento.collegamento.oraPartenza}">
+			<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:inputText>
+		<h:message for="oraPartenza"/><br /></p>
+
+		<p><h:outputText for="oraArrivo" styleClass="name-input" value="Ora di arrivo:" />
+		<h:inputText id="oraArrivo" styleClass="text-input" value="#{collegamento.collegamento.oraArrivo}">
+			<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:inputText>
+		<h:message for="oraArrivo"/><br /></p>
+		<br></br>
+
+		<p><h:outputText for="tipoCollegamento" styleClass="name-input" value="Tipo di collegamento: " />
+		<h:selectOneMenu styleClass="menu-input" value="#{collegamento.collegamento.tipoCollegamento}">
+			<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
+		</h:selectOneMenu><br /></p>
+		
+		<p><h:outputText for="origine" styleClass="name-input" value="Origine: " />
+		<h:inputText id="origine" styleClass="text-input" value="#{collegamento.collegamento.origine}" />
+		<h:message for="origine"/><br /></p>
+			
+		<p><h:outputText for="destinazione" styleClass="name-input" value="Destinazione: " />
+		<h:inputText id="destinazione" styleClass="text-input" value="#{collegamento.collegamento.destinazione}" />
+		<h:message for="destinazione"/><br /></p>
+		<br></br>
+		
+		<p><h:outputText for="prezzo" styleClass="name-input" value="Prezzo: " />
+		<h:inputText id="prezzo" styleClass="text-input" value="#{collegamento.collegamento.prezzo}" />
+		<h:message for="prezzo"/><br /></p>
+		
+
+		
+		<h:commandButton value="Salva" styleClass="button" action="#{collegamento.creaCollegamento()}" />
+	</h:form>
+
+</div>
+</ui:define>
+</ui:composition>
+</html>
