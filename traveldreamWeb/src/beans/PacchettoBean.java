@@ -1,7 +1,9 @@
 package beans;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoDTO;
+import dtos.PacchettoPredefinitoDTO;
 import dtos.UtenteDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -25,6 +28,7 @@ import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
 import ejbs.GestorePacchetto;
+import ejbs.GestorePacchettoPredefinito;
 import enums.TipoPacchetto;
 
 @ManagedBean(name="pacchetto")
@@ -34,9 +38,13 @@ public class PacchettoBean {
 	@EJB
 	private GestorePacchetto pacchettoBean;
 	
+	@EJB
+	private GestorePacchettoPredefinito predefinitoBean;
+	
 	private PacchettoDTO pacchetto;
 	private DestinazioneDTO destinazione;
 	private List<PacchettoDTO> elenco;
+	private PacchettoPredefinitoDTO predefinito;
 	
 	@PostConstruct
 	public void setUp () {
@@ -67,6 +75,14 @@ public class PacchettoBean {
 
 	public void setElenco(List<PacchettoDTO> elenco) {
 		this.elenco = elenco;
+	}
+
+	public PacchettoPredefinitoDTO getPredefinito() {
+		return predefinito;
+	}
+
+	public void setPredefinito(PacchettoPredefinitoDTO predefinito) {
+		this.predefinito = predefinito;
 	}
 	
 	/*
@@ -201,11 +217,44 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Permette di convertire le informazione contenute nel pacchetto predefinito
+	 * @param idPredefinito L'identificativo del pacchetto predefinito
+	 */
+	public void convertiPacchettoPredefinito (int idPredefinito) {
+		try {
+			this.setPredefinito(predefinitoBean.getPacchetto(idPredefinito));
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
+	
+	/**
 	 * Permette la creazione di un pacchetto a partire da un pacchetto predefinito
 	 */
-	public void salvaPacchettoPredefinito () {
+	public void salvaPacchettoPredefinito (int durata, String dataArrivo) {
 		try {
+			/*
+			 * Utente usato per test
+			 * Da sostituire con l'utente correntemente loggato nel sistema
+			 */
+			UtenteDTO utente = new UtenteDTO();
+			utente.setEmail("stefano@gmail.com");
+			this.getPacchetto().setUtente(utente);
+			
+			this.getPacchetto().setNome(this.getPredefinito().getNome());
+			this.getPacchetto().setPacchettoPredefinito(this.getPredefinito());
+			this.getPacchetto().setPrezzo(this.getPredefinito().getPrezzo());
+			Date dataArr = new SimpleDateFormat("dd/MM/yyyy").parse(dataArrivo);
+			this.getDestinazione().setDataArrivo(dataArr);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dataArr);
+			cal.add(Calendar.DATE, durata);
+			this.getDestinazione().setDataPartenza(cal.getTime());
+			this.getDestinazione().setHotel(this.getPredefinito().getHotel());
+			this.getDestinazione().setCitta(this.getDestinazione().getHotel().getCitta());
+			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
 			pacchettoBean.salvaPacchettoPredefinito(this.getPacchetto());
+			JsfUtil.infoMessage("Pacchetto salvato!");
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {
@@ -214,6 +263,8 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Hotel inesistente!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (ParseException e) {
+			System.out.println("Errore nel convertire la data " + dataArrivo);
 		}
 	}
 	

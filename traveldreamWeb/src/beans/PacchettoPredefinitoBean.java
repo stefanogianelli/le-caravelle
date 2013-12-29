@@ -269,4 +269,19 @@ public class PacchettoPredefinitoBean {
 		}
 		return null;
 	}
+	
+	/**
+	 * Permette di rimuovere un collegamento dal pacchetto
+	 * @param collegamento Il collegamento che si vuole rimuovere
+	 */
+	public void rimuoviCollegamento (CollegamentoDTO collegamento) {
+		try {
+			pacchettoBean.rimuoviCollegamento(getPacchetto(), collegamento);
+			JsfUtil.infoMessage("Collegamento rimosso!");
+		} catch (CollegamentoInesistenteException e) {
+			JsfUtil.errorMessage("Collegamento inesistente!");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
 }
