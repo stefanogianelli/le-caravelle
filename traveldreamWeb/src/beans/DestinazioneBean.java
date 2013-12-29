@@ -105,12 +105,12 @@ public class DestinazioneBean {
 	
 	/**
 	 * Permette la rimozione di un'escursione da una destinazione
-	 * @param destinazione La destinazione dalla quale rimuovere l'escursione
-	 * @param escursione L'escursione da rimuovere
+	 * @param attivita L'attività da rimuovere
 	 */
-	public void eliminaEscursione (DestinazioneDTO destinazione, EscursioneDTO escursione) {
+	public void eliminaEscursione (AttivitaDTO attivita) {
 		try {
-			destinazioneBean.eliminaEscursione(destinazione.getId(), escursione.getId());
+			destinazioneBean.eliminaEscursione(attivita);
+			JsfUtil.infoMessage("Escursione eliminata!");
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {

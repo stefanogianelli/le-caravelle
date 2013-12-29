@@ -108,17 +108,12 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	}
 
 	@Override
-	public void eliminaEscursione(int idDestinazione, int idEscursione) throws EscursioneInesistenteException, DestinazioneInesistenteException {
-		Destinazioni entity = this.convertiInEntita(idDestinazione);
+	public void eliminaEscursione(AttivitaDTO attivita) throws EscursioneInesistenteException, DestinazioneInesistenteException {
+		Attivita attivitaEntity = this.convertiInEntita(attivita);
+		Destinazioni destinazione = attivitaEntity.getDestinazione();
+		destinazione.removeAttivita(attivitaEntity);
 		
-		Query q = em.createNamedQuery("Attivita.getAttivitaDaId", Attivita.class);
-		q.setParameter("destinazione", idDestinazione);
-		q.setParameter("escursione", idEscursione);
-		Attivita attivita = (Attivita) q.getSingleResult();
-		
-		entity.removeAttivita(attivita);
-		
-		em.merge(entity);
+		em.merge(destinazione);
 	}
 	
 	@Override
