@@ -81,7 +81,9 @@
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText><br />	
 				<h:outputText value="#{d.hotel.nome} a #{d.citta.nome} (#{d.citta.nazione})" />
-				<h:commandButton value="elimina destinazione" action="#{pacchetto.eliminaDestinazione(d)}" />
+				<h:form>
+					<h:commandButton value="elimina destinazione" action="#{pacchetto.eliminaDestinazione(d)}" />
+				</h:form>
 				<br />
 				<!-- Informazioni sulle escursioni -->
 				<h:panelGroup rendered="#{d.attivita.size() > 0}">
