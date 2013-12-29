@@ -26,6 +26,7 @@ public class Durate implements Serializable {
 	private PacchettiPredefiniti pacchettoPredefinito;
 
 	public Durate() {
+		id = new DuratePK();
 	}
 
 	public DuratePK getId() {
