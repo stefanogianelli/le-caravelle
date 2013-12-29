@@ -58,22 +58,22 @@ a:hover {
 	}
 .menu-input{
 	height:32px;
-	width:503px;
+	width:403px;
 	font-size: 26px;
 	text-align: left;
 	color:black;
 	position: absolute;
-	margin: 0 auto 20px -230px;
+	margin: 0 auto 20px -180px;
 	left:50%;
 }
 .text-input{
 	height:28px;
-	width:500px;
+	width:400px;
 	font-size: 26px;
 	text-align: left;
 	color:black;
 	position: absolute;
-	margin: 0 auto 20px -230px;
+	margin: 0 auto 20px -180px;
 	left:50%;
 }
 .data-input{
