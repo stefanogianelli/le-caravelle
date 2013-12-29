@@ -18,26 +18,31 @@
 	<h:link value="indietro" outcome="elencoPacchettiTest" />
 	<h:messages />
 	<h:form>
-		<h:panelGroup id="dettagli">
+		<h:panelGroup>
 			Nome:&nbsp;
-			<h:outputText value="#{pacchetto.pacchetto.nome}" rendered="#{not pacchetto.editable}" />
-			<h:inputText value="#{pacchetto.pacchetto.nome}" rendered="#{pacchetto.editable}" /><br />
+			<p:inplace id="nome" editor="true">  
+				<p:ajax event="save" listener="#{pacchetto.modificaNomePacchetto()}" />
+            	<p:inputText value="#{pacchetto.pacchetto.nome}" required="true"/>  
+            </p:inplace><br />
 			
 			Partenza:&nbsp;
-			<h:outputText value="#{pacchetto.pacchetto.citta.nome}" rendered="#{not pacchetto.editable}" />
-			<h:inputText value="#{pacchetto.pacchetto.citta.nome}" rendered="#{pacchetto.editable}" /><br />
+			<p:inplace id="partenza" label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true">  
+				<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza()}" update="prezzo" />
+                <h:selectOneMenu value="#{pacchetto.pacchetto.citta.nome}">
+					<f:selectItems value="#{citta.nomiCitta}" />
+				</h:selectOneMenu>	  
+            </p:inplace><br />
 			
 			Partecipanti:&nbsp;
-			<h:outputText value="#{pacchetto.pacchetto.numPartecipanti}" rendered="#{not pacchetto.editable}" />
-			<h:inputText value="#{pacchetto.pacchetto.numPartecipanti}" rendered="#{pacchetto.editable}" /><br />
+			<p:inplace id="partecipanti" editor="true">  
+				<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" update="prezzo" />
+            	<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true"/>  
+            </p:inplace><br />
 			
 			Prezzo:&nbsp;
-			<h:outputText value="#{pacchetto.pacchetto.prezzo}" /><br />
+			<h:outputText id="prezzo" value="#{pacchetto.pacchetto.prezzo}" /><br />
 			
-			<h:commandButton action="#{pacchetto.abilitaModifica()}" value="modifica" rendered="#{not pacchetto.editable}" />
-			<h:commandButton action="#{pacchetto.eliminaPacchetto()}" value="elimina" rendered="#{not pacchetto.editable}" />
-			<h:commandButton action="#{pacchetto.salvaPacchetto()}" value="salva" rendered="#{pacchetto.editable}" />
-			<h:commandButton action="#{pacchetto.disabilitaModifica()}" value="annulla" rendered="#{pacchetto.editable}" />
+			<h:commandButton action="#{pacchetto.eliminaPacchetto()}" value="elimina" />
 		</h:panelGroup>
 	</h:form>
 		

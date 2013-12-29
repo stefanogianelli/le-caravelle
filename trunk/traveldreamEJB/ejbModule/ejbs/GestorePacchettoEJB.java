@@ -130,6 +130,41 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
+	public void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
+		Pacchetti entity = this.convertiInEntita(pacchetto);
+		
+		entity.setNome(pacchetto.getNome());
+		
+		em.merge(entity);
+	}
+	
+	@Override
+	public void modificaCittaPartenzaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException, CittaInesistenteException {
+		Pacchetti entity = this.convertiInEntita(pacchetto);
+		
+		//se viene cambiata la città di partenza rimuovo il primo e ultimo collegamento
+		if (!entity.getCitta().getNome().equals(pacchetto.getCitta().getNome()) && !entity.getDestinazioni().isEmpty()) {
+			this.rimuoviCollegamenti(entity, entity.getDestinazioni().get(0).getDataArrivo(), entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza());
+			entity.setPrezzo(this.calcolaPrezzo(entity));
+		}
+		
+		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
+		entity.setPrezzo(this.calcolaPrezzo(entity));
+		
+		em.merge(entity);
+	}
+	
+	@Override
+	public void modificaNumeroPartecipanti (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
+		Pacchetti entity = this.convertiInEntita(pacchetto);
+		
+		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		entity.setPrezzo(this.calcolaPrezzo(entity));
+		
+		em.merge(entity);		
+	}
+	
+	@Override
 	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, EntityExistsException {
 		Pacchetti entity = new Pacchetti();
 		

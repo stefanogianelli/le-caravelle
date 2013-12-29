@@ -55,6 +55,28 @@ public interface GestorePacchetto {
 	void salvaPacchetto (PacchettoDTO pacchetto) throws CittaInesistenteException, PacchettoInesistenteException;
 	
 	/**
+	 * Modifica il nome di un pacchetto
+	 * @param pacchetto Il pacchetto da modificare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
+	
+	/**
+	 * Modifica la città di partenza del pacchetto
+	 * @param pacchetto Il pacchetto da modificare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 */
+	void modificaCittaPartenzaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException, CittaInesistenteException;
+	
+	/**
+	 * Modifica il numero di partecipanti al viaggio
+	 * @param pacchetto Il pacchetto da modificare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	void modificaNumeroPartecipanti (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
+	
+	/**
 	 * Permette il salvataggiuo di un pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database

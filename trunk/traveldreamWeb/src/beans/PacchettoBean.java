@@ -37,7 +37,6 @@ public class PacchettoBean {
 	private PacchettoDTO pacchetto;
 	private DestinazioneDTO destinazione;
 	private List<PacchettoDTO> elenco;
-	private boolean editable;
 	
 	@PostConstruct
 	public void setUp () {
@@ -68,14 +67,6 @@ public class PacchettoBean {
 
 	public void setElenco(List<PacchettoDTO> elenco) {
 		this.elenco = elenco;
-	}
-
-	public boolean isEditable() {
-		return editable;
-	}
-
-	public void setEditable(boolean editable) {
-		this.editable = editable;
 	}
 	
 	/*
@@ -157,29 +148,35 @@ public class PacchettoBean {
 	}
 	
 	/**
-	 * Permette la modifica di un pacchetto
+	 * Permette la modifica del nome del pacchetto
 	 */
-	public void abilitaModifica () {
-		this.setEditable(true);
-	}
-	
-	/**
-	 * Disabilita la modifica di un pacchetto
-	 */
-	public void disabilitaModifica () {
-		this.setEditable(false);
-	}
-	
-	/**
-	 * Permette il salvataggio delle modifiche fatte nel pacchetto
-	 */
-	public void salvaPacchetto () {
+	public void modificaNomePacchetto () {
 		try {
-			pacchettoBean.salvaPacchetto(this.getPacchetto());
-			this.disabilitaModifica();
-			JsfUtil.infoMessage("Pacchetto modificato correttamente!");
+			pacchettoBean.modificaNomePacchetto(getPacchetto());
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+	}
+	
+	/**
+	 * Permette la modifica della città di partenza
+	 */
+	public void modificaCittaPartenza () {
+		try {
+			pacchettoBean.modificaCittaPartenzaPacchetto(getPacchetto());
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
+		}
+	}
+	
+	/**
+	 * Permette la modifica del numero di partecipanti
+	 */
+	public void modificaNumeroPartecipanti () {
+		try {
+			pacchettoBean.modificaNumeroPartecipanti(getPacchetto());
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
