@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Nuova escursione</ui:define>
+
+<ui:define name="content">
+
+<div class="bloccoDett">
+
+	<h:form>
+		<p><h:outputText for="nome" styleClass="name-input" value="Nome escursione: " />
+		<h:inputText id="nome" styleClass="text-input" value="#{escursione.escursione.nome}" />
+		<h:message for="nome"/><br /></p>
+		
+		<p><h:outputText for="citta" styleClass="name-input" value="Città: " />
+		<h:selectOneMenu id="citta" styleClass="menu-input" value="#{escursione.escursione.citta.nome}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>
+		<h:message for="citta"/><br /></p>
+		
+		<p><h:outputText for="data" styleClass="name-input" value="Data: " />
+		<p:calendar id="data" value="#{escursione.escursione.data}" locale="it" />
+		<h:message for="data"/><br /></p>
+		
+		<p><h:outputText for="ora" styleClass="name-input" value="Ora: " />
+		<h:inputText id="ora" styleClass="text-input" value="#{escursione.escursione.ora}">
+			<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:inputText>
+		<h:message for="ora"/><br /></p>
+		
+		<p><h:outputText for="durata" styleClass="name-input" value="Durata: " />
+		<h:inputText id="durata" styleClass="text-input" value="#{escursione.escursione.durata}" />
+		<h:message for="durata"/><br /></p>
+		
+		<p><h:outputText for="" styleClass="name-input" value="Categoria: " />
+		<h:selectOneMenu styleClass="menu-input" value="#{escursione.escursione.categoria}">
+			<f:selectItems value="#{escursione.getCategorie()}" var="cat" itemValue="#{cat}" itemLabel="#{cat.label}" />
+		</h:selectOneMenu><br /></p>
+		
+		<p><h:outputText for="prezzo" styleClass="name-input" value="Prezzo: " />
+		<h:inputText id="prezzo" styleClass="text-input" value="#{escursione.escursione.prezzo}" />
+		<h:message for="prezzo"/><br /></p>
+		
+		<h:commandButton action="#{escursione.creaEscursione()}" value="Salva" />
+	</h:form>
+	
+</div>
+
+</ui:define>
+
+</ui:composition>
+</html>

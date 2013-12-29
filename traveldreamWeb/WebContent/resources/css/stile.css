@@ -56,8 +56,32 @@ a:link, a:visited{
 a:hover { 
 	color: #003333;
 	}
-form{
-	text-align: center;
+.menu-input{
+	height:30px;
+	width:500px;
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	border: 1px solid red;
+	margin: 0 auto 20px -230px;
+	left:50%;
+}
+.text-input{
+	height:30px;
+	width:500px;
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	border: 1px solid red;
+	margin: 0 auto 20px 20px;
+}
+.name-input{
+	height:30px;
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	border: 1px solid red;
+	margin-bottom:20px;
 }
 select{
 	text-align: center;
@@ -73,6 +97,7 @@ select{
 	padding: 0; 
 	position: relative;
 	background-color: white;
+	border:1px solid #003333;
 	}
 
 /* template*/	
