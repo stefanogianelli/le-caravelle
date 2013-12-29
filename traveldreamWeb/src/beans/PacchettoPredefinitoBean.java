@@ -111,6 +111,20 @@ public class PacchettoPredefinitoBean {
 	}
 	
 	/**
+	 * Permette di eliminare un pacchetto
+	 * @return L'indirizzo della pagine con l'elenco dei pacchetti
+	 */
+	public String eliminaPacchetto () {
+		try {
+			pacchettoBean.eliminaPacchetto(getPacchetto());
+			return "elencoPacchettiPredefiniti?faces-redirect=true";
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+		return null;
+	}
+	
+	/**
 	 * Permette la modifica del nome del pacchetto
 	 */
 	public void modificaNomePacchetto () {

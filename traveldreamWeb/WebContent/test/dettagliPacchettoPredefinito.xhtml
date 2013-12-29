@@ -15,7 +15,7 @@
 	</f:metadata>
 	<h1>Pacchetto Predefinito</h1>
 	<h:link value="indietro" outcome="elencoPacchettiPredefiniti" />
-	<h:messages /><br /><br />
+	<h:messages /><br />
 	
 	<h:form>
 		<h:panelGroup>
@@ -74,7 +74,8 @@
 			<h:commandButton value="salva durata" action="#{pacchettoPredefinito.salvaDurata(durataEntry.value)}" />
 			<h:message for="durata" /><br /><br />
 			
-			<h:outputText value="#{pacchettoPredefinito.pacchetto.hotel.nome}" />
+			<h:outputText value="#{pacchettoPredefinito.pacchetto.hotel.nome}" /><br /><br />
+			<h:commandButton value="elimina pacchetto" action="#{pacchettoPredefinito.eliminaPacchetto()}" />
 		</h:panelGroup>
 	</h:form>
 </body> 
