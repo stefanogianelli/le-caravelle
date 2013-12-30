@@ -108,8 +108,8 @@ public class HotelBean {
 	 */
 	public void modificaHotel (HotelDTO hotel) {
 		try {
-			hotelBean.modificaDatiHotel(hotel);
 			hotel.setEditable(false);
+			hotelBean.modificaDatiHotel(hotel);			
 			JsfUtil.infoMessage("Hotel modificato correttamente!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");

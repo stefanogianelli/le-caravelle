@@ -288,8 +288,8 @@ public class PacchettoBean {
 	 * Permette l'acquisto di un pacchetto
 	 */
 	public void acquistaPacchetto () {		
-		int numeroDestinazioni = this.getPacchetto().getDestinazioni().size() + 1;
-		int numeroCollegamenti = this.getPacchetto().getCollegamenti().size() + 1;
+		int numeroDestinazioni = this.getPacchetto().getDestinazioni().size();
+		int numeroCollegamenti = this.getPacchetto().getCollegamenti().size();
 		
 		try {	
 			//controllo che il pacchetto sia completo

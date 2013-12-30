@@ -10,7 +10,7 @@ import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
 import dtos.EscursioneDTO;
 import eccezioni.DestinazioneInesistenteException;
-import eccezioni.EscursioneEsistenteException;
+import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.NumeroPartecipantiException;
 import ejbs.GestoreDestinazione;
@@ -70,7 +70,7 @@ public class DestinazioneBean {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {
 			JsfUtil.errorMessage("Destinazione inesistente!");
-		} catch (EscursioneEsistenteException e) {
+		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("Escursione già inserita!");
 		} catch (NumeroPartecipantiException e) {
 			JsfUtil.errorMessage("Il numero di partecipanti all'escursione deve essere minore o uguale al numero di partecipanti al viaggio!");

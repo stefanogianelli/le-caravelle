@@ -18,6 +18,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import dtos.PersonaDTO;
 import dtos.UtenteDTO;
+import eccezioni.EntitaEsistenteException;
 import entities.Gruppi;
 import entities.Persone;
 import entities.Utenti;
@@ -46,7 +47,11 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	}
 
 	@Override
-	public void registrazioneUtente(String email) throws MessagingException {
+	public void registrazioneUtente(String email) throws MessagingException, EntitaEsistenteException {
+		//verifico che l'email non sia già stata utilizzata
+		if(em.find(Utenti.class, email) != null)
+			throw new EntitaEsistenteException();
+			
 		List<Gruppi> gruppi = new ArrayList<Gruppi>();
 		gruppi.add(Gruppi.UTENTE);
 		

@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
-import javax.persistence.EntityExistsException;
 
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 
 @Local
@@ -39,9 +39,9 @@ public interface GestoreEscursione {
 	 * Crea una nuova escursione nel database
 	 * @param escursione L'oggetto da salvare
 	 * @throws CittaInesistenteException Quando non viene trovata la città nel database
-	 * @throws EntityExistsException Quando l'escursione è già esistente nel database
+	 * @throws EntitaEsistenteException Quando l'escursione è già esistente nel database
 	 */
-	void creaEscursione (EscursioneDTO escursione) throws CittaInesistenteException, EntityExistsException;
+	void creaEscursione (EscursioneDTO escursione) throws CittaInesistenteException, EntitaEsistenteException;
 	
 	/**
 	 * Permette di modificare i dati di una escursione
