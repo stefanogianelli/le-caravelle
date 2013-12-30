@@ -78,9 +78,9 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`hotel` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `stelle` INT NOT NULL,
-  `indirizzo` VARCHAR(45) NOT NULL,
+  `indirizzo` VARCHAR(255) NOT NULL,
   `telefono` VARCHAR(45) NOT NULL,
-  `website` VARCHAR(45) NULL,
+  `website` VARCHAR(255) NULL,
   `email` VARCHAR(45) NOT NULL,
   `prezzo` DOUBLE NOT NULL,
   `citta` INT NOT NULL,
@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `traveldreamdb`.`pacchetti_predefiniti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti_predefiniti` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL UNIQUE,
+  `nome` VARCHAR(255) NOT NULL UNIQUE,
   `prezzo` DOUBLE NOT NULL,
   `idHotel` INT NOT NULL,
   PRIMARY KEY (`id`),
