@@ -11,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
 import dtos.CollegamentoDTO;
@@ -20,10 +19,8 @@ import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import dtos.PacchettoPredefinitoDTO;
 import dtos.UtenteDTO;
-import eccezioni.AcquistoException;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
-import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
@@ -116,8 +113,8 @@ public class PacchettoBean {
 	 * Ricerca tutti i pacchetti personalizzati posseduti dall'utente
 	 * @param email L'indirizzo email dell'utente
 	 */
-	public void cercaPacchetto (String email) {
-		this.cercaPacchetto(email, TipoPacchetto.PERSONALIZZATO);
+	public void cercaPacchetti (String email) {
+		this.cercaPacchetti(email, TipoPacchetto.PERSONALIZZATO);
 	}	
 	
 	/**
@@ -125,7 +122,7 @@ public class PacchettoBean {
 	 * @param email L'indirizzo email dell'utente
 	 * @param tipo La tipologia di pacchetto
 	 */
-	public void cercaPacchetto (String email, TipoPacchetto tipo) {
+	public void cercaPacchetti (String email, TipoPacchetto tipo) {
 		this.getElenco().clear();
 		this.getElenco().addAll(pacchettoBean.elencoPacchetti(email, tipo));
 		if (this.getElenco().isEmpty())
@@ -139,7 +136,9 @@ public class PacchettoBean {
 	 */
 	public String creaPacchetto (HotelDTO hotel) {
 		try {	
+			//impedisco all'utente di selezionare un hotel nella stessa città di partenza
 			if (!hotel.getCitta().getNome().equalsIgnoreCase(getPacchetto().getCitta().getNome())) {
+				//controllo che la data di arrivo sia minore della data di partenza dalla destinazione
 				if (getDestinazione().getDataArrivo().before(getDestinazione().getDataPartenza())) {
 					/*
 					 * Utente usato per test
@@ -155,17 +154,17 @@ public class PacchettoBean {
 					int id = pacchettoBean.creaPacchettoPersonalizzato(this.getPacchetto());
 					return "dettagliPacchetto?idPacchetto=" + id + "&faces-redirect=true";
 				} else {
-					JsfUtil.errorMessage("La data di partenza deve essere precedente alla data di partenza!");
+					JsfUtil.errorMessage("La data di arrivo deve essere precedente alla data di partenza!");
 				}
 			} else {
 				JsfUtil.errorMessage("La città di partenza e la destinazione non possono essere uguali!");
 			}
-		} catch (EntityExistsException e) {
-			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel inesistente!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Il nome del pacchetto è già esistente nel database!");
 		}
 		return null;
 	}
@@ -178,15 +177,29 @@ public class PacchettoBean {
 			pacchettoBean.modificaNomePacchetto(getPacchetto());
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Nome già utilizzato!");
 		}
 	}
 	
 	/**
 	 * Permette la modifica della città di partenza
 	 */
-	public void modificaCittaPartenza () {
+	public void modificaCittaPartenza (String nomeNuovaCitta) {
 		try {
-			pacchettoBean.modificaCittaPartenzaPacchetto(getPacchetto());
+			boolean check = true;
+			//controllo che la nuova città non sia già stata inserita in una delle destinazioni
+			for (DestinazioneDTO d : this.getPacchetto().getDestinazioni()) {
+				if (d.getCitta().getNome().equalsIgnoreCase(nomeNuovaCitta)) {
+					check = false;
+					break;
+				}
+			}
+			if (check) {
+				this.getPacchetto().getCitta().setNome(nomeNuovaCitta);
+				pacchettoBean.modificaCittaPartenzaPacchetto(getPacchetto());
+			} else
+				JsfUtil.errorMessage("Città inserita in una destinazione!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (CittaInesistenteException e) {
@@ -258,7 +271,7 @@ public class PacchettoBean {
 			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
 			pacchettoBean.salvaPacchettoPredefinito(this.getPacchetto());
 			JsfUtil.infoMessage("Pacchetto salvato!");
-		} catch (EntityExistsException e) {
+		} catch (InsertException e) {
 			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
@@ -274,13 +287,18 @@ public class PacchettoBean {
 	/**
 	 * Permette l'acquisto di un pacchetto
 	 */
-	public void acquistaPacchetto () {
-		try {
-			pacchettoBean.acquistaPacchetto(this.getPacchetto());
+	public void acquistaPacchetto () {		
+		int numeroDestinazioni = this.getPacchetto().getDestinazioni().size() + 1;
+		int numeroCollegamenti = this.getPacchetto().getCollegamenti().size() + 1;
+		
+		try {	
+			//controllo che il pacchetto sia completo
+			if (numeroCollegamenti == numeroDestinazioni + 1)
+				pacchettoBean.acquistaPacchetto(this.getPacchetto());
+			else
+				JsfUtil.errorMessage("Pacchetto incompleto!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
-		} catch (AcquistoException e) {
-			JsfUtil.errorMessage("Pacchetto incompleto!");
 		}
 	}
 	
@@ -343,7 +361,7 @@ public class PacchettoBean {
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (InsertException e) {
-			JsfUtil.errorMessage("Date non valide");
+			JsfUtil.errorMessage(e.getMessage());
 		}
 		return null;
 	}
@@ -354,14 +372,16 @@ public class PacchettoBean {
 	 */
 	public void eliminaDestinazione (DestinazioneDTO destinazione) {
 		try {
-			pacchettoBean.eliminaDestinazione(this.getPacchetto(), destinazione);
-			JsfUtil.infoMessage("Destinazione rimossa!");
+			//controllo che rimanga almeno una destinazione nel pacchetto
+			if (this.getPacchetto().getDestinazioni().size() > 1) {	
+				pacchettoBean.eliminaDestinazione(this.getPacchetto(), destinazione);
+				JsfUtil.infoMessage("Destinazione rimossa!");
+			} else
+				JsfUtil.errorMessage("Impossibile eliminare la destinazione!");
 		} catch (DestinazioneInesistenteException e) {
 			JsfUtil.errorMessage("Destinazione inesistente!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
-		} catch (DeleteException e) {
-			JsfUtil.errorMessage("Impossibile eliminare la destinazione!");
 		}
 	}
 	

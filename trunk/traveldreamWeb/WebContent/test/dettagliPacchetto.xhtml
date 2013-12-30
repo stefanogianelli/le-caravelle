@@ -16,7 +16,7 @@
 	
 	<h1>Pacchetto</h1>
 	<h:link value="indietro" outcome="elencoPacchettiTest" />
-	<h:messages />
+	<h:messages /><br />
 	<h:form>
 		<h:panelGroup>
 			Nome:&nbsp;
@@ -28,8 +28,8 @@
 			
 			Partenza:&nbsp;
 			<p:inplace id="partenza" label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true" rendered="#{pacchetto.isTipoPersonalizzato()}">  
-				<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza()}" update="prezzo" />
-                <h:selectOneMenu value="#{pacchetto.pacchetto.citta.nome}">
+				<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" update="prezzo" />
+                <h:selectOneMenu binding="#{nuovaCittaPartenza}">
 					<f:selectItems value="#{citta.nomiCitta}" />
 				</h:selectOneMenu>	  
             </p:inplace>
@@ -44,14 +44,14 @@
 			Partecipanti:&nbsp;
 			<p:inplace id="partecipanti" editor="true" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}">  
 				<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" update="prezzo,:destinazioni" />
-            	<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true"/>  
+            	<p:inputText id="partText" value="#{pacchetto.pacchetto.numPartecipanti}" required="true"/>  
             </p:inplace>
             <h:outputText value="#{pacchetto.pacchetto.numPartecipanti}" rendered="#{(not pacchetto.isTipoPersonalizzato()) and (not pacchetto.isTipoPredefinito())}" /><br />
 			
 			Prezzo:&nbsp;
 			<h:outputText id="prezzo" value="#{pacchetto.pacchetto.prezzo}" /><br />
 			
-			<h:commandButton action="#{pacchetto.eliminaPacchetto()}" value="elimina" rendered="#{pacchetto.isTipoPersonalizzato() and pacchetto.isTipoPredefinito()}" />
+			<h:commandButton action="#{pacchetto.eliminaPacchetto()}" value="elimina" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
 		</h:panelGroup>
 	</h:form>
 		
