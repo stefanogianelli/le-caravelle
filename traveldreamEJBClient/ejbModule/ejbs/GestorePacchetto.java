@@ -3,15 +3,12 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
-import javax.persistence.EntityExistsException;
 
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
-import eccezioni.AcquistoException;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
-import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
@@ -42,17 +39,18 @@ public interface GestorePacchetto {
 	 * @param pacchetto I dati del pacchetto
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
-	 * @throws EntityExistsException Quando il pacchetto è già esistente nel database
+	 * @throws InsertException Quando il nome del pacchetto esiste già nel database
 	 * @return L'identificativo del pacchetto creato
 	 */
-	int creaPacchettoPersonalizzato (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException;
+	int creaPacchettoPersonalizzato (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, InsertException;
 	
 	/**
 	 * Modifica il nome di un pacchetto
 	 * @param pacchetto Il pacchetto da modificare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws InsertException Quando il nome del pacchetto esiste già nel database
 	 */
-	void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
+	void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Modifica la città di partenza del pacchetto
@@ -75,17 +73,16 @@ public interface GestorePacchetto {
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws EntityExistsException Quando il pacchetto è già esistente nel database
+	 * @throws InsertException Quando il nome del pacchetto esiste già nel database
 	 */
-	void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, EntityExistsException;
+	void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Permette l'acquisto di un pacchetto
 	 * @param pacchetto Il pacchetto da acquistare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws AcquistoException Quando non è possibile acquistare il pacchetto (perchè incompleto)
 	 */
-	void acquistaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException, AcquistoException;
+	void acquistaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
 	
 	/**
 	 * Permette la condivisione di un pacchetto
@@ -110,7 +107,10 @@ public interface GestorePacchetto {
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @trhows InsertException Quando le date della destinazione non sono valide
+	 * @throws InsertException Può capitare per diversi motivi:
+	 * - la data di arrivo è maggiore della data di partenza
+	 * - la città scelta come destinazione è uguale alla città di partenza
+	 * - le date scelte non sono valide (si ricorda che è possibile aggiungere una nuova destinazione in "testa" o in "coda" alla prima o all'ultima destinazione inserita nel pacchetto)
 	 */
 	void aggiuntaDestinazione (int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException;
 	
@@ -130,9 +130,8 @@ public interface GestorePacchetto {
 	 * @param destinazione La destinazione da eliminare
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws DeleteException Quando non è possibile cancellare la destinazione (per esempio, quando ne è rimasta solo una nel pacchetto)
 	 */
-	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException, DeleteException;
+	void eliminaDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di un collegamento nel pacchetto

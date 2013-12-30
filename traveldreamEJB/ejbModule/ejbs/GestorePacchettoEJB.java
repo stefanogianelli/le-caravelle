@@ -14,7 +14,6 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -23,10 +22,8 @@ import javax.persistence.Query;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
-import eccezioni.AcquistoException;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
-import eccezioni.DeleteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
@@ -93,13 +90,20 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
-	public int creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EntityExistsException {
+	public int creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, InsertException {
 		Pacchetti entity = new Pacchetti();		
 
-		if (!pacchetto.getNome().isEmpty())
-			entity.setNome(pacchetto.getNome());
-		else
+		if (pacchetto.getNome().isEmpty())
 			entity.setNome("Pacchetto" + Math.random());
+		else {
+			//controllo che il nome del pacchetto non esista nel database
+			Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
+			q.setParameter("nome", pacchetto.getNome());
+			if (!q.getResultList().isEmpty())
+				throw new InsertException();
+			else
+				entity.setNome(pacchetto.getNome());
+		}		
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());		
 		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
@@ -116,10 +120,16 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
+	public void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException, InsertException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		entity.setNome(pacchetto.getNome());
+		//controllo che il nome del pacchetto non esista nel database
+		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
+		q.setParameter("nome", pacchetto.getNome());
+		if (!q.getResultList().isEmpty())
+			throw new InsertException();
+		else
+			entity.setNome(pacchetto.getNome());
 		
 		em.merge(entity);
 	}
@@ -129,12 +139,11 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		//se viene cambiata la città di partenza rimuovo il primo e ultimo collegamento
-		if (!entity.getCitta().getNome().equals(pacchetto.getCitta().getNome()) && !entity.getDestinazioni().isEmpty()) {
+		if (!entity.getCitta().getNome().equals(pacchetto.getCitta().getNome()) && !entity.getDestinazioni().isEmpty())
 			this.rimuoviCollegamenti(entity, entity.getDestinazioni().get(0).getDataArrivo(), entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza());
-			entity.setPrezzo(this.calcolaPrezzo(entity));
-		}
 		
 		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
+		
 		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
 			entity.setPrezzo(this.calcolaPrezzo(entity));
 		
@@ -155,42 +164,44 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		}
 		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
 			entity.setPrezzo(this.calcolaPrezzo(entity));
+		else
+			entity.setPrezzo(this.calcolaPrezzoPredefinito(entity));
 		
 		em.merge(entity);		
 	}
 	
 	@Override
-	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, EntityExistsException {
+	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException {
 		Pacchetti entity = new Pacchetti();
 		
-		entity.setNome(pacchetto.getNome());
-		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
-		entity.setPrezzo(pacchetto.getPrezzo());
-		entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
-		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			entity.addDestinazione(this.destinazione.creaDestinazione(d));
+		//controllo che il nome del pacchetto non esista nel database
+		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
+		q.setParameter("nome", pacchetto.getNome());
+		if(q.getResultList().isEmpty()) {		
+			entity.setNome(pacchetto.getNome());
+			entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+			entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
+			for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
+				entity.addDestinazione(this.destinazione.creaDestinazione(d));
+			}
+			entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
+			entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+			entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+			entity.setPrezzo(this.calcolaPrezzoPredefinito(entity));
+			
+			em.persist(entity);
 		}
-		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
-		entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
-		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
-		
-		em.persist(entity);
+		else
+			throw new InsertException();
 	}
 
 	@Override
-	public void acquistaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException, AcquistoException {
+	public void acquistaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
-		
-		int numeroDestinazioni = entity.getDestinazioni().size() + 1;
-		int numeroCollegamenti = entity.getCollegamenti().size() + 1;
-		
-		//controllo che il pacchetto sia completo
-		if (numeroCollegamenti == numeroDestinazioni + 1) {
-			entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
+
+		entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
 			
-			em.merge(entity);
-		} else
-			throw new AcquistoException();
+		em.merge(entity);
 	}
 
 	@Override
@@ -227,14 +238,22 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		
 		//controllo le date della destinazione
 		if (destinazione.getDataPartenza().compareTo(entity.getDestinazioni().get(0).getDataArrivo()) == 0 || destinazione.getDataArrivo().compareTo(entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza()) == 0) {
-			entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
-			//aggiorno il prezzo del pacchetto
-			entity.setPrezzo(entity.getPrezzo() + destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti()*(int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24)));
-			this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
-			
-			em.merge(entity);
+			//impedisco all'utente di selezionare un hotel nella stessa città di partenza
+			if (!destinazione.getCitta().getNome().equalsIgnoreCase(entity.getCitta().getNome())) {
+				//controllo che la data di arrivo sia minore della data di partenza dalla destinazione
+				if (destinazione.getDataArrivo().before(destinazione.getDataPartenza())) {			
+					entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
+					//aggiorno il prezzo del pacchetto
+					entity.setPrezzo(entity.getPrezzo() + destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti()*(int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24)));
+					this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
+					
+					em.merge(entity);
+				} else
+					throw new InsertException("La data di arrivo deve essere precedente alla data di partenza!");
+			} else
+				throw new InsertException("La città di partenza e la destinazione non possono essere uguali!");
 		} else
-			throw new InsertException();
+			throw new InsertException("Date non valide");
 	}
 	
 	@Override
@@ -249,17 +268,16 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException, DeleteException {
-		Pacchetti entity = this.convertiInEntita(pacchetto);
+	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException {
+		Pacchetti entity = this.convertiInEntita(pacchetto);	
 		
-		if (entity.getDestinazioni().size() > 1) {			
-			//aggiorno il prezzo del pacchetto
-			entity.setPrezzo(entity.getPrezzo() - destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti()*(int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24)));
-			entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));	
-			this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());			
-			em.merge(entity);
-		} else
-			throw new DeleteException();
+		//aggiorno il prezzo del pacchetto
+		entity.setPrezzo(entity.getPrezzo() - destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti()*(int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24)));
+		entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));	
+		//rimuovo gli eventuali collegamenti collegati
+		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());		
+		
+		em.merge(entity);
 	}
 
 	@Override
@@ -305,6 +323,19 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		totale *= pacchetto.getNumPartecipanti();
 		//aggiungo il costo delle escursioni
 		totale += esc;
+		
+		return totale;
+	}
+	
+	/**
+	 * Calcola il costo di un pacchetto predefinito
+	 * @param pacchetto Il pacchetto del quale si vuole calcolare il totale
+	 * @return Il costo del pacchetto
+	 */
+	private double calcolaPrezzoPredefinito (Pacchetti pacchetto) {
+		double totale = 0.0;
+		
+		totale = pacchetto.getPacchettoPredefinito().getPrezzo()*pacchetto.getNumPartecipanti()*(int)( (pacchetto.getDestinazioni().get(0).getDataPartenza().getTime() - pacchetto.getDestinazioni().get(0).getDataArrivo().getTime()) / (1000 * 60 * 60 * 24));
 		
 		return totale;
 	}
