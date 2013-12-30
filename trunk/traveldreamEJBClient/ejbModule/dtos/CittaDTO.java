@@ -46,4 +46,12 @@ public class CittaDTO implements Serializable {
 		this.regione = regione;
 	}
 	
+	@Override
+	public boolean equals (Object other) {		
+		if (this.getNome().equals(((CittaDTO) other).getNome()))
+			return true;
+		else
+			return false;
+	}
+	
 }

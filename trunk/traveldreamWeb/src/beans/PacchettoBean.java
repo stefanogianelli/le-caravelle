@@ -293,8 +293,10 @@ public class PacchettoBean {
 		
 		try {	
 			//controllo che il pacchetto sia completo
-			if (numeroCollegamenti == numeroDestinazioni + 1)
+			if (numeroCollegamenti == numeroDestinazioni + 1) {
 				pacchettoBean.acquistaPacchetto(this.getPacchetto());
+				JsfUtil.infoMessage("Pacchetto acquistato!");
+			}
 			else
 				JsfUtil.errorMessage("Pacchetto incompleto!");
 		} catch (PacchettoInesistenteException e) {
