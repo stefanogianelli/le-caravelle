@@ -3,6 +3,7 @@ package ejbs;
 import interfaces.GestoreCittaLocal;
 import interfaces.GestoreCollegamentoLocal;
 import interfaces.GestoreDestinazioneLocal;
+import interfaces.GestoreEscursioneLocal;
 import interfaces.GestoreHotelLocal;
 import interfaces.GestorePacchettoLocal;
 import interfaces.GestorePacchettoPredefinitoLocal;
@@ -19,12 +20,14 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dtos.AttivitaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
+import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
@@ -61,6 +64,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	
 	@EJB
 	private GestorePacchettoPredefinitoLocal predefinito;
+	
+	@EJB
+	private GestoreEscursioneLocal escursione;
 	
 	@Override
 	public PacchettoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException {
@@ -208,7 +214,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void condividiPacchetto(PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException {
+	public void condividiPacchetto(PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException, EscursioneInesistenteException {
 		Amici amico = new Amici();
 		//verifico se l'indirizzo email è già esistente
 		Query q = em.createNamedQuery("Amici.getAmico", Amici.class);
@@ -223,12 +229,18 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		
 		Pacchetti entity = new Pacchetti();
 		
-		entity.setNome(pacchetto.getNome() + " (Condiviso con " + email + ")");
+		entity.setNome(pacchetto.getNome());
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
 			entity.addDestinazione(this.destinazione.creaDestinazione(d));
+			for (AttivitaDTO a : d.getAttivita()) {
+				Attivita attivita = new Attivita();
+				attivita.setEscursione(this.escursione.convertiInEntita(a.getEscursione()));
+				attivita.setNumPartecipanti(a.getNumeroPartecipanti());
+				entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).addAttivita(attivita);
+			}
 		}
 		for (CollegamentoDTO c : pacchetto.getCollegamenti()) {
 			entity.addCollegamento(this.collegamento.convertiInEntita(c));
