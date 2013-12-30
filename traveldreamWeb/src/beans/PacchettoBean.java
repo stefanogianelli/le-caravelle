@@ -328,7 +328,6 @@ public class PacchettoBean {
 				JsfUtil.errorMessage("Collegamento inesistente!");
 			}
 		} else
-			System.out.println("Pacchetto Incompleto");
 			JsfUtil.errorMessage("Pacchetto Incompleto! Impossibile condividere.");
 	}
 	

@@ -160,7 +160,7 @@
 		<h:form>
 			<h:commandButton action="#{pacchetto.acquistaPacchetto()}" value="acquista" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
 			
-			<p:commandButton id="showCondividi" type="button" value="Condividi" onclick="PF('cond').show()" />  
+			<p:commandButton id="showCondividi" type="button" value="Condividi" onclick="PF('cond').show()" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />  
           
 			<p:dialog header="Condividi" widgetVar="cond" resizable="false">
 				<h:form>
