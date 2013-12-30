@@ -116,17 +116,42 @@ public class PacchettoPredefinitoBean {
 	 * @param hotel L'hotel da aggiungere al pacchetto
 	 */
 	public void creaPacchetto (HotelDTO hotel) {
-		try {
-			this.getPacchetto().setHotel(hotel);
-			pacchettoBean.creaPacchetto(getPacchetto());
-			JsfUtil.infoMessage("Pacchetto creato!");
-		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel inesistente!");
-		} catch (CittaInesistenteException w) {
-			JsfUtil.errorMessage("Città inesistente!");
-		} catch (InsertException e) {
-			JsfUtil.errorMessage("Nome già usato!");
-		}
+		boolean check = true;
+		
+		//verifico che sia stata inserita almeno una città di partenza
+		if (!this.getPacchetto().getCittaPartenza().isEmpty()) {	
+			//verifico che sia stata inserita almeno una data di partenza
+			if (!this.getPacchetto().getDatePartenza().isEmpty()) {
+				//verifico che sia stata inserita almeno una durata
+				if (!this.getPacchetto().getDurate().isEmpty()) {				
+					//verifico che l'hotel inserito non sia nella stessa città di una delle città di partenza
+					for (CittaDTO c : this.getPacchetto().getCittaPartenza()) {
+						if (c.equals(hotel.getCitta())) {
+							check = false;
+							break;
+						}
+					}
+					
+					if (check) {								
+						try {
+							this.getPacchetto().setHotel(hotel);
+							pacchettoBean.creaPacchetto(getPacchetto());
+							JsfUtil.infoMessage("Pacchetto creato!");
+						} catch (HotelInesistenteException e) {
+							JsfUtil.errorMessage("Hotel inesistente!");
+						} catch (CittaInesistenteException w) {
+							JsfUtil.errorMessage("Città inesistente!");
+						} catch (InsertException e) {
+							JsfUtil.errorMessage("Nome già usato!");
+						}		
+					} else
+						JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza!");
+				} else
+					JsfUtil.errorMessage("Inserire almeno una durata!");
+			} else
+				JsfUtil.errorMessage("Inserire almeno una data di partenza!");
+		} else
+			JsfUtil.errorMessage("Inserire almeno una città di partenza!");
 	}
 	
 	/**
@@ -181,6 +206,8 @@ public class PacchettoPredefinitoBean {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel inesistente!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza!");
 		}
 		return null;
 	}
