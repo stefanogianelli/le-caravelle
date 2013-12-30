@@ -28,11 +28,11 @@
 		<h:message for="partenza"/><br />
 		
 		<h:outputText for="dataArrivo" value="Data Arrivo: " />
-		<p:calendar value="#{pacchetto.destinazione.dataArrivo}" id="dataArrivo" locale="it" />
+		<p:calendar value="#{pacchetto.destinazione.dataArrivo}" id="dataArrivo" locale="it" required="true" />
 		<h:message for="dataArrivo"/><br />
 		
 		<h:outputText for="dataPartenza" value="Data Partenza: " />
-		<p:calendar value="#{pacchetto.destinazione.dataPartenza}" id="dataPartenza" locale="it" />
+		<p:calendar value="#{pacchetto.destinazione.dataPartenza}" id="dataPartenza" locale="it" required="true" />
 		<h:message for="dataPartenza"/><br />
 		
 		<h:outputText for="dest" value="Destinazione: " />
@@ -58,7 +58,7 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Stelle</f:facet>
-				#{h.stelle}
+				<p:rating value="#{h.stelle}" readonly="true" stars="5" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">eMail</f:facet>
