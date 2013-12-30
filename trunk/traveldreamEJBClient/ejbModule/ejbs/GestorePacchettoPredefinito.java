@@ -152,8 +152,9 @@ public interface GestorePacchettoPredefinito {
 	 * @param hotel L'hotel da inserire
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws InsertException Quando l'hotel che si vuole aggiungere si trova nella stessa città di una delle città di partenza
 	 */
-	void modificaHotel (int idPacchetto, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException;
+	void modificaHotel (int idPacchetto, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException, InsertException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto

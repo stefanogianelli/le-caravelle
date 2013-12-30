@@ -190,6 +190,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	public void aggiuntaCollegamento(int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException, InsertException {
 		PacchettiPredefiniti entity = this.convertiInEntita(idPacchetto);
 		
+		//verifico che il collegamento non sia già stato inserito
 		for (Collegamenti c : entity.getCollegamenti()) {
 			if (c.getCodice() == collegamento.getCodice())
 				throw new InsertException();
@@ -264,8 +265,14 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 	
 	@Override
-	public void modificaHotel (int idPacchetto, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException {
+	public void modificaHotel (int idPacchetto, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException, InsertException {
 		PacchettiPredefiniti entity = this.convertiInEntita(idPacchetto);
+		
+		//verifico che l'hotel aggiunto non sia in una delle città di partenza inserite nel pacchetto
+		for (Citta c : entity.getCittaPartenza()) {
+			if (c.getNome().equals(hotel.getCitta().getNome()))
+				throw new InsertException();
+		}
 		
 		entity.setHotel(this.hotel.convertiInEntita(hotel));
 		
