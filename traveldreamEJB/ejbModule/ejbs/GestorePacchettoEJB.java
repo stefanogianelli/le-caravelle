@@ -229,7 +229,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		
 		Pacchetti entity = new Pacchetti();
 		
-		entity.setNome(pacchetto.getNome());
+		entity.setNome(pacchetto.getNome() + " (Condiviso con " + nome + " " + cognome + ")");
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);
@@ -255,7 +255,18 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 
 	@Override
 	public void eliminaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException {
-		em.remove(this.convertiInEntita(pacchetto));		
+		Pacchetti entity = this.convertiInEntita(pacchetto);
+		if (pacchetto.getTipoPacchetto() == TipoPacchetto.CONDIVISO) {
+			//rimuovo tutte le condivisione del pacchetto
+			Query q = em.createNamedQuery("Amici.getPacchetti", Amici.class);
+			q.setParameter("id", pacchetto.getId());
+			@SuppressWarnings("unchecked")
+			List<Amici> amici = q.getResultList();
+			for (Amici a : amici) {
+				a.removePacchetto(entity);
+			}
+		}
+		em.remove(entity);		
 	}
 
 	@Override

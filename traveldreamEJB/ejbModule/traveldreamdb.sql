@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `traveldreamdb`.`pacchetti_predefiniti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti_predefiniti` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(255) NOT NULL UNIQUE,
+  `nome` VARCHAR(45) NOT NULL UNIQUE,
   `prezzo` DOUBLE NOT NULL,
   `idHotel` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -122,7 +122,7 @@ DROP TABLE IF EXISTS `traveldreamdb`.`pacchetti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(255) NOT NULL UNIQUE,
   `numPartecipanti` INT NOT NULL DEFAULT 1,
   `prezzo` DOUBLE NOT NULL,
   `tipoPacchetto` VARCHAR(45) NOT NULL,
