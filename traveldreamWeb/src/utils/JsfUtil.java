@@ -10,7 +10,7 @@ public class JsfUtil {
 	 * @param msg Il messsaggio d'errore
 	 */
 	public static void errorMessage (String msg) {
-		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
+		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore", msg);
 		FacesContext.getCurrentInstance().addMessage(null, messaggio);
 	}
 	
@@ -20,7 +20,7 @@ public class JsfUtil {
 	 * @param id L'identificativo del componente
 	 */
 	public static void errorMessage (String msg, String id) {
-		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
+		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Errore", msg);
 		FacesContext.getCurrentInstance().addMessage(id, messaggio);
 	}
 	
@@ -29,7 +29,7 @@ public class JsfUtil {
 	 * @param msg Il messaggio d'errore
 	 */
 	public static void infoMessage (String msg) {
-		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
+		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msg);
 		FacesContext.getCurrentInstance().addMessage(null, messaggio);
 	}
 	
@@ -39,7 +39,7 @@ public class JsfUtil {
 	 * @param id L'identificativo del componente
 	 */
 	public static void infoMessage (String msg, String id) {
-		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
+		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", msg);
 		FacesContext.getCurrentInstance().addMessage(id, messaggio);
 	}
 }

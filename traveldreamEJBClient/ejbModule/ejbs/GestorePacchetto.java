@@ -88,10 +88,13 @@ public interface GestorePacchetto {
 	 * Permette la condivisione di un pacchetto
 	 * @param pacchetto Il pacchetto da condividere
 	 * @param email L'indirizzo email dell'amico con cui condividere il paccheto
+	 * @param nome Il nome dell'amico
+	 * @param cognome Il cognome dell'amico
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 */
-	void condividiPacchetto (PacchettoDTO pacchetto, String email) throws CittaInesistenteException, HotelInesistenteException;
+	void condividiPacchetto (PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto

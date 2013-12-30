@@ -208,8 +208,18 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void condividiPacchetto(PacchettoDTO pacchetto, String email) throws CittaInesistenteException, HotelInesistenteException {
-		Amici amico = em.find(Amici.class, email);
+	public void condividiPacchetto(PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException {
+		Amici amico = new Amici();
+		//verifico se l'indirizzo email è già esistente
+		Query q = em.createNamedQuery("Amici.getAmico", Amici.class);
+		q.setParameter("email", email);
+		if (q.getResultList().isEmpty()) {
+			amico.setEmail(email);
+			amico.setNome(nome);
+			amico.setCognome(cognome);			
+		} else {
+			amico = (Amici) q.getResultList().get(0);
+		}
 		
 		Pacchetti entity = new Pacchetti();
 		
@@ -217,17 +227,18 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);
-		List<Destinazioni> destinazioni = new ArrayList<Destinazioni>();
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
-			destinazioni.add(this.destinazione.creaDestinazione(d));
+			entity.addDestinazione(this.destinazione.creaDestinazione(d));
 		}
-		entity.setDestinazioni(destinazioni);
+		for (CollegamentoDTO c : pacchetto.getCollegamenti()) {
+			entity.addCollegamento(this.collegamento.convertiInEntita(c));
+		}
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
 		amico.addPacchetto(entity);	
 		
-		em.persist(amico);
+		em.merge(amico);
 	}
 
 	@Override
