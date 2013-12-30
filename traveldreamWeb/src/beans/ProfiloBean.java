@@ -8,6 +8,7 @@ import javax.mail.MessagingException;
 
 import utils.JsfUtil;
 import dtos.UtenteDTO;
+import eccezioni.EntitaEsistenteException;
 import ejbs.GestoreProfilo;
 
 @ManagedBean(name="profilo")
@@ -48,6 +49,8 @@ public class ProfiloBean {
 			profiloBean.registrazioneUtente(profilo.getEmail());
 		} catch (MessagingException e) {
 			JsfUtil.errorMessage("Errore!");
+		} catch (EntitaEsistenteException e) {
+			JsfUtil.errorMessage("email già usata!");
 		}
 	}
 	

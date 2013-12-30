@@ -4,6 +4,7 @@ import javax.ejb.Local;
 import javax.mail.MessagingException;
 
 import dtos.UtenteDTO;
+import eccezioni.EntitaEsistenteException;
 
 @Local
 public interface GestoreProfilo {
@@ -18,8 +19,9 @@ public interface GestoreProfilo {
      * Permette la creazione di un profilo utente
      * @param datiUtente I dati dell'utente che si vuole registrare
      * @throws MessagingException 
+     * @throws EntitaEsistenteException Quando esiste un utente con la stessa email
      */
-	void registrazioneUtente (String email) throws MessagingException;
+	void registrazioneUtente (String email) throws MessagingException, EntitaEsistenteException;
 	
 	/**
 	 * Permette l'aggiunta dei dati personali di un utente

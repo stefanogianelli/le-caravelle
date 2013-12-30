@@ -4,7 +4,7 @@ import javax.ejb.Local;
 
 import dtos.AttivitaDTO;
 import eccezioni.DestinazioneInesistenteException;
-import eccezioni.EscursioneEsistenteException;
+import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.NumeroPartecipantiException;
 
@@ -18,10 +18,10 @@ public interface GestoreDestinazione {
 	 * @param numeroPartecipanti Il numero di partecipanti all'escursione.
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
-	 * @throws EscursioneEsistenteException Quando l'escursione è già stata inserita
+	 * @throws EntitaEsistenteException Quando l'escursione è già stata inserita
 	 * @throws NumeroPartecipantiException Quando il numero di partecipanti inserito non è valido
 	 */
-	void aggiuntaEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EscursioneEsistenteException, NumeroPartecipantiException;
+	void aggiuntaEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EntitaEsistenteException, NumeroPartecipantiException;
 	
 	/**
 	 * Permette la modifica del numero di partecipanti ad una escursione

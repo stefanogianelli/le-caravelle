@@ -10,13 +10,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 import entities.Escursioni;
 
@@ -71,7 +71,14 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	}
 
 	@Override
-	public void creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException, EntityExistsException {
+	public void creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException, EntitaEsistenteException {
+		//verifico che non esista già un'escursione con lo stesso nome nella stessa città
+		Query q = em.createNativeQuery("Escursioni.getEscursioneDaNome", Escursioni.class);
+		q.setParameter("nome", escursione.getNome());
+		q.setParameter("citta", escursione.getCitta().getNome());
+		if(!q.getResultList().isEmpty())
+			throw new EntitaEsistenteException();
+		
 		Escursioni entity = new Escursioni ();
 		
 		entity.setCategoria(escursione.getCategoria());

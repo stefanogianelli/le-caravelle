@@ -19,7 +19,7 @@ import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
-import eccezioni.EscursioneEsistenteException;
+import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.NumeroPartecipantiException;
@@ -72,12 +72,14 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	}
 	
 	@Override
-	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EscursioneEsistenteException, NumeroPartecipantiException {
+	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EntitaEsistenteException, NumeroPartecipantiException {
 		Destinazioni entity = this.convertiInEntita(idDestinazione);
 		
+		//Controllo che il numero di partecipanti all'escursione sia minore o uguale al numero di partecipanti al viaggio
 		if (numeroPartecipanti <= entity.getPacchetto().getNumPartecipanti()) {
 			Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
 			
+			//controllo che l'escursione non sia già stata aggiunta
 			Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
 			q.setParameter("destinazione", entity);
 			q.setParameter("escursione", escursioneEntity);
@@ -93,7 +95,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 				
 				em.merge(entity);		
 			} else
-				throw new EscursioneEsistenteException();
+				throw new EntitaEsistenteException();
 		} else
 			throw new NumeroPartecipantiException();
 	}
@@ -102,6 +104,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	public void modificaDatiEscursione(AttivitaDTO attivita) throws EscursioneInesistenteException, DestinazioneInesistenteException, NumeroPartecipantiException {
 		Attivita attivitaEntity = this.convertiInEntita(attivita);
 
+		//Controllo che il numero di partecipanti all'escursione sia minore o uguale al numero di partecipanti al viaggio
 		if (attivita.getNumeroPartecipanti() <= attivitaEntity.getDestinazione().getPacchetto().getNumPartecipanti()) {
 			//aggiorno il prezzo del pacchetto
 			if (attivita.getNumeroPartecipanti() > attivitaEntity.getNumPartecipanti())

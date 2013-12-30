@@ -7,11 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 import ejbs.GestoreEscursione;
 import enums.CategoriaEscursione;
@@ -83,7 +83,7 @@ public class EscursioneBean {
 		try {
 			escursioneBean.creaEscursione(this.getEscursione());
 			JsfUtil.infoMessage("Escursione creata con successo!");
-		} catch (EntityExistsException e) {
+		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("L'escursione è già presente nel database!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Regione sconosciuta!");
