@@ -99,6 +99,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			//controllo che il nome del pacchetto non esista nel database
 			Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 			q.setParameter("nome", pacchetto.getNome());
+			q.setParameter("utente", pacchetto.getUtente().getEmail());
 			if (!q.getResultList().isEmpty())
 				throw new InsertException();
 			else
@@ -126,6 +127,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		//controllo che il nome del pacchetto non esista nel database
 		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 		q.setParameter("nome", pacchetto.getNome());
+		q.setParameter("utente", pacchetto.getUtente().getEmail());
 		if (!q.getResultList().isEmpty())
 			throw new InsertException();
 		else
@@ -177,6 +179,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		//controllo che il nome del pacchetto non esista nel database
 		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 		q.setParameter("nome", pacchetto.getNome());
+		q.setParameter("utente", pacchetto.getUtente().getEmail());
 		if(q.getResultList().isEmpty()) {		
 			entity.setNome(pacchetto.getNome());
 			entity.setNumPartecipanti(pacchetto.getNumPartecipanti());

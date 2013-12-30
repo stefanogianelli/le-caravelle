@@ -12,7 +12,6 @@ import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
-import eccezioni.DeleteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
@@ -40,8 +39,9 @@ public interface GestorePacchettoPredefinito {
 	 * @param pacchetto I dati del pacchetto
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 * @throws InsertException Quando il nome del pacchetto è già stato utilizzato
 	 */
-	void creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException;
+	void creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException;
 	
 	/**
 	 * Permette di aggiungere una città di partenza nel pacchetto
@@ -59,45 +59,40 @@ public interface GestorePacchettoPredefinito {
 	 * @param citta La città da rimuovere
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
-	 * @throws DeleteException Quando non è possibile rimuovere la città (nel caso sia l'unica rimasta nel pacchetto)
 	 */
-	void rimuoviCittaPartenza (PacchettoPredefinitoDTO pacchetto, CittaDTO citta) throws PacchettoInesistenteException, CittaInesistenteException, DeleteException;
+	void rimuoviCittaPartenza (PacchettoPredefinitoDTO pacchetto, CittaDTO citta) throws PacchettoInesistenteException, CittaInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di una nuova data di partenza nel pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere la data
 	 * @param data La data che si vuole aggiungere
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws InsertException Quando la data è già presente nel database
 	 */
-	void aggiuntaDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException, InsertException;
+	void aggiuntaDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException;
 	
 	/**
 	 * Permette la rimozione di una data da un pacchetto
 	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere la data
 	 * @param data La data che si vuole eliminare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws DeleteException Quando non è possibile cancellare la data (per esempio, quando ne è rimasta solo una nel pacchetto)
 	 */
-	void rimuoviDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException, DeleteException;
+	void rimuoviDataPartenza (PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException;
 	
 	/**
 	 * Permette di aggiungere una nuova durata in un pacchetto
 	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere la durata
 	 * @param durata La durata da aggiungere
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws InsertException Quando la durata esiste già nel database
 	 */
-	void aggiuntaDurata (PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException, InsertException;
+	void aggiuntaDurata (PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException;
 	
 	/**
 	 * Permette di eliminare una durata da un pacchetto
 	 * @param pacchetto Il pacchetto dal quale si vuole rimuovere la durata
 	 * @param durata La durata che si vuole rimuovere
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws DeleteException Quando non è possibile cancellare la durata (per esempio, quando ne è rimasta solo una nel pacchetto)
 	 */
-	void rimuoviDurata (PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException, DeleteException;
+	void rimuoviDurata (PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'aggiunta di un collegamento nel pacchetto
@@ -140,8 +135,9 @@ public interface GestorePacchettoPredefinito {
 	 * Permette la modifica del nome del pacchetto
 	 * @param pacchetto Il pacchetto da salvare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws InsertException Quando il nome del pacchetto è già stato utilizzato
 	 */
-	void modificaNomePacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException;
+	void modificaNomePacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Permette la modifica del prezzo del pacchetto
