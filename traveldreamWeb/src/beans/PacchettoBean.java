@@ -22,6 +22,7 @@ import dtos.UtenteDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
+import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
@@ -326,6 +327,8 @@ public class PacchettoBean {
 				JsfUtil.errorMessage("Hotel inesistente!");
 			} catch (CollegamentoInesistenteException e) {
 				JsfUtil.errorMessage("Collegamento inesistente!");
+			} catch (EscursioneInesistenteException e) {
+				JsfUtil.errorMessage("Escursione inesistente!");
 			}
 		} else
 			JsfUtil.errorMessage("Pacchetto Incompleto! Impossibile condividere.");

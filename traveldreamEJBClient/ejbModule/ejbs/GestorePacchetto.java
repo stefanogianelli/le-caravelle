@@ -10,6 +10,7 @@ import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
+import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
@@ -93,8 +94,9 @@ public interface GestorePacchetto {
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
+	 * @throws EscursioneInesistenteException Quando non viene trovata l'escursione nel database
 	 */
-	void condividiPacchetto (PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException;
+	void condividiPacchetto (PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException, EscursioneInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
