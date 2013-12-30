@@ -16,7 +16,7 @@
 	
 	<h1>Pacchetto</h1>
 	<h:link value="indietro" outcome="elencoPacchettiTest" />
-	<h:messages /><br />
+	<p:messages showDetail="true" autoUpdate="true" /><br />
 	<h:form>
 		<h:panelGroup>
 			Nome:&nbsp;
@@ -159,6 +159,27 @@
 		</h:link><br />
 		<h:form>
 			<h:commandButton action="#{pacchetto.acquistaPacchetto()}" value="acquista" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
+			
+			<p:commandButton id="showCondividi" type="button" value="Condividi" onclick="PF('cond').show()" />  
+          
+			<p:dialog header="Condividi" widgetVar="cond" resizable="false">
+				<h:form>
+					<p:messages showDetail="true" autoUpdate="true" />			
+      			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
+           				<h:outputLabel for="email" value="email:" />  
+	           			<p:inputText id="email" binding="#{emailAmico}" required="true" />
+	           			
+	           			<h:outputLabel for="nome" value="Nome:" />  
+	           			<p:inputText id="nome" binding="#{nomeAmico}" required="true" />
+	           			
+	           			<h:outputLabel for="cognome" value="Cognome:" />  
+	           			<p:inputText id="cognome" binding="#{cognomeAmico}" required="true" />
+	       			</h:panelGrid>  
+	 
+	       			<p:commandButton value="Condividi" action="#{pacchetto.condividiPacchetto(emailAmico.value,nomeAmico.value,cognomeAmico.value)}" /> 
+	       			<p:commandButton value="Chiudi" oncomplete="PF('cond').hide();" /> 
+       			</h:form>
+			</p:dialog>
 		</h:form>
 	</h:panelGroup>
 </body> 

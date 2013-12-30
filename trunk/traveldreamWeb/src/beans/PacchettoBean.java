@@ -294,6 +294,7 @@ public class PacchettoBean {
 		try {	
 			//controllo che il pacchetto sia completo
 			if (numeroCollegamenti == numeroDestinazioni + 1) {
+				//TODO: check dati utente e aggiunta dati dei passeggeri
 				pacchettoBean.acquistaPacchetto(this.getPacchetto());
 				JsfUtil.infoMessage("Pacchetto acquistato!");
 			}
@@ -307,15 +308,28 @@ public class PacchettoBean {
 	/**
 	 * Permette la condivisione di un pacchetto con un amico
 	 * @param email L'email dell'amico con il quale condividere il pacchetto
+	 * @param nome Il nome dell'amico
+	 * @param cognome il cognome dell'amico
 	 */
-	public void condividiPacchetto (String email) {
-		try {
-			pacchettoBean.condividiPacchetto(this.getPacchetto(), email);
-		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta!");
-		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel inesistente!");
-		}
+	public void condividiPacchetto (String email, String nome, String cognome) {
+		int numeroDestinazioni = this.getPacchetto().getDestinazioni().size();
+		int numeroCollegamenti = this.getPacchetto().getCollegamenti().size();
+		
+		//controllo che il pacchetto sia completo
+		if (numeroCollegamenti == numeroDestinazioni + 1) {
+			try {
+				pacchettoBean.condividiPacchetto(this.getPacchetto(), email, nome, cognome);
+				JsfUtil.infoMessage("Pacchetto condiviso con " + nome);
+			} catch (CittaInesistenteException e) {
+				JsfUtil.errorMessage("Città sconosciuta!");
+			} catch (HotelInesistenteException e) {
+				JsfUtil.errorMessage("Hotel inesistente!");
+			} catch (CollegamentoInesistenteException e) {
+				JsfUtil.errorMessage("Collegamento inesistente!");
+			}
+		} else
+			System.out.println("Pacchetto Incompleto");
+			JsfUtil.errorMessage("Pacchetto Incompleto! Impossibile condividere.");
 	}
 	
 	/*

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
@@ -18,7 +19,10 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
-@NamedQuery(name="Amici.elenco", query="SELECT a FROM Amici a")
+@NamedQueries({
+	@NamedQuery(name="Amici.elenco", query="SELECT a FROM Amici a"),
+	@NamedQuery(name="Amici.getAmico", query="SELECT a FROM Amici a WHERE a.email = :email")
+})
 public class Amici implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +33,7 @@ public class Amici implements Serializable {
 
 	private String cognome;	
 
-	@OneToMany(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 			name="condiviso_con"
 			, joinColumns={
