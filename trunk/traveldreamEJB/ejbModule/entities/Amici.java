@@ -21,7 +21,8 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Amici.elenco", query="SELECT a FROM Amici a"),
-	@NamedQuery(name="Amici.getAmico", query="SELECT a FROM Amici a WHERE a.email = :email")
+	@NamedQuery(name="Amici.getAmico", query="SELECT a FROM Amici a WHERE a.email = :email"),
+	@NamedQuery(name="Amici.getPacchetti", query="SELECT a FROM Amici a JOIN a.pacchetti p WHERE p.id = :id")
 })
 public class Amici implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -33,7 +34,7 @@ public class Amici implements Serializable {
 
 	private String cognome;	
 
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval=true)
 	@JoinTable(
 			name="condiviso_con"
 			, joinColumns={

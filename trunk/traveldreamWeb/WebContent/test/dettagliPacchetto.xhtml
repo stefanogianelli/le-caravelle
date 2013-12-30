@@ -51,7 +51,7 @@
 			Prezzo:&nbsp;
 			<h:outputText id="prezzo" value="#{pacchetto.pacchetto.prezzo}" /><br />
 			
-			<h:commandButton action="#{pacchetto.eliminaPacchetto()}" value="elimina" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
+			<h:commandButton action="#{pacchetto.eliminaPacchetto()}" value="elimina" />
 		</h:panelGroup>
 	</h:form>
 		
