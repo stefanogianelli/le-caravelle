@@ -223,7 +223,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		
 		Pacchetti entity = new Pacchetti();
 		
-		entity.setNome(pacchetto.getNome());
+		entity.setNome(pacchetto.getNome() + " (Condiviso con " + email + ")");
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);
