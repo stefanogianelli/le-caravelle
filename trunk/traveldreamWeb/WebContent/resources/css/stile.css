@@ -575,3 +575,10 @@ select{
 	border: 1px solid red;
 	margin: 20px 40px 0 40px;
 }
+.bloccoLogin {
+	background-color: #dcdcdc;
+	height: 700px;
+	width: 100%;
+	border-top:1px solid #dcdcdc;
+	border-bottom:5px solid white;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Login</ui:define>
+
+<ui:define name="content">
+
+<div class="bloccoLogin">
+       <h1>Accedi alla tua area personale</h1>
+       <h2>Effettua il login</h2>
+		<br></br>
+	<h:form>
+		<p><h:outputText styleClass="name-input" value="Email: " />
+		<h:inputText styleClass="text-input"/>
+		<h:message for="nome"/><br /></p>
+		<p><h:outputText styleClass="name-input" value="Password: " />
+		<h:inputText styleClass="text-input"/>
+		<h:message for="nome"/><br /></p>
+	</h:form>
+	
+	<div class="bloccoButton">
+	<h:commandButton styleClass="button" value="Accedi" />
+	</div>
+	
+	<br></br>
+	<h3>Hai dimenticato la password?</h3>
+</div>
+
+</ui:define>
+</ui:composition>
+</html>
