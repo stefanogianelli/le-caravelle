@@ -61,15 +61,23 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	}
 
     @Override
-	public void modificaDatiDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException {
+	public void modificaDateDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException {
 		Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
 		entity.setDataPartenza(destinazione.getDataPartenza());
-		entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
 		
 		em.merge(entity);
 	}
+    
+    @Override
+    public void modificaHotel (DestinazioneDTO destinazione) throws HotelInesistenteException {
+    	Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
+    	
+		entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
+		
+		em.merge(entity);
+    }
 	
 	@Override
 	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EntitaEsistenteException, NumeroPartecipantiException {

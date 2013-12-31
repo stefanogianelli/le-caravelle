@@ -294,12 +294,22 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
-	public void modificaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException, HotelInesistenteException {
+	public void modificaDateDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		this.destinazione.modificaDatiDestinazione(destinazione);
+		this.destinazione.modificaDateDestinazione(destinazione);
 		
+		//rimuovo i collegamenti non più coerenti
 		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
+		
+		em.merge(entity);
+	}
+	
+	@Override
+	public void modificaHotelDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, HotelInesistenteException {
+		Pacchetti entity = this.convertiInEntita(pacchetto);
+		
+		this.destinazione.modificaHotel(destinazione);
 		
 		em.merge(entity);
 	}

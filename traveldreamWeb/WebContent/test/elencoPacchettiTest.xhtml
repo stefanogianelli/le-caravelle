@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <h:head>
@@ -21,7 +22,7 @@
 		
 		<h:commandButton value="Cerca" action="#{pacchetto.cercaPacchetti(email.value, tipo.value)}" />
 	</h:form>
-	<h:messages />
+	<p:messages showDetail="true" autoUpdate="true" />
 	
 	<h:panelGroup rendered="#{pacchetto.elenco.size() > 0}">
 		<h4>Pacchetto:</h4>

@@ -62,8 +62,6 @@ public class EscursioneBean {
 	public void elencoEscursioni () {
 		if (this.getElenco().isEmpty())
 			this.getElenco().addAll(escursioneBean.elencoEscursioni());
-		if (this.getElenco().isEmpty())
-			JsfUtil.infoMessage("Nessun risultato");
 	}
 
 	/**
@@ -72,8 +70,6 @@ public class EscursioneBean {
 	public void cercaEscursioni (String regione) {
 		this.getElenco().clear();
 		this.getElenco().addAll(escursioneBean.elencoEscursioni(regione));
-		if (this.getElenco().isEmpty())
-			JsfUtil.infoMessage("Nessun risultato");
 	}
 	
 	/**
