@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="templateDip.xhtml">
@@ -15,9 +16,8 @@
 <div class="bloccoRicerca">
 
 <h:form>
-	<h:commandButton value="Nuovo collegamento" styleClass="search-button" action="nuovoCollegamento" />
+<h:commandButton value="Nuovo collegamento" styleClass="search-button" action="nuovoCollegamento" />
 </h:form>
-
 </div>
 
 <div class="mioBloccoBianco">
@@ -28,8 +28,17 @@
 		<br></br>
 		<div id="prezzo">Data: data</div>	
 	</div>
+
 	<h:form>
-		<h:commandButton value="Dettagli collegamento" styleClass="search-button" action="dettagliCollegamento" />
+		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliCollegamento" />
+	</h:form>
+
+	<h:form>
+		<h:commandButton value="Modifica" styleClass="detail-button" action="modificaCollegamento" />
+	</h:form>
+	
+	<h:form>
+		<h:commandButton value="Elimina" styleClass="detail-button"/>
 	</h:form>
 
 </div>
@@ -43,10 +52,18 @@
 		<div id="prezzo">Data: data</div>	
 	</div>
 
-<h:form>
-	<h:commandButton value="Dettagli collegamento" styleClass="search-button" action="dettagliCollegamento" />
-</h:form>
+	<h:form>
+		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliCollegamento" />
+	</h:form>
 
+	<h:form>
+		<h:commandButton value="Modifica" styleClass="detail-button" action="modificaCollegamento" />
+	</h:form>
+	
+	<h:form>
+		<h:commandButton value="Elimina" styleClass="detail-button"/>
+	</h:form>
+	
 </div>
 
 <div class="mioBloccoBianco">
