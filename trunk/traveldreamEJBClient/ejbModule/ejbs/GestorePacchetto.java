@@ -120,14 +120,22 @@ public interface GestorePacchetto {
 	void aggiuntaDestinazione (int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException;
 	
 	/**
-	 * Permette la modifica dei dati di una destinazione
+	 * Permette la modifica delle date di una destinazione
 	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
-	 * @param destinazione I nuovi dati della destinazione
+	 * @param destinazione La destinazione da modificare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 */
+	void modificaDateDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException;
+	
+	/**
+	 * Permette la modifica dell'hotel di una destinazione
+	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
+	 * @param destinazione La destinazione da modificare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	void modificaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException, HotelInesistenteException;
+	public void modificaHotelDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, HotelInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di una destinazione da un pacchetto

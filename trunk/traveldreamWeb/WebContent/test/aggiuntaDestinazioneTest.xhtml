@@ -17,7 +17,7 @@
 	<h:link value="torna al pacchetto" outcome="dettagliPacchetto">
 		<f:param name="idPacchetto" value="#{id.value}"/>
 	</h:link>
-	<h:messages />
+	<p:messages showDetail="true" autoUpdate="true" />
 	<h:form>
 		<h:outputText for="dataArrivo" value="Data Arrivo: " />
 		<p:calendar value="#{pacchetto.destinazione.dataArrivo}" id="dataArrivo" locale="it" />

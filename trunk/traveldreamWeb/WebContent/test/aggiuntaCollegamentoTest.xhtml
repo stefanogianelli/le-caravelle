@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <h:head>
@@ -22,7 +23,7 @@
 	<h:link value="torna al pacchetto" outcome="dettagliPacchetto">
 		<f:param name="idPacchetto" value="#{id.value}"/>
 	</h:link>
-	<h:messages />	
+	<p:messages showDetail="true" autoUpdate="true" />
 	<h:form rendered="#{not pacchetto.isTipoPredefinito()}">		
 		<h:outputText value="Tipo Collegamento: " />
 		<h:selectOneMenu binding="#{tipo}">

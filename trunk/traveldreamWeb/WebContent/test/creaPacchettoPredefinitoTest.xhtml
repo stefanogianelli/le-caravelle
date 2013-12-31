@@ -11,7 +11,7 @@
 <body> 
 	<h1>Nuovo Pacchetto</h1>
 	<h:link value="indietro" outcome="pacchettoPredefinitoTest" />
-	<h:messages />
+	<p:messages showDetail="true" autoUpdate="true" />
 	<h:form>
 		<h:outputText for="nome" value="Nome: " />
 		<h:inputText id="nome" value="#{pacchettoPredefinito.pacchetto.nome}" />

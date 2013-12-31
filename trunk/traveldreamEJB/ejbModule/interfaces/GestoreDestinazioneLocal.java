@@ -23,12 +23,18 @@ public interface GestoreDestinazioneLocal {
 	Destinazioni creaDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException;
 	
 	/**
-	 * Permette la modifica dei dati di una destinazione
+	 * Permette la modifica delle date di una destinazione
 	 * @param destinazione La destinazione da modificare
 	 * @throws CittaInesistenteException  Quando non viene trovata la città nel database
+	 */
+	void modificaDateDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException;
+	
+	/**
+	 * Permette la modifica dell'hotel
+	 * @param destinazione La destinazione da modificare
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	void modificaDatiDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException;
+	void modificaHotel (DestinazioneDTO destinazione) throws HotelInesistenteException;
 	
 	/**
 	 * Permette la conversione da un DTO alla rispettiva entità

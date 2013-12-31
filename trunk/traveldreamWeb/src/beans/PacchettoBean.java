@@ -101,12 +101,14 @@ public class PacchettoBean {
 	 * @param id L'identificativo del pacchetto
 	 */
 	public void getPacchetto (int id) {
-		try {
-			this.setPacchetto(pacchettoBean.getPacchetto(id));
-			if (this.isTipoPredefinito())
-				this.setPredefinito(this.getPacchetto().getPacchettoPredefinito());
-		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+		if (this.getPacchetto().getId() == 0) {
+			try {
+				this.setPacchetto(pacchettoBean.getPacchetto(id));
+				if (this.isTipoPredefinito())
+					this.setPredefinito(this.getPacchetto().getPacchettoPredefinito());
+			} catch (PacchettoInesistenteException e) {
+				JsfUtil.errorMessage("Pacchetto inesistente!");
+			}
 		}
 	}
 	
@@ -318,18 +320,27 @@ public class PacchettoBean {
 		
 		//controllo che il pacchetto sia completo
 		if (numeroCollegamenti == numeroDestinazioni + 1) {
-			try {
-				pacchettoBean.condividiPacchetto(this.getPacchetto(), email, nome, cognome);
-				JsfUtil.infoMessage("Pacchetto condiviso con " + nome);
-			} catch (CittaInesistenteException e) {
-				JsfUtil.errorMessage("Città sconosciuta!");
-			} catch (HotelInesistenteException e) {
-				JsfUtil.errorMessage("Hotel inesistente!");
-			} catch (CollegamentoInesistenteException e) {
-				JsfUtil.errorMessage("Collegamento inesistente!");
-			} catch (EscursioneInesistenteException e) {
-				JsfUtil.errorMessage("Escursione inesistente!");
-			}
+			if(email != null && !email.isEmpty()) {
+				if (nome != null && !nome.isEmpty()) {
+					if (cognome != null && !cognome.isEmpty()) {
+						try {
+							pacchettoBean.condividiPacchetto(this.getPacchetto(), email, nome, cognome);
+							JsfUtil.infoMessage("Pacchetto condiviso con " + nome);
+						} catch (CittaInesistenteException e) {
+							JsfUtil.errorMessage("Città sconosciuta!");
+						} catch (HotelInesistenteException e) {
+							JsfUtil.errorMessage("Hotel inesistente!");
+						} catch (CollegamentoInesistenteException e) {
+							JsfUtil.errorMessage("Collegamento inesistente!");
+						} catch (EscursioneInesistenteException e) {
+							JsfUtil.errorMessage("Escursione inesistente!");
+						}
+					} else
+						JsfUtil.errorMessage("Inserire un cognome");
+				} else
+					JsfUtil.errorMessage("Inserire un nome");
+			} else
+				JsfUtil.errorMessage("Inserire un indirizzo email");
 		} else
 			JsfUtil.errorMessage("Pacchetto Incompleto! Impossibile condividere.");
 	}
@@ -382,6 +393,20 @@ public class PacchettoBean {
 			JsfUtil.errorMessage(e.getMessage());
 		}
 		return null;
+	}
+	
+	/**
+	 * Permette la modifica delle date di una destinazione
+	 * @param destinazione La destinazione da modificare
+	 */
+	public void modificaDateDestinazione (DestinazioneDTO destinazione) {
+		try {
+			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città sconosciuta!");
+		}
 	}
 	
 	/**
