@@ -116,7 +116,7 @@ a:hover {
 	height:50px;
 	width:300px;
 	position: absolute;
-	margin:40px auto auto -120px;
+	margin:20px auto auto -120px;
 	left: 50%;
 	font-size:26px;
 	font-family:arial;
@@ -356,6 +356,7 @@ select{
   
 /*Creazione pacchetto*/
 .data{
+	height:150px;
 	display:block;
 	float:none;
 	text-align:center;
@@ -549,7 +550,7 @@ select{
 }
 .bloccoButton {
 	background-color: #dcdcdc;
-	height: 130px;
+	height: 100px;
 	display:block;
 	float:none;
 	font-size: 26px;

@@ -18,7 +18,7 @@
         <h1>Crea il tuo pacchetto</h1>
         <h2>Inizia la vacanza...</h2>
         <h3>Seleziona la destinazione</h3>
-		<h:selectOneMenu binding="#{nomeCitta}">
+		<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
 			<f:selectItems value="#{citta.nomiCitta}" />
 		</h:selectOneMenu>	
 	</div>
@@ -26,32 +26,31 @@
 	<div class="blocco">
 		<div class="data">
 			<h3>Data di arrivo</h3>
-			<p:calendar value="#{pacchetto.destinazione.dataArrivo}" locale="it" required="true" /> 
-			<br></br>
+			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataArrivo}" locale="it" required="true" /> 
 		</div>
 		
 		<div class="data">
 			<h3>Data di partenza</h3>
-			<p:calendar value="#{pacchetto.destinazione.dataPartenza}" locale="it" required="true" />
-			<br></br>
+			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataPartenza}" locale="it" required="true" />
 		</div>
-	
+	</div>
+	<div class="blocco">
 		<div class="data">
         	<h3>Seleziona la città di partenza</h3>
-			<h:selectOneMenu value="#{pacchetto.pacchetto.citta.nome}">
+			<h:selectOneMenu styleClass="menu-input" value="#{pacchetto.pacchetto.citta.nome}">
 				<f:selectItems value="#{citta.nomiCitta}" />
 			</h:selectOneMenu>
-			<br></br>
 		</div>
 		
         <div class="data">
 	        <h3>Seleziona il numero di partecipanti</h3>
-			<h:inputText value="#{pacchetto.pacchetto.numPartecipanti}" />
-			<br></br>
+			<h:inputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" />
 		</div>
 		
-		<div class="data">
-			<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" value="Cerca" />
+		<div class="bloccoButton">
+			<h:form>
+			<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" value="Cerca" styleClass="button" />
+			</h:form>
 		</div>
 	</div>
 	

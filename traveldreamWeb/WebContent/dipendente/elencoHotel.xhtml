@@ -14,15 +14,25 @@
 <h1>Elenco hotel</h1>
 
 <div class="bloccoRicerca">
+<h:form>
+	<p><h:outputText styleClass="name-input" value="Scegli una città:" />
+	<h:inputText styleClass="text-input" binding="#{nomeCitta}" />
+<h:messages /></p>
+</h:form>
+</div>
 
+<div class="bloccoRicerca">
+<h:form>
+<h:commandButton value="Cerca" styleClass="search-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />
+</h:form>
 <h:form>
 	<h:commandButton value="Nuovo hotel" styleClass="search-button" action="nuovoHotel" />
 </h:form>
-
 </div>
+
 <div class="mioBloccoBianco">
 		<div class="hotel">
-			<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
+			<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />	
 			<p><b>Nome hotel</b></p>
 			<p>stelle</p>
 			<p>prezzo</p>
