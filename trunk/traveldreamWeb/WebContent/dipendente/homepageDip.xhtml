@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Homepage</ui:define>
+
+<ui:define name="content">
+
+<div class="mioBlocco">
+	<h1><a href="elencoPacchetti.xhtml">Elenco pacchetti</a></h1>
+	
+	<h:form>
+		<h:commandButton value="Nuovo pacchetto" styleClass="search-button" action="nuovoPacchetto" />
+	</h:form>
+	
+</div>
+
+<div class="mioBloccoBianco">
+	<h1><a href="elencoHotel.xhtml">Elenco hotel</a></h1>
+	
+	<h:form>
+		<h:commandButton value="Nuovo hotel" styleClass="search-button" action="nuovoHotel" />
+	</h:form>
+</div>
+
+<div class="mioBlocco">
+	<h1><a href="elencoCollegamenti.xhtml">Elenco collegamenti</a></h1>
+	
+	<h:form>
+	<h:commandButton value="Nuovo collegamento" styleClass="search-button" action="nuovoCollegamento" />
+	</h:form>
+</div>
+
+<div class="mioBloccoBianco">
+	<h1><a href="elencoEscursioni.xhtml">Elenco escursioni</a></h1>
+	
+	<h:form>
+	<h:commandButton value="Nuova escursione" styleClass="search-button" action="nuovaEscursione" />
+	</h:form>
+</div>
+
+</ui:define>
+</ui:composition>
+</html>
