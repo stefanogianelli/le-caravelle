@@ -15,7 +15,8 @@
 
 <h1>Nuovo hotel</h1>
 <br></br>
-
+<h:messages />
+<br></br>
 	<h:form>
 		<p><h:outputText for="nome" styleClass="name-input" value="Nome hotel: " />
 		<h:inputText id="nome" styleClass="text-input" value="#{hotel.hotel.nome}" />
@@ -53,7 +54,9 @@
 		<h:inputText id="email" styleClass="text-input" value="#{hotel.hotel.email}" />
 		<h:message for="email"/><br /></p>
 		
+		<div class="bloccoButton">
 		<h:commandButton action="#{hotel.creaHotel()}" styleClass="button" value="Salva" />
+		</div>
 	</h:form>
 
 </div>

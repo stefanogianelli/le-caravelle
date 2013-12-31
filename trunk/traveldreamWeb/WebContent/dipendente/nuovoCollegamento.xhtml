@@ -15,7 +15,9 @@
 
 <h1>Nuovo collegamento</h1>
 <br></br>
-
+<h:messages />
+<br>
+</br>
 	<h:form>
 	
 		<p><h:outputText for="cittaPartenza" styleClass="name-input" value="Città di partenza: " />
@@ -67,8 +69,9 @@
 		<h:message for="prezzo"/><br /></p>
 		
 
-		
+		<div class="bloccoButton">
 		<h:commandButton value="Salva" styleClass="button" action="#{collegamento.creaCollegamento()}" />
+		</div>
 	</h:form>
 
 </div>
