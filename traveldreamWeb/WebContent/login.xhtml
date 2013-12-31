@@ -5,39 +5,50 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
+<ui:composition template="/template.xhtml">
 	
 	<ui:define name="title">Login</ui:define>
 	
-	<ui:define name="content">
+<ui:define name="content">
 	
-	<div class="blocco">
-        <h1>Accedi alla tua area personale</h1>
-        <h2>Effettua il login</h2>
- 		<br></br>
-		<h:form>
-			Email: <input type="text" name="email"> </input> <br></br>
-			Password: <input type="password" name="pwd"> </input>
-			<br></br>
-			<button type="submit">Accedi</button>
-		</h:form>
+<div class="bloccoLogin">
+       <h1>Accedi alla tua area personale</h1>
+       <h2>Effettua il login</h2>
 		<br></br>
-		<h3>Hai dimenticato la password?</h3>
+	<h:form>
+		<p><h:outputText styleClass="name-input" value="Email: " />
+		<h:inputText styleClass="text-input"/>
+		<h:message/><br /></p>
+		<p><h:outputText styleClass="name-input" value="Password: " />
+		<h:inputText styleClass="text-input"/>
+		<h:message/><br /></p>
+	</h:form>
+	
+	<div class="bloccoButton">
+	<h:commandButton styleClass="button" value="Accedi" />
 	</div>
 	
-	<div class="blocco">
-        <h1>Non sei ancora registrato?</h1>
-        <h2>Effettua la registrazione</h2>
-        <br></br>
-        <h3>Step 1: inserisci la tua email</h3>
-        <h3>Step 2: ricevi una password personale</h3>
- 		<br></br>
-		<form>
-			Email: <input type="text" name="email"> </input>
-			<br></br>
-			<button type="submit">Richiedi</button>
-		</form>
-	</div>
+	<br></br>
+	<h3>Hai dimenticato la password?</h3>
+</div>
+<div class="bloccoLogin">
+
+       <h1>Non sei ancora registrato?</h1>
+       <h2>Effettua la registrazione</h2>
+       <br></br>
+       <h3>Step 1: inserisci la tua email</h3>
+       <h3>Step 2: ricevi una password personale</h3>
+		<br></br>
+		<h:form>
+			<p><h:outputText styleClass="name-input" value="Email: " />
+			<h:inputText styleClass="text-input"/>
+			<h:message/><br /></p>
+		</h:form>
+		
+		<div class="bloccoButton">
+		<h:commandButton styleClass="button" value="Conferma" />
+		</div>
+</div>
 	
 	<div class="consigli">
 		<br></br>
