@@ -76,6 +76,15 @@ a:hover {
 	margin: 0 auto 20px -180px;
 	left:50%;
 }
+.text-output{
+	height:28px;
+	width:944px;
+	font-size: 26px;
+	text-align: center;
+	color:black;
+	position: absolute;
+	margin: 60px auto 0 auto;
+}
 .data-input{
 	height:auto;
 	font-size: 26px;
@@ -114,7 +123,17 @@ a:hover {
 	text-align:center;
 	color: #003333;
 }
-
+.save-button{
+	height:40px;
+	width:120px;
+	position: absolute;
+	left:50%;
+	margin:0 auto auto -40px;
+	font-size:18px;
+	font-family:arial;
+	text-align:center;
+	color: #003333;
+}
 .search-button{
 	height:50px;
 	width:250px;
@@ -173,7 +192,7 @@ select{
 	display: block;
 }
 .access{
-	margin-left: 780px;
+	margin-left: 700px;
 }
 .access a{
 	margin-top: 40px;
@@ -527,6 +546,17 @@ select{
 	border-bottom:5px solid white;
 	display:block;
 	float:none;
+}
+.bloccoButton {
+	background-color: #dcdcdc;
+	height: 130px;
+	display:block;
+	float:none;
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	margin: 20px 40px 0 40px;
+	border:1px solid red;
 }
 /*Pagine info*/
 .info {
