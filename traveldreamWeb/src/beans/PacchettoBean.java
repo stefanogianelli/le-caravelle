@@ -410,6 +410,29 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Permette di modificare l'hotel inserito in una destinazione
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @param idDestinazione L'identificativo dell'hotel
+	 * @param hotel Il nuovo hotel
+	 * @return L'indirizzo della pagina dettagli
+	 */
+	public String modificaHotelDestinazione (int idPacchetto, int idDestinazione, HotelDTO hotel) {
+		try {
+			pacchettoBean.modificaHotelDestinazione(idPacchetto, idDestinazione, hotel);
+			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (HotelInesistenteException e) {
+			JsfUtil.errorMessage("Hotel inesistente!");
+		} catch (DestinazioneInesistenteException e) {
+			JsfUtil.errorMessage("Destinazione inesistente!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("L'hotel non si trova nella stessa città della destinazione!");
+		}
+		return null;
+	}
+	
+	/**
 	 * Permette di eliminare una destinazione da un pacchetto
 	 * @param destinazione La destinazione da eliminare
 	 */

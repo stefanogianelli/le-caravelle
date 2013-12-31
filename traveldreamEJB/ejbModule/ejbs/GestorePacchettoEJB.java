@@ -23,6 +23,7 @@ import javax.persistence.Query;
 import dtos.AttivitaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
+import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -306,12 +307,17 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
-	public void modificaHotelDestinazione (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, HotelInesistenteException {
-		Pacchetti entity = this.convertiInEntita(pacchetto);
+	public void modificaHotelDestinazione (int idPacchetto, int idDestinazione, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException, DestinazioneInesistenteException, InsertException {
+		Pacchetti entity = this.convertiInEntita(idPacchetto);
+		Destinazioni destinazione = this.destinazione.convertiInEntita(idDestinazione);
 		
-		this.destinazione.modificaHotel(destinazione);
-		
-		em.merge(entity);
+		//controllo che l'hotel sia nella stessa città della destinazione
+		if (destinazione.getCitta().getNome().equals(hotel.getCitta().getNome())) {
+			destinazione.setHotel(this.hotel.convertiInEntita(hotel));;
+			
+			em.merge(entity);
+		} else
+			throw new InsertException();
 	}
 
 	@Override
