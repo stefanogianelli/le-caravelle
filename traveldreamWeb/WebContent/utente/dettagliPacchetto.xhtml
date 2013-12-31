@@ -19,7 +19,18 @@
 <p:messages showDetail="true" autoUpdate="true" />
 
 <h:panelGroup rendered="#{pacchetto.pacchetto.id != 0}">
-	<h1>#{pacchetto.pacchetto.nome}</h1>
+	<h1>
+		<h:panelGrid rendered="#{(not pacchetto.tipoPersonalizzato) and (not pacchetto.tipoPredefinito)}">
+			#{pacchetto.pacchetto.nome}
+		</h:panelGrid>
+		<h:form>		
+			<p:inplace editor="true" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">  
+				<p:ajax event="save" listener="#{pacchetto.modificaNomePacchetto()}" />
+		       	<p:inputText value="#{pacchetto.pacchetto.nome}" required="true"/>  
+		    </p:inplace>
+	    </h:form>
+
+    </h1>
 	
 	<div class="bloccoRicerca">
 		<h:form>
@@ -41,9 +52,11 @@
 				<p>Città di partenza</p>
 				<h2>
 					<h:form>
-						<p:inplace editor="true" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" style="font-size: 35px;">  
-							<p:ajax event="save" listener="#{pacchetto.modificaNomePacchetto()}" />
-			            	<p:inputText value="#{pacchetto.pacchetto.nome}" required="true" style="width: 200px;" />  
+						<p:inplace label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
+							<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" />
+			                <h:selectOneMenu binding="#{nuovaCittaPartenza}">
+								<f:selectItems value="#{citta.nomiCitta}" />
+							</h:selectOneMenu>	  
 			            </p:inplace>
 		        	</h:form>
 					<h:outputText value="#{pacchetto.pacchetto.citta.nome}" rendered="#{(not pacchetto.tipoPersonalizzato) and (not pacchetto.tipoPredefinito)}" />

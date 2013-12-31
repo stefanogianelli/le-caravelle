@@ -100,7 +100,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	public int creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, InsertException {
 		Pacchetti entity = new Pacchetti();		
 
-		if (pacchetto.getNome().isEmpty())
+		if (pacchetto.getNome() == null ||pacchetto.getNome().isEmpty())
 			entity.setNome("Pacchetto" + Math.random());
 		else {
 			//controllo che il nome del pacchetto non esista nel database
