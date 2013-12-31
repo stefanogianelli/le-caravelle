@@ -101,6 +101,11 @@
 				<h:outputText value="#{d.hotel.nome} a #{d.citta.nome} (#{d.citta.nazione})" />
 				<h:form rendered="#{not pacchetto.isTipoPredefinito()}">
 					<h:commandButton value="elimina destinazione" action="#{pacchetto.eliminaDestinazione(d)}" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
+					<h:link outcome="modificaHotelPacchetto" value="modifica hotel" rendered="#{pacchetto.tipoPersonalizzato}">
+						<f:param name="idPacchetto" value="#{id.value}" />
+						<f:param name="idDestinazione" value="#{d.id}" />
+						<f:param name="nomeCitta" value="#{d.citta.nome}" />
+					</h:link>
 				</h:form>
 				<br />
 				<!-- Informazioni sulle escursioni -->
