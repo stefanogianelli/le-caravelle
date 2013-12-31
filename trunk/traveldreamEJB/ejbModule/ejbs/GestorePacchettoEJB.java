@@ -11,6 +11,7 @@ import interfaces.GestoreProfiloLocal;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -23,7 +24,6 @@ import javax.persistence.Query;
 import dtos.AttivitaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
-import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -303,23 +303,12 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		//rimuovo i collegamenti non più coerenti
 		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
 		
+		//aggiorno il prezzo del pacchetto
+		entity.setPrezzo(this.calcolaPrezzo(entity));
+		
 		em.merge(entity);
 	}
 	
-	@Override
-	public void modificaHotelDestinazione (int idPacchetto, int idDestinazione, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException, DestinazioneInesistenteException, InsertException {
-		Pacchetti entity = this.convertiInEntita(idPacchetto);
-		Destinazioni destinazione = this.destinazione.convertiInEntita(idDestinazione);
-		
-		//controllo che l'hotel sia nella stessa città della destinazione
-		if (destinazione.getCitta().getNome().equals(hotel.getCitta().getNome())) {
-			destinazione.setHotel(this.hotel.convertiInEntita(hotel));;
-			
-			em.merge(entity);
-		} else
-			throw new InsertException();
-	}
-
 	@Override
 	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);	
@@ -401,22 +390,16 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	 * @param dataPartenza La data nella quale rimuovere il collegamento di ritorno
 	 */
 	private void rimuoviCollegamenti (Pacchetti pacchetto, Date dataArrivo, Date dataPartenza) {
-		Collegamenti andata, ritorno;
+		Collegamenti andata = null;
+		Collegamenti ritorno = null;
+		Collegamenti c = null;
 		
-		Query q = em.createNamedQuery("Collegamenti.getCollegamentoDaData", Collegamenti.class);
-		q.setParameter("data", dataArrivo);
-		try {
-			andata = (Collegamenti) q.getSingleResult();
-		} catch (NoResultException e) {
-			andata = null;
-		}
-		
-		Query q1 = em.createNamedQuery("Collegamenti.getCollegamentoDaData", Collegamenti.class);
-		q1.setParameter("data", dataPartenza);
-		try {
-			ritorno = (Collegamenti) q1.getSingleResult();
-		} catch (NoResultException e) {
-			ritorno = null;
+		for (Iterator<Collegamenti> itr = pacchetto.getCollegamenti().iterator(); itr.hasNext();) {
+			c = itr.next();
+			if (c.getDataPartenza().equals(dataArrivo)) 
+				andata = c;
+			if (c.getDataPartenza().equals(dataPartenza))
+				ritorno = c;
 		}
 		
 		if (andata != null) {			
@@ -431,8 +414,6 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 				pacchetto.setPrezzo(pacchetto.getPrezzo() - ritorno.getPrezzo()*pacchetto.getNumPartecipanti());
 			pacchetto.removeCollegamento(ritorno);
 		}
-		
-		em.merge(pacchetto);
 	}
 
 	@Override
