@@ -11,42 +11,45 @@
 
 <ui:define name="content">
 
+<h:form>
 	<div class="blocco">
         <h1>Crea il tuo pacchetto</h1>
         <h2>Inizia la vacanza...</h2>
         <h3>Seleziona la destinazione</h3>
-		 <select>
-		  <option value="Milano">Milano</option> 	<!-- Da collegare al database -->
-		</select>
+		<h:selectOneMenu binding="#{nomeCitta}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>	
 	</div>
 	
 	<div class="blocco">
 		<div class="data">
 			<h3>Data di arrivo</h3>
-			<h:form>
-			<input type="text" name="dataArrivo"> </input> <br></br>
-			</h:form>
+			<p:calendar value="#{pacchetto.destinazione.dataArrivo}" locale="it" required="true" /> 
+			<br></br>
 		</div>
 		
 		<div class="data">
 			<h3>Data di partenza</h3>
-			<h:form>
-			<input type="text" name="dataPartenza"> </input> <br></br>
-			</h:form>
+			<p:calendar value="#{pacchetto.destinazione.dataPartenza}" locale="it" required="true" />
+			<br></br>
 		</div>
 	
-		<div class="città">
-        <h3>Seleziona la città di partenza</h3>
-			<h:form>
-			<input type="text" name="partenza"> </input> <br></br>
-			</h:form>
+		<div class="data">
+        	<h3>Seleziona la città di partenza</h3>
+			<h:selectOneMenu value="#{pacchetto.pacchetto.citta.nome}">
+				<f:selectItems value="#{citta.nomiCitta}" />
+			</h:selectOneMenu>
+			<br></br>
 		</div>
 		
         <div class="data">
-        <h3>Seleziona il numero di partecipanti</h3>
-			<h:form>
-			<input type="text" name="partecipanti"> </input> <br></br>
-			</h:form>
+	        <h3>Seleziona il numero di partecipanti</h3>
+			<h:inputText value="#{pacchetto.pacchetto.numPartecipanti}" />
+			<br></br>
+		</div>
+		
+		<div class="data">
+			<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" value="Cerca" />
 		</div>
 	</div>
 	
@@ -57,15 +60,10 @@
 			<p><b>Hotel La Madonnina</b></p>
 			<p>3 stelle</p>
 			<p>prezzo</p>
-
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
 			
+			<h:commandButton value="Scegli" styleClass="flight-button"/>
+
+			<h:commandButton value="Dettagli" styleClass="flight-button"/>			
 		</div>
 
 		<div class="hotel">
@@ -73,15 +71,11 @@
 			<p><b>Starhotel Rosa</b></p>
 			<p>4 stelle</p>
 			<p>prezzo</p>
-			
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
-			
+
+			<h:commandButton value="Scegli" styleClass="flight-button"/>
+
+			<h:commandButton value="Dettagli" styleClass="flight-button"/>
+
 		</div>
 		
 		<div class="hotel">
@@ -90,14 +84,10 @@
 			<p>3 stelle</p>
 			<p>prezzo</p>
 
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
-			
+			<h:commandButton value="Scegli" styleClass="flight-button"/>
+
+			<h:commandButton value="Dettagli" styleClass="flight-button"/>		
+					
 		</div>
 		
 		<div class="hotel">
@@ -106,20 +96,17 @@
 			<p>4 stelle</p>
 			<p>prezzo</p>
 
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
+			<h:commandButton value="Scegli" styleClass="flight-button"/>
+
+			<h:commandButton value="Dettagli" styleClass="flight-button"/>
 			
 		</div>
 		
 	</div>
+</h:form>	
 
 </ui:define>
 
-	
-	</ui:composition>
+</ui:composition>
+
 </html>
