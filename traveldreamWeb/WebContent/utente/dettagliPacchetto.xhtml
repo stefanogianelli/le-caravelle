@@ -11,135 +11,207 @@
 
 <ui:define name="content">
 
-<h1>Nome pacchetto</h1>
+<f:metadata>
+	<f:viewParam name="idPacchetto" binding="#{id}" />
+	<f:event listener="#{pacchetto.getPacchetto(id.value)}" type="preRenderView" />
+</f:metadata>
 
-<div class="bloccoRicerca">
-	<h:form>
-		<h:commandButton value="Elimina pacchetto" styleClass="search-button"/>
-	</h:form>
-	<h:form>
-		<h:commandButton value="Condividi pacchetto" styleClass="search-button"/>
-	</h:form>
-	<h:form>
-		<h:commandButton value="Acquista pacchetto" styleClass="search-button"/>
-	</h:form>
-</div>
+<p:messages showDetail="true" autoUpdate="true" />
 
-<div class="bloccoPacc">
-	<h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
+<h:panelGroup rendered="#{pacchetto.pacchetto.id != 0}">
+	<h1>#{pacchetto.pacchetto.nome}</h1>
 	
-	<div class="descr">
-		<p>Città di partenza</p>
-		<h2>cittàPartenza</h2>
-		<br></br>
-		<p>Numero di partecipanti</p>
-		<h2>numeroPartecipanti</h2>
-	</div>
-	
-	<div class="descr">
-	<div id="prezzo">Prezzo</div>
-	</div>
-</div>
-
-<div class="bloccoPaccVolo">
-	<p>Data</p>
-	<div class="volo">	
-		<div class="etichette">
-		<ul>
-			<li>Da</li>
-			<li>A</li>
-			<li>Partenza</li>
-			<li>Arrivo</li>
-			<li>Scali</li>
-			<li>Prezzo</li>
-		</ul>
-		</div>
+	<div class="bloccoRicerca">
 		<h:form>
-			<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliCollegamento.xhtml" />
+			<h:commandButton value="Elimina pacchetto" styleClass="search-button" action="#{pacchetto.eliminaPacchetto()}"/>
 		</h:form>
-	
 		<h:form>
-			<h:commandButton value="Modifica" styleClass="flight-button"/>
+			<h:commandButton value="Condividi pacchetto" styleClass="search-button" />
 		</h:form>
+		<h:form>
+			<h:commandButton value="Acquista pacchetto" styleClass="search-button" action="#{pacchetto.acquistaPacchetto()}" disabled="#{(not pacchetto.tipoPersonalizzato) or (not pacchetto.tipoPredefinito)}"/>
+		</h:form>
+	</div>	
+	
+	<div class="bloccoPacc">
+		<h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
 		
-		<div class="dati">
-		<ul>
-			<li>New York JFK</li>
-			<li>Milano Malpensa</li>
-			<li>22:20</li>
-			<li>12:05</li>
-			<li>0</li>
-			<li>468 euro</li>
-		</ul>
+		<div class="descr">		
+			<div>	
+				<p>Città di partenza</p>
+				<h2>
+					<h:form>
+						<p:inplace editor="true" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" style="font-size: 35px;">  
+							<p:ajax event="save" listener="#{pacchetto.modificaNomePacchetto()}" />
+			            	<p:inputText value="#{pacchetto.pacchetto.nome}" required="true" style="width: 200px;" />  
+			            </p:inplace>
+		        	</h:form>
+					<h:outputText value="#{pacchetto.pacchetto.citta.nome}" rendered="#{(not pacchetto.tipoPersonalizzato) and (not pacchetto.tipoPredefinito)}" />
+				</h2>
+			</div>
+			<br></br>
+			<p>Numero di partecipanti</p>
+			<h2>
+				<h:form>
+					<p:inplace editor="true" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">  
+						<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" />
+	            		<p:inputText id="partText" value="#{pacchetto.pacchetto.numPartecipanti}" required="true" style="width: 200px;"/>  
+	            	</p:inplace>
+            	</h:form>
+            	<h:outputText value="#{pacchetto.pacchetto.numPartecipanti}" rendered="#{(not pacchetto.tipoPersonalizzato) and (not pacchetto.tipoPredefinito)}" />
+			</h2>
 		</div>
 		
-
-	
-	</div>
-</div>
-
-<div class="bloccoPacc">
-	<div class="descr">
-		<p>Città di destinazione</p>
-		<h2>cittàDestinazione</h2>
-	</div>
-	
-	<h:form>
-		<h:commandButton value="Elimina" styleClass="detail-button"/>
-	</h:form>
-	
-	<div class="hotelPacc">
-		<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
-		<div class="descrHotel">
-		<p><b>Nome hotel</b></p>
-		<p>Indirizzo</p>
-		<p>telefono</p>
+		<div class="descr">
+			<div id="prezzo">#{pacchetto.pacchetto.prezzo} €</div>
 		</div>
-		<h:form>
-			<h:commandButton value="Modifica" styleClass="flight-button"/>
-		</h:form>
-	
-		<h:form>
-			<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliHotel.xhtml" />
-		</h:form>
 	</div>
-</div>
-
-<div class="bloccoPaccEscursione">
-	<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" />
-</div>
-
-<div class="bloccoPaccVolo">
-	<p>Data</p>
-	<div class="volo">
-		<div class="etichette">
-		<ul>
-			<li>Da</li>
-			<li>A</li>
-			<li>Partenza</li>
-			<li>Arrivo</li>
-			<li>Scali</li>
-			<li>Prezzo</li>
-		</ul>
+	
+	<ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}">		
+		<!-- Collegamento di andata -->
+		<div class="bloccoPaccVolo">
+			<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).dataPartenza}" rendered="#{pacchetto.esisteCollegamento(d.dataArrivo)}">
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			</h:outputText>
+			<div class="volo">	
+				<div class="etichette">
+				<ul>
+					<li>Da</li>
+					<li>A</li>
+					<li>Partenza</li>
+					<li>Arrivo</li>
+					<li>Scali</li>
+					<li>Prezzo</li>
+				</ul>
+				</div>
+				<h:form>
+					<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliCollegamento.xhtml" />
+				</h:form>
+			
+				<h:form>
+					<h:commandButton value="Modifica" styleClass="flight-button"/>
+				</h:form>
+				
+				<!-- Blocco dettagli volo -->
+				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.esisteCollegamento(d.dataArrivo)}">
+					<ul>
+						<li>#{pacchetto.getCollegamento(d.dataArrivo).cittaPartenza.nome} #{pacchetto.getCollegamento(d.dataArrivo).origine}</li>
+						<li>#{pacchetto.getCollegamento(d.dataArrivo).cittaArrivo.nome} #{pacchetto.getCollegamento(d.dataArrivo).destinazione}</li>
+						<li>
+							<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).oraPartenza}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>
+						</li>
+						<li>
+							<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).oraArrivo}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>
+						</li>
+						<li>0</li>
+						<li>#{pacchetto.getCollegamento(d.dataArrivo).prezzo} €</li>
+					</ul>
+				</h:panelGroup>
+				
+				<!-- Blocco aggiunta volo -->
+				<h:panelGroup styleClass="dati" layout="block" rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
+                        <h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
+                        	<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+							<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+							<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
+							<f:param name="cittaArrivo" value="#{d.citta.nome}" />
+                        </h:link>
+                </h:panelGroup>               
+			
+			</div>
 		</div>
 		
-		<h:form>
-			<h:commandButton value="Modifica" styleClass="flight-button"/>
-		</h:form>
-	
-		<h:form>
-			<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliCollegamento.xhtml" />
-		</h:form>
-		
-		<div class="dati">
-			<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento.xhtml" />
+		<div class="bloccoPacc">
+			<div class="descr">
+				<p>Città di destinazione</p>
+				<h2>#{d.citta.nome}</h2>
+			</div>
+			
+			<h:form>
+				<h:commandButton value="Elimina" styleClass="detail-button"/>
+			</h:form>
+			
+			<div class="hotelPacc">
+				<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
+				<div class="descrHotel">
+				<p><b>#{d.hotel.nome}</b></p>
+				<p>#{d.hotel.indirizzo}</p>
+				<p>#{d.hotel.telefono}</p>
+				</div>
+				<h:form>
+					<h:commandButton value="Modifica" styleClass="flight-button"/>
+				</h:form>
+			
+				<h:form>
+					<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliHotel.xhtml" />
+				</h:form>
+			</div>
 		</div>
-	</div>
-</div>
+		
+		<div class="bloccoPaccEscursione">
+			<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" />
+		</div>
+		
+		<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
+		<h:panelGroup styleClass="bloccoPaccVolo" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d)}">
+			<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).dataPartenza}" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			</h:outputText>
+			<div class="volo">
+				<div class="etichette">
+				<ul>
+					<li>Da</li>
+					<li>A</li>
+					<li>Partenza</li>
+					<li>Arrivo</li>
+					<li>Scali</li>
+					<li>Prezzo</li>
+				</ul>
+				</div>
+				
+				<h:form>
+					<h:commandButton value="Modifica" styleClass="flight-button"/>
+				</h:form>
+			
+				<h:form>
+					<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliCollegamento.xhtml" />
+				</h:form>
+				
+				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
+					<ul>
+						<li>#{pacchetto.getCollegamento(d.dataPartenza).cittaPartenza.nome} #{pacchetto.getCollegamento(d.dataPartenza).origine}</li>
+						<li>#{pacchetto.getCollegamento(d.dataPartenza).cittaArrivo.nome} #{pacchetto.getCollegamento(d.dataPartenza).destinazione}</li>
+						<li>
+							<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).oraPartenza}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>
+						</li>
+						<li>
+							<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).oraArrivo}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>
+						</li>
+						<li>0</li>
+						<li>#{pacchetto.getCollegamento(d.dataPartenza).prezzo} €</li>
+					</ul>
+				</h:panelGroup>
+				
+				<!-- Blocco aggiunta volo -->
+				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
+                        <h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento.xhtml" />
+                </h:panelGroup>
+				
+			</div>
+		</h:panelGroup>
+	</ui:repeat>
+		
 	<h:link value="Aggiungi destinazione" outcome="aggiuntaDestinazione.xhtml" />
-<div class="bloccoPacc">
- 
-</div>
+
+</h:panelGroup>	
 
 </ui:define>
 
