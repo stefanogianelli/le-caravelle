@@ -6,7 +6,6 @@ import javax.ejb.Local;
 
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
-import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -128,18 +127,6 @@ public interface GestorePacchetto {
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 */
 	void modificaDateDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException;
-	
-	/**
-	 * Permette la modifica dell'hotel di una destinazione
-	 * @param idPacchetto L'identificativo del pacchetto nel quale è contenuta la destinazione
-	 * @param idDestinazione L'identificativo della destinazione da modificare
-	 * @param hotel L'hotel da aggiungere
-	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
-	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
-	 * @throws InsertException Quando l'hotel non si trova nella stessa città della destinazione
-	 */
-	public void modificaHotelDestinazione (int idPacchetto, int idDestinazione, HotelDTO hotel) throws PacchettoInesistenteException, HotelInesistenteException, DestinazioneInesistenteException, InsertException;
 	
 	/**
 	 * Permette l'eliminazione di una destinazione da un pacchetto

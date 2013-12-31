@@ -26,6 +26,7 @@ import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
+import ejbs.GestoreDestinazione;
 import ejbs.GestorePacchetto;
 import ejbs.GestorePacchettoPredefinito;
 import enums.TipoPacchetto;
@@ -39,6 +40,9 @@ public class PacchettoBean {
 	
 	@EJB
 	private GestorePacchettoPredefinito predefinitoBean;
+	
+	@EJB
+	private GestoreDestinazione destinazioneBean;
 	
 	private PacchettoDTO pacchetto;
 	private DestinazioneDTO destinazione;
@@ -101,14 +105,12 @@ public class PacchettoBean {
 	 * @param id L'identificativo del pacchetto
 	 */
 	public void getPacchetto (int id) {
-		if (this.getPacchetto().getId() == 0) {
-			try {
-				this.setPacchetto(pacchettoBean.getPacchetto(id));
-				if (this.isTipoPredefinito())
-					this.setPredefinito(this.getPacchetto().getPacchettoPredefinito());
-			} catch (PacchettoInesistenteException e) {
-				JsfUtil.errorMessage("Pacchetto inesistente!");
-			}
+		try {
+			this.setPacchetto(pacchettoBean.getPacchetto(id));
+			if (this.isTipoPredefinito())
+				this.setPredefinito(this.getPacchetto().getPacchettoPredefinito());
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
 	
@@ -350,6 +352,18 @@ public class PacchettoBean {
 	 */
 	
 	/**
+	 * Verifica se la destinazione desiderata è la prima (in ordine di data di partenza)
+	 * @param destinazione La destinazione da controllare
+	 * @return true se la destinazione è la prima, false altrimenti
+	 */
+	public boolean isPrimaDestinazione (DestinazioneDTO destinazione) {
+		if (this.getPacchetto().getDestinazioni().indexOf(destinazione) == 0) {
+			return true;
+		} else
+			return false;		
+	}
+	
+	/**
 	 * Verifica se la destinazione desiderata è l'ultima (in ordine di data di partenza)
 	 * @param destinazione La destinazione da controllare
 	 * @return true se la destinazione è l'ultima, false altrimenti
@@ -396,12 +410,32 @@ public class PacchettoBean {
 	}
 	
 	/**
-	 * Permette la modifica delle date di una destinazione
+	 * Permette la modifica della data di arrivo in una destinazione
 	 * @param destinazione La destinazione da modificare
 	 */
-	public void modificaDateDestinazione (DestinazioneDTO destinazione) {
+	public void modificaDataArrivo (DestinazioneDTO destinazione) {
+		String success = "Data modificata!";
 		try {
-			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+			//verifico se la destinazione è la prima
+			if (this.isPrimaDestinazione(destinazione)) {
+				//se è la prima allora controllo che la data di arrivo sia antecedente la data di partenza
+				if (destinazione.getDataArrivo().before(destinazione.getDataPartenza())) {
+					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+					JsfUtil.infoMessage(success);
+				} else
+					JsfUtil.errorMessage("La data di arrivo deve precedere la data di partenza!");
+			} else {
+				DestinazioneDTO precedente = this.getPacchetto().getDestinazioni().get(this.getPacchetto().getDestinazioni().indexOf(destinazione) - 1);
+				//se non è la prima allora controllo che la nuova data di arrivo sia superiore alla data di arrivo della destinazione precedente
+				if (destinazione.getDataArrivo().after(precedente.getDataArrivo())) {
+					//modifico anche la data di partenza della destinazione precedente
+					precedente.setDataPartenza(destinazione.getDataArrivo());
+					pacchettoBean.modificaDateDestinazione(getPacchetto(), precedente);
+					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+					JsfUtil.infoMessage(success);
+				} else
+					JsfUtil.errorMessage("La data scelta è in conflitto con la destinazione precedente!");
+			}
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (CittaInesistenteException e) {
@@ -410,18 +444,49 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Permette la modifica della data di partenza da una destinazione
+	 * @param destinazione La destinazione da modificare
+	 */
+	public void modificaDataPartenza (DestinazioneDTO destinazione) {
+		String success = "Data modificata!";
+		try {
+			//verifico se la destinazione è l'utlima
+			if(this.isUltimaDestinazione(destinazione)) {
+				//se è l'ultima verifico che la data di partenza sia successiva alla data di arrivo
+				if (destinazione.getDataPartenza().after(destinazione.getDataArrivo())) {
+					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+					JsfUtil.infoMessage(success);
+				} else
+					JsfUtil.errorMessage("La data di partenza deve essere successiva alla data di arrivo nella destinazione!");
+			} else {
+				//se non è l'ultima controllo che la nuova data di partenza sia minore della data di partenza della destinazione successiva
+				DestinazioneDTO successiva = this.getPacchetto().getDestinazioni().get(this.getPacchetto().getDestinazioni().indexOf(destinazione) + 1);
+				if (destinazione.getDataPartenza().before(successiva.getDataPartenza())) {
+					//modifico anche la data di arrivo nella destinazione successiva
+					successiva.setDataArrivo(destinazione.getDataArrivo());
+					pacchettoBean.modificaDateDestinazione(getPacchetto(), successiva);
+					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+					JsfUtil.infoMessage(success);
+				} else
+					JsfUtil.errorMessage("La data scelta è in conflitto con la destinazione successiva!");
+			}
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città sconosciuta!");
+		}	
+	}
+	
+	/**
 	 * Permette di modificare l'hotel inserito in una destinazione
-	 * @param idPacchetto L'identificativo del pacchetto
 	 * @param idDestinazione L'identificativo dell'hotel
 	 * @param hotel Il nuovo hotel
 	 * @return L'indirizzo della pagina dettagli
 	 */
 	public String modificaHotelDestinazione (int idPacchetto, int idDestinazione, HotelDTO hotel) {
 		try {
-			pacchettoBean.modificaHotelDestinazione(idPacchetto, idDestinazione, hotel);
+			destinazioneBean.modificaHotel(idDestinazione, hotel);
 			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
-		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel inesistente!");
 		} catch (DestinazioneInesistenteException e) {

@@ -17,7 +17,7 @@
 	<h1>Pacchetto</h1>
 	<h:link value="indietro" outcome="elencoPacchettiTest" />
 	<p:messages showDetail="true" autoUpdate="true" />
-	<h:form>
+	<h:form id="pacchettoForm">
 		<h:panelGroup>
 			Nome:&nbsp;
 			<p:inplace id="nome" editor="true" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}">  
@@ -43,7 +43,7 @@
 			
 			Partecipanti:&nbsp;
 			<p:inplace id="partecipanti" editor="true" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}">  
-				<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" update="prezzo,:destinazioni" />
+				<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" update="prezzo,:mainForm:destinazioni" />
             	<p:inputText id="partText" value="#{pacchetto.pacchetto.numPartecipanti}" required="true"/>  
             </p:inplace>
             <h:outputText value="#{pacchetto.pacchetto.numPartecipanti}" rendered="#{(not pacchetto.isTipoPersonalizzato()) and (not pacchetto.isTipoPredefinito())}" /><br />
@@ -56,154 +56,170 @@
 	</h:form>
 		
 	<h4>Destinazioni:</h4>
-	<h:panelGroup id="destinazioni">
-		<ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}">
-			<!-- Collegamento di andata -->
-			<h:panelGroup rendered="#{pacchetto.esisteCollegamento(d.dataArrivo)}">
-				Il
-				<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).dataPartenza}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>
-				alle
-				<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).oraPartenza}">
-					<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-				</h:outputText>
-				da #{pacchetto.getCollegamento(d.dataArrivo).cittaPartenza.nome} (#{pacchetto.getCollegamento(d.dataArrivo).origine}) a #{pacchetto.getCollegamento(d.dataArrivo).cittaArrivo.nome} (#{pacchetto.getCollegamento(d.dataArrivo).destinazione})
-				<br />
-				<h:panelGroup rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
-					<h:link value="modifica collegamento" outcome="aggiuntaCollegamentoTest">
+	<h:form id="mainForm">
+		<h:panelGroup id="destinazioni">
+			<ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}">
+				<!-- Collegamento di andata -->
+				<h:panelGroup rendered="#{pacchetto.esisteCollegamento(d.dataArrivo)}">
+					Il
+					<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).dataPartenza}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+					alle
+					<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).oraPartenza}">
+						<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+					</h:outputText>
+					da #{pacchetto.getCollegamento(d.dataArrivo).cittaPartenza.nome} (#{pacchetto.getCollegamento(d.dataArrivo).origine}) a #{pacchetto.getCollegamento(d.dataArrivo).cittaArrivo.nome} (#{pacchetto.getCollegamento(d.dataArrivo).destinazione})
+					<br />
+					<h:panelGroup rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
+						<h:link value="modifica collegamento" outcome="aggiuntaCollegamentoTest">
+							<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+							<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+							<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
+							<f:param name="cittaArrivo" value="#{d.citta.nome}" />
+						</h:link>
+					</h:panelGroup>
+					<br /><br />
+				</h:panelGroup>
+				<!-- Aggiunta collegamento se inesistente -->
+				<h:panelGroup rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
+					<h:link value="aggiunta collegamento" outcome="aggiuntaCollegamentoTest">
 						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
 						<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
 						<f:param name="cittaArrivo" value="#{d.citta.nome}" />
 					</h:link>
+					<br /><br />
 				</h:panelGroup>
-				<br /><br />
-			</h:panelGroup>
-			<!-- Aggiunta collegamento se inesistente -->
-			<h:panelGroup rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
-				<h:link value="aggiunta collegamento" outcome="aggiuntaCollegamentoTest">
-					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-					<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
-					<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
-					<f:param name="cittaArrivo" value="#{d.citta.nome}" />
-				</h:link>
-				<br /><br />
-			</h:panelGroup>
-			<!--  Informazioni sulla destinazione -->
-			<h:panelGroup>
-				Dal <h:outputText value="#{d.dataArrivo}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>
-				al <h:outputText value="#{d.dataPartenza}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText><br />	
-				<h:outputText value="#{d.hotel.nome} a #{d.citta.nome} (#{d.citta.nazione})" />
-				<h:form rendered="#{not pacchetto.isTipoPredefinito()}">
-					<h:commandButton value="elimina destinazione" action="#{pacchetto.eliminaDestinazione(d)}" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
-					<h:link outcome="modificaHotelPacchetto" value="modifica hotel" rendered="#{pacchetto.tipoPersonalizzato}">
-						<f:param name="idPacchetto" value="#{id.value}" />
-						<f:param name="idDestinazione" value="#{d.id}" />
-						<f:param name="nomeCitta" value="#{d.citta.nome}" />
-					</h:link>
-				</h:form>
-				<br />
-				<!-- Informazioni sulle escursioni -->
-				<h:panelGroup rendered="#{d.attivita.size() > 0}">
-					<h4>Escursioni:</h4>
-					<ul>
-						<ui:repeat var="e" value="#{d.attivita}">
-							<li>
-								#{e.escursione.nome} a #{e.escursione.citta.nome} il
-								<h:outputText value="#{e.escursione.data}">
-									<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-								</h:outputText>
-								(partecipanti: #{e.numeroPartecipanti})
-								<h:form rendered="#{pacchetto.tipoPersonalizzato}">
-									<h:panelGroup rendered="#{e.destinazione.id != destinazione.attivita.destinazione.id or e.escursione.id != destinazione.attivita.escursione.id}">
-										<h:commandButton action="#{destinazione.abilitaModifica(e)}" value="modifica" />
-										<h:commandButton action="#{destinazione.eliminaEscursione(e)}" value="elimina" />
-									</h:panelGroup>
-									<h:panelGroup rendered="#{e.destinazione.id == destinazione.attivita.destinazione.id and e.escursione.id == destinazione.attivita.escursione.id}">								
-										<h:inputText value="#{e.numeroPartecipanti}" />
-										<h:commandButton action="#{destinazione.modificaEscursione(e)}" value="salva" />
-										<h:commandButton action="#{destinazione.disabilitaModifica()}" value="annulla" />
-									</h:panelGroup>		
-								</h:form>					
-							</li>
-						</ui:repeat>
-					</ul>
+				<!--  Informazioni sulla destinazione -->
+				<h:panelGroup>
+					Dal
+					<p:inplace id="dataArrivo" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
+						<p:ajax event="save" listener="#{pacchetto.modificaDataArrivo(d)}" update=":pacchettoForm:prezzo,:mainForm:destinazioni" />
+	            		<p:calendar value="#{d.dataArrivo}" id="dataArrivoCal" locale="it" pattern="dd/MM/yyyy">
+	            			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+	            		</p:calendar>
+	            	</p:inplace>
+					<h:outputText value="#{d.dataArrivo}" rendered="#{not pacchetto.tipoPersonalizzato}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+					al
+					<p:inplace id="dataPartenza" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
+						<p:ajax event="save" listener="#{pacchetto.modificaDataPartenza(d)}" update=":pacchettoForm:prezzo,:mainForm:destinazioni" />
+	            		<p:calendar value="#{d.dataPartenza}" id="dataPartenzaCal" locale="it" pattern="dd/MM/yyyy">
+	            			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+	            		</p:calendar>
+	            	</p:inplace>					
+					<h:outputText value="#{d.dataPartenza}" rendered="#{not pacchetto.tipoPersonalizzato}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText><br />	
+					<h:outputText value="#{d.hotel.nome} a #{d.citta.nome} (#{d.citta.nazione})" />
+					<h:panelGroup rendered="#{not pacchetto.isTipoPredefinito()}">
+						<h:commandButton value="elimina destinazione" action="#{pacchetto.eliminaDestinazione(d)}" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" /><br />
+						<h:link outcome="modificaHotelPacchetto" value="modifica hotel" rendered="#{pacchetto.tipoPersonalizzato}">
+							<f:param name="idPacchetto" value="#{id.value}" />
+							<f:param name="idDestinazione" value="#{d.id}" />
+							<f:param name="nomeCitta" value="#{d.citta.nome}" />
+						</h:link>
+					</h:panelGroup>
+					<br /><br />
+					<!-- Informazioni sulle escursioni -->
+					<h:panelGroup rendered="#{d.attivita.size() > 0}">
+						<h4>Escursioni:</h4>
+						<ul>
+							<ui:repeat var="e" value="#{d.attivita}">
+								<li>
+									#{e.escursione.nome} a #{e.escursione.citta.nome} il
+									<h:outputText value="#{e.escursione.data}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+									</h:outputText>
+									(partecipanti: #{e.numeroPartecipanti})
+									<h:panelGroup rendered="#{pacchetto.tipoPersonalizzato}">
+										<h:panelGroup rendered="#{e.destinazione.id != destinazione.attivita.destinazione.id or e.escursione.id != destinazione.attivita.escursione.id}">
+											<h:commandButton action="#{destinazione.abilitaModifica(e)}" value="modifica" />
+											<h:commandButton action="#{destinazione.eliminaEscursione(e)}" value="elimina" />
+										</h:panelGroup>
+										<h:panelGroup rendered="#{e.destinazione.id == destinazione.attivita.destinazione.id and e.escursione.id == destinazione.attivita.escursione.id}">								
+											<h:inputText value="#{e.numeroPartecipanti}" />
+											<h:commandButton action="#{destinazione.modificaEscursione(e)}" value="salva" />
+											<h:commandButton action="#{destinazione.disabilitaModifica()}" value="annulla" />
+										</h:panelGroup>		
+									</h:panelGroup>					
+								</li>
+							</ui:repeat>
+						</ul>
+					</h:panelGroup>
+					<!-- Aggiunta Escursione -->
+					<h:panelGroup rendered="#{pacchetto.isTipoPersonalizzato()}">
+						<h:link value="aggiunta escursione" outcome="aggiuntaEscursione">
+							<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+							<f:param name="idDestinazione" value="#{d.id}" />
+							<f:param name="regione" value="#{d.citta.regione}" />
+						</h:link>		
+						<br /><br />	
+					</h:panelGroup>
 				</h:panelGroup>
-				<!-- Aggiunta Escursione -->
-				<h:panelGroup rendered="#{pacchetto.isTipoPersonalizzato()}">
-					<h:link value="aggiunta escursione" outcome="aggiuntaEscursione">
-						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-						<f:param name="idDestinazione" value="#{d.id}" />
-						<f:param name="regione" value="#{d.citta.regione}" />
-					</h:link>		
-					<br /><br />	
+				<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
+				<h:panelGroup rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
+					Il
+					<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).dataPartenza}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+					alle
+					<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).oraPartenza}">
+						<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+					</h:outputText>
+					da #{pacchetto.getCollegamento(d.dataPartenza).cittaPartenza.nome} (#{pacchetto.getCollegamento(d.dataPartenza).origine}) a #{pacchetto.getCollegamento(d.dataPartenza).cittaArrivo.nome} (#{pacchetto.getCollegamento(d.dataPartenza).destinazione})
+					<br />
+					<h:panelGroup rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
+						<h:link value="modifica collegamento" outcome="aggiuntaCollegamentoTest">
+							<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+							<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
+							<f:param name="cittaPartenza" value="#{d.citta.nome}" />
+							<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />						
+						</h:link>
+					</h:panelGroup>				
+					<br /><br />
 				</h:panelGroup>
-			</h:panelGroup>
-			<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
-			<h:panelGroup rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
-				Il
-				<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).dataPartenza}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>
-				alle
-				<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).oraPartenza}">
-					<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-				</h:outputText>
-				da #{pacchetto.getCollegamento(d.dataPartenza).cittaPartenza.nome} (#{pacchetto.getCollegamento(d.dataPartenza).origine}) a #{pacchetto.getCollegamento(d.dataPartenza).cittaArrivo.nome} (#{pacchetto.getCollegamento(d.dataPartenza).destinazione})
-				<br />
-				<h:panelGroup rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
-					<h:link value="modifica collegamento" outcome="aggiuntaCollegamentoTest">
+				<!-- Aggiunta collegamento di ritorno, se non presente (visualizzazto solo nell'ultima destinazione) -->
+				<h:panelGroup rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
+					<h:link value="aggiunta collegamento" outcome="aggiuntaCollegamentoTest">
 						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
 						<f:param name="cittaPartenza" value="#{d.citta.nome}" />
 						<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />						
 					</h:link>
-				</h:panelGroup>				
-				<br /><br />
+					<br /><br />
+				</h:panelGroup>
+			</ui:repeat>
+			<h:link value="aggiunta destinazione" outcome="aggiuntaDestinazioneTest" rendered="#{pacchetto.isTipoPersonalizzato()}">
+				<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+			</h:link><br />
+			<h:panelGroup>
+				<p:commandButton action="#{pacchetto.acquistaPacchetto()}" value="acquista" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
+				
+				<p:commandButton value="Condividi" onclick="PF('cond').show()" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />  
+	          
+				<p:dialog header="Condividi" widgetVar="cond" resizable="false">
+					<h:panelGroup>
+						<p:messages showDetail="true" autoUpdate="true" />			
+	      			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
+	           				<h:outputLabel for="email" value="email:" />  
+		           			<p:inputText id="email" binding="#{emailAmico}" />
+		           			
+		           			<h:outputLabel for="nome" value="Nome:" />  
+		           			<p:inputText id="nome" binding="#{nomeAmico}" />
+		           			
+		           			<h:outputLabel for="cognome" value="Cognome:" />  
+		           			<p:inputText id="cognome" binding="#{cognomeAmico}" />
+		       			</h:panelGrid>  
+		 
+		       			<p:commandButton value="Condividi" action="#{pacchetto.condividiPacchetto(emailAmico.value,nomeAmico.value,cognomeAmico.value)}" /> 
+		       			<p:commandButton value="Chiudi" oncomplete="PF('cond').hide();" /> 
+	       			</h:panelGroup>
+				</p:dialog>
 			</h:panelGroup>
-			<!-- Aggiunta collegamento di ritorno, se non presente (visualizzazto solo nell'ultima destinazione) -->
-			<h:panelGroup rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
-				<h:link value="aggiunta collegamento" outcome="aggiuntaCollegamentoTest">
-					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-					<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
-					<f:param name="cittaPartenza" value="#{d.citta.nome}" />
-					<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />						
-				</h:link>
-				<br /><br />
-			</h:panelGroup>
-		</ui:repeat>
-		<h:link value="aggiunta destinazione" outcome="aggiuntaDestinazioneTest" rendered="#{pacchetto.isTipoPersonalizzato()}">
-			<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-		</h:link><br />
-		<h:form>
-			<p:commandButton action="#{pacchetto.acquistaPacchetto()}" value="acquista" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />
-			
-			<p:commandButton value="Condividi" onclick="PF('cond').show()" rendered="#{pacchetto.isTipoPersonalizzato() or pacchetto.isTipoPredefinito()}" />  
-          
-			<p:dialog header="Condividi" widgetVar="cond" resizable="false">
-				<h:form>
-					<p:messages showDetail="true" autoUpdate="true" />			
-      			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
-           				<h:outputLabel for="email" value="email:" />  
-	           			<p:inputText id="email" binding="#{emailAmico}" />
-	           			
-	           			<h:outputLabel for="nome" value="Nome:" />  
-	           			<p:inputText id="nome" binding="#{nomeAmico}" />
-	           			
-	           			<h:outputLabel for="cognome" value="Cognome:" />  
-	           			<p:inputText id="cognome" binding="#{cognomeAmico}" />
-	       			</h:panelGrid>  
-	 
-	       			<p:commandButton value="Condividi" action="#{pacchetto.condividiPacchetto(emailAmico.value,nomeAmico.value,cognomeAmico.value)}" /> 
-	       			<p:commandButton value="Chiudi" oncomplete="PF('cond').hide();" /> 
-       			</h:form>
-			</p:dialog>
-		</h:form>
-	</h:panelGroup>
+		</h:panelGroup>
+	</h:form>
 </body> 
 </html>

@@ -3,13 +3,26 @@ package ejbs;
 import javax.ejb.Local;
 
 import dtos.AttivitaDTO;
+import dtos.HotelDTO;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
+import eccezioni.HotelInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.NumeroPartecipantiException;
 
 @Local
 public interface GestoreDestinazione {
+	
+	/**
+	 * Permette la modifica dell'hotel di una destinazione
+	 * @param idDestinazione L'identificativo della destinazione da modificare
+	 * @param hotel L'hotel da aggiungere
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
+	 * @throws InsertException Quando l'hotel non si trova nella stessa città della destinazione
+	 */
+	void modificaHotel (int idDestinazione, HotelDTO hotel) throws HotelInesistenteException, DestinazioneInesistenteException, InsertException;
 	
 	/**
 	 * Permette l'aggiunta di una escursione

@@ -17,11 +17,13 @@ import javax.persistence.Query;
 
 import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
+import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.NumeroPartecipantiException;
 import entities.Attivita;
 import entities.Destinazioni;
@@ -66,15 +68,17 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
 		entity.setDataPartenza(destinazione.getDataPartenza());
-		
-		em.merge(entity);
 	}
     
     @Override
-    public void modificaHotel (DestinazioneDTO destinazione) throws HotelInesistenteException {
-    	Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
-    	
-		entity.setHotel(hotel.convertiInEntita(destinazione.getHotel()));
+    public void modificaHotel (int idDestinazione, HotelDTO hotel) throws HotelInesistenteException, DestinazioneInesistenteException, InsertException {
+    	Destinazioni entity = this.convertiInEntita(idDestinazione);
+    			
+		//controllo che l'hotel sia nella stessa città della destinazione
+		if (entity.getCitta().getNome().equals(hotel.getCitta().getNome())) {
+			entity.setHotel(this.hotel.convertiInEntita(hotel));
+		} else
+			throw new InsertException();
 		
 		em.merge(entity);
     }
