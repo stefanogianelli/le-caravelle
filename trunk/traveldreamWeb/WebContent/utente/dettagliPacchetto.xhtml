@@ -13,6 +13,18 @@
 
 <h1>Nome pacchetto</h1>
 
+<div class="bloccoRicerca">
+	<h:form>
+		<h:commandButton value="Elimina pacchetto" styleClass="search-button"/>
+	</h:form>
+	<h:form>
+		<h:commandButton value="Condividi pacchetto" styleClass="search-button"/>
+	</h:form>
+	<h:form>
+		<h:commandButton value="Acquista pacchetto" styleClass="search-button"/>
+	</h:form>
+</div>
+
 <div class="bloccoPacc">
 	<h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
 	
@@ -31,7 +43,7 @@
 
 <div class="bloccoPaccVolo">
 	<p>Data</p>
-	<div class="volo">
+	<div class="volo">	
 		<div class="etichette">
 		<ul>
 			<li>Da</li>
@@ -42,6 +54,14 @@
 			<li>Prezzo</li>
 		</ul>
 		</div>
+		<h:form>
+			<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliCollegamento.xhtml" />
+		</h:form>
+	
+		<h:form>
+			<h:commandButton value="Modifica" styleClass="flight-button"/>
+		</h:form>
+		
 		<div class="dati">
 		<ul>
 			<li>New York JFK</li>
@@ -52,6 +72,9 @@
 			<li>468 euro</li>
 		</ul>
 		</div>
+		
+
+	
 	</div>
 </div>
 
@@ -60,6 +83,11 @@
 		<p>Città di destinazione</p>
 		<h2>cittàDestinazione</h2>
 	</div>
+	
+	<h:form>
+		<h:commandButton value="Elimina" styleClass="detail-button"/>
+	</h:form>
+	
 	<div class="hotelPacc">
 		<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
 		<div class="descrHotel">
@@ -67,7 +95,18 @@
 		<p>Indirizzo</p>
 		<p>telefono</p>
 		</div>
+		<h:form>
+			<h:commandButton value="Modifica" styleClass="flight-button"/>
+		</h:form>
+	
+		<h:form>
+			<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliHotel.xhtml" />
+		</h:form>
 	</div>
+</div>
+
+<div class="bloccoPaccEscursione">
+	<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" />
 </div>
 
 <div class="bloccoPaccVolo">
@@ -83,20 +122,23 @@
 			<li>Prezzo</li>
 		</ul>
 		</div>
+		
+		<h:form>
+			<h:commandButton value="Modifica" styleClass="flight-button"/>
+		</h:form>
+	
+		<h:form>
+			<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliCollegamento.xhtml" />
+		</h:form>
+		
 		<div class="dati">
-		<ul>
-			<li>New York JFK</li>
-			<li>Milano Malpensa</li>
-			<li>22:20</li>
-			<li>12:05</li>
-			<li>0</li>
-			<li>468 euro</li>
-		</ul>
+			<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento.xhtml" />
 		</div>
 	</div>
 </div>
-
+	<h:link value="Aggiungi destinazione" outcome="aggiuntaDestinazione.xhtml" />
 <div class="bloccoPacc">
+ 
 </div>
 
 </ui:define>

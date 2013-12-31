@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="templateDip.xhtml">
@@ -32,8 +33,17 @@
 		<br></br>
 		<div id="prezzo">città</div>
 	</div>
+	
 	<h:form>
-		<h:commandButton value="Dettagli hotel" styleClass="search-button" action="dettagliHotel" />
+		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliHotel" />
+	</h:form>
+
+	<h:form>
+		<h:commandButton value="Modifica" styleClass="detail-button" action="modificaHotel" />
+	</h:form>
+	
+	<h:form>
+		<h:commandButton value="Elimina" styleClass="detail-button"/>
 	</h:form>
 	
 </div>
@@ -53,7 +63,15 @@
 	</div>
 	
 	<h:form>
-		<h:commandButton value="Dettagli hotel" styleClass="search-button" action="dettagliHotel" />
+		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliHotel" />
+	</h:form>
+
+	<h:form>
+		<h:commandButton value="Modifica" styleClass="detail-button" action="modificaHotel" />
+	</h:form>
+	
+	<h:form>
+		<h:commandButton value="Elimina" styleClass="detail-button"/>
 	</h:form>
 	
 </div>

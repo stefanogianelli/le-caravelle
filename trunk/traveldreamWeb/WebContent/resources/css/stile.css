@@ -118,20 +118,32 @@ a:hover {
 .search-button{
 	height:50px;
 	width:250px;
-	margin:20px auto auto 40px;
+	margin:20px 45px;
 	font-size:22px;
 	font-family:arial;
 	text-align:center;
 	color: #003333;
+	display:block;
+	float:left;
 }
 .detail-button{
 	height:40px;
-	width:180px;
-	margin:20px 20px;
+	width:120px;
+	margin:20px auto 0 20px;
 	font-size:18px;
 	font-family:arial;
 	text-align:center;
 	color: #003333;
+}
+.flight-button{
+	height:30px;
+	width:85px;
+	margin:10px 10px auto auto;
+	font-size:14px;
+	font-family:arial;
+	text-align:center;
+	color: #003333;
+	float:right;
 }
 
 select{
@@ -368,6 +380,7 @@ select{
 	width:894px;
 	margin: 10px 10px 0 10px;
 	border:1px solid #999999;
+	float:left;
 }
 .etichette ul{
 	margin-left: -40px;
@@ -391,6 +404,7 @@ select{
 	width:894px;
 	margin: 0 10px;
 	border:1px solid white;
+	float:left;
 }
 .dati ul{
 	margin-left:-40px;
@@ -465,7 +479,6 @@ select{
 	border-top:1px solid white;
 	border:1px solid red;
 }
-
 .bloccoPacc img{
 	float: left;
 	margin: 30px 0 0 40px;
@@ -473,6 +486,13 @@ select{
 .bloccoPaccVolo {
 	background-color: white;
 	height: 200px;
+	width: 100%;
+	border-top:1px solid white;
+	border:1px solid red;
+}
+.bloccoPaccEscursione {
+	background-color: white;
+	height: auto;
 	width: 100%;
 	border-top:1px solid white;
 	border:1px solid red;
@@ -501,10 +521,12 @@ select{
 }
 .bloccoRicerca {
 	background-color: #669999;
-	height: 200px;
+	height: 90px;
 	width: 100%;
 	border-top:1px solid #669999;
 	border-bottom:5px solid white;
+	display:block;
+	float:none;
 }
 /*Pagine info*/
 .info {
