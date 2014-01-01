@@ -23,8 +23,8 @@
 		<h:panelGrid rendered="#{(not pacchetto.tipoPersonalizzato) and (not pacchetto.tipoPredefinito)}">
 			#{pacchetto.pacchetto.nome}
 		</h:panelGrid>
-		<h:form>		
-			<p:inplace editor="true" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">  
+		<h:form rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">		
+			<p:inplace editor="true">  
 				<p:ajax event="save" listener="#{pacchetto.modificaNomePacchetto()}" />
 		       	<p:inputText value="#{pacchetto.pacchetto.nome}" required="true"/>  
 		    </p:inplace>
@@ -35,29 +35,33 @@
 	<div class="bloccoRicerca">
 		<h:form>
 			<h:commandButton value="Elimina pacchetto" styleClass="search-button" action="#{pacchetto.eliminaPacchetto()}"/>
-		</h:form>
-		<h:form>
-			<h:commandButton value="Condividi pacchetto" styleClass="search-button" />
-		</h:form>
-		<h:form>
-			<h:commandButton value="Acquista pacchetto" styleClass="search-button" action="#{pacchetto.acquistaPacchetto()}" disabled="#{(not pacchetto.tipoPersonalizzato) or (not pacchetto.tipoPredefinito)}"/>
+			<h:commandButton value="Condividi pacchetto" styleClass="search-button" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}" />
+			<h:commandButton value="Acquista pacchetto" styleClass="search-button" action="#{pacchetto.acquistaPacchetto()}" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}"/>
 		</h:form>
 	</div>	
 	
-	<div class="bloccoPacc">
+	<div id="dettagliPacchetto" class="bloccoPacc">
 		<h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
 		
 		<div class="descr">		
 			<div>	
 				<p>Città di partenza</p>
 				<h2>
-					<h:form>
-						<p:inplace label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
+					<h:form rendered="#{pacchetto.tipoPersonalizzato}">
+						<p:inplace label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true">  
 							<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" />
 			                <h:selectOneMenu binding="#{nuovaCittaPartenza}">
 								<f:selectItems value="#{citta.nomiCitta}" />
 							</h:selectOneMenu>	  
 			            </p:inplace>
+		        	</h:form>
+		        	<h:form rendered="#{pacchetto.tipoPredefinito}">
+			            <p:inplace label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true">  
+							<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" />
+			                <h:selectOneMenu binding="#{nuovaCittaPartenzaPred}">
+								<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
+							</h:selectOneMenu>	  
+			            </p:inplace>			        	
 		        	</h:form>
 					<h:outputText value="#{pacchetto.pacchetto.citta.nome}" rendered="#{(not pacchetto.tipoPersonalizzato) and (not pacchetto.tipoPredefinito)}" />
 				</h2>
@@ -65,8 +69,8 @@
 			<br></br>
 			<p>Numero di partecipanti</p>
 			<h2>
-				<h:form>
-					<p:inplace editor="true" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">  
+				<h:form rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
+					<p:inplace editor="true">  
 						<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" />
 	            		<p:inputText id="partText" value="#{pacchetto.pacchetto.numPartecipanti}" required="true" style="width: 200px;"/>  
 	            	</p:inplace>
@@ -98,11 +102,16 @@
 				</ul>
 				</div>
 				<h:form>
-					<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliCollegamento.xhtml" />
-				</h:form>
-			
-				<h:form>
-					<h:commandButton value="Modifica" styleClass="flight-button"/>
+					<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento" disabled="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
+						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataArrivo).codice}" />
+					</h:link>
+					<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}">
+						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+						<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
+						<f:param name="cittaArrivo" value="#{d.citta.nome}" />			
+					</h:link>
 				</h:form>
 				
 				<!-- Blocco dettagli volo -->
@@ -127,12 +136,12 @@
 				
 				<!-- Blocco aggiunta volo -->
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
-                        <h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
-                        	<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-							<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
-							<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
-							<f:param name="cittaArrivo" value="#{d.citta.nome}" />
-                        </h:link>
+                	<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
+                   		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+						<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
+						<f:param name="cittaArrivo" value="#{d.citta.nome}" />
+                   </h:link>
                 </h:panelGroup>               
 			
 			</div>
@@ -145,7 +154,7 @@
 			</div>
 			
 			<h:form>
-				<h:commandButton value="Elimina" styleClass="detail-button"/>
+				<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchetto.eliminaDestinazione(d)}" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}"/>
 			</h:form>
 			
 			<div class="hotelPacc">
@@ -156,17 +165,21 @@
 				<p>#{d.hotel.telefono}</p>
 				</div>
 				<h:form>
-					<h:commandButton value="Modifica" styleClass="flight-button"/>
-				</h:form>
-			
-				<h:form>
-					<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliHotel.xhtml" />
+					<h:link value="Modifica" styleClass="flight-button" disabled="#{not pacchetto.tipoPersonalizzato}"/>
+					<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliHotel">
+						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="idHotel" value="#{d.hotel.id}" />
+					</h:link>
 				</h:form>
 			</div>
 		</div>
 		
 		<div class="bloccoPaccEscursione">
-			<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" />
+			<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
+				<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+				<f:param name="idDestinazione" value="#{d.id}" />
+				<f:param name="regione" value="#{d.citta.regione}" />
+			</h:link>
 		</div>
 		
 		<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
@@ -187,11 +200,16 @@
 				</div>
 				
 				<h:form>
-					<h:commandButton value="Modifica" styleClass="flight-button"/>
-				</h:form>
-			
-				<h:form>
-					<h:commandButton value="Dettagli" styleClass="flight-button" action="dettagliCollegamento.xhtml" />
+					<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento" disabled="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
+						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataPartenza).codice}" />
+					</h:link>
+					<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}">
+						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
+						<f:param name="cittaPartenza" value="#{d.citta.nome}" />
+						<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
+					</h:link>
 				</h:form>
 				
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
@@ -215,14 +233,21 @@
 				
 				<!-- Blocco aggiunta volo -->
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
-                        <h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento.xhtml" />
+                        <h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
+                        	<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+							<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
+							<f:param name="cittaPartenza" value="#{d.citta.nome}" />
+							<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
+						</h:link>
                 </h:panelGroup>
 				
 			</div>
 		</h:panelGroup>
 	</ui:repeat>
 		
-	<h:link value="Aggiungi destinazione" outcome="aggiuntaDestinazione.xhtml" />
+	<h:link value="Aggiungi destinazione" outcome="aggiuntaDestinazione" disabled="#{not pacchetto.tipoPersonalizzato}">
+		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+	</h:link>
 
 </h:panelGroup>	
 
