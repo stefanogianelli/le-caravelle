@@ -33,9 +33,27 @@
     </h1>
 	
 	<div class="bloccoRicerca">
-		<h:commandButton value="Elimina pacchetto" styleClass="search-button" action="#{pacchetto.eliminaPacchetto()}"/>
-		<h:commandButton value="Condividi pacchetto" styleClass="search-button" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}" />
-		<h:commandButton value="Acquista pacchetto" styleClass="search-button" action="#{pacchetto.acquistaPacchetto()}" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}"/>
+		<p:commandButton value="Elimina pacchetto" styleClass="search-button" action="#{pacchetto.eliminaPacchetto()}"/>
+		<p:commandButton value="Condividi pacchetto" styleClass="search-button" onclick="PF('condividiPacchetto').show()" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}" />
+		
+		<p:dialog header="Condividi" widgetVar="condividiPacchetto" resizable="false">
+			<h:panelGroup>		
+   			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
+       				<h:outputLabel for="email" value="email:" />  
+         			<p:inputText id="email" binding="#{emailAmico}" />
+         			
+         			<h:outputLabel for="nome" value="Nome:" />  
+         			<p:inputText id="nome" binding="#{nomeAmico}" />
+         			
+         			<h:outputLabel for="cognome" value="Cognome:" />  
+         			<p:inputText id="cognome" binding="#{cognomeAmico}" />
+       			</h:panelGrid>  
+ 
+       			<p:commandButton value="Condividi" action="#{pacchetto.condividiPacchetto(emailAmico.value,nomeAmico.value,cognomeAmico.value)}" oncomplete="PF('condividiPacchetto').hide();" />
+      		</h:panelGroup>
+		</p:dialog>
+		
+		<p:commandButton value="Acquista pacchetto" styleClass="search-button" action="#{pacchetto.acquistaPacchetto()}" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}"/>
 	</div>	
 	
 	<div id="dettagliPacchetto" class="bloccoPacc">
@@ -144,6 +162,7 @@
 			</div>
 		</div>
 		
+		<!-- Informazioni sulla destinazione -->
 		<div class="bloccoPacc">
 			<div class="descr">
 				<p>Città di destinazione</p>
@@ -154,7 +173,7 @@
 			
 			<div>
 				Data di arrivo
-				<p:inplace id="modificaDataArrivo" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
+				<p:inplace editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
 					<p:ajax event="save" listener="#{pacchetto.modificaDataArrivo(d)}" update=":mainForm:prezzoPacchetto" />
             		<p:calendar value="#{d.dataArrivo}" id="dataArrivoCal" locale="it" pattern="dd/MM/yyyy">
             			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
@@ -164,7 +183,7 @@
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText>
 				Data di partenza
-				<p:inplace id="modificaDataPartenza" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
+				<p:inplace editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
 					<p:ajax event="save" listener="#{pacchetto.modificaDataPartenza(d)}" update=":mainForm:prezzoPacchetto" />
             		<p:calendar value="#{d.dataPartenza}" id="dataPartenzaCal" locale="it" pattern="dd/MM/yyyy">
             			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
