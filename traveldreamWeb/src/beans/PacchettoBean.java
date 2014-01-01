@@ -230,7 +230,7 @@ public class PacchettoBean {
 	public String eliminaPacchetto () {
 		try {
 			pacchettoBean.eliminaPacchetto(this.getPacchetto());
-			return "elencoPacchettiTest?faces-redirect=true";
+			return "areaCliente?faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
@@ -467,7 +467,7 @@ public class PacchettoBean {
 				DestinazioneDTO successiva = this.getPacchetto().getDestinazioni().get(this.getPacchetto().getDestinazioni().indexOf(destinazione) + 1);
 				if (destinazione.getDataPartenza().before(successiva.getDataPartenza())) {
 					//modifico anche la data di arrivo nella destinazione successiva
-					successiva.setDataArrivo(destinazione.getDataArrivo());
+					successiva.setDataArrivo(destinazione.getDataPartenza());
 					pacchettoBean.modificaDateDestinazione(getPacchetto(), successiva);
 					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
 					JsfUtil.infoMessage(success);
