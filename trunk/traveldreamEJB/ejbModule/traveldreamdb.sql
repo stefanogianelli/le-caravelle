@@ -122,7 +122,7 @@ DROP TABLE IF EXISTS `traveldreamdb`.`pacchetti` ;
 
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(255) NOT NULL UNIQUE,
+  `nome` VARCHAR(255) NOT NULL,
   `numPartecipanti` INT NOT NULL DEFAULT 1,
   `prezzo` DOUBLE NOT NULL,
   `tipoPacchetto` VARCHAR(45) NOT NULL,
@@ -130,6 +130,7 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti` (
   `idPred` INT NULL,
   `emailUtente` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE (`nome`, `emailUtente`),
   INDEX `fk_Pacchetto_Citta 2_idx` (`idCittaOrigine` ASC),
   INDEX `fk_Pacchetto_PacchettoPredefinito1_idx` (`idPred` ASC),
   INDEX `fk_pacchetti_utenti1_idx` (`emailUtente` ASC),
