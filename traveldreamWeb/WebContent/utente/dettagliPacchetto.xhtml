@@ -71,7 +71,7 @@
 			<h2>
 				<h:form rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
 					<p:inplace editor="true">  
-						<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" />
+						<p:ajax event="save" listener="#{pacchetto.modificaNumeroPartecipanti()}" update=":prezzoPacchetto" />
 	            		<p:inputText id="partText" value="#{pacchetto.pacchetto.numPartecipanti}" required="true" style="width: 200px;"/>  
 	            	</p:inplace>
             	</h:form>
@@ -79,9 +79,9 @@
 			</h2>
 		</div>
 		
-		<div class="descr">
+		<h:panelGroup id="prezzoPacchetto" styleClass="descr" layout="block">
 			<div id="prezzo">#{pacchetto.pacchetto.prezzo} €</div>
-		</div>
+		</h:panelGroup>
 	</div>
 	
 	<ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}">		
