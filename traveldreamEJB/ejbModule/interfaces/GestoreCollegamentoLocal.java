@@ -8,7 +8,7 @@ import entities.Collegamenti;
 
 @Local
 public interface GestoreCollegamentoLocal {
-
+	
 	/**
 	 * Permette la conversione da un DTO alla rispettiva entità
 	 * @param collegamento Il DTO del collegamento
@@ -16,6 +16,14 @@ public interface GestoreCollegamentoLocal {
 	 * @throws CollegamentoInesistenteException Quando il collegamento non viene trovato nel database
 	 */
 	Collegamenti convertiInEntita (CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
+	
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param codiceCollegamento Il codice del collegamento
+	 * @return L'entità desiderata
+	 * @throws CollegamentoInesistenteException Quando il collegamento non viene trovato nel database
+	 */
+	Collegamenti convertiInEntita (int codiceCollegamento) throws CollegamentoInesistenteException;
 	
 	/**
 	 * Permette la conversione da un'entità al rispettivo DTO

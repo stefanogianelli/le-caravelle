@@ -62,6 +62,18 @@ public class CollegamentoBean {
 	}
 	
 	/**
+	 * Permette la ricerca di un collegamento tramite il suo codice
+	 * @param codiceCollegamento Il codice del collegamento
+	 */
+	public void getCollegamento (int codiceCollegamento) {
+		try {
+			this.setCollegamento(collegamentoBean.getCollegamento(codiceCollegamento));
+		} catch (CollegamentoInesistenteException e) {
+			JsfUtil.errorMessage("Collegamento inesistente!");
+		}
+	}
+	
+	/**
 	 * Elenca tutti i collegamenti presenti nel database
 	 */
 	public void elencoCollegamenti () {

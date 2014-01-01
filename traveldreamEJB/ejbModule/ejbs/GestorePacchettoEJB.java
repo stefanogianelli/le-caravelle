@@ -17,7 +17,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -77,15 +76,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	
 	@Override
 	public PacchettoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException {
-		Query q = em.createNamedQuery("Pacchetti.getPacchettoDaId", Pacchetti.class);
-		q.setParameter("id", idPacchetto);
-		Pacchetti pacchetto;
-		try {
-			pacchetto = (Pacchetti) q.getSingleResult();
-		} catch (NoResultException e) {
-			throw new PacchettoInesistenteException();
-		}
-		return this.convertiInDTO(pacchetto);
+		return this.convertiInDTO(this.convertiInEntita(idPacchetto));
 	}
 	
 	@Override

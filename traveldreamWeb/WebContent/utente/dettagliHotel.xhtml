@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="/template.xhtml">
@@ -9,25 +10,29 @@
 <ui:define name="title">Dettagli hotel</ui:define>
 
 <ui:define name="content">
-<h1>Dettagli hotel</h1>
-<div class="bloccoDett">
-	<h2>Hotel La Madonnina</h2>
-	<p>3 stelle</p>
-	<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
-	<p>Prezzo a notte: prezzo</p>
-	<br></br>
-	<p>Indirizzo: Via Mazzini 10</p>
-	<p>Città: città</p>
-	<br></br>
-	<p>Telefono: telefono</p>
-	<p>Website: website</p>
-	<p>Email: email</p>
-	
-	<h:form>
-		<h:commandButton styleClass="button" value="Salva" />
-	</h:form>
 
-</div>
+<f:metadata>
+	<f:viewParam name="idHotel" binding="#{id}" />
+	<f:event listener="#{hotel.getHotel(id.value)}" type="preRenderView" />
+</f:metadata>
+
+<h1>Dettagli hotel</h1>
+
+<p:messages showDetail="true" autoUpdate="true" />
+
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{hotel.hotel.id != 0}">
+	<h2>#{hotel.hotel.nome}</h2>
+	<p><p:rating value="#{hotel.hotel.stelle}" readonly="true" stars="5" /></p>
+	<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
+	<p>Prezzo a notte: #{hotel.hotel.prezzo} €</p>
+	<br></br>
+	<p>Indirizzo: #{hotel.hotel.indirizzo}</p>
+	<p>Città: #{hotel.hotel.citta.nome}</p>
+	<br></br>
+	<p>Telefono: #{hotel.hotel.telefono}</p>
+	<p>Website: #{hotel.hotel.website}</p>
+	<p>Email: #{hotel.hotel.email}</p>
+</h:panelGroup>
 </ui:define>
 
 </ui:composition>

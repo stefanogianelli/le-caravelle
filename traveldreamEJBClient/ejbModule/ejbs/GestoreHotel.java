@@ -12,6 +12,14 @@ import eccezioni.HotelInesistenteException;
 @Local
 public interface GestoreHotel {
 
+	/**
+	 * Resituisce l'hotel associato all'identificativo inserito
+	 * @param idHotel L'identificativo dell'hotel
+	 * @return L'hotel corrispondente
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 */
+	HotelDTO getHotel (int idHotel) throws HotelInesistenteException;
+	
     /**
      * Mostra l'elenco di tutti gli hotel presenti nel database
      * @return L'elenco degli hotel

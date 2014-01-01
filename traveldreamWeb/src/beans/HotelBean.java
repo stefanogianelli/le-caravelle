@@ -50,6 +50,18 @@ public class HotelBean {
 	public void setElenco(List<HotelDTO> elenco) {
 		this.elenco = elenco;
 	}
+	
+	/**
+	 * Permette la ricerca di un hotel tramite il suo identificativo
+	 * @param idHotel L'identificativo dell'hotel
+	 */
+	public void getHotel (int idHotel) {
+		try {
+			this.setHotel(hotelBean.getHotel(idHotel));
+		} catch (HotelInesistenteException e) {
+			JsfUtil.errorMessage("Hotel sconosciuto!");
+		}
+	}
 
 	/**
 	 * Mostra tutti gli hotel presenti nel database

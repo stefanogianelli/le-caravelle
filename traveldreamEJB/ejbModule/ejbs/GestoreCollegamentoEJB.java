@@ -34,6 +34,11 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	private GestoreCittaLocal citta;
 	
 	@Override
+	public CollegamentoDTO getCollegamento (int codiceCollegamento) throws CollegamentoInesistenteException {
+		return this.convertiInDTO(this.convertiInEntita(codiceCollegamento));
+	}
+	
+	@Override
 	public List<CollegamentoDTO> elencoCollegamenti() {
 		List<Collegamenti> collegamenti = em.createNamedQuery("Collegamenti.elenco", Collegamenti.class).getResultList();
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
@@ -114,6 +119,15 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	@Override
 	public Collegamenti convertiInEntita (CollegamentoDTO collegamento) throws CollegamentoInesistenteException {
 		Collegamenti collegamentoEntity = em.find(Collegamenti.class, collegamento.getCodice());
+		if (collegamentoEntity != null)
+			return collegamentoEntity;
+		else
+			throw new CollegamentoInesistenteException ();
+	}
+	
+	@EJB
+	public Collegamenti convertiInEntita (int codiceCollegamento) throws CollegamentoInesistenteException {
+		Collegamenti collegamentoEntity = em.find(Collegamenti.class, codiceCollegamento);
 		if (collegamentoEntity != null)
 			return collegamentoEntity;
 		else
