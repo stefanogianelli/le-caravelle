@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <ui:composition template="/template.xhtml">
@@ -10,106 +11,58 @@
 
 <ui:define name="content">
 
-	<div class="blocco">
-        <h1>Crea il tuo pacchetto</h1>
-        <h2>Aggiungi destinazione</h2>
-        <h3>Seleziona la destinazione</h3>
-		 <select>
-		  <option value="Milano">Milano</option> 	<!-- Da collegare al database -->
-		</select>
-	</div>
+	<f:metadata>
+		<f:viewParam name="idPacchetto" binding="#{id}" />
+		<f:event listener="#{pacchetto.getPacchetto(id.value)}" type="preRenderView" />
+	</f:metadata>
 	
-	<div class="blocco">
-		<div class="data">
-			<h3>Data di arrivo</h3>
-			<h:form>
-			<input type="text" name="dataArrivo"> </input> <br></br>
-			</h:form>
-		</div>
-		
-		<div class="data">
-			<h3>Data di partenza</h3>
-			<h:form>
-			<input type="text" name="dataPartenza"> </input> <br></br>
-			</h:form>
-		</div>
-	
-		<div class="città">
-        <h3>Seleziona la città di partenza</h3>
-			<h:form>
-			<input type="text" name="partenza"> </input> <br></br>
-			</h:form>
-		</div>
-		
-	</div>
-	
-	<div class="bloccoBianco"> <!-- Da collegare al database -->
-		<h2>Scegli l'hotel</h2>
-		<div class="hotel">
-			<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
-			<p><b>Hotel La Madonnina</b></p>
-			<p>3 stelle</p>
-			<p>prezzo</p>
-			
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
-		
-		</div>
+	<p:messages showDetail="true" autoUpdate="true" />
 
-		<div class="hotel">
-			<h:graphicImage library="images" name="starhotel.jpg" width="195" height="113" />
-			<p><b>Starhotel Rosa</b></p>
-			<p>4 stelle</p>
-			<p>prezzo</p>
-	
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
-		
+	<h:form>
+		<div class="blocco">
+	        <h1>Crea il tuo pacchetto</h1>
+	        <h2>Aggiungi destinazione</h2>
+	        <h3>Seleziona la destinazione</h3>
+		 	<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+				<f:selectItems value="#{citta.nomiCitta}" />
+			</h:selectOneMenu>	
 		</div>
 		
-		<div class="hotel">
-			<h:graphicImage library="images" name="fenice.jpg" width="195" height="113" />
-			<p><b>Hotel Fenice</b></p>
-			<p>3 stelle</p>
-			<p>prezzo</p>
+		<div class="blocco">
+			<div class="data">
+				<h3>Data di arrivo</h3>
+				<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataArrivo}" locale="it"  required="true" />
+			</div>
 			
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
-		
-		</div>
-		
-		<div class="hotel">
-			<h:graphicImage library="images" name="michelangelo.jpg" width="195" height="113" />
-			<p><b>Hotel Michelangelo</b></p>
-			<p>4 stelle</p>
-			<p>prezzo</p>
+			<div class="data">
+				<h3>Data di partenza</h3>
+				<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataPartenza}" locale="it"  required="true" />
+			</div>
 			
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
-		
+			<div class="bloccoButton">
+				<h:commandButton id="cercaHotel" value="Cerca" styleClass="button">
+					<f:ajax execute="@form" listener="#{hotel.cercaHotel(nomeCitta.value)}" render="listaHotel" />
+				</h:commandButton>
+			</div>
+			
 		</div>
 		
-	</div>
+		<h:panelGroup id="listaHotel" styleClass="bloccoBianco" layout="block">
+			<p:carousel value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">  
+			    <f:facet name="header">Hotel</f:facet>
+				<div class="hotel">
+					<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
+					<p><b>#{h.nome}</b></p>
+					<p:rating value="#{h.stelle}" readonly="true" stars="5" />
+					<p>#{h.prezzo} €</p>
+					
+					<h:commandButton value="Scegli" action="#{pacchetto.salvaDestinazione(id.value, h)}" styleClass="flight-button"/>
+		
+					<h:commandButton value="Dettagli" styleClass="flight-button"/>			
+				</div>		
+			</p:carousel>
+		</h:panelGroup>
+	</h:form>
 
 </ui:define>
 
