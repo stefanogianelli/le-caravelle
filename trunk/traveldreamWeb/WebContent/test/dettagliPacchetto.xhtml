@@ -28,7 +28,7 @@
 			
 			Partenza:&nbsp;
 			<p:inplace id="partenza" label="#{pacchetto.pacchetto.citta.nome}" effectSpeed="fast" editor="true" rendered="#{pacchetto.isTipoPersonalizzato()}">  
-				<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" update="prezzo" />
+				<p:ajax event="save" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" update="prezzo, :mainForm:destinazioni" />
                 <h:selectOneMenu binding="#{nuovaCittaPartenza}">
 					<f:selectItems value="#{citta.nomiCitta}" />
 				</h:selectOneMenu>	  
