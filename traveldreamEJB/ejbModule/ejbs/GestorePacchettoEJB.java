@@ -104,21 +104,19 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	
 	@Override
 	public int creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, InsertException {
-		Pacchetti entity = new Pacchetti();		
-
-		//TODO: da eliminare il controllo del nome, nella pagina finale non viene chiesto il nome del pacchetto ed è necessario generarne uno casualmente
-		if (pacchetto.getNome() == null ||pacchetto.getNome().isEmpty())
-			entity.setNome("Pacchetto" + (MIN_PACCHETTO + (int)(Math.random() * ((MAX_PACCHETTO - MIN_PACCHETTO) + 1))));
-		else {
+		Pacchetti entity = new Pacchetti();
+		boolean check = false;
+		
+		while (!check) {
+			entity.setNome("Pacchetto " + (MIN_PACCHETTO + (int)(Math.random() * ((MAX_PACCHETTO - MIN_PACCHETTO) + 1))));
 			//controllo che il nome del pacchetto non esista nel database
 			Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 			q.setParameter("nome", pacchetto.getNome());
 			q.setParameter("utente", pacchetto.getUtente().getEmail());
-			if (!q.getResultList().isEmpty())
-				throw new InsertException();
-			else
-				entity.setNome(pacchetto.getNome());
-		}		
+			if (q.getResultList().isEmpty())
+				check = true;
+		}
+		
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());		
 		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
