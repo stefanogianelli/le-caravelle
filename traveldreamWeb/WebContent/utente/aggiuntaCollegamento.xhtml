@@ -46,14 +46,14 @@
 			
 			<div class="data">
 				<h3>Data di partenza</h3>
-				<h:outputText value="#{dataPartenza}">
+				<h:inputText styleClass="text-input" value="#{dataPartenza}" disabled="true">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>
+				</h:inputText>
 			</div>
 			
 			<div class="data">
 	        <h3>Numero di passeggeri</h3>
-				<h:outputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" />
+				<h:inputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" disabled="true" />
 			</div>
 							
 		</div>
