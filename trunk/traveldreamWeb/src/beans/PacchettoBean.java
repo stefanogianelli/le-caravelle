@@ -251,6 +251,8 @@ public class PacchettoBean {
 	
 	/**
 	 * Permette la creazione di un pacchetto a partire da un pacchetto predefinito
+	 * @param durata La durata scelta
+	 * @param dataArrivo La data di arrivo scelta
 	 */
 	public void salvaPacchettoPredefinito (int durata, String dataArrivo) {
 		try {
@@ -389,6 +391,8 @@ public class PacchettoBean {
 	
 	/**
 	 * Salva la nuova destinazione nel database
+	 * @param id L'identificativo del pacchetto
+	 * @param hotel L'hotel scelto
 	 * @return L'indirizzo della pagina con i dettagli del pacchetto
 	 */
 	public String salvaDestinazione (int id, HotelDTO hotel) {
@@ -479,6 +483,7 @@ public class PacchettoBean {
 	
 	/**
 	 * Permette di modificare l'hotel inserito in una destinazione
+	 * @param idPacchetto L'identificativo del pacchetto
 	 * @param idDestinazione L'identificativo dell'hotel
 	 * @param hotel Il nuovo hotel
 	 * @return L'indirizzo della pagina dettagli
@@ -534,7 +539,7 @@ public class PacchettoBean {
 	}
 	
 	/**
-	 * Restituisce il collegamento, se esistente, nel pacchetto nella data desiderata
+	 * Restituisce il collegamento, se esistente, nella data desiderata
 	 * @param data La data desiderata
 	 * @return Il collegamento, se esiste, null altrimenti
 	 */
