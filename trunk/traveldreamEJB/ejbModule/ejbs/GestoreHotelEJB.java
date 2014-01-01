@@ -29,6 +29,11 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	
 	@EJB
 	private GestoreCittaLocal citta;
+	
+	@Override
+	public HotelDTO getHotel (int idHotel) throws HotelInesistenteException {
+		return this.convertiInDTO(this.convertiInEntita(idHotel));
+	}
 
 	@Override
 	public List<HotelDTO> elencoHotel() {
@@ -100,6 +105,15 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	@Override
 	public Hotel convertiInEntita (HotelDTO hotel) throws HotelInesistenteException {
 		Hotel hotelEntity = em.find(Hotel.class, hotel.getId());
+		if (hotelEntity != null)
+			return hotelEntity;
+		else
+			throw new HotelInesistenteException ();
+	}
+	
+	@Override
+	public Hotel convertiInEntita (int idHotel) throws HotelInesistenteException {
+		Hotel hotelEntity = em.find(Hotel.class, idHotel);
 		if (hotelEntity != null)
 			return hotelEntity;
 		else

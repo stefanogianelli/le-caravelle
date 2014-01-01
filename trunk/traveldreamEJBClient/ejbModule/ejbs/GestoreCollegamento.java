@@ -14,6 +14,14 @@ import enums.TipoCollegamento;
 @Local
 public interface GestoreCollegamento {
 
+	/**
+	 * Resituisce il collegamento associato all'identificativo inserito
+	 * @param codiceCollegamento Il codice del collegamento
+	 * @return Il collegamento corrispondente
+	 * @throws CollegamentoInesistenteException Quando il collegamento non viene trovato nel database
+	 */
+	CollegamentoDTO getCollegamento (int codiceCollegamento) throws CollegamentoInesistenteException;
+	
     /**
      * Mostra l'elenco dei collegamenti disponibili
      * @return L'elenco dei collegamenti

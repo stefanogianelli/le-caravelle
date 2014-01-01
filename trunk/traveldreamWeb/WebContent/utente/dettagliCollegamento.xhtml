@@ -9,21 +9,42 @@
 <ui:define name="title">Dettagli collegamento</ui:define>
 
 <ui:define name="content">
+
+<f:metadata>
+	<f:viewParam name="codiceCollegamento" binding="#{codice}" />
+	<f:event listener="#{collegamento.getCollegamento(codice.value)}" type="preRenderView" />
+</f:metadata>
+
 <h1>Dettagli collegamento</h1>
-<div class="bloccoDett">
-	<p>Città di partenza: cittàPartenza</p>
-	<p>Città di arrivo: cittàArrivo</p>
+
+<p:messages showDetail="true" autoUpdate="true" />
+
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{collegamento.collegamento.codice != 0}">
+	<p>Città di partenza: #{collegamento.collegamento.cittaPartenza.nome}</p>
+	<p>Città di arrivo: #{collegamento.collegamento.cittaArrivo.nome}</p>
 	<br></br>
-	<p>Data: data</p>
-	<p>Ora di partenza: oraPartenza</p>
-	<p>Ora di arrivo: oraArrivo</p>
+	<p>Data:
+		<h:outputText value="#{collegamento.collegamento.dataPartenza}">
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+		</h:outputText>
+	</p>
+	<p>Ora di partenza:
+		<h:outputText value="#{collegamento.collegamento.oraPartenza}">
+			<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:outputText>	
+	</p>
+	<p>Ora di arrivo:
+		<h:outputText value="#{collegamento.collegamento.oraArrivo}">
+			<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:outputText>
+	</p>
 	<br></br>
-	<p>Tipo di collegamento: tipoCollegamento</p>
-	<p>Origine: origine</p>
-	<p>Destinazione: destinazione</p>
+	<p>Tipo di collegamento: #{collegamento.collegamento.tipoCollegamento.label}</p>
+	<p>Origine: #{collegamento.collegamento.origine}</p>
+	<p>Destinazione: #{collegamento.collegamento.destinazione}</p>
 	<br></br>
-	<p>Prezzo: prezzo</p>
-</div>
+	<p>Prezzo: #{collegamento.collegamento.prezzo} €</p>
+</h:panelGroup>
 
 </ui:define>
 </ui:composition>

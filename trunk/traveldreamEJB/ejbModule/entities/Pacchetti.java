@@ -33,7 +33,6 @@ import enums.TipoPacchetto;
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
 @NamedQueries ({
 	@NamedQuery(name="Pacchetti.elenco", query="SELECT p FROM Pacchetti p"),
-	@NamedQuery(name="Pacchetti.getPacchettoDaId", query="SELECT p FROM Pacchetti p WHERE p.id = :id"),
 	@NamedQuery(name="Pacchetti.getPacchettiPerTipo", query="SELECT p FROM Pacchetti p WHERE p.utente.email = :utente AND p.tipoPacchetto = :tipo"),
 	@NamedQuery(name="Pacchetti.getPacchettiPerNome", query="SELECT p FROM Pacchetti p WHERE p.nome = :nome AND p.utente.email = :utente")
 })
