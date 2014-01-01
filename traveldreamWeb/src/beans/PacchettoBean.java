@@ -597,6 +597,6 @@ public class PacchettoBean {
 		if (this.getPacchetto().getTipoPacchetto() == TipoPacchetto.PERSONALIZZATO)
 			return true;
 		else
-			return false;		
+			return false;
 	}
 }
