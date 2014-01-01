@@ -50,7 +50,7 @@ public class HotelBean {
 	public void setElenco(List<HotelDTO> elenco) {
 		this.elenco = elenco;
 	}
-	
+
 	/**
 	 * Mostra tutti gli hotel presenti nel database
 	 */

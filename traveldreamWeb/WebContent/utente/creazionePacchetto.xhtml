@@ -48,13 +48,13 @@
 		</div>
 		
 		<div class="bloccoButton">
-			<h:form>
-			<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" value="Cerca" styleClass="button" />
-			</h:form>
+			<h:commandButton id="cercaHotel" value="Cerca" styleClass="button">
+				<f:ajax execute="@form" listener="#{hotel.cercaHotel(nomeCitta.value)}" render="listaHotel" />
+			</h:commandButton>
 		</div>
 	</div>
-	
-	<div class="bloccoBianco">
+
+	<h:panelGroup id="listaHotel" styleClass="bloccoBianco" layout="block">
 		<p:carousel value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">  
 		    <f:facet name="header">Hotel</f:facet>
 			<div class="hotel">
@@ -68,7 +68,7 @@
 				<h:commandButton value="Dettagli" styleClass="flight-button"/>			
 			</div>		
 		</p:carousel>
-	</div> 
+	</h:panelGroup> 
 
 </h:form>	
 

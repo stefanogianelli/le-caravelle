@@ -44,6 +44,12 @@ import enums.TipoPacchetto;
  */
 @Stateless
 public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLocal {
+	
+	/*
+	 * Definiscono il range del numero generato casualmento per il nome del pacchetto
+	 */
+	private final int MIN_PACCHETTO = 1;
+	private final int MAX_PACCHETTO = 200;
 
 	@PersistenceContext
 	private EntityManager em;
@@ -100,8 +106,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	public int creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, InsertException {
 		Pacchetti entity = new Pacchetti();		
 
+		//TODO: da eliminare il controllo del nome, nella pagina finale non viene chiesto il nome del pacchetto ed è necessario generarne uno casualmente
 		if (pacchetto.getNome() == null ||pacchetto.getNome().isEmpty())
-			entity.setNome("Pacchetto" + Math.random());
+			entity.setNome("Pacchetto" + (MIN_PACCHETTO + (int)(Math.random() * ((MAX_PACCHETTO - MIN_PACCHETTO) + 1))));
 		else {
 			//controllo che il nome del pacchetto non esista nel database
 			Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
