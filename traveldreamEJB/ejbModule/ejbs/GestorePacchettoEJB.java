@@ -295,7 +295,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 					entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));					
 					this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
 					//aggiorno il prezzo del pacchetto
-					this.calcolaPrezzo(entity);
+					entity.setPrezzo(this.calcolaPrezzo(entity));
 					
 					em.merge(entity);
 				} else
@@ -313,7 +313,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		this.destinazione.modificaDateDestinazione(destinazione);
 		
 		//rimuovo i collegamenti non più coerenti
-		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
+		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataArrivo());
 		
 		//aggiorno il prezzo del pacchetto
 		entity.setPrezzo(this.calcolaPrezzo(entity));
@@ -329,7 +329,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		//rimuovo gli eventuali collegamenti collegati
 		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
 		//aggiorno il prezzo del pacchetto
-		this.calcolaPrezzo(entity);
+		entity.setPrezzo(this.calcolaPrezzo(entity));
 		
 		em.merge(entity);
 	}
@@ -349,7 +349,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
 		//aggiorno il prezzo del pacchetto
 		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
-			this.calcolaPrezzo(entity);
+			entity.setPrezzo(this.calcolaPrezzo(entity));
 		
 		em.merge(entity);
 	}
@@ -412,14 +412,12 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 				andata = c;
 			if (c.getDataPartenza().equals(dataPartenza))
 				ritorno = c;
-		}
-		
-		if (andata != null) {			
+		}		
+
+		if (andata != null)			
 			pacchetto.removeCollegamento(andata);
-		}
-		if (ritorno != null) {
+		if (ritorno != null)
 			pacchetto.removeCollegamento(ritorno);
-		}
 	}
 
 	@Override

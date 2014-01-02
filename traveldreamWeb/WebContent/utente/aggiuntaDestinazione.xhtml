@@ -51,7 +51,7 @@
 			<p:carousel value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">  
 			    <f:facet name="header">Hotel</f:facet>
 				<div class="hotel">
-					<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
+					<h:graphicImage library="images" name="#{h.immagine}" width="195" height="113" />
 					<p><b>#{h.nome}</b></p>
 					<p:rating value="#{h.stelle}" readonly="true" stars="5" />
 					<p>#{h.prezzo} €</p>

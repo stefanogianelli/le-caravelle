@@ -34,14 +34,13 @@ public class Hotel implements Serializable {
 
 	private String email;	
 
-	private double prezzo;	
+	private double prezzo;
 
 	@ManyToOne
 	@JoinColumn(name="citta")
 	private Citta citta;
-
-	public Hotel() {
-	}
+	
+	private String immagine;
 
 	public int getId() {
 		return this.id;
@@ -113,6 +112,14 @@ public class Hotel implements Serializable {
 
 	public void setCitta(Citta citta) {
 		this.citta = citta;
+	}
+
+	public String getImmagine() {
+		return immagine;
+	}
+
+	public void setImmagine(String immagine) {
+		this.immagine = immagine;
 	}
 
 }
