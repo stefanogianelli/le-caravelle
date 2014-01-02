@@ -11,13 +11,19 @@
 
 <ui:define name="content">
 
+<f:event listener="#{hotel.elencoHotel()}" type="preRenderView" />
+
 <h1>Elenco hotel</h1>
+
+<p:messages showDetail="true" autoUpdate="true" />
 
 <h:form>
 	<div class="bloccoRicerca">
 		<p>
 			<h:outputText styleClass="name-input" value="Scegli una città:" />
-			<h:inputText styleClass="text-input" binding="#{nomeCitta}" />
+			<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+				<f:selectItems value="#{citta.nomiCitta}" />
+			</h:selectOneMenu>			
 		</p>
 	</div>
 	
@@ -27,7 +33,7 @@
 	</div>
 </h:form>
 
-<ui:repeat var="h" value="#{hotel.elencoHotel()}" varStatus="status">
+<ui:repeat var="h" value="#{hotel.elenco}" varStatus="status" rendered="#{hotel.elenco.size() > 0}">
 	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
 			<div class="hotel">
 				<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />	
