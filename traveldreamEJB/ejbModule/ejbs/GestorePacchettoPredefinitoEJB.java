@@ -81,7 +81,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException {
+	public int creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
 		
 		//Controllo che il nome del pacchetto non sia già stato utilizzato
@@ -106,6 +106,9 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 			entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
 			
 			em.persist(entity);
+			em.flush();
+			
+			return entity.getId();
 		} else
 			throw new InsertException();
 	}
