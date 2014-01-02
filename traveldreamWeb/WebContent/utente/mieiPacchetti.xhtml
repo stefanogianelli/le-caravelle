@@ -12,46 +12,45 @@
 
 <h1>I miei pacchetti</h1>
 
-<div class="mioBloccoBianco">
-	<div class="pacchetto">
-		 <a href="/traveldreamWeb/cuba.xhtml">
-		 <h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
-		 </a>
-		 <div id="linkPacc"><a href="dettagliPacchetto.xhtml">Cuba</a></div> 
-	</div>
-		
-	<div class="descr">
-		<h2><a href="dettagliPacchetto.xhtml">Cuba</a></h2>
-		<p>Dal 10/07/2014 al 24/07/2014</p>
-		<br></br>
-		<div id="prezzo">
-		Prezzo: 2500 euro
+<ui:repeat var="p" value="#{pacchetto.elencoPacchettiPersonalizzati()}" varStatus="status">
+	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+		<div class="pacchetto">
+			<h:link outcome="dettagliPacchetto">
+		  		<f:param name="idPacchetto" value="#{p.id}" />	
+			 	<h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
+		 	</h:link>
+			<div id="linkPacc">
+				<h:link outcome="dettagliPacchetto">
+					<f:param name="idPacchetto" value="#{p.id}" />	
+					#{p.nome.subSequence(0,11)}...
+				</h:link>
+			</div>
+		</div>
+			
+		<div class="descr">
+			<h2>
+				<h:link outcome="dettagliPacchetto">
+					<f:param name="idPacchetto" value="#{p.id}" />	
+					#{p.nome}
+				</h:link>
+			</h2>
+			<p>
+				Dal
+				<h:outputText value="#{p.destinazioni.get(0).dataArrivo}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+				al
+				<h:outputText value="#{p.destinazioni.get(p.destinazioni.size() - 1).dataPartenza}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+			</p>
+			<br></br>
+			<div id="prezzo">
+			Prezzo: #{p.prezzo} €
+			</div>
 		</div>
 	</div>
-</div>
-<div class="mioBlocco">
-	<div class="pacchetto">
-		 <a href="/traveldreamWeb/cuba.xhtml">
-		 <h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
-		 </a>
-		 <div id="linkPacc"><a href="dettagliPacchetto.xhtml">Cuba</a></div> 
-	</div>
-		
-	<div class="descr">
-		<h2><a href="dettagliPacchetto.xhtml">Cuba</a></h2>
-		<p>Dal 10/07/2014 al 24/07/2014</p>
-		<br></br>
-		<div id="prezzo">
-		Prezzo: 2500 euro
-		</div>
-	</div>
-</div>
-
-<div class="mioBloccoBianco">
-</div>
-
-<div class="mioBlocco">
-</div>
+</ui:repeat>
 
 </ui:define>
 </ui:composition>
