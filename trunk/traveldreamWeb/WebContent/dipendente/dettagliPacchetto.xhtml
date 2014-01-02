@@ -115,10 +115,7 @@
 		</div>
 	</ui:repeat>
 	<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
-		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-		<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
-		<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
-		<f:param name="cittaArrivo" value="#{d.citta.nome}" />
+		<f:param name="idPacchetto" value="#{id.value}" />
 	</h:link>	
 </h:form>
 

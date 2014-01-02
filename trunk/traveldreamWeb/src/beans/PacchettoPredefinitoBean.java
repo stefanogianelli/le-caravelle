@@ -323,7 +323,7 @@ public class PacchettoPredefinitoBean {
 	public String aggiuntaCollegamento (int idPacchetto, CollegamentoDTO collegamento) {
 		try {
 			pacchettoBean.aggiuntaCollegamento(idPacchetto, collegamento);
-			return "dettagliPacchettoPredefinito?idPacchetto=" + idPacchetto + "&faces-redirect=true";
+			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente!");
 		} catch (PacchettoInesistenteException e) {
