@@ -133,6 +133,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 		dto.setTelefono(hotel.getTelefono());
 		dto.setWebsite(hotel.getWebsite());
 		dto.setCitta(citta.convertiInDTO(hotel.getCitta()));
+		dto.setImmagine(hotel.getImmagine());
 		
 		return dto;
 	}
