@@ -79,9 +79,10 @@ public class PacchettoPredefinitoBean {
 	 */
 	public void aggiuntaData (Date data) {
 		//verifico che la data non sia già stata inserita
-		if (this.getPacchetto().getDatePartenza().indexOf(data) == -1)
+		if (this.getPacchetto().getDatePartenza().indexOf(data) == -1) {
 			this.getPacchetto().getDatePartenza().add(data);
-		else
+			JsfUtil.infoMessage("Data aggiunta!");
+		} else
 			JsfUtil.errorMessage("Data già inserita");
 	}
 	
@@ -91,9 +92,10 @@ public class PacchettoPredefinitoBean {
 	 */
 	public void aggiuntaDurata (int durata) {
 		//verifico che la durata non sia già stata inserita
-		if (this.getPacchetto().getDurate().indexOf(durata) == -1)
+		if (this.getPacchetto().getDurate().indexOf(durata) == -1) {
 			this.getPacchetto().getDurate().add(durata);
-		else
+			JsfUtil.infoMessage("Durata aggiunta!");
+		} else
 			JsfUtil.errorMessage("Durata già inserita");
 	}
 	
@@ -105,9 +107,10 @@ public class PacchettoPredefinitoBean {
 		CittaDTO citta = new CittaDTO();
 		citta.setNome(nome);
 		//verifico che la città non sia già stata inserita
-		if (this.getPacchetto().getCittaPartenza().indexOf(citta) == -1)
+		if (this.getPacchetto().getCittaPartenza().indexOf(citta) == -1) {
 			this.getPacchetto().getCittaPartenza().add(citta);
-		else
+			JsfUtil.infoMessage("Città aggiunta!");
+		} else
 			JsfUtil.errorMessage("Città già inserita");
 	}
 	
@@ -191,6 +194,7 @@ public class PacchettoPredefinitoBean {
 	public void modificaPrezzoPacchetto () {
 		try {
 			pacchettoBean.modificaPrezzo(getPacchetto());
+			JsfUtil.infoMessage("Prezzo modificato!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
@@ -205,7 +209,7 @@ public class PacchettoPredefinitoBean {
 	public String modificaHotel (int idPacchetto, HotelDTO hotel) {
 		try {
 			pacchettoBean.modificaHotel(idPacchetto, hotel);
-			return "dettagliPacchettoPredefinito?idPacchetto=" + idPacchetto + "&faces-redirect=true";
+			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (HotelInesistenteException e) {
@@ -223,6 +227,7 @@ public class PacchettoPredefinitoBean {
 	public void salvaCitta (String nome) {
 		try {
 			pacchettoBean.aggiuntaCittaPartenza(getPacchetto(), nome);
+			JsfUtil.infoMessage("Città aggiunta");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (CittaInesistenteException e) {
@@ -241,6 +246,7 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getCittaPartenza().size() > 1) {
 			try {
 				pacchettoBean.rimuoviCittaPartenza(getPacchetto(), citta);
+				JsfUtil.infoMessage("Città rimossa!");
 			} catch (PacchettoInesistenteException e) {
 				JsfUtil.errorMessage("Pacchetto inesistente!");
 			} catch (CittaInesistenteException e) {
@@ -259,6 +265,7 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getDatePartenza().indexOf(data) == -1) {
 			try {
 				pacchettoBean.aggiuntaDataPartenza(getPacchetto(), data);
+				JsfUtil.infoMessage("Data aggiunta");
 			} catch (PacchettoInesistenteException e) {
 				JsfUtil.errorMessage("Pacchetto inesistente!");
 			}
@@ -275,6 +282,7 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getDatePartenza().size() > 1) {
 			try {
 				pacchettoBean.rimuoviDataPartenza(getPacchetto(), data);
+				JsfUtil.infoMessage("Data rimossa!");
 			} catch (PacchettoInesistenteException e) {
 				JsfUtil.errorMessage("Pacchetto inesistente!");
 			}
@@ -291,6 +299,7 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getDurate().indexOf(durata) == -1) {
 			try {
 				pacchettoBean.aggiuntaDurata(getPacchetto(), durata);
+				JsfUtil.infoMessage("Durata aggiunta!");
 			} catch (PacchettoInesistenteException e) {
 				JsfUtil.errorMessage("Pacchetto inesistente!");
 			}
@@ -307,6 +316,7 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getDurate().size() > 1) {
 			try {
 				pacchettoBean.rimuoviDurata(getPacchetto(), durata);
+				JsfUtil.infoMessage("Durata rimossa!");
 			} catch (PacchettoInesistenteException e) {
 				JsfUtil.errorMessage("Pacchetto inesistente!");
 			}
