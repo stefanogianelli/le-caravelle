@@ -116,23 +116,69 @@ public class PacchettoBean {
 	
 	/**
 	 * Ricerca tutti i pacchetti personalizzati posseduti dall'utente
-	 * @param email L'indirizzo email dell'utente
 	 */
-	public void cercaPacchetti (String email) {
-		this.cercaPacchetti(email, TipoPacchetto.PERSONALIZZATO);
+	public void cercaPacchetti () {
+		this.cercaPacchetti(TipoPacchetto.PERSONALIZZATO);
 	}	
 	
 	/**
 	 * Ricerca tutti i pacchetti posseduti da un utente dello stesso tipo
-	 * @param email L'indirizzo email dell'utente
 	 * @param tipo La tipologia di pacchetto
 	 */
-	public void cercaPacchetti (String email, TipoPacchetto tipo) {
+	public void cercaPacchetti (TipoPacchetto tipo) {
 		this.getElenco().clear();
-		this.getElenco().addAll(pacchettoBean.elencoPacchetti(email, tipo));
+		this.getElenco().addAll(pacchettoBean.elencoPacchetti("stefano@gmail.com", tipo));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}
+	
+	/**
+	 * Restituisce tutti i pacchetti personalizzati posseduti dall'utente
+	 * @return I pacchetti posseduti dall'utente
+	 */
+	public List<PacchettoDTO> elencoPacchettiPersonalizzati () {
+		return pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
+	}
+	
+	/**
+	 * Restituisce i primi tre pacchetti condivisi posseduti dall'utente
+	 * @return I pacchetti posseduti dall'utente
+	 */
+	public List<PacchettoDTO> elencoTrePacchettiCondivisi () {
+		return pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.CONDIVISO);
+	}
+	
+	/**
+	 * Restituisce tutti i pacchetti condivisi posseduti dall'utente
+	 * @return I pacchetti posseduti dall'utente
+	 */
+	public List<PacchettoDTO> elencoPacchettiCondivisi () {
+		return pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.CONDIVISO);
+	}
+	
+	/**
+	 * Restituisce i primi tre pacchetti acquistati posseduti dall'utente
+	 * @return I pacchetti posseduti dall'utente
+	 */
+	public List<PacchettoDTO> elencoTrePacchettiAcquistati () {
+		return pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+	}
+	
+	/**
+	 * Restituisce tutti i pacchetti acquistati posseduti dall'utente
+	 * @return I pacchetti posseduti dall'utente
+	 */
+	public List<PacchettoDTO> elencoPacchettiAcquistati () {
+		return pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+	}	
+	
+	/**
+	 * Restituisce i primi tre pacchetti personalizzati posseduti dall'utente
+	 * @return I pacchetti posseduti dall'utente
+	 */
+	public List<PacchettoDTO> elencoTrePacchettiPersonalizzati () {
+		return pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
+	}	
 
 	/**
 	 * Permette la creazione di un nuovo pacchetto

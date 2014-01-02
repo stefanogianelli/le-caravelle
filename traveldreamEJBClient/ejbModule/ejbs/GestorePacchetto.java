@@ -35,6 +35,14 @@ public interface GestorePacchetto {
      */
 	List<PacchettoDTO> elencoPacchetti (String email, TipoPacchetto tipo);
 	
+    /**
+     * Mostra l'elenco dei primi tre pacchetti per tipologia posseduti da un utente
+     * @param email L'indirizzo email dell'utente
+     * @param tipo La tipologia di pacchetto da cercare
+     * @return L'elenco dei pacchetti
+     */
+	List<PacchettoDTO> elencoTrePacchetti(String email, TipoPacchetto tipo);
+	
 	/**
 	 * Permette la creazione di un nuovo pacchetto personalizzato
 	 * @param pacchetto I dati del pacchetto
