@@ -37,11 +37,12 @@ public interface GestorePacchettoPredefinito {
 	/**
 	 * Permette la creazione di un nuovo pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
+	 * @return L'identificativo del pacchetto creato
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws InsertException Quando il nome del pacchetto è già stato utilizzato
 	 */
-	void creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException;
+	int creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException;
 	
 	/**
 	 * Permette di aggiungere una città di partenza nel pacchetto

@@ -10,7 +10,6 @@
 <body> 
 	<f:metadata>
 		<f:viewParam name="idPacchetto" binding="#{idPacchetto}" />
-		<f:event listener="#{collegamento.elencoCollegamenti()}" type="preRenderView" />
 	</f:metadata>
 	
 	<h:link value="indietro" outcome="dettagliPacchettoPredefinito">
@@ -19,7 +18,7 @@
 	<h:messages /><br />
 	
 	<h:form>
-		<h:dataTable value="#{collegamento.elenco}" var="c" style="text-align: center;">
+		<h:dataTable value="#{collegamento.elencoCollegamenti()}" var="c" style="text-align: center;">
 			<h:column>
 				<f:facet name="header">Data Partenza</f:facet>
 				<h:outputText value="#{c.dataPartenza}">

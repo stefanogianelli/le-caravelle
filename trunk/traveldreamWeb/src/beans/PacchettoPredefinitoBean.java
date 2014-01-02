@@ -114,8 +114,9 @@ public class PacchettoPredefinitoBean {
 	/**
 	 * Crea un nuovo pacchetto predefinito
 	 * @param hotel L'hotel da aggiungere al pacchetto
+	 * @return L'indirizzo della pagina con i dettagli del pacchetto creato
 	 */
-	public void creaPacchetto (HotelDTO hotel) {
+	public String creaPacchetto (HotelDTO hotel) {
 		boolean check = true;
 		
 		//verifico che sia stata inserita almeno una città di partenza
@@ -135,8 +136,7 @@ public class PacchettoPredefinitoBean {
 					if (check) {								
 						try {
 							this.getPacchetto().setHotel(hotel);
-							pacchettoBean.creaPacchetto(getPacchetto());
-							JsfUtil.infoMessage("Pacchetto creato!");
+							return "dettagliPacchetto?idPacchetto=" + pacchettoBean.creaPacchetto(getPacchetto()) + "&faces-redirect=true";
 						} catch (HotelInesistenteException e) {
 							JsfUtil.errorMessage("Hotel inesistente!");
 						} catch (CittaInesistenteException w) {
@@ -152,6 +152,8 @@ public class PacchettoPredefinitoBean {
 				JsfUtil.errorMessage("Inserire almeno una data di partenza!");
 		} else
 			JsfUtil.errorMessage("Inserire almeno una città di partenza!");
+		
+		return null;
 	}
 	
 	/**
@@ -175,6 +177,7 @@ public class PacchettoPredefinitoBean {
 	public void modificaNomePacchetto () {
 		try {
 			pacchettoBean.modificaNomePacchetto(getPacchetto());
+			JsfUtil.infoMessage("Nome modificato!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (InsertException e) {

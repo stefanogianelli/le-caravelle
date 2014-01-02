@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="templateDip.xhtml">
@@ -10,93 +11,127 @@
 
 <ui:define name="content">
 
-<h1>Nome pacchetto</h1>
+<f:metadata>
+	<f:viewParam name="idPacchetto" binding="#{id}" />
+	<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
+</f:metadata>
 
-<div class="bloccoPacc">
-	<h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
+<p:messages showDetail="true" autoUpdate="true" />
+
+<h:form>
+	<h1 id="nomePacchetto" style="display: block;">
+		#{pacchettoPredefinito.pacchetto.nome}
+		<h:commandButton value="modifica" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+	</h1>
 	
-	<div class="descr">
-		<p>Città di partenza</p>
-		<h2>cittàPartenza</h2>
-		<br></br>
-		<p>Durata vacanza</p>
-		<h2>durata</h2>
+	<h1 id="modificaNome" style="display: none;">
+		<h:inputText value="#{pacchettoPredefinito.pacchetto.nome}" required="true" />
+		<h:commandButton value="salva" action="#{pacchettoPredefinito.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		<h:commandButton value="annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+	</h1> 
+	
+	<div class="bloccoPacc">
+		<h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
+		
+		<div class="descr">
+			<p>Città di partenza</p>
+			<h2>cittàPartenza</h2>
+			<br></br>
+			<p>Durata vacanza</p>
+			<h2>durata</h2>
+		</div>
+		
+		<div class="descr">
+		<div id="prezzo">#{pacchettoPredefinito.pacchetto.prezzo} €</div>
+		</div>
 	</div>
 	
-	<div class="descr">
-	<div id="prezzo">Prezzo</div>
+	<div class="bloccoPacc">
+		<div class="descr">
+			<p>Città di destinazione</p>
+			<h2>#{pacchettoPredefinito.pacchetto.hotel.citta.nome}</h2>
+		</div>
+		
+		<div class="hotelPacc">
+			<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
+			<div class="descrHotel">
+				<p><b>#{pacchettoPredefinito.pacchetto.hotel.nome}</b></p>
+				<p>#{pacchettoPredefinito.pacchetto.hotel.indirizzo}</p>
+				<p>#{pacchettoPredefinito.pacchetto.hotel.telefono}</p>
+			</div>
+			<h:link value="Modifica" styleClass="flight-button"/>
+			<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliHotel">
+				<f:param name="idPacchetto" value="#{id.value}" />
+				<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
+			</h:link>			
+		</div>
 	</div>
-</div>
+	
+	<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
+		<div class="bloccoPaccVolo">
+			<p>
+				<h:outputText value="#{c.dataPartenza}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>		
+			</p>
+			<div class="volo">
+				<div class="etichette">
+				<ul>
+					<li>Da</li>
+					<li>A</li>
+					<li>Partenza</li>
+					<li>Arrivo</li>
+					<li>Scali</li>
+					<li>Prezzo</li>
+				</ul>
+				</div>
+				
+				<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento">
+					<f:param name="idPacchetto" value="#{id.value}" />
+					<f:param name="codiceCollegamento" value="#{c.codice}" />
+				</h:link>
+				
+				<h:commandLink value="elimina" action="#{pacchettoPredefinito.rimuoviCollegamento(c)}" styleClass="flight-button" />			
+				
+				<div class="dati">
+					<ul>
+						<li>#{c.cittaPartenza.nome} #{c.origine}</li>
+						<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
+						<li>
+							<h:outputText value="#{c.oraPartenza}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>				
+						</li>
+						<li>
+							<h:outputText value="#{c.oraArrivo}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>						
+						</li>
+						<li>0</li>
+						<li>#{c.prezzo} €</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</ui:repeat>
+	<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
+		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+		<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+		<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
+		<f:param name="cittaArrivo" value="#{d.citta.nome}" />
+	</h:link>	
+</h:form>
 
-<div class="bloccoPaccVolo">
-	<p>Data</p>
-	<div class="volo">
-		<div class="etichette">
-		<ul>
-			<li>Da</li>
-			<li>A</li>
-			<li>Partenza</li>
-			<li>Arrivo</li>
-			<li>Scali</li>
-			<li>Prezzo</li>
-		</ul>
-		</div>
-		<div class="dati">
-		<ul>
-			<li>New York JFK</li>
-			<li>Milano Malpensa</li>
-			<li>22:20</li>
-			<li>12:05</li>
-			<li>0</li>
-			<li>468 euro</li>
-		</ul>
-		</div>
-	</div>
-</div>
-
-<div class="bloccoPacc">
-	<div class="descr">
-		<p>Città di destinazione</p>
-		<h2>cittàDestinazione</h2>
-	</div>
-	<div class="hotelPacc">
-		<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
-		<div class="descrHotel">
-		<p><b>Nome hotel</b></p>
-		<p>Indirizzo</p>
-		<p>telefono</p>
-		</div>
-	</div>
-</div>
-
-<div class="bloccoPaccVolo">
-	<p>Data</p>
-	<div class="volo">
-		<div class="etichette">
-		<ul>
-			<li>Da</li>
-			<li>A</li>
-			<li>Partenza</li>
-			<li>Arrivo</li>
-			<li>Scali</li>
-			<li>Prezzo</li>
-		</ul>
-		</div>
-		<div class="dati">
-		<ul>
-			<li>New York JFK</li>
-			<li>Milano Malpensa</li>
-			<li>22:20</li>
-			<li>12:05</li>
-			<li>0</li>
-			<li>468 euro</li>
-		</ul>
-		</div>
-	</div>
-</div>
-
-<div class="bloccoPacc">
-</div>
+<script type="text/javascript">
+     function toggle(id) {
+       var element = document.getElementById(id);
+       if(element.style.display == 'block') {
+         element.style.display = 'none';
+       } else {
+         element.style.display = 'block'
+       }
+     }
+</script>
 
 </ui:define>
 </ui:composition>
