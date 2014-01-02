@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 @NamedQueries ({
 	@NamedQuery(name="Destinazioni.elenco", query="SELECT d FROM Destinazioni d")
 })
-public class Destinazioni implements Serializable {
+public class Destinazioni implements Serializable, Comparable<Destinazioni> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -128,6 +128,16 @@ public class Destinazioni implements Serializable {
 		getAttivita().remove(attivita);
 
 		return attivita;
+	}
+
+	@Override
+	public int compareTo(Destinazioni d) {
+		if(this.getDataArrivo().before(d.getDataArrivo()))
+				return -1;
+		else if(this.getDataArrivo().compareTo(d.getDataArrivo()) == 0)
+			return 0;
+		else
+			return 1;
 	}
 	
 }

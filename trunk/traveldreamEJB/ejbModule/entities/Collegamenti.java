@@ -22,7 +22,7 @@ import java.util.Date;
 		query = "SELECT c FROM Collegamenti c WHERE (c.dataPartenza = :data AND c.cittaPartenza.nome = :partenza AND c.cittaArrivo.nome = :arrivo AND c.tipoCollegamento = :tipo) ORDER BY c.oraPartenza ASC"),
 	@NamedQuery(name = "Collegamenti.getCollegamentoDaData", query = "SELECT c FROM Collegamenti c WHERE c.dataPartenza = :data")
 })
-public class Collegamenti implements Serializable {
+public class Collegamenti implements Serializable, Comparable<Collegamenti> {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -135,6 +135,16 @@ public class Collegamenti implements Serializable {
 
 	public void setCittaPartenza(Citta cittaPartenza) {
 		this.cittaPartenza = cittaPartenza;
+	}
+
+	@Override
+	public int compareTo(Collegamenti c) {
+		if (this.getOraPartenza().before(c.getOraPartenza()))
+			return -1;
+		else if (this.getOraPartenza().compareTo(c.getOraPartenza()) == 0)
+			return 0;
+		else
+			return 1;
 	}
 
 }

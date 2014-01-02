@@ -5,6 +5,7 @@ import interfaces.GestoreCollegamentoLocal;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti() {
 		List<Collegamenti> collegamenti = em.createNamedQuery("Collegamenti.elenco", Collegamenti.class).getResultList();
+		Collections.sort(collegamenti);
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
 		for (Collegamenti c : collegamenti) {
 			dto.add(this.convertiInDTO(c));
@@ -54,6 +56,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		q.setParameter("tipo", tipo);
 		@SuppressWarnings("unchecked")
 		List<Collegamenti> collegamenti = q.getResultList();
+		Collections.sort(collegamenti);
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
 		for (Collegamenti c : collegamenti) {
 			dto.add(this.convertiInDTO(c));
@@ -70,6 +73,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		q.setParameter("tipo", tipo);
 		@SuppressWarnings("unchecked")
 		List<Collegamenti> collegamenti = q.getResultList();
+		Collections.sort(collegamenti);
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
 		for (Collegamenti c : collegamenti) {
 			dto.add(this.convertiInDTO(c));

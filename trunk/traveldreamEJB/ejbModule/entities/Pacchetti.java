@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -54,7 +54,6 @@ public class Pacchetti implements Serializable {
 
 	//relazione bidirezionale one-to-many con l'entità Destinazioni
 	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="pacchetto", orphanRemoval=true)
-	@OrderBy("dataArrivo ASC")
 	private List<Destinazioni> destinazioni;
 	
 	@ManyToMany(cascade={CascadeType.MERGE})
@@ -66,8 +65,7 @@ public class Pacchetti implements Serializable {
 			, inverseJoinColumns={
 				@JoinColumn(name="idCollegamento")
 				}
-			)	
-	@OrderBy("dataPartenza ASC")
+			)
 	private List<Collegamenti> collegamenti;
 
 	@ManyToOne
@@ -134,6 +132,7 @@ public class Pacchetti implements Serializable {
 	}
 
 	public List<Destinazioni> getDestinazioni() {
+		Collections.sort(destinazioni);
 		return this.destinazioni;
 	}
 
