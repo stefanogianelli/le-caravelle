@@ -174,6 +174,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
+		
 		//aggiorno il numero di partecipanti delle (eventuali) escursioni
 		for (Destinazioni d : entity.getDestinazioni()) {
 			for (Attivita a : d.getAttivita()) {
@@ -181,6 +182,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 					a.setNumPartecipanti(entity.getNumPartecipanti());
 			}
 		}
+		
 		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
 			entity.setPrezzo(this.calcolaPrezzo(entity));
 		else
@@ -290,10 +292,10 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			if (!destinazione.getCitta().getNome().equalsIgnoreCase(entity.getCitta().getNome())) {
 				//controllo che la data di arrivo sia minore della data di partenza dalla destinazione
 				if (destinazione.getDataArrivo().before(destinazione.getDataPartenza())) {			
-					entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));
-					//aggiorno il prezzo del pacchetto
-					entity.setPrezzo(entity.getPrezzo() + destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti()*(int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24)));
+					entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));					
 					this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
+					//aggiorno il prezzo del pacchetto
+					this.calcolaPrezzo(entity);
 					
 					em.merge(entity);
 				} else
@@ -323,11 +325,11 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	public void eliminaDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws DestinazioneInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);	
 		
-		//aggiorno il prezzo del pacchetto
-		entity.setPrezzo(entity.getPrezzo() - destinazione.getHotel().getPrezzo()*entity.getNumPartecipanti()*(int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24)));
 		entity.removeDestinazione(this.destinazione.convertiInEntita(destinazione));	
 		//rimuovo gli eventuali collegamenti collegati
-		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());		
+		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
+		//aggiorno il prezzo del pacchetto
+		this.calcolaPrezzo(entity);
 		
 		em.merge(entity);
 	}
@@ -347,7 +349,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
 		//aggiorno il prezzo del pacchetto
 		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
-			entity.setPrezzo(entity.getPrezzo() + collegamento.getPrezzo()*entity.getNumPartecipanti());
+			this.calcolaPrezzo(entity);
 		
 		em.merge(entity);
 	}
@@ -413,15 +415,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		}
 		
 		if (andata != null) {			
-			//aggiorno il prezzo del pacchetto
-			if (pacchetto.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
-				pacchetto.setPrezzo(pacchetto.getPrezzo() - andata.getPrezzo()*pacchetto.getNumPartecipanti());
 			pacchetto.removeCollegamento(andata);
 		}
 		if (ritorno != null) {
-			//aggiorno il prezzo del pacchetto
-			if (pacchetto.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
-				pacchetto.setPrezzo(pacchetto.getPrezzo() - ritorno.getPrezzo()*pacchetto.getNumPartecipanti());
 			pacchetto.removeCollegamento(ritorno);
 		}
 	}
