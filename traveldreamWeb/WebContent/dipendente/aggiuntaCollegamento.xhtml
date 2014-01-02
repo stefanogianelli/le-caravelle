@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Dettagli collegamento</ui:define>
+
+<ui:define name="content">
+
+	<f:metadata>
+		<f:viewParam name="idPacchetto" binding="#{idPacchetto}" />
+	</f:metadata>
+	
+	<p:messages showDetail="true" autoUpdate="true" />	
+	
+	<h:form>
+		<ui:repeat var="c" value="#{collegamento.elencoCollegamenti()}">
+			<div class="bloccoPaccVolo">
+				<p>
+					<h:outputText value="#{c.dataPartenza}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>		
+				</p>
+				<div class="volo">
+					<div class="etichette">
+					<ul>
+						<li>Da</li>
+						<li>A</li>
+						<li>Partenza</li>
+						<li>Arrivo</li>
+						<li>Scali</li>
+						<li>Prezzo</li>
+					</ul>
+					</div>
+					
+					<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento">
+						<f:param name="idPacchetto" value="#{id.value}" />
+						<f:param name="codiceCollegamento" value="#{c.codice}" />
+					</h:link>
+					
+					<h:commandLink value="scegli" action="#{pacchettoPredefinito.aggiuntaCollegamento(idPacchetto,c)}" styleClass="flight-button" />			
+					
+					<div class="dati">
+						<ul>
+							<li>#{c.cittaPartenza.nome} #{c.origine}</li>
+							<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
+							<li>
+								<h:outputText value="#{c.oraPartenza}">
+									<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+								</h:outputText>				
+							</li>
+							<li>
+								<h:outputText value="#{c.oraArrivo}">
+									<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+								</h:outputText>						
+							</li>
+							<li>0</li>
+							<li>#{c.prezzo} €</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</ui:repeat>
+	</h:form>
+
+</ui:define>
+	
+</ui:composition>
+</html>
