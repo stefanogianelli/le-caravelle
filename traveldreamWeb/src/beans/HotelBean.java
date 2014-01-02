@@ -65,10 +65,10 @@ public class HotelBean {
 
 	/**
 	 * Mostra tutti gli hotel presenti nel database
-	 * @return L'elenco degli hotel
 	 */
-	public List<HotelDTO> elencoHotel () {
-		return hotelBean.elencoHotel();
+	public void elencoHotel () {
+		if (this.getElenco().isEmpty())
+			this.getElenco().addAll(hotelBean.elencoHotel());
 	}
 
 	/**
