@@ -108,8 +108,8 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	}
 
 	@Override
-	public void eliminaEscursione(EscursioneDTO escursione) throws EscursioneInesistenteException {
-		em.remove(this.convertiInEntita(escursione));
+	public void eliminaEscursione(int idEscursione) throws EscursioneInesistenteException {
+		em.remove(this.convertiInEntita(idEscursione));
 	}
 
 	@Override

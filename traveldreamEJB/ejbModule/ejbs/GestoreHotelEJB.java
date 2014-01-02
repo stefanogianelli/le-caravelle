@@ -98,8 +98,8 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	}
 
 	@Override
-	public void eliminaHotel(HotelDTO hotel) throws HotelInesistenteException {
-		em.remove(this.convertiInEntita(hotel));
+	public void eliminaHotel(int idHotel) throws HotelInesistenteException {
+		em.remove(this.convertiInEntita(idHotel));
 	}
 	
 	@Override

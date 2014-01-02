@@ -51,8 +51,8 @@ public interface GestoreHotel {
 	
 	/**
 	 * Permette l'eliminazione di un hotel dal database
-	 * @param hotel L'hotel da eliminare
+	 * @param idHotel L'identificativo dell'hotel da eliminare
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 */
-	void eliminaHotel (HotelDTO hotel) throws HotelInesistenteException;
+	void eliminaHotel (int idHotel) throws HotelInesistenteException;
 }

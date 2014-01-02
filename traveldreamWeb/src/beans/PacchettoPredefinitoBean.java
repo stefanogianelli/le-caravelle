@@ -55,10 +55,10 @@ public class PacchettoPredefinitoBean {
 	
 	/**
 	 * Mostra tutti i pacchetti predefiniti presente nel database
+	 * @return L'elenco dei pacchetti trovati
 	 */
-	public void elencoPacchetti () {
-		if (this.getElenco().isEmpty())
-			this.setElenco(pacchettoBean.elencoPacchetti());
+	public List<PacchettoPredefinitoDTO> elencoPacchetti () {		
+		return pacchettoBean.elencoPacchetti();
 	}
 	
 	/**
@@ -156,12 +156,13 @@ public class PacchettoPredefinitoBean {
 	
 	/**
 	 * Permette di eliminare un pacchetto
-	 * @return L'indirizzo della pagine con l'elenco dei pacchetti
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @return L'indirizzo della pagina con l'elenco dei pacchetti
 	 */
-	public String eliminaPacchetto () {
+	public String eliminaPacchetto (int idPacchetto) {
 		try {
-			pacchettoBean.eliminaPacchetto(getPacchetto());
-			return "elencoPacchettiPredefiniti?faces-redirect=true";
+			pacchettoBean.eliminaPacchetto(idPacchetto);
+			return "elencoPacchetti?faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}

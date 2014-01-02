@@ -13,85 +13,47 @@
 
 <h1>Elenco hotel</h1>
 
-<div class="bloccoRicerca">
 <h:form>
-	<p><h:outputText styleClass="name-input" value="Scegli una città:" />
-	<h:inputText styleClass="text-input" binding="#{nomeCitta}" />
-<h:messages /></p>
-</h:form>
-</div>
-
-<div class="bloccoRicerca">
-<h:form>
-<h:commandButton value="Cerca" styleClass="search-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />
-</h:form>
-<h:form>
-	<h:commandButton value="Nuovo hotel" styleClass="search-button" action="nuovoHotel" />
-</h:form>
-</div>
-
-<div class="mioBloccoBianco">
-		<div class="hotel">
-			<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />	
-			<p><b>Nome hotel</b></p>
-			<p>stelle</p>
-			<p>prezzo</p>
-		</div>
-	
-	<div class="descr">
-		<h2>Nome hotel</h2>
-		<br></br>
-		<div id="prezzo">città</div>
+	<div class="bloccoRicerca">
+		<p>
+			<h:outputText styleClass="name-input" value="Scegli una città:" />
+			<h:inputText styleClass="text-input" binding="#{nomeCitta}" />
+		</p>
 	</div>
 	
-	<h:form>
-		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliHotel" />
-	</h:form>
-
-	<h:form>
-		<h:commandButton value="Modifica" styleClass="detail-button" action="modificaHotel" />
-	</h:form>
-	
-	<h:form>
-		<h:commandButton value="Elimina" styleClass="detail-button"/>
-	</h:form>
-	
-</div>
-
-<div class="mioBlocco">
-		<div class="hotel">
-			<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />
-			<p><b>Nome hotel</b></p>
-			<p>stelle</p>
-			<p>prezzo</p>
-		</div>
-	
-	<div class="descr">
-		<h2>Nome hotel</h2>
-		<br></br>
-		<div id="prezzo">città</div>
+	<div class="bloccoRicerca">
+		<h:commandButton value="Cerca" styleClass="search-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />
+		<h:commandButton value="Nuovo hotel" styleClass="search-button" action="nuovoHotel" />
 	</div>
-	
-	<h:form>
-		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliHotel" />
-	</h:form>
+</h:form>
 
-	<h:form>
-		<h:commandButton value="Modifica" styleClass="detail-button" action="modificaHotel" />
-	</h:form>
-	
-	<h:form>
-		<h:commandButton value="Elimina" styleClass="detail-button"/>
-	</h:form>
-	
-</div>
-
-<div class="mioBloccoBianco">
-</div>
-
-<div class="mioBlocco">
-</div>
-	
+<ui:repeat var="h" value="#{hotel.elencoHotel()}" varStatus="status">
+	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+			<div class="hotel">
+				<h:graphicImage library="images" name="madonnina.jpg" width="195" height="113" />	
+				<p><b>#{h.nome}</b></p>
+				<p><p:rating value="#{h.stelle}" readonly="true" stars="5" /></p>
+				<p>#{h.prezzo} €</p>
+			</div>
+		
+		<div class="descr">
+			<h2>#{h.nome}</h2>
+			<br></br>
+			<div id="prezzo">#{h.citta.nome}</div>
+		</div>
+		
+		<h:form>
+			<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+				<f:param name="idHotel" value="#{h.id}" />
+			</h:link>
+			<h:link value="Modifica" styleClass="detail-button" outcome="modificaHotel">
+				<f:param name="idHotel" value="#{h.id}" />
+			</h:link>
+			<h:commandButton value="Elimina" styleClass="detail-button" action="#{hotel.eliminaHotel(h.id)}"/>
+		</h:form>
+		
+	</div>	
+</ui:repeat>
 
 </ui:define>
 

@@ -53,8 +53,8 @@ public interface GestoreEscursione {
 	
 	/**
 	 * Permette l'eliminazione di una escursione dal database
-	 * @param escursione L'escursione da eliminare
+	 * @param idEscursione L'identificativo dell'escursione da eliminare
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 */
-	void eliminaEscursione (EscursioneDTO escursione) throws EscursioneInesistenteException;
+	void eliminaEscursione (int idEscursione) throws EscursioneInesistenteException;
 }
