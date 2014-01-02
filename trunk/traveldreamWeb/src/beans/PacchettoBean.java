@@ -133,11 +133,24 @@ public class PacchettoBean {
 	}
 	
 	/**
-	 * Restituisce tutti i pacchetti personalizzati posseduti dall'utente
+	 * Restituisce tutti i pacchetti personalizzati e predefiniti posseduti dall'utente
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoPacchettiPersonalizzati () {
-		return pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
+		pacchetti.addAll(pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PREDEFINITO));
+		return pacchetti;
+	}
+	
+	/**
+	 * Restituisce i primi tre pacchetti personalizzati o predefiniti posseduti dall'utente
+	 * @return I pacchetti posseduti dall'utente
+	 */
+	public List<PacchettoDTO> elencoTrePacchettiPersonalizzati () {
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
+		if(pacchetti.size() < 3)
+			pacchetti.addAll(pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.PREDEFINITO));
+		return pacchetti;
 	}
 	
 	/**
@@ -170,15 +183,7 @@ public class PacchettoBean {
 	 */
 	public List<PacchettoDTO> elencoPacchettiAcquistati () {
 		return pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
-	}	
-	
-	/**
-	 * Restituisce i primi tre pacchetti personalizzati posseduti dall'utente
-	 * @return I pacchetti posseduti dall'utente
-	 */
-	public List<PacchettoDTO> elencoTrePacchettiPersonalizzati () {
-		return pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
-	}	
+	}		
 
 	/**
 	 * Permette la creazione di un nuovo pacchetto
@@ -334,6 +339,52 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (ParseException e) {
 			System.out.println("Errore nel convertire la data " + dataArrivo);
+		}
+	}
+	
+	/**
+	 * Permette la modifica della durata
+	 * @param durata La nuova durata
+	 * @param destinazione La destinazione che si vuole modificare
+	 */
+	public void modificaDurata (int durata, DestinazioneDTO destinazione) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(destinazione.getDataArrivo());
+		cal.add(Calendar.DATE, durata);
+		destinazione.setDataPartenza(cal.getTime());	
+		try {
+			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+			JsfUtil.infoMessage("Durata modificata!");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città inesistente!");
+		}	
+	}
+	
+	/**
+	 * Permette la modifica della data di partenza di un pacchetto predefinito
+	 * @param dataArrivo La nuova data di arrivo
+	 * @param destinazione La destinazione che si vuole modificare
+	 */
+	public void modificaDataPredefinito (String dataArrivo, DestinazioneDTO destinazione) {		
+		try {
+			//calcolo durata corrente
+			int durata = (int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24));	
+			Date dataArr = new SimpleDateFormat("dd/MM/yyyy").parse(dataArrivo);	
+			destinazione.setDataArrivo(dataArr);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dataArr);
+			cal.add(Calendar.DATE, durata);		
+			destinazione.setDataPartenza(cal.getTime());
+			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+			JsfUtil.infoMessage("Data modificata!");
+		} catch (ParseException e) {
+			System.out.println("Errore nel parsing della data " + dataArrivo);
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città inesistente!");
 		}
 	}
 	
