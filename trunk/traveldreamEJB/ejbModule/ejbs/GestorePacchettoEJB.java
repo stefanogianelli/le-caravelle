@@ -94,6 +94,20 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
+	public List<PacchettoDTO> elencoTrePacchetti(String email, TipoPacchetto tipo) {		
+		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
+		q.setParameter("utente", email);
+		q.setParameter("tipo", tipo);
+		@SuppressWarnings("unchecked")
+		List<Pacchetti> pacchetti = q.setMaxResults(3).getResultList();
+		List<PacchettoDTO> pacchettiDTO = new ArrayList<PacchettoDTO>();
+		for (Pacchetti p : pacchetti) {
+			pacchettiDTO.add(this.convertiInDTO(p));
+		}
+		return pacchettiDTO;
+	}
+	
+	@Override
 	public int creaPacchettoPersonalizzato(PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, InsertException {
 		Pacchetti entity = new Pacchetti();
 		boolean check = false;

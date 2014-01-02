@@ -17,39 +17,41 @@
 
 <div class="blocco">
 	<h1><a href="mieiPacchetti.xhtml">I miei pacchetti</a></h1>
+	<ui:repeat var="p" value="#{pacchetto.elencoTrePacchettiPersonalizzati()}">
 		<div class="pacchetto">
-		  <a href="/traveldreamWeb/cuba.xhtml">
-		  <h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
-		  </a>
-		  <div id="linkPacc">Cuba</div> 
+		  <h:link outcome="dettagliPacchetto">
+		  	<f:param name="idPacchetto" value="#{p.id}" />			  
+		 	<h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
+		  </h:link>
+		  <div id="linkPacc">#{p.nome}</div> 
 		</div>
-
-		<div class="pacchetto">
-		  <a href="/traveldreamWeb/barcellona.xhtml">
-		  <h:graphicImage library="images" name="barcellona.jpg" width="288" height="174" />
-		  </a>
-		  <div id="linkPacc">Un finde loco</div>	  
-		</div>
+	</ui:repeat>
 </div>
 
 <div class="bloccoBianco">
 	<h1><a href="pacchettiCondivisi.xhtml">Pacchetti condivisi</a></h1>
+	<ui:repeat var="p" value="#{pacchetto.elencoTrePacchettiCondivisi()}">
 		<div class="pacchetto">
-		  <a href="/traveldreamWeb/barcellona.xhtml">
-		  <h:graphicImage library="images" name="barcellona.jpg" width="288" height="174" />
-		  </a>
-		  <div id="linkPacc">Un finde loco</div> 
+		  <h:link outcome="dettagliPacchetto">
+		  	<f:param name="idPacchetto" value="#{p.id}" />			  
+		 	<h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
+		  </h:link>
+		  <div id="linkPacc">#{p.nome.subSequence(0,9)} ...</div> 
 		</div>
+	</ui:repeat>
 </div>
 
 <div class="blocco">
 	<h1><a href="mieiRicordi.xhtml">I miei ricordi</a></h1>
+	<ui:repeat var="p" value="#{pacchetto.elencoTrePacchettiAcquistati()}">
 		<div class="pacchetto">
-		  <a href="/traveldreamWeb/roma.xhtml">
-		  <h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
-		  </a>	  
-		  <div id="linkPacc">Dolce vita</div>	  
+		  <h:link outcome="dettagliPacchetto">
+		  	<f:param name="idPacchetto" value="#{p.id}" />			  
+		 	<h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
+		  </h:link>
+		  <div id="linkPacc">#{p.nome}</div> 
 		</div>
+	</ui:repeat>
 </div>
 
 </ui:define>
