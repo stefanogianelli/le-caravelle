@@ -23,7 +23,7 @@
 		  	<f:param name="idPacchetto" value="#{p.id}" />			  
 		 	<h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
 		  </h:link>
-		  <div id="linkPacc">#{p.nome}</div> 
+		  <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,11).toString().concat('...') : p.nome}</div> 
 		</div>
 	</ui:repeat>
 </div>
@@ -36,7 +36,7 @@
 		  	<f:param name="idPacchetto" value="#{p.id}" />			  
 		 	<h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
 		  </h:link>
-		  <div id="linkPacc">#{p.nome.subSequence(0,11)}...</div> 
+		  <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,11).toString().concat('...') : p.nome}</div> 
 		</div>
 	</ui:repeat>
 </div>
@@ -49,7 +49,7 @@
 		  	<f:param name="idPacchetto" value="#{p.id}" />			  
 		 	<h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
 		  </h:link>
-		  <div id="linkPacc">#{p.nome}</div> 
+		  <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,11).toString().concat('...') : p.nome}</div> 
 		</div>
 	</ui:repeat>
 </div>
