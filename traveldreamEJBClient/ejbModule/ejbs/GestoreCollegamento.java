@@ -63,9 +63,9 @@ public interface GestoreCollegamento {
 	
 	/**
 	 * Permette l'eliminazione di un collegamento dal database
-	 * @param collegamento Il collegamento da eliminare
+	 * @param codiceCollegamento Il codice del collegamento da eliminare
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 */
-	void eliminaCollegamento (CollegamentoDTO collegamento) throws CollegamentoInesistenteException;
+	public void eliminaCollegamento (int codiceCollegamento) throws CollegamentoInesistenteException;
 	
 }

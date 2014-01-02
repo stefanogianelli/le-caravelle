@@ -14,55 +14,35 @@
 <h1>Elenco collegamenti</h1>
 
 <div class="bloccoRicerca">
-
-<h:form>
-<h:commandButton value="Nuovo collegamento" styleClass="search-button" action="nuovoCollegamento" />
-</h:form>
+	<h:form>
+		<h:commandButton value="Nuovo collegamento" styleClass="search-button" action="nuovoCollegamento" />
+	</h:form>
 </div>
 
-<div class="mioBloccoBianco">
-	<div class="descr">
-		<p>Città di partenza: cittàPartenza</p>
-		<p>Città di arrivo: cittàArrivo</p>
-		<p>Tipo di collegamento: tipoCollegamento</p>
-		<br></br>
-		<div id="prezzo">Data: data</div>	
-	</div>
-
-	<h:form>
-		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliCollegamento" />
-	</h:form>
+<ui:repeat var="c" value="#{collegamento.elencoCollegamenti()}" varStatus="status">
+	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+		<div class="descr">
+			<p>Città di partenza: #{c.cittaPartenza.nome}</p>
+			<p>Città di arrivo: #{c.cittaArrivo.nome}</p>
+			<p>Tipo di collegamento: #{c.tipoCollegamento.label}</p>
+			<br></br>
+			<div id="prezzo">Data:
+				<h:outputText value="#{c.dataPartenza}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>			
+			</div>	
+		</div>
 		
-	<h:form>
-		<h:commandButton value="Elimina" styleClass="detail-button"/>
-	</h:form>
-
-</div>
-
-<div class="mioBlocco">
-	<div class="descr">
-		<p>Città di partenza: cittàPartenza</p>
-		<p>Città di arrivo: cittàArrivo</p>
-		<p>Tipo di collegamento: tipoCollegamento</p>
-		<br></br>
-		<div id="prezzo">Data: data</div>	
+		<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+			<f:param name="codiceCollegamento" value="#{c.codice}" />
+		</h:link>
+			
+		<h:form>
+			<h:commandButton value="Elimina" styleClass="detail-button" action="#{collegamento.eliminaCollegamento(c.codice)}" />
+		</h:form>
+	
 	</div>
-
-	<h:form>
-		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliCollegamento" />
-	</h:form>
-	
-	<h:form>
-		<h:commandButton value="Elimina" styleClass="detail-button"/>
-	</h:form>
-	
-</div>
-
-<div class="mioBloccoBianco">
-</div>
-
-<div class="mioBlocco">
-</div>
+</ui:repeat>
 
 </ui:define>
 

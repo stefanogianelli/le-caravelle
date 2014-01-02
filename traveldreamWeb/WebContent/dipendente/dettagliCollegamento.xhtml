@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="templateDip.xhtml">
@@ -10,37 +11,49 @@
 
 <ui:define name="content">
 
+<f:metadata>
+	<f:viewParam name="codiceCollegamento" binding="#{codice}" />
+	<f:event listener="#{collegamento.getCollegamento(codice.value)}" type="preRenderView" />
+</f:metadata>
+
 <h1>Dettagli collegamento</h1>
 
+<p:messages showDetail="true" autoUpdate="true" />
+
 <div class="bloccoRicerca">
-
-<h:form>
-<h:commandButton value="Elimina" styleClass="search-button" />
-</h:form>
-<h:form>
-<h:commandButton value="Modifica" styleClass="search-button" />
-</h:form>
-<h:form>
-<h:commandButton value="Salva" styleClass="search-button" />
-</h:form>
+	<h:form>
+		<h:commandButton value="Elimina" styleClass="search-button" action="#{collegamento.eliminaCollegamento(codice.value)}" />
+		<h:commandButton value="Modifica" styleClass="search-button" />
+		<h:commandButton value="Salva" styleClass="search-button" />
+	</h:form>
 </div>
 
-<div class="bloccoDett">
-	<h2>Codice</h2>
-	<p>Città di partenza: cittàPartenza</p>
-	<p>Città di arrivo: cittàArrivo</p>
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{collegamento.collegamento.codice != 0}">
+	<p>Città di partenza: #{collegamento.collegamento.cittaPartenza.nome}</p>
+	<p>Città di arrivo: #{collegamento.collegamento.cittaArrivo.nome}</p>
 	<br></br>
-	<p>Data: data</p>
-	<p>Ora di partenza: oraPartenza</p>
-	<p>Ora di arrivo: oraArrivo</p>
+	<p>Data:
+		<h:outputText value="#{collegamento.collegamento.dataPartenza}">
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+		</h:outputText>
+	</p>
+	<p>Ora di partenza:
+		<h:outputText value="#{collegamento.collegamento.oraPartenza}">
+			<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:outputText>	
+	</p>
+	<p>Ora di arrivo:
+		<h:outputText value="#{collegamento.collegamento.oraArrivo}">
+			<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:outputText>
+	</p>
 	<br></br>
-	<p>Tipo di collegamento: tipoCollegamento</p>
-	<p>Origine: origine</p>
-	<p>Destinazione: destinazione</p>
+	<p>Tipo di collegamento: #{collegamento.collegamento.tipoCollegamento.label}</p>
+	<p>Origine: #{collegamento.collegamento.origine}</p>
+	<p>Destinazione: #{collegamento.collegamento.destinazione}</p>
 	<br></br>
-	<p>Prezzo: prezzo</p>
-
-</div>
+	<p>Prezzo: #{collegamento.collegamento.prezzo} €</p>
+</h:panelGroup>
 
 </ui:define>
 </ui:composition>
