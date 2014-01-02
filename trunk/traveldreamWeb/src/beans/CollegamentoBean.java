@@ -75,12 +75,10 @@ public class CollegamentoBean {
 	
 	/**
 	 * Elenca tutti i collegamenti presenti nel database
+	 * @return L'elenco dei collegamenti
 	 */
-	public void elencoCollegamenti () {
-		if (this.getElenco().isEmpty())
-			this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti());
-		if (this.getElenco().isEmpty())
-			JsfUtil.infoMessage("Nessun risultato");
+	public List<CollegamentoDTO> elencoCollegamenti () {
+		return this.collegamentoBean.elencoCollegamenti();
 	}
 
 	/**
@@ -141,14 +139,15 @@ public class CollegamentoBean {
 	
 	/**
 	 * Permette l'eliminazione di un collegamento
-	 * @param collegamento Il collegamento da eliminare
+	 * @param codiceCollegamento Il codice del collegamento da eliminare
 	 */
-	public void eliminaCollegamento (CollegamentoDTO collegamento) {
+	public String eliminaCollegamento (int codiceCollegamento) {
 		try {
-			collegamentoBean.eliminaCollegamento(collegamento);
-			JsfUtil.infoMessage("Collegamento eliminato!");
+			collegamentoBean.eliminaCollegamento(codiceCollegamento);
+			return "elencoCollegamenti?faces-redirect=true";
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente!");
 		}
-	}
+		return null;
+	}	
 }

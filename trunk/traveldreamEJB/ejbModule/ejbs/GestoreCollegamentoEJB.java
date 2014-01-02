@@ -116,8 +116,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	}
 
 	@Override
-	public void eliminaCollegamento(CollegamentoDTO collegamento) throws CollegamentoInesistenteException{
-		em.remove(this.convertiInEntita(collegamento));		
+	public void eliminaCollegamento (int codiceCollegamento) throws CollegamentoInesistenteException {
+		em.remove(this.convertiInEntita(codiceCollegamento));
 	}
 	
 	@Override
