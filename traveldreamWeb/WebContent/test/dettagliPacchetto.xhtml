@@ -9,6 +9,17 @@
 	<title>Dettagli Pacchetto</title>
 </h:head> 
 <body>
+	<script type="text/javascript">
+      function toggle(id) {
+        var element = document.getElementById(id);
+        if(element.style.display == 'block') {
+          element.style.display = 'none';
+        } else {
+          element.style.display = 'block'
+        }
+      }
+    </script>
+
 	<f:metadata>
 		<f:viewParam name="idPacchetto" binding="#{id}" />
 		<f:event listener="#{pacchetto.getPacchetto(id.value)}" type="preRenderView" />
@@ -94,15 +105,17 @@
 				<!--  Informazioni sulla destinazione -->
 				<h:panelGroup>
 					Dal
-					<p:inplace id="dataArrivo" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
-						<p:ajax event="save" listener="#{pacchetto.modificaDataArrivo(d)}" update=":pacchettoForm:prezzo,:mainForm:destinazioni" />
-	            		<p:calendar value="#{d.dataArrivo}" id="dataArrivoCal" locale="it" pattern="dd/MM/yyyy">
-	            			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-	            		</p:calendar>
-	            	</p:inplace>
-					<h:outputText value="#{d.dataArrivo}" rendered="#{not pacchetto.tipoPersonalizzato}">
+					<h:outputText id="mostraData" value="#{d.dataArrivo}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 					</h:outputText>
+					<h:commandButton value="modifica" onclick="toggle('modificaData'); return false;" />
+					
+					<div id="modificaData" style="display: none;">
+						<p:calendar value="#{d.dataArrivo}" id="dataArrivoCal" locale="it" pattern="dd/MM/yyyy">
+	            			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+	            		</p:calendar>
+					</div>
+					
 					al
 					<p:inplace id="dataPartenza" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
 						<p:ajax event="save" listener="#{pacchetto.modificaDataPartenza(d)}" update=":pacchettoForm:prezzo,:mainForm:destinazioni" />
