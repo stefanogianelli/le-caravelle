@@ -65,12 +65,10 @@ public class HotelBean {
 
 	/**
 	 * Mostra tutti gli hotel presenti nel database
+	 * @return L'elenco degli hotel
 	 */
-	public void elencoHotel () {
-		if (this.getElenco().isEmpty())
-			this.getElenco().addAll(hotelBean.elencoHotel());
-		if (this.getElenco().isEmpty())
-			JsfUtil.infoMessage("Nessun risultato");
+	public List<HotelDTO> elencoHotel () {
+		return hotelBean.elencoHotel();
 	}
 
 	/**
@@ -132,11 +130,11 @@ public class HotelBean {
 	
 	/**
 	 * Permette l'eliminazione di un hotel
-	 * @param hotel L'hotel da eliminare
+	 * @param idHotel L'identificativo dell'hotel da eliminare
 	 */
-	public void eliminaHotel (HotelDTO hotel) {
+	public void eliminaHotel (int idHotel) {
 		try {
-			hotelBean.eliminaHotel(hotel);
+			hotelBean.eliminaHotel(idHotel);
 			JsfUtil.infoMessage("Hotel eliminato!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel sconosciuta!");

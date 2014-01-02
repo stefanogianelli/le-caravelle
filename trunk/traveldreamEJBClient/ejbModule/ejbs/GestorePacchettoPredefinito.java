@@ -158,9 +158,9 @@ public interface GestorePacchettoPredefinito {
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
-	 * @param pacchetto Il pacchetto da eliminare
+	 * @param idPacchetto L'identificativo del pacchetto da eliminare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void eliminaPacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException;
+	void eliminaPacchetto (int idPacchetto) throws PacchettoInesistenteException;
 
 }

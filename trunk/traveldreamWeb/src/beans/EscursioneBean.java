@@ -58,10 +58,10 @@ public class EscursioneBean {
 	
 	/**
 	 * Elenca tutte le escursioni presenti nel database
+	 * @return L'elenco delle escursioni
 	 */
-	public void elencoEscursioni () {
-		if (this.getElenco().isEmpty())
-			this.getElenco().addAll(escursioneBean.elencoEscursioni());
+	public List<EscursioneDTO> elencoEscursioni () {
+		return escursioneBean.elencoEscursioni();
 	}
 
 	/**
@@ -120,11 +120,11 @@ public class EscursioneBean {
 	
 	/**
 	 * Permette l'eliminazione di un'escursione
-	 * @param escursione L'escursione da eliminare
+	 * @param idEscursione L'identificativo dell'escursione da eliminare
 	 */
-	public void eliminaEscursione (EscursioneDTO escursione) {
+	public void eliminaEscursione (int idEscursione) {
 		try {
-			escursioneBean.eliminaEscursione(escursione);
+			escursioneBean.eliminaEscursione(idEscursione);
 			JsfUtil.infoMessage("Escursione eliminata!");
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");

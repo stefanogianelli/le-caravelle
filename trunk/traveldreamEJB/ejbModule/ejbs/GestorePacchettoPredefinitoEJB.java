@@ -280,8 +280,8 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void eliminaPacchetto(PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
-		em.remove(this.convertiInEntita(pacchetto));
+	public void eliminaPacchetto(int idPacchetto) throws PacchettoInesistenteException {
+		em.remove(this.convertiInEntita(idPacchetto));
 	}
 	
 	@Override

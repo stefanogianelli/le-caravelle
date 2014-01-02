@@ -16,36 +16,34 @@
 <div class="bloccoRicerca">
 
 <h:form>
-<h:commandButton value="Nuova escursione" styleClass="search-button" action="nuovaEscursione" />
+	<h:commandButton value="Nuova escursione" styleClass="search-button" action="nuovaEscursione" />
 </h:form>
 
 </div>
 
-<div class="mioBloccoBianco">
-	<div class="descr">
-		<h2>Nome escursione</h2>
-		<p>Data</p>
-		<br></br>
-		<div id="prezzo">Città</div>	
-	</div>
+<ui:repeat var="e" value="#{escursione.elencoEscursioni()}" varStatus="status">
+	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+		<div class="descr">
+			<h2>#{e.nome}</h2>
+			<p>
+				<h:outputText value="#{e.data}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>				
+			</p>
+			<br></br>
+			<div id="prezzo">#{e.citta.nome}</div>	
+		</div>
+
+		<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliEscursione">
+			<f:param name="idEscursione" value="#{e.id}" />
+		</h:link>
+		
+		<h:form>
+			<h:commandButton value="Elimina" styleClass="detail-button" action="#{escursione.eliminaEscursione(e.id)}" />
+		</h:form>
 	
-	<h:form>
-		<h:commandButton value="Dettagli" styleClass="detail-button" action="dettagliEscursione" />
-	</h:form>
-	<h:form>
-		<h:commandButton value="Elimina" styleClass="detail-button"/>
-	</h:form>
-
-</div>
-
-<div class="mioBlocco">
-</div>
-
-<div class="mioBloccoBianco">
-</div>
-
-<div class="mioBlocco">
-</div>
+	</div>
+</ui:repeat>
 
 </ui:define>
 </ui:composition>
