@@ -127,7 +127,7 @@
 						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 						<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataArrivo).codice}" />
 					</h:link>
-					<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}">
+					<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataArrivo))}">
 						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
 						<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
@@ -174,7 +174,7 @@
 					<h2>#{d.citta.nome}</h2>
 				</div>
 				
-				<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchetto.eliminaDestinazione(d)}" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}"/>
+				<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchetto.eliminaDestinazione(d)}" disabled="#{not pacchetto.tipoPersonalizzato}"/>
 				
 				<div>
 					Data di arrivo
@@ -183,6 +183,7 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 						</h:outputText>
 						<h:commandButton value="modifica" onclick="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
+						<h:commandButton value="modifica" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" rendered="#{pacchetto.tipoPredefinito}" />
 					</div>
 					
 					<div id="modificaDataArrivo" style="display: none;">
@@ -192,12 +193,22 @@
 		            	<h:commandButton value="salva" action="#{pacchetto.modificaDataArrivo(d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
 		            	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
 					</div>
+					
+					<div id="modificaDataArrivoPredefinito" style="display: none;">
+						<h:selectOneMenu binding="#{dataArrivoPred}">
+							<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="data" itemLabel="#{pacchetto.getData(data)}" itemValue="#{pacchetto.getData(data)}" />			
+						</h:selectOneMenu>
+		            	<h:commandButton value="salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
+		            	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />									
+					</div>
+					
 					Data di partenza
 					<div id="dataPartenza" style="display: block;">
 						<h:outputText value="#{d.dataPartenza}">
 							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 						</h:outputText>
 						<h:commandButton value="modifica" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
+						<h:commandButton value="modifica" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" rendered="#{pacchetto.tipoPredefinito}" />					
 					</div>
 					
 					<div id="modificaDataPartenza" style="display: none;">
@@ -206,7 +217,15 @@
 		            	</p:calendar>
 		            	<h:commandButton value="salva" action="#{pacchetto.modificaDataPartenza(d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
 		            	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
-					</div>		
+					</div>
+					
+					<div id="modificaDurata" style="display: none;">
+		                <h:selectOneMenu binding="#{durata}">
+							<f:selectItems value="#{pacchetto.predefinito.durate}" />
+						</h:selectOneMenu>					
+		            	<h:commandButton value="salva" action="#{pacchetto.modificaDurata(durata.value,d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
+		            	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />					
+					</div>
 				</div>
 				
 				<div class="hotelPacc">
