@@ -17,7 +17,7 @@
 
 <div class="blocco">
 	<h1><a href="mieiPacchetti.xhtml">I miei pacchetti</a></h1>
-	<ui:repeat var="p" value="#{pacchetto.elencoTrePacchettiPersonalizzati()}">
+	<ui:repeat var="p" value="#{pacchetto.elencoTreMieiPacchetti()}">
 		<div class="pacchetto">
 		  <h:link outcome="dettagliPacchetto">
 		  	<f:param name="idPacchetto" value="#{p.id}" />			  

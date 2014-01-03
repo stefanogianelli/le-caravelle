@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -133,12 +134,23 @@ public class PacchettoBean {
 	}
 	
 	/**
-	 * Restituisce tutti i pacchetti personalizzati e predefiniti posseduti dall'utente
+	 * Restituisce tutti i pacchetti personalizzati, predefiniti e acquistati (in date future) posseduti dall'utente
 	 * @return I pacchetti posseduti dall'utente
 	 */
-	public List<PacchettoDTO> elencoPacchettiPersonalizzati () {
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
+	public List<PacchettoDTO> elencoMieiPacchetti () {
+		Calendar dataOdierna = Calendar.getInstance();
+		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
+		PacchettoDTO p;
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
+		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
+			p = itr.next();
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(dataOdierna.getTime()))
+				itr.remove();
+		}
 		pacchetti.addAll(pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PREDEFINITO));
+		pacchetti.addAll(pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO));
+		
 		return pacchetti;
 	}
 	
@@ -146,7 +158,7 @@ public class PacchettoBean {
 	 * Restituisce i primi tre pacchetti personalizzati o predefiniti posseduti dall'utente
 	 * @return I pacchetti posseduti dall'utente
 	 */
-	public List<PacchettoDTO> elencoTrePacchettiPersonalizzati () {
+	public List<PacchettoDTO> elencoTreMieiPacchetti () {
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
 		if(pacchetti.size() < 3)
 			pacchetti.addAll(pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.PREDEFINITO));
@@ -174,7 +186,17 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoTrePacchettiAcquistati () {
-		return pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		Calendar dataOdierna = Calendar.getInstance();
+		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
+		PacchettoDTO p;
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
+		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
+			p = itr.next();
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(dataOdierna.getTime()))
+				itr.remove();
+		}
+		return pacchetti;
 	}
 	
 	/**
@@ -182,7 +204,17 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoPacchettiAcquistati () {
-		return pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		Calendar dataOdierna = Calendar.getInstance();
+		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
+		PacchettoDTO p;
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
+		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
+			p = itr.next();
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(dataOdierna.getTime()))
+				itr.remove();
+		}
+		return pacchetti;
 	}		
 
 	/**
