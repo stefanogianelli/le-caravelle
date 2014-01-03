@@ -138,6 +138,25 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Ritorna il nome di un immagine casuale tra le destinazioni inserite nel pacchetto
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @return Il nome dell'immagine
+	 */
+	public String getImmagine (int idPacchetto) {
+		try {
+			PacchettoDTO pacchetto = pacchettoBean.getPacchetto(idPacchetto);
+			int size = pacchetto.getDestinazioni().size();
+			int index = 0 + (int)(Math.random() * size);
+			int immSize = pacchetto.getDestinazioni().get(index).getCitta().getImmagini().size();
+			int immIndex = 0 + (int)(Math.random() * immSize);
+			return pacchetto.getDestinazioni().get(index).getCitta().getImmagini().get(immIndex).getImmagine(); 			
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+		return null;
+	}
+	
+	/**
 	 * Ricerca tutti i pacchetti personalizzati posseduti dall'utente
 	 */
 	public void cercaPacchetti () {

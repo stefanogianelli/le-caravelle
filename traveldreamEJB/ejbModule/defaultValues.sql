@@ -11,6 +11,14 @@ INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Johannesburg', 'Gu
 INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Istanbul', 'Marmara', 'Turchia', 41.016667, 28.966667);
 INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Parigi', 'Île-de-France', 'Francia', 48.856667, 2.351944);
 
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (1, 'milano1.jpg');
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (1, 'milano2.jpeg');
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (2, 'roma1.jpg');
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (2, 'roma2.jpg');
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (2, 'roma3.jpg');
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (4, 'barcellona1.jpg');
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (4, 'barcellona2.jpg');
+
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel La Madonnina', 3, 'Via G. Mazzini 10', '+39 02 89096917', 'http://www.hotellamadonninamilano.it/', 'info@hotellamadonninamilano.it', 160.0, 1, 'madonnina.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Starhotel Rosa', 4, 'Piazza Fontana 3', '+39 02 88311', 'http://rosagrand.starhotels.com/it/home.aspx', 'rosa.mi@starhotels.it', 85.0, 1, 'starhotel.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel Fenice', 3, 'Corso Buenos Aires 2', '+39 02 29525541', 'http://www.hotelfenice.it/it/', 'info@hotelfenice.it', 97.65, 1, 'fenice.jpg');

@@ -3,7 +3,6 @@
 	<persistence-unit name="traveldreamEJB">
 		<jta-data-source>jdbc/traveldreamdb</jta-data-source>
 		<class>entities.Amici</class>
-		<class>entities.Citta</class>
 		<class>entities.Collegamenti</class>
 		<class>entities.DatePartenza</class>
 		<class>entities.DatePartenzaPK</class>
@@ -21,5 +20,7 @@
 		<class>entities.AttivitaPK</class>
 		<class>entities.AttivitaPred</class>
 		<class>entities.AttivitaPredPK</class>
+		<class>entities.Citta</class>
+		<class>entities.ImmaginiCitta</class>
 	</persistence-unit>
 </persistence>
