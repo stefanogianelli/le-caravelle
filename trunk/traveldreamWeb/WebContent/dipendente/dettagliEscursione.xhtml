@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="templateDip.xhtml">
@@ -10,34 +11,47 @@
 
 <ui:define name="content">
 
+<f:metadata>
+	<f:viewParam name="idEscursione" binding="#{id}" />
+	<f:event listener="#{escursione.getEscursione(id.value)}" type="preRenderView" />
+</f:metadata>
+
 <h1>Dettagli escursione</h1>
 
-<div class="bloccoRicerca">
+<p:messages showDetail="true" autoUpdate="true" />
 
-<h:form>
-<h:commandButton value="Elimina" styleClass="search-button" />
-</h:form>
-<h:form>
-<h:commandButton value="Modifica" styleClass="search-button" />
-</h:form>
-<h:form>
-<h:commandButton value="Salva" styleClass="search-button" />
-</h:form>
-</div>
-
-<div class="bloccoDett">
-	<h2>Nome escursione</h2>
-	<br></br>
-	<p>Città: città</p>
-	<br></br>
-	<p>Data: data</p>
-	<p>Ora di partenza: ora</p>
-	<p>Durata dell'escursione: durata</p>
-	<br></br>
-	<p>Prezzo: prezzo</p>
-	<br></br>
-	<p>Tipo di escursione: categoria</p>
-</div>
+<h:panelGroup rendered="#{escursione.escursione.id != 0}">
+	<div class="bloccoRicerca">
+		<h:form>
+			<h:commandLink value="Elimina" styleClass="search-button" action="#{escursione.eliminaEscursione(id.value)}" />
+			<h:link value="Modifica" styleClass="search-button" outcome="modificaEscursione">
+				<f:param name="idEscursione" value="#{id.value}" />
+			</h:link>
+		</h:form>
+	</div>
+	
+	<div class="bloccoDett">
+		<h2>#{escursione.escursione.nome}</h2>
+		<br></br>
+		<p>Città: #{escursione.escursione.citta.nome}</p>
+		<br></br>
+		<p>Data:
+			<h:outputText value="#{escursione.escursione.data}">
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			</h:outputText>		
+		</p>
+		<p>Ora di partenza:
+			<h:outputText value="#{escursione.escursione.ora}">
+				<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+			</h:outputText>			
+		</p>
+		<p>Durata dell'escursione: #{escursione.escursione.durata}</p>
+		<br></br>
+		<p>Prezzo: #{escursione.escursione.prezzo} €</p>
+		<br></br>
+		<p>Tipo di escursione: #{escursione.escursione.categoria.label}</p>
+	</div>
+</h:panelGroup>
 
 </ui:define>
 

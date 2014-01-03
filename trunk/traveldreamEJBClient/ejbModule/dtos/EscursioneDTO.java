@@ -28,11 +28,6 @@ public class EscursioneDTO implements Serializable {
 
 	private CittaDTO citta;
 	
-	/*
-	 * Utilizzato per la modifica
-	 */	
-	private boolean editable;
-	
 	public EscursioneDTO () {
 		citta = new CittaDTO();
 	}
@@ -99,13 +94,5 @@ public class EscursioneDTO implements Serializable {
 
 	public void setCitta(CittaDTO citta) {
 		this.citta = citta;
-	}
-
-	public boolean isEditable() {
-		return editable;
-	}
-
-	public void setEditable(boolean editable) {
-		this.editable = editable;
 	}
 }

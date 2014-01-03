@@ -31,6 +31,11 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	
 	@EJB
 	private GestoreCittaLocal citta;
+	
+	@Override
+	public EscursioneDTO getEscursione (int idEscursione) throws EscursioneInesistenteException {
+		return this.convertiInDTO(this.convertiInEntita(idEscursione));
+	}
 	   
 	@Override
 	public List<EscursioneDTO> elencoEscursioni() {
@@ -71,7 +76,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	}
 
 	@Override
-	public void creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException, EntitaEsistenteException {
+	public int creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException, EntitaEsistenteException {
 		//verifico che non esista già un'escursione con lo stesso nome nella stessa città
 		Query q = em.createNamedQuery("Escursioni.getEscursioneDaNome", Escursioni.class);
 		q.setParameter("nome", escursione.getNome());
@@ -90,6 +95,9 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 		entity.setCitta(citta.getCitta(escursione.getCitta().getNome()));
 		
 		em.persist(entity);
+		em.flush();
+		
+		return entity.getId();
 	}
 
 	@Override
