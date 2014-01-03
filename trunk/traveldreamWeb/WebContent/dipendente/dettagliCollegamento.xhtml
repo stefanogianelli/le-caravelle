@@ -20,39 +20,42 @@
 
 <p:messages showDetail="true" autoUpdate="true" />
 
-<div class="bloccoRicerca">
-	<h:form>
-		<h:commandButton value="Elimina" styleClass="search-button" action="#{collegamento.eliminaCollegamento(codice.value)}" />
-		<h:commandButton value="Modifica" styleClass="search-button" />
-		<h:commandButton value="Salva" styleClass="search-button" />
-	</h:form>
-</div>
-
-<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{collegamento.collegamento.codice != 0}">
-	<p>Città di partenza: #{collegamento.collegamento.cittaPartenza.nome}</p>
-	<p>Città di arrivo: #{collegamento.collegamento.cittaArrivo.nome}</p>
-	<br></br>
-	<p>Data:
-		<h:outputText value="#{collegamento.collegamento.dataPartenza}">
-			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-		</h:outputText>
-	</p>
-	<p>Ora di partenza:
-		<h:outputText value="#{collegamento.collegamento.oraPartenza}">
-			<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-		</h:outputText>	
-	</p>
-	<p>Ora di arrivo:
-		<h:outputText value="#{collegamento.collegamento.oraArrivo}">
-			<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-		</h:outputText>
-	</p>
-	<br></br>
-	<p>Tipo di collegamento: #{collegamento.collegamento.tipoCollegamento.label}</p>
-	<p>Origine: #{collegamento.collegamento.origine}</p>
-	<p>Destinazione: #{collegamento.collegamento.destinazione}</p>
-	<br></br>
-	<p>Prezzo: #{collegamento.collegamento.prezzo} €</p>
+<h:panelGroup rendered="#{collegamento.collegamento.codice != 0}">	
+	<div class="bloccoRicerca">
+		<h:form>
+			<h:commandLink value="Elimina" styleClass="search-button" action="#{collegamento.eliminaCollegamento(codice.value)}" />
+			<h:link value="Modifica" styleClass="search-button" outcome="modificaCollegamento">
+				<f:param name="codiceCollegamento" value="#{collegamento.collegamento.codice}" />
+			</h:link>
+		</h:form>
+	</div>
+	
+	<div class="bloccoDett">
+		<p>Città di partenza: #{collegamento.collegamento.cittaPartenza.nome}</p>
+		<p>Città di arrivo: #{collegamento.collegamento.cittaArrivo.nome}</p>
+		<br></br>
+		<p>Data:
+			<h:outputText value="#{collegamento.collegamento.dataPartenza}">
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			</h:outputText>
+		</p>
+		<p>Ora di partenza:
+			<h:outputText value="#{collegamento.collegamento.oraPartenza}">
+				<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+			</h:outputText>	
+		</p>
+		<p>Ora di arrivo:
+			<h:outputText value="#{collegamento.collegamento.oraArrivo}">
+				<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+			</h:outputText>
+		</p>
+		<br></br>
+		<p>Tipo di collegamento: #{collegamento.collegamento.tipoCollegamento.label}</p>
+		<p>Origine: #{collegamento.collegamento.origine}</p>
+		<p>Destinazione: #{collegamento.collegamento.destinazione}</p>
+		<br></br>
+		<p>Prezzo: #{collegamento.collegamento.prezzo} €</p>
+	</div>
 </h:panelGroup>
 
 </ui:define>

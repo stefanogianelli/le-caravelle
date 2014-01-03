@@ -20,7 +20,7 @@
 
 <p:messages showDetail="true" autoUpdate="true" />
 
-<div class="bloccoDett">
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{hotel.hotel.id != 0}">
 	<h:form>
 		<p><h:outputText tyleClass="name-input" value="Nome hotel: " />
 		<h:inputText styleClass="text-input" value="#{hotel.hotel.nome}" /><br /></p>
@@ -57,7 +57,7 @@
 			<h:commandButton action="#{hotel.modificaHotel()}" styleClass="button" value="Salva" />
 		</div>
 	</h:form>
-</div>
+</h:panelGroup>
 
 </ui:define>
 </ui:composition>

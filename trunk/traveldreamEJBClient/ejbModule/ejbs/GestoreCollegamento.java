@@ -48,10 +48,11 @@ public interface GestoreCollegamento {
 	/**
 	 * Aggiunge un nuovo collegamento nel database
 	 * @param collegamento I dati del collegamento da aggiungere
+	 * @return L'identificativo del nuovo collegamento creato
 	 * @throws CittaInesistenteException Quando non viene trovata la città nel database
 	 * @throws EntityExistsException Quando il collegamento è già esistente nel database
 	 */
-	void creaCollegamento (CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException;
+	int creaCollegamento (CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException;
 	
 	/**
 	 * Permette la modifica dei dati di un collegamento

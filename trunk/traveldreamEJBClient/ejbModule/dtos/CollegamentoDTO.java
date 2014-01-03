@@ -33,11 +33,6 @@ public class CollegamentoDTO implements Serializable {
 	
 	private CittaDTO cittaPartenza;
 	
-	/*
-	 * Utilizzato per la modifica del collegamento
-	 */
-	private boolean editable;
-	
 	public CollegamentoDTO () {
 		cittaArrivo = new CittaDTO();
 		cittaPartenza = new CittaDTO();
@@ -121,14 +116,6 @@ public class CollegamentoDTO implements Serializable {
 
 	public void setCittaPartenza(CittaDTO cittaPartenza) {
 		this.cittaPartenza = cittaPartenza;
-	}
-
-	public boolean isEditable() {
-		return editable;
-	}
-
-	public void setEditable(boolean editable) {
-		this.editable = editable;
 	}
 	
 }
