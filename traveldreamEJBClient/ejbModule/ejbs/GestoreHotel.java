@@ -36,10 +36,11 @@ public interface GestoreHotel {
 	/**
 	 * Crea un nuovo hotel nel database
 	 * @param hotel L'oggetto da salvare
+	 * @return L'identificativo dell'hotel creato
 	 * @throws CittaInesistenteException Quando non viene trovata la città nel database
 	 * @throws EntitaEsistenteException Quando l'hotel è già esistente nel database
 	 */
-	void creaHotel (HotelDTO hotel) throws CittaInesistenteException, EntitaEsistenteException;
+	int creaHotel (HotelDTO hotel) throws CittaInesistenteException, EntitaEsistenteException;
 	
 	/**
 	 * Permette di modificare i dati di un hotel

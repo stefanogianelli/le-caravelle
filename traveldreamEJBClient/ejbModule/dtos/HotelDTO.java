@@ -33,11 +33,6 @@ public class HotelDTO implements Serializable {
 	
 	private String immagine;
 	
-	/*
-	 * Utilizzato per la modifica dell'hotel
-	 */	
-	private boolean isEditable;
-	
 	public HotelDTO () {
 		citta = new CittaDTO();
 	}
@@ -112,14 +107,6 @@ public class HotelDTO implements Serializable {
 
 	public void setCitta(CittaDTO citta) {
 		this.citta = citta;
-	}
-
-	public boolean isEditable() {
-		return isEditable;
-	}
-
-	public void setEditable(boolean isEditable) {
-		this.isEditable = isEditable;
 	}
 
 	public String getImmagine() {

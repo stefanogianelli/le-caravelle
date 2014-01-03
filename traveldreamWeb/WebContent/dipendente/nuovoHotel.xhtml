@@ -46,11 +46,13 @@
 		<p><h:outputText styleClass="name-input" value="Email: " />
 		<h:inputText styleClass="text-input" value="#{hotel.hotel.email}" /><br /></p>
 		
+		<p><h:outputText styleClass="name-input" value="Immagine: " />
+		<h:inputText styleClass="text-input" value="#{hotel.hotel.immagine}" /><br /></p>		
+		
 		<div class="bloccoButton">
 			<h:commandButton action="#{hotel.creaHotel()}" styleClass="button" value="Salva" />
 		</div>
 	</h:form>
-
 </div>
 </ui:define>
 </ui:composition>
