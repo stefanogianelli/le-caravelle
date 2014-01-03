@@ -27,9 +27,12 @@ public class Citta implements Serializable {
 	private String nome;
 
 	private String regione;
-
-	public Citta() {
-	}
+	
+	@Column(name = "lat")
+	private float latitudine;
+	
+	@Column(name = "lon")
+	private float longitudine;
 
 	public int getId() {
 		return this.id;
@@ -61,6 +64,22 @@ public class Citta implements Serializable {
 
 	public void setRegione(String regione) {
 		this.regione = regione;
+	}
+
+	public float getLatitudine() {
+		return latitudine;
+	}
+
+	public void setLatitudine(float latitudine) {
+		this.latitudine = latitudine;
+	}
+
+	public float getLongitudine() {
+		return longitudine;
+	}
+
+	public void setLongitudine(float longitudine) {
+		this.longitudine = longitudine;
 	}
 
 }

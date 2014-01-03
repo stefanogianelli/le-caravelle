@@ -14,6 +14,10 @@ public class CittaDTO implements Serializable {
 
 	private String regione;
 	
+	private float latitudine;
+	
+	private float longitudine;
+	
 	public int getId() {
 		return id;
 	}
@@ -46,6 +50,22 @@ public class CittaDTO implements Serializable {
 		this.regione = regione;
 	}
 	
+	public float getLatitudine() {
+		return latitudine;
+	}
+
+	public void setLatitudine(float latitudine) {
+		this.latitudine = latitudine;
+	}
+
+	public float getLongitudine() {
+		return longitudine;
+	}
+
+	public void setLongitudine(float longitudine) {
+		this.longitudine = longitudine;
+	}
+
 	@Override
 	public boolean equals (Object other) {		
 		if (this.getNome().equals(((CittaDTO) other).getNome()))
