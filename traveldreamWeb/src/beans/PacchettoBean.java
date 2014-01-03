@@ -230,7 +230,7 @@ public class PacchettoBean {
 		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
 		PacchettoDTO p;
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
-		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
+		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
 			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(dataOdierna.getTime()))
