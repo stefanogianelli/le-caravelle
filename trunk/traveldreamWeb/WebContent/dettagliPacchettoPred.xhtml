@@ -42,7 +42,7 @@
 		<h2>#{pacchettoPredefinito.pacchetto.hotel.citta.nome}</h2>
 	</div>
 	<div class="hotelPacc">
-		<h:graphicImage library="images/hotel" name="#{pacchettoPredefinito.pacchetto.hotel.immagine}" width="195" height="113" />
+		<h:graphicImage library="images/hotel" name="#{pacchettoPredefinito.pacchetto.hotel.immagine == NULL ? 'noImage.png' : pacchettoPredefinito.pacchetto.hotel.immagine}" width="195" height="113" />
 		<div class="descrHotel">
 			<p><b>#{pacchettoPredefinito.pacchetto.hotel.nome}</b></p>
 			<p>#{pacchettoPredefinito.pacchetto.hotel.indirizzo}</p>
