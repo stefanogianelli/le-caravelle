@@ -82,7 +82,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	}
 
 	@Override
-	public void creaCollegamento(CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException {
+	public int creaCollegamento(CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException {
 		Collegamenti entity = new Collegamenti ();
 		
 		entity.setDataPartenza(collegamento.getDataPartenza());
@@ -96,6 +96,9 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenza().getNome()));
 		
 		em.persist(entity);
+		em.flush();
+		
+		return entity.getCodice();
 	}
 
 	@Override

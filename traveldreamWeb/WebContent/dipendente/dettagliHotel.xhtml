@@ -18,29 +18,31 @@
 
 <h1>Dettagli hotel</h1>
 
-<div class="bloccoRicerca">
+<h:panelGroup rendered="#{hotel.hotel.id != 0}">
+	<div class="bloccoRicerca">
+		<h:form>
+			<h:commandLink value="Elimina" styleClass="search-button" action="#{hotel.eliminaHotel(id.value)}" />
+			<h:link value="Modifica" styleClass="search-button" outcome="modificaHotel">
+				<f:param name="idHotel" value="#{hotel.hotel.id}" />
+			</h:link>
+		</h:form>
+	</div>
+	
+	<div class="bloccoDett">
+		<h2>#{hotel.hotel.nome}</h2>
+		<p:rating styleClass="stelle-input" value="#{hotel.hotel.stelle}" readonly="true" stars="5" />
+		<h:graphicImage library="images/hotel" name="#{hotel.hotel.immagine.equals('NULL') ? 'noImage.png' : hotel.hotel.immagine}" width="195" height="113" />
+		<p>Prezzo a notte: #{hotel.hotel.prezzo} €</p>
+		<br></br>
+		<p>Indirizzo: #{hotel.hotel.indirizzo}</p>
+		<p>Città: #{hotel.hotel.citta.nome}</p>
+		<br></br>
+		<p>Telefono: #{hotel.hotel.telefono}</p>
+		<p>Website: #{hotel.hotel.website}</p>
+		<p>Email: #{hotel.hotel.email}</p>
+	</div>
+</h:panelGroup>
 
-<h:form>
-	<h:commandLink value="Elimina" styleClass="search-button" action="#{hotel.eliminaHotel(id.value)}" />
-	<h:commandLink value="Modifica" styleClass="search-button" action="modificaHotel">
-		<f:param name="idHotel" value="#{hotel.hotel.id}" />
-	</h:commandLink>
-</h:form>
-</div>
-
-<div class="bloccoDett">
-	<h2>#{hotel.hotel.nome}</h2>
-	<p:rating styleClass="stelle-input" value="#{hotel.hotel.stelle}" readonly="true" stars="5" />
-	<h:graphicImage library="images/hotel" name="#{hotel.hotel.immagine.equals('NULL') ? 'noImage.png' : hotel.hotel.immagine}" width="195" height="113" />
-	<p>Prezzo a notte: #{hotel.hotel.prezzo} €</p>
-	<br></br>
-	<p>Indirizzo: #{hotel.hotel.indirizzo}</p>
-	<p>Città: #{hotel.hotel.citta.nome}</p>
-	<br></br>
-	<p>Telefono: #{hotel.hotel.telefono}</p>
-	<p>Website: #{hotel.hotel.website}</p>
-	<p>Email: #{hotel.hotel.email}</p>
-</div>
 </ui:define>
 
 </ui:composition>

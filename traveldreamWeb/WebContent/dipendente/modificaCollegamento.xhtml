@@ -1,23 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
 
 <ui:composition template="templateDip.xhtml">
 
-<ui:define name="title">Nuovo collegamento</ui:define>
+<ui:define name="title">Modifica Collegamento</ui:define>
 
 <ui:define name="content">
 
-<div class="bloccoDett">
+<f:metadata>
+	<f:viewParam name="codiceCollegamento" binding="#{id}" />
+	<f:event listener="#{collegamento.getCollegamento(id.value)}" type="preRenderView" />
+</f:metadata>
 
-<h1>Nuovo collegamento</h1>
-<br></br>
+<h1>Modifica Collegamento</h1>
+
 <p:messages showDetail="true" autoUpdate="true" />
-<br>
-</br>
+
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{collegamento.collegamento.codice != 0}">
 	<h:form>	
 		<p><h:outputText styleClass="name-input" value="Città di partenza: " />
 		<h:selectOneMenu styleClass="menu-input" value="#{collegamento.collegamento.cittaPartenza.nome}">
@@ -63,7 +66,8 @@
 			<h:commandButton value="Salva" styleClass="button" action="#{collegamento.creaCollegamento()}" />
 		</div>
 	</h:form>
-</div>
+</h:panelGroup>
+
 </ui:define>
 </ui:composition>
 </html>

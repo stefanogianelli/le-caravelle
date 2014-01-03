@@ -93,48 +93,34 @@ public class CollegamentoBean {
 	
 	/**
 	 * Permette la creazione di un nuovo collegamento
+	 * @return L'indirizzo della pagina con i dettagli del collegamento creato
 	 */
-	public void creaCollegamento () {
+	public String creaCollegamento () {
 		try {
-			collegamentoBean.creaCollegamento(this.getCollegamento());
-			JsfUtil.infoMessage("Collegamento aggiunto correttamente!");
+			return "dettagliCollegamento?codiceCollegamento=" + collegamentoBean.creaCollegamento(this.getCollegamento()) + "&faces-redirect=true";
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("Il collegamento è già presente nel database!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		}
-	}
-	
-	/**
-	 * Abilita la modifica di un collegamento
-	 * @param collegamento Il collegamento da modificare
-	 */
-	public void abilitaModifica (CollegamentoDTO collegamento) {
-		collegamento.setEditable(true);
-	}
-	
-	/**
-	 * Disabilita la modifica di un collegamento
-	 * @param collegamento Il collegamento del quale disabilitare la modifica
-	 */
-	public void disabilitaModifica (CollegamentoDTO collegamento) {
-		collegamento.setEditable(false);
+		return null;
 	}
 	
 	/**
 	 * Permette la modifica dei dati di un collegamento esistente
 	 * @param collegamento I dati del collegamento
+	 * @return L'indirizzo della pagina con i dettagli del collegamento
 	 */
-	public void modificaCollegamento (CollegamentoDTO collegamento) {
+	public String modificaCollegamento () {
 		try {
-			collegamentoBean.modificaDatiCollegamento(collegamento);
-			collegamento.setEditable(false);
-			JsfUtil.infoMessage("Collegamento modificato correttamente!");
+			collegamentoBean.modificaDatiCollegamento(this.getCollegamento());
+			return "dettagliCollegamento?codiceCollegamento=" + this.getCollegamento().getCodice() + "&faces-redirect=true";
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		}
+		return null;
 	}
 	
 	/**
