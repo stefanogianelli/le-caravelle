@@ -72,6 +72,23 @@ public class PacchettoPredefinitoBean {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 	}
+	
+	/**
+	 * Ritorna il nome di un immagine casuale tra le destinazioni inserite nel pacchetto
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @return Il nome dell'immagine
+	 */
+	public String getImmagine (int idPacchetto) {
+		try {
+			PacchettoPredefinitoDTO pacchetto = pacchettoBean.getPacchetto(idPacchetto);
+			int size = pacchetto.getHotel().getCitta().getImmagini().size();
+			int index = 0 + (int)(Math.random() * size);
+			return pacchetto.getHotel().getCitta().getImmagini().get(index).getImmagine(); 			
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
+		return null;
+	}	
 
 	/**
 	 * Aggiunge una data al pacchetto

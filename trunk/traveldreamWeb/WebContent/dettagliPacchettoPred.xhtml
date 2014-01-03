@@ -21,7 +21,7 @@
 <h1>#{pacchettoPredefinito.pacchetto.nome}</h1>
 
 <div class="bloccoPacc">
-	<h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
+	<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(id.value)}" width="288" height="174" />
 	
 	<div class="descr">
 		<p>Città di partenza</p>
@@ -42,7 +42,7 @@
 		<h2>#{pacchettoPredefinito.pacchetto.hotel.citta.nome}</h2>
 	</div>
 	<div class="hotelPacc">
-		<h:graphicImage library="images" name="#{pacchettoPredefinito.pacchetto.hotel.immagine}" width="195" height="113" />
+		<h:graphicImage library="images/hotel" name="#{pacchettoPredefinito.pacchetto.hotel.immagine}" width="195" height="113" />
 		<div class="descrHotel">
 			<p><b>#{pacchettoPredefinito.pacchetto.hotel.nome}</b></p>
 			<p>#{pacchettoPredefinito.pacchetto.hotel.indirizzo}</p>
