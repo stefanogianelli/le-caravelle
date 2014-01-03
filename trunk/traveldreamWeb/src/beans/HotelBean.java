@@ -84,48 +84,33 @@ public class HotelBean {
 
 	/**
 	 * Permette di creare un nuovo hotel
+	 * @return L'indirizzo della pagina dettagli dell'hotel creato
 	 */
-	public void creaHotel () {
+	public String creaHotel () {
 		try {
-			hotelBean.creaHotel(this.getHotel());
-			JsfUtil.infoMessage("Hotel aggiunto correttamente!");
+			return "dettagliHotel?idHotel=" + hotelBean.creaHotel(this.getHotel()) + "&faces-redirect=true";
 		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("L'hotel è già presente nel database!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		}
-	}
-	
-	/**
-	 * Abilita gli input text per la modifica di un hotel
-	 * @param hotel L'hotel da modificare
-	 */
-	public void abilitaModifica (HotelDTO hotel) {
-		hotel.setEditable(true);
-	}
-	
-	/**
-	 * Disabilita gli input text per la modifica di un hotel
-	 * @param hotel L'hotel da ripristinare
-	 */
-	public void disabilitaModifica (HotelDTO hotel) {
-		hotel.setEditable(false);
+		return null;
 	}
 	
 	/**
 	 * Permette la modifica di un hotel
-	 * @param I dati dell'hotel
+	 * @return L'indirizzo della pagina dettagli associata all'hotel
 	 */
-	public void modificaHotel (HotelDTO hotel) {
+	public String modificaHotel () {
 		try {
-			hotel.setEditable(false);
-			hotelBean.modificaDatiHotel(hotel);			
-			JsfUtil.infoMessage("Hotel modificato correttamente!");
+			hotelBean.modificaDatiHotel(this.getHotel());			
+			return "dettagliHotel?idHotel=" + this.getHotel().getId() + "&faces-redirect=true";
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta!");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel sconosciuto!");
 		}
+		return null;
 	}
 	
 	/**

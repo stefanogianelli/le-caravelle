@@ -59,7 +59,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	}	
 
 	@Override
-	public void creaHotel(HotelDTO hotel) throws CittaInesistenteException, EntitaEsistenteException {
+	public int creaHotel(HotelDTO hotel) throws CittaInesistenteException, EntitaEsistenteException {
 		//controllo che non esista un hotel con lo stesso nome nella stessa città
 		Query q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
 		q.setParameter("nome", hotel.getNome());
@@ -76,9 +76,16 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));		
+		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));
+		if(!hotel.getImmagine().isEmpty())
+			entity.setImmagine(hotel.getImmagine());
+		else
+			entity.setImmagine("NULL");
 		
 		em.persist(entity);
+		em.flush();
+		
+		return entity.getId();
 	}
 
 	@Override
@@ -92,7 +99,11 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));	
+		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));
+		if(!hotel.getImmagine().isEmpty())
+			entity.setImmagine(hotel.getImmagine());
+		else
+			entity.setImmagine("NULL");
 		
 		em.merge(entity);
 	}

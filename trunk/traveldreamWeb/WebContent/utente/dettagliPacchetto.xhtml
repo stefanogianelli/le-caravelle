@@ -229,7 +229,7 @@
 			</div>
 			
 			<div class="hotelPacc">
-				<h:graphicImage library="images/hotel" name="#{d.hotel.immagine == NULL ? 'noImage.png' : d.hotel.immagine}" width="195" height="113" />
+				<h:graphicImage library="images/hotel" name="#{d.hotel.immagine.equals('NULL') ? 'noImage.png' : d.hotel.immagine}" width="195" height="113" />
 				<div class="descrHotel">
 					<p><b>#{d.hotel.nome}</b></p>
 					<p>#{d.hotel.indirizzo}</p>

@@ -36,7 +36,7 @@
 <ui:repeat var="h" value="#{hotel.elenco}" varStatus="status" rendered="#{hotel.elenco.size() > 0}">
 	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
 			<div class="hotel">
-				<h:graphicImage library="images/hotel" name="#{h.immagine == NULL ? 'noImage.png' : h.immagine}" width="195" height="113" />	
+				<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />	
 				<p><b>#{h.nome}</b></p>
 				<p><p:rating value="#{h.stelle}" readonly="true" stars="5" /></p>
 				<p>#{h.prezzo} €</p>
