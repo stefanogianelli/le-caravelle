@@ -1,6 +1,8 @@
 package dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CittaDTO implements Serializable {
 
@@ -17,6 +19,12 @@ public class CittaDTO implements Serializable {
 	private float latitudine;
 	
 	private float longitudine;
+	
+	private List<ImmagineCittaDTO> immagini;
+	
+	public CittaDTO () {
+		immagini = new ArrayList<ImmagineCittaDTO>();
+	}
 	
 	public int getId() {
 		return id;
@@ -64,6 +72,14 @@ public class CittaDTO implements Serializable {
 
 	public void setLongitudine(float longitudine) {
 		this.longitudine = longitudine;
+	}
+
+	public List<ImmagineCittaDTO> getImmagini() {
+		return immagini;
+	}
+
+	public void setImmagini(List<ImmagineCittaDTO> immagini) {
+		this.immagini = immagini;
 	}
 
 	@Override

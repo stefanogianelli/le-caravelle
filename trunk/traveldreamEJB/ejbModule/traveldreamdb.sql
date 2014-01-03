@@ -72,6 +72,25 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `traveldreamdb`.`immagini_citta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `traveldreamdb`.`immagini_citta` ;
+
+CREATE TABLE IF NOT EXISTS `traveldreamdb`.`immagini_citta` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idCitta` INT NOT NULL,
+  `immagine` VARCHAR(45) NOT NULL,  
+  PRIMARY KEY (`id`),
+  INDEX `fk_immagini_citta_idx` (`idCitta` ASC),
+  CONSTRAINT `fk_immagini_citta`
+    FOREIGN KEY (`idCitta`)
+    REFERENCES `traveldreamdb`.`citta` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)  
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `traveldreamdb`.`hotel`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `traveldreamdb`.`hotel` ;

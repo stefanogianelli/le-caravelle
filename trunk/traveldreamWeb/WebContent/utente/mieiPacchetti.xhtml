@@ -17,7 +17,7 @@
 		<div class="pacchetto">
 			<h:link outcome="dettagliPacchetto">
 		  		<f:param name="idPacchetto" value="#{p.id}" />	
-			 	<h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
+			 	<h:graphicImage library="images/citta" name="#{pacchetto.getImmagine(p.id)}" width="288" height="174" />
 		 	</h:link>
 			<div id="linkPacc">
 				<h:link outcome="dettagliPacchetto">
