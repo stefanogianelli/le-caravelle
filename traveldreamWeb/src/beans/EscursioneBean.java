@@ -57,6 +57,18 @@ public class EscursioneBean {
 	}
 	
 	/**
+	 * Permette la ricerca di una escursione tramite il suo identificativo
+	 * @param idEscursione L'identificativo dell'escursione
+	 */
+	public void getEscursione (int idEscursione) {
+		try {
+			this.setEscursione(escursioneBean.getEscursione(idEscursione));
+		} catch (EscursioneInesistenteException e) {
+			JsfUtil.errorMessage("Escursione inesistente!");
+		}
+	}
+	
+	/**
 	 * Elenca tutte le escursioni presenti nel database
 	 * @return L'elenco delle escursioni
 	 */
@@ -74,61 +86,48 @@ public class EscursioneBean {
 	
 	/**
 	 * Permette la creazione di una nuova escursione
+	 * @return L'indirizzo della pagina con i dettagli dell'escursione creata
 	 */
-	public void creaEscursione () {
+	public String creaEscursione () {
 		try {
-			escursioneBean.creaEscursione(this.getEscursione());
-			JsfUtil.infoMessage("Escursione creata con successo!");
+			return "dettagliEscursione?idEscursione=" + escursioneBean.creaEscursione(this.getEscursione()) + "&faces-redirect=true";
 		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("L'escursione è già presente nel database!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Regione sconosciuta!");
 		}
-	}
-	
-	/**
-	 * Abilita la modifica di una escursione
-	 * @param escursione L'escursione da modificare
-	 */
-	public void abilitaModifica (EscursioneDTO escursione) {
-		escursione.setEditable(true);
-	}
-	
-	/**
-	 * Disabilita la modifica di un'escursione
-	 * @param escursione L'escursione della quale si vuole interrompere la modifica
-	 */
-	public void disabilitaModifica (EscursioneDTO escursione) {
-		escursione.setEditable(false);
+		return null;
 	}
 	
 	/**
 	 * Permette la modifica dei dati di una escursione
-	 * @param escursione I dati dell'escursione
+	 * @return L'indirizzo della pagina con i dettagli dell'escursione
 	 */
-	public void modificaEscursione (EscursioneDTO escursione) {
+	public String modificaEscursione () {
 		try {
-			escursioneBean.modificaDatiEscursione(escursione);
-			escursione.setEditable(false);
-			JsfUtil.infoMessage("Collegamento modificato correttamente!");
+			escursioneBean.modificaDatiEscursione(this.getEscursione());
+			return "dettagliEscursione?idEscursione=" + this.getEscursione().getId() + "&faces-redirect=true";
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Regione sconosciuta!");
 		}
+		return null;
 	}
 	
 	/**
 	 * Permette l'eliminazione di un'escursione
 	 * @param idEscursione L'identificativo dell'escursione da eliminare
+	 * @return L'indirizzo della pagina con l'elenco delle escursioni
 	 */
-	public void eliminaEscursione (int idEscursione) {
+	public String eliminaEscursione (int idEscursione) {
 		try {
 			escursioneBean.eliminaEscursione(idEscursione);
-			JsfUtil.infoMessage("Escursione eliminata!");
+			return "elencoEscursioni?faces-redirect=true";
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		}
+		return null;
 	}
 
 }

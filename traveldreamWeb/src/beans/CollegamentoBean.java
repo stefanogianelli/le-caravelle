@@ -83,6 +83,10 @@ public class CollegamentoBean {
 
 	/**
 	 * Ricerca i collegamenti disponibili tra due destinazioni nella data indicata
+	 * @param dataPartenza La data di partenza
+	 * @param cittaPartenza Il nome della città di partenza
+	 * @param cittaArrivo Il nome della città di arrivo
+	 * @param tipo La tipologia del collegamento
 	 */
 	public void cercaCollegamenti (Date dataPartenza, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
 		this.getElenco().clear();
@@ -108,7 +112,6 @@ public class CollegamentoBean {
 	
 	/**
 	 * Permette la modifica dei dati di un collegamento esistente
-	 * @param collegamento I dati del collegamento
 	 * @return L'indirizzo della pagina con i dettagli del collegamento
 	 */
 	public String modificaCollegamento () {
@@ -126,6 +129,7 @@ public class CollegamentoBean {
 	/**
 	 * Permette l'eliminazione di un collegamento
 	 * @param codiceCollegamento Il codice del collegamento da eliminare
+	 * @return L'indirizzo della pagina con l'elenco dei collegamenti
 	 */
 	public String eliminaCollegamento (int codiceCollegamento) {
 		try {

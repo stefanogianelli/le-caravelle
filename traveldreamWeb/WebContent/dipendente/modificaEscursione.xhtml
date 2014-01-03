@@ -1,22 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="templateDip.xhtml">
 
-<ui:define name="title">Nuova escursione</ui:define>
+<ui:define name="title">Modifica escursione</ui:define>
 
 <ui:define name="content">
 
-<div class="bloccoDett">
+<f:metadata>
+	<f:viewParam name="idEscursione" binding="#{id}" />
+	<f:event listener="#{escursione.getEscursione(id.value)}" type="preRenderView" />
+</f:metadata>
 
-<h1>Nuova escursione</h1>
-<br></br>
+<h1>Modifica escursione</h1>
+
 <p:messages showDetail="true" autoUpdate="true" />
-<br></br>
+
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{escursione.escursione.id != 0}">
 	<h:form>
 		<p><h:outputText styleClass="name-input" value="Nome escursione: " />
 		<h:inputText styleClass="text-input" value="#{escursione.escursione.nome}" /><br /></p>
@@ -50,11 +54,10 @@
 		</h:selectOneMenu><br /></p>
 	
 		<div class="bloccoButton">
-			<h:commandButton action="#{escursione.creaEscursione()}" styleClass="button" value="Salva" />
+			<h:commandButton action="#{escursione.modificaEscursione()}" styleClass="button" value="Salva" />
 		</div>
 	</h:form>
-	
-</div>
+</h:panelGroup>
 
 </ui:define>
 

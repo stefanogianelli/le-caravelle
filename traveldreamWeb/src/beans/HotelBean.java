@@ -116,13 +116,15 @@ public class HotelBean {
 	/**
 	 * Permette l'eliminazione di un hotel
 	 * @param idHotel L'identificativo dell'hotel da eliminare
+	 * @return L'indirizzo della pagina con l'elenco degli hotel
 	 */
-	public void eliminaHotel (int idHotel) {
+	public String eliminaHotel (int idHotel) {
 		try {
 			hotelBean.eliminaHotel(idHotel);
-			JsfUtil.infoMessage("Hotel eliminato!");
+			return "elencoHotel?faces-redirect=true";
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel sconosciuta!");
 		}
+		return null;
 	}
 }
