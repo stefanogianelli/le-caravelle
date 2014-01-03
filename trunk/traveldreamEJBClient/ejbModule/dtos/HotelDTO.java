@@ -2,6 +2,9 @@ package dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class HotelDTO implements Serializable {
@@ -21,6 +24,8 @@ public class HotelDTO implements Serializable {
 
 	private double prezzo;
 
+	@Min(1)
+	@Max(5)
 	private int stelle;
 
 	@NotEmpty
