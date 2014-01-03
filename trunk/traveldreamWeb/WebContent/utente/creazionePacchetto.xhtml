@@ -63,9 +63,25 @@
 				<p:rating value="#{h.stelle}" readonly="true" stars="5" />
 				<p>#{h.prezzo} €</p>
 				
-				<h:commandButton value="Scegli" action="#{pacchetto.creaPacchetto(h)}" styleClass="flight-button"/>
+				<p:dialog header="#{h.nome}" widgetVar="#{h.nome}" modal="true" resizable="false" style="background-color: #dcdcdc;">  
+					<h:panelGroup styleClass="bloccoDett" layout="block" style="height: auto;">
+						<h2>#{h.nome}</h2>
+						<p><p:rating value="#{h.stelle}" readonly="true" stars="5" /></p>
+						<h:graphicImage library="images" name="#{h.immagine}" width="195" height="113" />
+						<p>Prezzo a notte: #{h.prezzo} €</p>
+						<br></br>
+						<p>Indirizzo: #{h.indirizzo}</p>
+						<p>Città: #{h.citta.nome}</p>
+						<br></br>
+						<p>Telefono: #{h.telefono}</p>
+						<p>Website: #{h.website}</p>
+						<p>Email: #{h.email}</p>
+					</h:panelGroup>
+				</p:dialog>
+				
+				<p:commandButton value="Scegli" action="#{pacchetto.creaPacchetto(h)}" />
 	
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>			
+				<p:commandButton value="Dettagli" onclick="PF('#{h.nome}').show();"/>			
 			</div>		
 		</p:carousel>
 	</h:panelGroup> 
