@@ -3,6 +3,8 @@ package dtos;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import enums.CategoriaEscursione;
@@ -17,6 +19,7 @@ public class EscursioneDTO implements Serializable {
 
 	private Date data;
 
+	@Min(1)
 	private int durata;
 
 	@NotEmpty
