@@ -23,7 +23,7 @@
 <h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{hotel.hotel.id != 0}">
 	<h2>#{hotel.hotel.nome}</h2>
 	<p><p:rating value="#{hotel.hotel.stelle}" readonly="true" stars="5" /></p>
-	<h:graphicImage library="images/hotel" name="#{hotel.hotel.immagine}" width="195" height="113" />
+	<h:graphicImage library="images/hotel" name="#{hotel.hotel.immagine == NULL ? 'noImage.png' : hotel.hotel.immagine}" width="195" height="113" />
 	<p>Prezzo a notte: #{hotel.hotel.prezzo} €</p>
 	<br></br>
 	<p>Indirizzo: #{hotel.hotel.indirizzo}</p>
