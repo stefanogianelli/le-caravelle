@@ -13,6 +13,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
+
 import utils.JsfUtil;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
@@ -49,12 +54,25 @@ public class PacchettoBean {
 	private DestinazioneDTO destinazione;
 	private List<PacchettoDTO> elenco;
 	private PacchettoPredefinitoDTO predefinito;
+	private MapModel simpleModel;
 	
 	@PostConstruct
 	public void setUp () {
 		pacchetto = new PacchettoDTO();
 		destinazione = new DestinazioneDTO();
 		elenco = new ArrayList<PacchettoDTO>();
+		//genero i marker sulla mappa
+		simpleModel = new DefaultMapModel();
+		Calendar dataOdierna = Calendar.getInstance();
+		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		for (PacchettoDTO p : pacchetti) {
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(dataOdierna.getTime())) {
+				for (DestinazioneDTO d : p.getDestinazioni()) {
+					simpleModel.addOverlay(new Marker(new LatLng(d.getCitta().getLatitudine(), d.getCitta().getLongitudine()), d.getCitta().getNome()));
+				}
+			}
+		}	
 	}
 
 	public PacchettoDTO getPacchetto() {
@@ -88,6 +106,10 @@ public class PacchettoBean {
 	public void setPredefinito(PacchettoPredefinitoDTO predefinito) {
 		this.predefinito = predefinito;
 	}
+	
+	public MapModel getSimpleModel() {
+		return simpleModel;
+	}	
 	
 	/*
 	 * Metodi relativi alla gestione del pacchetto
@@ -190,7 +212,7 @@ public class PacchettoBean {
 		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
 		PacchettoDTO p;
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
-		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
+		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
 			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(dataOdierna.getTime()))

@@ -1,15 +1,15 @@
-INSERT INTO citta (nome, regione, nazione) VALUES ('Milano', 'Lombardia', 'Italia');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Roma', 'Lazio', 'Italia');
-INSERT INTO citta (nome, regione, nazione) VALUES ('New York', 'New York', 'USA');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Barcellona', 'Barcellona', 'Spagna');
-INSERT INTO citta (nome, regione, nazione) VALUES ('L''Avana', 'L''Avana', 'Cuba');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Londra', 'Londra', 'Regno Unito');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Alberobello', 'Puglia', 'Italia');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Rodi', 'Rodi', 'Grecia');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Citta del Capo', 'Capo Occidentale', 'Sudafrica');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Johannesburg', 'Guateng', 'Sudafrica');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Istanbul', 'Marmara', 'Turchia');
-INSERT INTO citta (nome, regione, nazione) VALUES ('Parigi', 'Île-de-France', 'Francia');
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Milano', 'Lombardia', 'Italia', 45.464161, 9.190336);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Roma', 'Lazio', 'Italia', 41.893056, 12.482778);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('New York', 'New York', 'USA', 40.716667, -74);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Barcellona', 'Barcellona', 'Spagna', 41.383333, 2.166667);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('L''Avana', 'L''Avana', 'Cuba', 23.133333, -82.383333);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Londra', 'Londra', 'Regno Unito', 51.507222, -0.1275);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Alberobello', 'Puglia', 'Italia', 40.784061, 17.237461);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Rodi', 'Rodi', 'Grecia', 36.4, 28.216667);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Citta del Capo', 'Capo Occidentale', 'Sudafrica', -33.9264, 18.4227);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Johannesburg', 'Guateng', 'Sudafrica', -26.133333, 27.9);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Istanbul', 'Marmara', 'Turchia', 41.016667, 28.966667);
+INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Parigi', 'Île-de-France', 'Francia', 48.856667, 2.351944);
 
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel La Madonnina', 3, 'Via G. Mazzini 10', '+39 02 89096917', 'http://www.hotellamadonninamilano.it/', 'info@hotellamadonninamilano.it', 160.0, 1, 'madonnina.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Starhotel Rosa', 4, 'Piazza Fontana 3', '+39 02 88311', 'http://rosagrand.starhotels.com/it/home.aspx', 'rosa.mi@starhotels.it', 85.0, 1, 'starhotel.jpg');

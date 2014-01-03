@@ -64,6 +64,8 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`citta` (
   `nome` VARCHAR(45) NOT NULL,
   `regione` VARCHAR(45) NOT NULL,
   `nazione` VARCHAR(45) NOT NULL,
+  `lat` FLOAT( 10, 6 ),
+  `lon` FLOAT( 10, 6 ),  
   PRIMARY KEY (`id`),
   UNIQUE (`nome`, `nazione`))
 ENGINE = InnoDB;

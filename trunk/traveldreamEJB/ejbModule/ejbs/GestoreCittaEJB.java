@@ -67,6 +67,8 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 		dto.setNazione(citta.getNazione());
 		dto.setNome(citta.getNome());
 		dto.setRegione(citta.getRegione());
+		dto.setLatitudine(citta.getLatitudine());
+		dto.setLongitudine(citta.getLongitudine());
 		
 		return dto;
 	}
