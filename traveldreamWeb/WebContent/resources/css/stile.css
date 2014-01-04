@@ -84,6 +84,7 @@ a:hover {
 	color:black;
 	position: absolute;
 	margin: 60px auto 0 auto;
+	list-style-type: none;
 }
 .data-input{
 	height:auto;
@@ -266,6 +267,7 @@ select{
 	background-color: #999999;
 	height: 260px;
 	width: 100%;
+	border-top:20px solid white;
 }
 #newsletter a:link {
 	font-family: Impact;
@@ -520,9 +522,20 @@ select{
 	margin: 0 0 10px 0;
 	text-align:center;
 }
+.pulsantiVolo {
+	width: auto;
+	margin: 15px 20px 0 0;
+	border:1px solid red;
+	display: block;
+	float: right;
+}
+.pulsantiVolo p{
+	margin: 0 0 10px 0;
+	text-align:center;
+}
 #prezzo{
-	margin: 0;
-	font-size: 34px;
+	margin-top: 10px;
+	font-size: 38px;
 	text-align: left;
 	color:black;
 	border: 1px solid red;
@@ -540,6 +553,21 @@ select{
 	background-color:white;
 	padding:5px;
 	margin:30px 0 10px 40px;
+}
+.bloccoDett table{
+	width:940px;
+	text-align:center;
+	margin: 40px auto 0 40px;
+	border-collapse:collapse;
+}
+.bloccoDett td{
+	border: 1px solid black;
+	vertical-align:middle;
+	padding:15px;
+	font-size:22px;
+}
+.bloccoDett th{
+	font-size:26px;
 }
 /*Dettagli pacchetto*/
 .bloccoPacc {
@@ -629,6 +657,17 @@ select{
 	margin: 10px 40px 0 40px;
 	border:1px solid red;
 }
+.bloccoCitta {
+	background-color: #dcdcdc;
+	height: 180px;
+	display:block;
+	float:none;
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	margin: 10px 40px 0 40px;
+	border:1px solid red;
+}
 /*Pagine info*/
 .info {
 	background-color:white;
@@ -652,4 +691,10 @@ select{
 	width: 100%;
 	border-top:1px solid #dcdcdc;
 	border-bottom:5px solid white;
+}
+.matita{
+	height:40px;
+	width:40px;
+	background: url('matita.jpg.xhtml?ln=images');
+	margin-left:20px;
 }
