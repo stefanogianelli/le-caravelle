@@ -128,7 +128,7 @@
 				</h:link>
 				<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataArrivo))}">
 					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-					<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+					<f:param name="dataPartenza" value="#{data.getData(d.dataArrivo)}" />
 					<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
 					<f:param name="cittaArrivo" value="#{d.citta.nome}" />			
 				</h:link>
@@ -157,7 +157,7 @@
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
                 	<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
                    		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+						<f:param name="dataPartenza" value="#{data.getData(d.dataArrivo)}" />
 						<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
 						<f:param name="cittaArrivo" value="#{d.citta.nome}" />
                    </h:link>
@@ -195,7 +195,7 @@
 				
 				<div id="modificaDataArrivoPredefinito" style="display: none;">
 					<h:selectOneMenu binding="#{dataArrivoPred}">
-						<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="data" itemLabel="#{pacchetto.getData(data)}" itemValue="#{pacchetto.getData(data)}" />			
+						<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="dataArrivo" itemLabel="#{data.getData(dataArrivo)}" itemValue="#{data.getData(dataArrivo)}" />			
 					</h:selectOneMenu>
 	            	<h:commandButton value="salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
 	            	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />									
@@ -271,9 +271,9 @@
 					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 					<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataPartenza).codice}" />
 				</h:link>
-				<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}">
+				<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataArrivo))}">
 					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-					<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
+					<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
 					<f:param name="cittaPartenza" value="#{d.citta.nome}" />
 					<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
 				</h:link>
@@ -301,7 +301,7 @@
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
                         <h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
                         	<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-							<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
+							<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
 							<f:param name="cittaPartenza" value="#{d.citta.nome}" />
 							<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
 						</h:link>
