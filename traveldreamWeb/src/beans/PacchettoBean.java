@@ -34,6 +34,7 @@ import ejbs.GestoreCitta;
 import ejbs.GestoreDestinazione;
 import ejbs.GestorePacchetto;
 import ejbs.GestorePacchettoPredefinito;
+import ejbs.GestoreProfilo;
 import enums.TipoPacchetto;
 
 @ManagedBean(name="pacchetto")
@@ -51,6 +52,9 @@ public class PacchettoBean {
 	
 	@EJB
 	private GestoreCitta cittaBean;
+	
+	@EJB
+	private GestoreProfilo profiloBean;
 	
 	private PacchettoDTO pacchetto;
 	private DestinazioneDTO destinazione;
@@ -111,7 +115,7 @@ public class PacchettoBean {
 	public void initMappa () {
 		//genero i marker sulla mappa
 		simpleModel = new DefaultMapModel();
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
 		for (PacchettoDTO p : pacchetti) {
 			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataBean.getDataOdierna())) {
 				for (DestinazioneDTO d : p.getDestinazioni()) {
@@ -178,7 +182,7 @@ public class PacchettoBean {
 	 */
 	public void cercaPacchetti (TipoPacchetto tipo) {
 		this.getElenco().clear();
-		this.getElenco().addAll(pacchettoBean.elencoPacchetti("stefano@gmail.com", tipo));
+		this.getElenco().addAll(pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), tipo));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}
@@ -189,15 +193,15 @@ public class PacchettoBean {
 	 */
 	public List<PacchettoDTO> elencoMieiPacchetti () {
 		PacchettoDTO p;
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
 			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataBean.getDataOdierna()))
 				itr.remove();
 		}
-		pacchetti.addAll(pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PREDEFINITO));
-		pacchetti.addAll(pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO));
+		pacchetti.addAll(pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PREDEFINITO));
+		pacchetti.addAll(pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PERSONALIZZATO));
 		
 		return pacchetti;
 	}
@@ -207,9 +211,9 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoTreMieiPacchetti () {
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.PERSONALIZZATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PERSONALIZZATO);
 		if(pacchetti.size() < 3)
-			pacchetti.addAll(pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.PREDEFINITO));
+			pacchetti.addAll(pacchettoBean.elencoTrePacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PREDEFINITO));
 		return pacchetti;
 	}
 	
@@ -218,7 +222,7 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoTrePacchettiCondivisi () {
-		return pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.CONDIVISO);
+		return pacchettoBean.elencoTrePacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.CONDIVISO);
 	}
 	
 	/**
@@ -226,7 +230,7 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoPacchettiCondivisi () {
-		return pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.CONDIVISO);
+		return pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.CONDIVISO);
 	}
 	
 	/**
@@ -235,7 +239,7 @@ public class PacchettoBean {
 	 */
 	public List<PacchettoDTO> elencoTrePacchettiAcquistati () {
 		PacchettoDTO p;
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
@@ -251,7 +255,7 @@ public class PacchettoBean {
 	 */
 	public List<PacchettoDTO> elencoPacchettiAcquistati () {
 		PacchettoDTO p;
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
@@ -277,7 +281,7 @@ public class PacchettoBean {
 					 * Da sostituire con l'utente correntemente loggato nel sistema
 					 */
 					UtenteDTO utente = new UtenteDTO();
-					utente.setEmail("stefano@gmail.com");
+					utente.setEmail(profiloBean.getUtenteCorrente().getEmail());
 					this.getPacchetto().setUtente(utente);
 					
 					this.getDestinazione().setHotel(hotel);
@@ -391,7 +395,7 @@ public class PacchettoBean {
 			 * Da sostituire con l'utente correntemente loggato nel sistema
 			 */
 			UtenteDTO utente = new UtenteDTO();
-			utente.setEmail("stefano@gmail.com");
+			utente.setEmail(profiloBean.getUtenteCorrente().getEmail());
 			this.getPacchetto().setUtente(utente);
 			
 			PacchettoPredefinitoDTO pred = predefinitoBean.getPacchetto(idPacchetto);
