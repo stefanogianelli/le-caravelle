@@ -21,10 +21,10 @@
 <p:messages showDetail="true" autoUpdate="true" />
 
 <h:panelGroup rendered="#{collegamento.collegamento.codice != 0}">	
-	<div class="bloccoRicerca">
+	<div class="bloccoModifica">
 		<h:form>
-			<h:commandLink value="Elimina" styleClass="search-button" action="#{collegamento.eliminaCollegamento(codice.value)}" />
-			<h:link value="Modifica" styleClass="search-button" outcome="modificaCollegamento">
+			<h:commandLink value="Elimina" action="#{collegamento.eliminaCollegamento(codice.value)}" />
+			<h:link value="Modifica" outcome="modificaCollegamento">
 				<f:param name="codiceCollegamento" value="#{collegamento.collegamento.codice}" />
 			</h:link>
 		</h:form>

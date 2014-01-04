@@ -104,6 +104,14 @@ a:hover {
 	left:50%;
 	border:1px solid red;
 }
+.stelle-dip{
+	height:20px;
+	width:90px;
+	background-color:#dcdcdc;
+	margin: 20px auto 0 40px;
+	padding:5px;
+	border:1px solid red;
+}
 .stelle-dett{
 	height:20px;
 	width:90px;
@@ -149,15 +157,15 @@ a:hover {
 	color: #003333;
 }
 .search-button{
-	height:50px;
-	width:250px;
-	margin:20px 45px;
-	font-size:22px;
+	height:40px;
+	width:240px;
+	position: absolute;
+	left:50%;
+	margin: 5px 0 auto -120px;
+	font-size:18px;
 	font-family:arial;
 	text-align:center;
 	color: #003333;
-	display:block;
-	float:left;
 }
 .detail-button{
 	height:40px;
@@ -171,7 +179,7 @@ a:hover {
 .flight-button{
 	height:30px;
 	width:85px;
-	margin:10px 10px auto auto;
+	margin:0;
 	font-size:14px;
 	font-family:arial;
 	text-align:center;
@@ -501,6 +509,17 @@ select{
 .descr p{
 	margin: 10px 0;
 }
+.pulsanti {
+	width: auto;
+	margin: 20px 40px 0 0;
+	border:1px solid red;
+	display: block;
+	float: right;
+}
+.pulsanti p{
+	margin: 0 0 10px 0;
+	text-align:center;
+}
 #prezzo{
 	margin: 0;
 	font-size: 34px;
@@ -576,9 +595,29 @@ select{
 	width: 100%;
 	border-top:1px solid #669999;
 	border-bottom:5px solid white;
-	display:block;
-	float:none;
 }
+.bloccoModifica {
+	background-color: #669999;
+	height: 51px;
+	width: 100%;
+	border-top:1px solid #669999;
+	border-bottom:5px solid white;
+}
+.bloccoModifica a{
+	color:white;
+	font-size: 18px;
+	margin-top:10px;
+	text-decoration: none;
+	display:block;
+	width:200px;
+	text-align: center;
+	display:block;
+	float: left;
+	border: 1px solid red;
+}
+.bloccoModifica a:hover { 
+	color: #003333;
+	}
 .bloccoButton {
 	background-color: #dcdcdc;
 	height: 80px;

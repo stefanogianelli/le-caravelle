@@ -13,7 +13,7 @@
 
 <h1>Elenco escursioni</h1>
 
-<div class="bloccoRicerca">
+<div class="bloccoModifica">
 
 <h:form>
 	<h:commandButton value="Nuova escursione" styleClass="search-button" action="nuovaEscursione?faces-redirect=true" />
@@ -22,7 +22,7 @@
 </div>
 
 <ui:repeat var="e" value="#{escursione.elencoEscursioni()}" varStatus="status">
-	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+	<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
 		<div class="descr">
 			<h2>#{e.nome}</h2>
 			<p>
@@ -33,15 +33,15 @@
 			<br></br>
 			<div id="prezzo">#{e.citta.nome}</div>	
 		</div>
-
-		<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliEscursione">
+		<div class="pulsanti">
+		<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliEscursione">
 			<f:param name="idEscursione" value="#{e.id}" />
-		</h:link>
+		</h:link></p>
 		
 		<h:form>
 			<h:commandButton value="Elimina" styleClass="detail-button" action="#{escursione.eliminaEscursione(e.id)}" />
 		</h:form>
-	
+		</div>
 	</div>
 </ui:repeat>
 

@@ -31,12 +31,12 @@
 		<p><h:outputText styleClass="name-input" value="Data: " />
 		<p:calendar styleClass="data-input" value="#{escursione.escursione.data}" locale="it" /><br /></p>
 		
-		<p><h:outputText styleClass="name-input" value="Ora: " />
+		<p><h:outputText styleClass="name-input" value="Ora di partenza: " />
 		<h:inputText styleClass="text-input" value="#{escursione.escursione.ora}">
 			<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
 		</h:inputText><br /></p>
 		
-		<p><h:outputText styleClass="name-input" value="Durata: " />
+		<p><h:outputText styleClass="name-input" value="Durata (ore): " />
 		<h:inputText styleClass="text-input" value="#{escursione.escursione.durata}" /><br /></p>
 		<br></br>
 		
@@ -44,7 +44,7 @@
 		<h:inputText styleClass="text-input" value="#{escursione.escursione.prezzo}" /><br /></p>
 		<br></br>
 		
-		<p><h:outputText styleClass="name-input" value="Categoria: " />
+		<p><h:outputText styleClass="name-input" value="Tipo di escursione: " />
 		<h:selectOneMenu styleClass="menu-input" value="#{escursione.escursione.categoria}">
 			<f:selectItems value="#{escursione.getCategorie()}" var="cat" itemValue="#{cat}" itemLabel="#{cat.label}" />
 		</h:selectOneMenu><br /></p>
