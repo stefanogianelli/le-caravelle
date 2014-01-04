@@ -20,21 +20,25 @@
 
 <h:form id="mainForm" rendered="#{pacchetto.pacchetto.id != 0}">
 
+	<!-- Nome del pacchetto -->
 	<h1 id="nomePacchetto" style="display: block;">
 		#{pacchetto.pacchetto.nome}
 		<h:commandButton value="modifica" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" />
 	</h1>
 		
+	<!-- Modifica nome del pacchetto -->
 	<h1 id="modificaNome" style="display: none;">
 		<h:inputText value="#{pacchetto.pacchetto.nome}" required="true" />
 		<h:commandButton value="salva" action="#{pacchetto.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
 		<h:commandButton value="annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
 	</h1>    
 	
+	<!-- Blocco con i pulsanti per l'eliminazione, la condivisione e l'acquisto del pacchetot -->
 	<div class="bloccoRicerca">
 		<p:commandButton value="Elimina pacchetto" styleClass="search-button" action="#{pacchetto.eliminaPacchetto()}"/>
 		<p:commandButton value="Condividi pacchetto" styleClass="search-button" onclick="PF('condividiPacchetto').show()" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}" />
 		
+		<!-- Dialog che compare in sovraimpressione per inserire i dati dell'amico -->
 		<p:dialog header="Condividi" widgetVar="condividiPacchetto" resizable="false">
 			<h:panelGroup>		
    			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
@@ -55,9 +59,12 @@
 		<p:commandButton value="Acquista pacchetto" styleClass="search-button" action="#{pacchetto.acquistaPacchetto()}" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}"/>
 	</div>	
 	
+	<!-- Dettagli del pacchetto -->
 	<div id="dettagliPacchetto" class="bloccoPacc">
+		<!-- Immagine del pacchetto -->
 		<h:graphicImage library="images/citta" name="#{pacchetto.getImmagine(id.value)}" width="288" height="174" />
 		
+		<!-- Informazioni generali sul pacchetto -->
 		<div class="descr">		
 			<div>	
 				<p>Città di partenza</p>
@@ -67,6 +74,7 @@
 					<h:commandButton value="modifica" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" rendered="#{pacchetto.tipoPredefinito}" />
 				</h2>
 				
+				<!-- Modifica della città di partenza -->
 				<h2 id="modificaCittaPartenza" style="display: none;">
 					<h:selectOneMenu binding="#{nuovaCittaPartenza}">
 						<f:selectItems value="#{citta.nomiCitta}" />
@@ -75,6 +83,7 @@
 					<h:commandButton value="annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" />
 				</h2>
 				
+				<!-- Modifica della città di partenza di un pacchetto predefinito -->
 				<h2 id="modificaCittaPartenzaPred" style="display: none;">
 	                <h:selectOneMenu binding="#{nuovaCittaPartenzaPred}">
 						<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
@@ -91,6 +100,7 @@
 				<h:commandButton value="modifica" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" />
 			</h2>
 			
+			<!-- Modifica del numero di partecipanti -->
 			<h2 id="modificaNumeroPartecipanti" style="display: none;">
 				<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true" />
 				<h:commandButton action="#{pacchetto.modificaNumeroPartecipanti()}" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="salva" />
@@ -99,6 +109,7 @@
 			
 		</div>
 		
+		<!-- Prezzo del pacchetto -->
 		<h:panelGroup id="prezzoPacchetto" styleClass="descr" layout="block">
 			<div id="prezzo">#{pacchetto.pacchetto.prezzo} €</div>
 		</h:panelGroup>
@@ -175,6 +186,7 @@
 			
 			<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchetto.eliminaDestinazione(d)}" disabled="#{not pacchetto.tipoPersonalizzato}"/>
 			
+			<!-- Date della destinazione -->
 			<div>
 				Data di arrivo
 				<div id="dataArrivo" style="display: block;">
@@ -227,6 +239,7 @@
 				</div>
 			</div>
 			
+			<!-- Informazioni sull'hotel -->
 			<div class="hotelPacc">
 				<h:graphicImage library="images/hotel" name="#{d.hotel.immagine.equals('NULL') ? 'noImage.png' : d.hotel.immagine}" width="195" height="113" />
 				<div class="descrHotel">
@@ -242,6 +255,7 @@
 			</div>
 		</div>
 		
+		<!-- Informazioni sulle escursioni -->
 		<div class="bloccoPaccEscursione">
 			<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
 				<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
@@ -278,6 +292,7 @@
 					<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
 				</h:link>
 				
+				<!-- Informazioni sul collegamento -->
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
 					<ul>
 						<li>#{pacchetto.getCollegamento(d.dataPartenza).cittaPartenza.nome} #{pacchetto.getCollegamento(d.dataPartenza).origine}</li>
@@ -311,6 +326,7 @@
 		</h:panelGroup>		
 	</ui:repeat>
 		
+	<!-- Aggiunta destinazione -->
 	<h:link value="Aggiungi destinazione" outcome="aggiuntaDestinazione" disabled="#{not pacchetto.tipoPersonalizzato}">
 		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 	</h:link>
@@ -318,14 +334,14 @@
 </h:form>	
 
 <script type="text/javascript">
-     function toggle(id) {
-       var element = document.getElementById(id);
-       if(element.style.display == 'block') {
-         element.style.display = 'none';
-       } else {
-         element.style.display = 'block'
-       }
-     }
+	function toggle(id) {
+		var element = document.getElementById(id);
+		if(element.style.display == 'block') {
+			element.style.display = 'none';
+		} else {
+			element.style.display = 'block'
+		}
+	}
 </script>
 
 </ui:define>
