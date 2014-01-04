@@ -20,21 +20,42 @@
 
 <h1>#{pacchettoPredefinito.pacchetto.nome}</h1>
 
-<div class="bloccoPacc">
-	<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(id.value)}" width="288" height="174" />
-	
-	<div class="descr">
-		<p>Città di partenza</p>
-		<h2>cittàPartenza</h2>
-		<br></br>
-		<p>Durata vacanza</p>
-		<h2>durata</h2>
+<h:form>
+	<div class="bloccoRicerca">
+		<h:commandButton value="Scegli pacchetto" styleClass="search-button" action="#{pacchetto.salvaPacchettoPredefinito(id.value,cittaPartenza.value,dataPartenza.value,durata.value)}" />
 	</div>
-	
-	<div class="descr">
-	<div id="prezzo">#{pacchettoPredefinito.pacchetto.prezzo} €</div>
+
+	<div class="bloccoPacc">
+		<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(id.value)}" width="288" height="174" />
+		
+		<div class="descr">
+			<p>Città di partenza</p>
+			<h2>
+				<h:selectOneMenu styleClass="menu-input" binding="#{cittaPartenza}" style="width: 200px;">
+					<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
+				</h:selectOneMenu>		
+			</h2>
+			<br></br>
+			<p>Date partenza</p>
+			<h2>
+				<h:selectOneMenu styleClass="menu-input" binding="#{dataPartenza}" style="width: 200px;">
+					<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
+				</h:selectOneMenu>			
+			</h2>		
+			<br></br>
+			<p>Durata vacanza</p>
+			<h2>
+				<h:selectOneMenu styleClass="menu-input" binding="#{durata}" style="width: 200px;">
+					<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
+				</h:selectOneMenu>			
+			</h2>
+		</div>
+		
+		<div class="descr">
+		<div id="prezzo">#{pacchettoPredefinito.pacchetto.prezzo} €</div>
+		</div>
 	</div>
-</div>
+</h:form>
 
 <div class="bloccoPacc">
 	<div class="descr">
@@ -51,51 +72,51 @@
 	</div>
 </div>
 
-	<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
-		<div class="bloccoPaccVolo">
-			<p>
-				<h:outputText value="#{c.dataPartenza}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>		
-			</p>
-			<div class="volo">
-				<div class="etichette">
+<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
+	<div class="bloccoPaccVolo">
+		<p>
+			<h:outputText value="#{c.dataPartenza}">
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			</h:outputText>		
+		</p>
+		<div class="volo">
+			<div class="etichette">
+			<ul>
+				<li>Da</li>
+				<li>A</li>
+				<li>Partenza</li>
+				<li>Arrivo</li>
+				<li>Scali</li>
+				<li>Prezzo</li>
+			</ul>
+			</div>
+			
+			<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento">
+				<f:param name="idPacchetto" value="#{id.value}" />
+				<f:param name="codiceCollegamento" value="#{c.codice}" />
+			</h:link>			
+			
+			<div class="dati">
 				<ul>
-					<li>Da</li>
-					<li>A</li>
-					<li>Partenza</li>
-					<li>Arrivo</li>
-					<li>Scali</li>
-					<li>Prezzo</li>
+					<li>#{c.cittaPartenza.nome} #{c.origine}</li>
+					<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
+					<li>
+						<h:outputText value="#{c.oraPartenza}">
+							<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+						</h:outputText>				
+					</li>
+					<li>
+						<h:outputText value="#{c.oraArrivo}">
+							<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+						</h:outputText>						
+					</li>
+					<li>0</li>
+					<li>#{c.prezzo} €</li>
 				</ul>
-				</div>
-				
-				<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento">
-					<f:param name="idPacchetto" value="#{id.value}" />
-					<f:param name="codiceCollegamento" value="#{c.codice}" />
-				</h:link>			
-				
-				<div class="dati">
-					<ul>
-						<li>#{c.cittaPartenza.nome} #{c.origine}</li>
-						<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
-						<li>
-							<h:outputText value="#{c.oraPartenza}">
-								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-							</h:outputText>				
-						</li>
-						<li>
-							<h:outputText value="#{c.oraArrivo}">
-								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-							</h:outputText>						
-						</li>
-						<li>0</li>
-						<li>#{c.prezzo} €</li>
-					</ul>
-				</div>
 			</div>
 		</div>
-	</ui:repeat>
+	</div>
+</ui:repeat>
 
 </ui:define>
 

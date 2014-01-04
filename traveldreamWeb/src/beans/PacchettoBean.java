@@ -1,9 +1,6 @@
 package beans;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +15,7 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+import utils.DataBean;
 import utils.JsfUtil;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
@@ -32,6 +30,7 @@ import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
+import ejbs.GestoreCitta;
 import ejbs.GestoreDestinazione;
 import ejbs.GestorePacchetto;
 import ejbs.GestorePacchettoPredefinito;
@@ -49,6 +48,9 @@ public class PacchettoBean {
 	
 	@EJB
 	private GestoreDestinazione destinazioneBean;
+	
+	@EJB
+	private GestoreCitta cittaBean;
 	
 	private PacchettoDTO pacchetto;
 	private DestinazioneDTO destinazione;
@@ -109,11 +111,9 @@ public class PacchettoBean {
 	public void initMappa () {
 		//genero i marker sulla mappa
 		simpleModel = new DefaultMapModel();
-		Calendar dataOdierna = Calendar.getInstance();
-		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
 		for (PacchettoDTO p : pacchetti) {
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(dataOdierna.getTime())) {
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataBean.getDataOdierna())) {
 				for (DestinazioneDTO d : p.getDestinazioni()) {
 					simpleModel.addOverlay(new Marker(new LatLng(d.getCitta().getLatitudine(), d.getCitta().getLongitudine()), d.getCitta().getNome()));
 				}
@@ -188,14 +188,12 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoMieiPacchetti () {
-		Calendar dataOdierna = Calendar.getInstance();
-		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
 		PacchettoDTO p;
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(dataOdierna.getTime()))
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataBean.getDataOdierna()))
 				itr.remove();
 		}
 		pacchetti.addAll(pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.PREDEFINITO));
@@ -236,14 +234,12 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoTrePacchettiAcquistati () {
-		Calendar dataOdierna = Calendar.getInstance();
-		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
 		PacchettoDTO p;
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(dataOdierna.getTime()))
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(DataBean.getDataOdierna()))
 				itr.remove();
 		}
 		return pacchetti;
@@ -254,14 +250,12 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoPacchettiAcquistati () {
-		Calendar dataOdierna = Calendar.getInstance();
-		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
 		PacchettoDTO p;
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(dataOdierna.getTime()))
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(DataBean.getDataOdierna()))
 				itr.remove();
 		}
 		return pacchetti;
@@ -384,10 +378,13 @@ public class PacchettoBean {
 	
 	/**
 	 * Permette la creazione di un pacchetto a partire da un pacchetto predefinito
-	 * @param durata La durata scelta
+	 * @param idPacchetto L'identificativo del pacchetto predefinito
+	 * @param cittaPartenza Il nome della città di partenza scelta
 	 * @param dataArrivo La data di arrivo scelta
+	 * @param durata La durata scelta
+	 * @return L'indirizzo della pagina dettagli del pacchetto creato
 	 */
-	public void salvaPacchettoPredefinito (int durata, String dataArrivo) {
+	public String salvaPacchettoPredefinito (int idPacchetto,String cittaPartenza, String dataArrivo, int durata) {
 		try {
 			/*
 			 * Utente usato per test
@@ -397,20 +394,18 @@ public class PacchettoBean {
 			utente.setEmail("stefano@gmail.com");
 			this.getPacchetto().setUtente(utente);
 			
-			this.getPacchetto().setNome(this.getPredefinito().getNome());
-			this.getPacchetto().setPacchettoPredefinito(this.getPredefinito());
-			this.getPacchetto().setPrezzo(this.getPredefinito().getPrezzo());
-			Date dataArr = new SimpleDateFormat("dd/MM/yyyy").parse(dataArrivo);
-			this.getDestinazione().setDataArrivo(dataArr);
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(dataArr);
-			cal.add(Calendar.DATE, durata);
-			this.getDestinazione().setDataPartenza(cal.getTime());
-			this.getDestinazione().setHotel(this.getPredefinito().getHotel());
+			PacchettoPredefinitoDTO pred = predefinitoBean.getPacchetto(idPacchetto);
+			
+			this.getPacchetto().setNome(pred.getNome());
+			this.getPacchetto().setPacchettoPredefinito(pred);
+			this.getPacchetto().setPrezzo(pred.getPrezzo());
+			this.getPacchetto().setCitta(cittaBean.cercaCitta(cittaPartenza));
+			this.getDestinazione().setDataArrivo(DataBean.parseData(dataArrivo));
+			this.getDestinazione().setDataPartenza(DataBean.sommaGiorni(this.getDestinazione().getDataArrivo(), durata));
+			this.getDestinazione().setHotel(pred.getHotel());
 			this.getDestinazione().setCitta(this.getDestinazione().getHotel().getCitta());
 			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
-			pacchettoBean.salvaPacchettoPredefinito(this.getPacchetto());
-			JsfUtil.infoMessage("Pacchetto salvato!");
+			return "/utente/dettagliPacchetto?idPacchetto=" + pacchettoBean.salvaPacchettoPredefinito(this.getPacchetto()) + "&faces-redirect=true";
 		} catch (InsertException e) {
 			JsfUtil.errorMessage("Il pacchetto è già presente nel database!");
 		} catch (CittaInesistenteException e) {
@@ -419,9 +414,8 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Hotel inesistente!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
-		} catch (ParseException e) {
-			System.out.println("Errore nel convertire la data " + dataArrivo);
 		}
+		return null;
 	}
 	
 	/**
@@ -430,10 +424,7 @@ public class PacchettoBean {
 	 * @param destinazione La destinazione che si vuole modificare
 	 */
 	public void modificaDurata (int durata, DestinazioneDTO destinazione) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(destinazione.getDataArrivo());
-		cal.add(Calendar.DATE, durata);
-		destinazione.setDataPartenza(cal.getTime());	
+		destinazione.setDataPartenza(DataBean.sommaGiorni(destinazione.getDataArrivo(), durata));	
 		try {
 			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
 			JsfUtil.infoMessage("Durata modificata!");
@@ -453,16 +444,10 @@ public class PacchettoBean {
 		try {
 			//calcolo durata corrente
 			int durata = (int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24));	
-			Date dataArr = new SimpleDateFormat("dd/MM/yyyy").parse(dataArrivo);	
-			destinazione.setDataArrivo(dataArr);
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(dataArr);
-			cal.add(Calendar.DATE, durata);		
-			destinazione.setDataPartenza(cal.getTime());
+			destinazione.setDataArrivo(DataBean.parseData(dataArrivo));
+			destinazione.setDataPartenza(DataBean.sommaGiorni(destinazione.getDataArrivo(), durata));
 			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
 			JsfUtil.infoMessage("Data modificata!");
-		} catch (ParseException e) {
-			System.out.println("Errore nel parsing della data " + dataArrivo);
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (CittaInesistenteException e) {
@@ -746,15 +731,6 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
 		return null;
-	}
-	
-	/**
-	 * Si occupa di formattare la data in dd/MM/yyyy (es.: 28/12/2013)
-	 * @param data La data da formattare
-	 * @return La stringa del formato desiderato
-	 */
-	public String getData (Date data) {
-		return new SimpleDateFormat("dd/MM/yyy").format(data);
 	}
 	
 	/**
