@@ -24,6 +24,7 @@
 	</div>
 	
 	<div class="blocco">
+		<h3>Seleziona le date</h3>
 		<div class="data">
 			<h3>Data di arrivo</h3>
 			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataArrivo}" locale="it" required="true" /> 
@@ -55,18 +56,18 @@
 	</div>
 
 	<h:panelGroup id="listaHotel" styleClass="bloccoBianco" layout="block">
-		<p:carousel value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}">  
-		    <f:facet name="header">Hotel</f:facet>
+		<p:carousel value="#{hotel.elenco}" styleClass="elencoHotel" var="h" rendered="#{hotel.elenco.size() > 0}">  
+		    <f:facet name="header">Seleziona l'hotel</f:facet>
 			<div class="hotel">
 				<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />
 				<p><b>#{h.nome}</b></p>
-				<p:rating value="#{h.stelle}" readonly="true" stars="5" />
+				<p:rating value="#{h.stelle}" styleClass="stelle-dett" readonly="true" stars="5" />
 				<p>#{h.prezzo} €</p>
 				
-				<p:dialog header="#{h.nome}" widgetVar="#{h.nome}" modal="true" resizable="false" style="background-color: #dcdcdc;">  
-					<h:panelGroup styleClass="bloccoDett" layout="block" style="height: auto;">
+				<p:dialog header="#{h.nome}" widgetVar="#{h.nome}" modal="true" resizable="false">  
+					<h:panelGroup styleClass="dettagliHotel" layout="block" style="height: auto;">
 						<h2>#{h.nome}</h2>
-						<p><p:rating value="#{h.stelle}" readonly="true" stars="5" /></p>
+						<p:rating value="#{h.stelle}" styleClass="stelle-descr" readonly="true" stars="5" />
 						<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />
 						<p>Prezzo a notte: #{h.prezzo} €</p>
 						<br></br>

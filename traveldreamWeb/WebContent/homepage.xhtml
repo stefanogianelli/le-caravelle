@@ -11,17 +11,18 @@
 
 <ui:define name="content">
 
+<h:form>
 	<div class="blocco">
-        <h1><a href="utente/creazionePacchetto.xhtml">Crea il tuo pacchetto</a></h1>
+        <h1><a href="/traveldreamWeb/utente/creazionePacchetto.xhtml">Crea il tuo pacchetto</a></h1>
         <h2>Inizia la vacanza...</h2>
         <h3>Seleziona la destinazione</h3>
-		 <select>
-		  <option value="Milano">Milano</option> 	<!-- Da collegare al database -->
-		</select>
+		<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>
 	</div>
 	
 	<div class="blocco">
-        <h1><a href="pacchettiPredefiniti.xhtml">Scegli il tuo pacchetto</a></h1>
+        <h1><a href="/traveldreamWeb/pacchettiPredefiniti.xhtml">Scegli il tuo pacchetto</a></h1>
         <h2>Scopri la vacanza...</h2>
         <h3>Seleziona la destinazione</h3>
 		 <select>
@@ -30,7 +31,7 @@
 	</div>
  
  	<div class="bloccoBianco">
-        <h1><a href="nostriConsigli.xhtml">I nostri consigli</a></h1>
+        <h1><a href="/traveldreamWeb/nostriConsigli.xhtml">I nostri consigli</a></h1>
 		<div class="pacchetto">
 		<h:link outcome="dettagliPacchettoPred.xhtml">
 		     <h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
@@ -53,7 +54,7 @@
 		</div>
 		
     </div>
-    
+ </h:form>   
 	<div class="domande">
 		<ul>
 		<li><a href="/traveldreamWeb/Info/perchéTravelDream.xhtml">Perchè viaggiare con <br></br>TravelDream?</a></li>
