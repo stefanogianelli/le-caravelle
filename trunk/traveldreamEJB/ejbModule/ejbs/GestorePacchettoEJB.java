@@ -192,7 +192,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
-	public void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException {
+	public int salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException {
 		Pacchetti entity = new Pacchetti();
 		
 		//controllo che il nome del pacchetto non esista nel database
@@ -212,6 +212,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			entity.setPrezzo(this.calcolaPrezzoPredefinito(entity));
 			
 			em.persist(entity);
+			em.flush();
+			
+			return entity.getId();
 		}
 		else
 			throw new InsertException();

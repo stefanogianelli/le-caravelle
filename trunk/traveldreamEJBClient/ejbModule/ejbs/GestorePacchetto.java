@@ -79,12 +79,13 @@ public interface GestorePacchetto {
 	/**
 	 * Permette il salvataggiuo di un pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
+	 * @return L'identificativo del pacchetto creato
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 * @throws InsertException Quando il nome del pacchetto esiste già nel database
 	 */
-	void salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException;
+	int salvaPacchettoPredefinito (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Permette l'acquisto di un pacchetto
