@@ -82,8 +82,11 @@ public class PacchettoPredefinitoBean {
 		try {
 			PacchettoPredefinitoDTO pacchetto = pacchettoBean.getPacchetto(idPacchetto);
 			int size = pacchetto.getHotel().getCitta().getImmagini().size();
-			int index = 0 + (int)(Math.random() * size);
-			return pacchetto.getHotel().getCitta().getImmagini().get(index).getImmagine(); 			
+			if (size != 0) {
+				int index = 0 + (int)(Math.random() * size);
+				return pacchetto.getHotel().getCitta().getImmagini().get(index); 
+			} else
+				return "noImage.png";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}

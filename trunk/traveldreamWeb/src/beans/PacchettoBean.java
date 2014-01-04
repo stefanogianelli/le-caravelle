@@ -148,8 +148,11 @@ public class PacchettoBean {
 			int size = pacchetto.getDestinazioni().size();
 			int index = 0 + (int)(Math.random() * size);
 			int immSize = pacchetto.getDestinazioni().get(index).getCitta().getImmagini().size();
-			int immIndex = 0 + (int)(Math.random() * immSize);
-			return pacchetto.getDestinazioni().get(index).getCitta().getImmagini().get(immIndex).getImmagine(); 			
+			if (immSize != 0) {
+				int immIndex = 0 + (int)(Math.random() * immSize);
+				return pacchetto.getDestinazioni().get(index).getCitta().getImmagini().get(immIndex);
+			} else
+				return "noImage.png";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		}
