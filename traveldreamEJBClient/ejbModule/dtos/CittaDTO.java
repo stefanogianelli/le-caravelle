@@ -20,10 +20,10 @@ public class CittaDTO implements Serializable {
 	
 	private float longitudine;
 	
-	private List<ImmagineCittaDTO> immagini;
+	private List<String> immagini;
 	
 	public CittaDTO () {
-		immagini = new ArrayList<ImmagineCittaDTO>();
+		immagini = new ArrayList<String>();
 	}
 	
 	public int getId() {
@@ -74,11 +74,11 @@ public class CittaDTO implements Serializable {
 		this.longitudine = longitudine;
 	}
 
-	public List<ImmagineCittaDTO> getImmagini() {
+	public List<String> getImmagini() {
 		return immagini;
 	}
 
-	public void setImmagini(List<ImmagineCittaDTO> immagini) {
+	public void setImmagini(List<String> immagini) {
 		this.immagini = immagini;
 	}
 

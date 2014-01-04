@@ -12,7 +12,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dtos.CittaDTO;
-import dtos.ImmagineCittaDTO;
 import eccezioni.CittaInesistenteException;
 import entities.Citta;
 import entities.ImmaginiCitta;
@@ -71,11 +70,9 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 		dto.setRegione(citta.getRegione());
 		dto.setLatitudine(citta.getLatitudine());
 		dto.setLongitudine(citta.getLongitudine());
-		List<ImmagineCittaDTO> immagini = new ArrayList<ImmagineCittaDTO>();
+		List<String> immagini = new ArrayList<String>();
 		for (ImmaginiCitta i : citta.getImmagini()) {
-			ImmagineCittaDTO immagine = new ImmagineCittaDTO();
-			immagine.setImmagine(i.getImmagine());
-			immagini.add(immagine);
+			immagini.add(i.getImmagine());
 		}
 		dto.setImmagini(immagini);
 		
