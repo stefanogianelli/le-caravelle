@@ -22,7 +22,6 @@ import dtos.DestinazioneDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoDTO;
 import dtos.PacchettoPredefinitoDTO;
-import dtos.UtenteDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
@@ -276,14 +275,7 @@ public class PacchettoBean {
 			if (!hotel.getCitta().getNome().equalsIgnoreCase(getPacchetto().getCitta().getNome())) {
 				//controllo che la data di arrivo sia minore della data di partenza dalla destinazione
 				if (getDestinazione().getDataArrivo().before(getDestinazione().getDataPartenza())) {
-					/*
-					 * Utente usato per test
-					 * Da sostituire con l'utente correntemente loggato nel sistema
-					 */
-					UtenteDTO utente = new UtenteDTO();
-					utente.setEmail(profiloBean.getUtenteCorrente().getEmail());
-					this.getPacchetto().setUtente(utente);
-					
+					this.getPacchetto().setUtente(profiloBean.getUtenteCorrente());					
 					this.getDestinazione().setHotel(hotel);
 					this.getDestinazione().setCitta(hotel.getCitta());
 					this.getPacchetto().getDestinazioni().add(this.getDestinazione());
@@ -389,17 +381,10 @@ public class PacchettoBean {
 	 * @return L'indirizzo della pagina dettagli del pacchetto creato
 	 */
 	public String salvaPacchettoPredefinito (int idPacchetto,String cittaPartenza, String dataArrivo, int durata) {
-		try {
-			/*
-			 * Utente usato per test
-			 * Da sostituire con l'utente correntemente loggato nel sistema
-			 */
-			UtenteDTO utente = new UtenteDTO();
-			utente.setEmail(profiloBean.getUtenteCorrente().getEmail());
-			this.getPacchetto().setUtente(utente);
-			
+		try {			
 			PacchettoPredefinitoDTO pred = predefinitoBean.getPacchetto(idPacchetto);
 			
+			this.getPacchetto().setUtente(profiloBean.getUtenteCorrente());
 			this.getPacchetto().setNome(pred.getNome());
 			this.getPacchetto().setPacchettoPredefinito(pred);
 			this.getPacchetto().setPrezzo(pred.getPrezzo());
