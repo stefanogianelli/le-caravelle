@@ -61,18 +61,6 @@ public class PacchettoBean {
 		pacchetto = new PacchettoDTO();
 		destinazione = new DestinazioneDTO();
 		elenco = new ArrayList<PacchettoDTO>();
-		//genero i marker sulla mappa
-		simpleModel = new DefaultMapModel();
-		Calendar dataOdierna = Calendar.getInstance();
-		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
-		for (PacchettoDTO p : pacchetti) {
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(dataOdierna.getTime())) {
-				for (DestinazioneDTO d : p.getDestinazioni()) {
-					simpleModel.addOverlay(new Marker(new LatLng(d.getCitta().getLatitudine(), d.getCitta().getLongitudine()), d.getCitta().getNome()));
-				}
-			}
-		}	
 	}
 
 	public PacchettoDTO getPacchetto() {
@@ -114,6 +102,24 @@ public class PacchettoBean {
 	/*
 	 * Metodi relativi alla gestione del pacchetto
 	 */
+	
+	/**
+	 * Inizializza la mappa con i marker delle varie destinazioni visitate
+	 */
+	public void initMappa () {
+		//genero i marker sulla mappa
+		simpleModel = new DefaultMapModel();
+		Calendar dataOdierna = Calendar.getInstance();
+		dataOdierna.set(Calendar.HOUR_OF_DAY, 0);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti("stefano@gmail.com", TipoPacchetto.ACQUISTATO);
+		for (PacchettoDTO p : pacchetti) {
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(dataOdierna.getTime())) {
+				for (DestinazioneDTO d : p.getDestinazioni()) {
+					simpleModel.addOverlay(new Marker(new LatLng(d.getCitta().getLatitudine(), d.getCitta().getLongitudine()), d.getCitta().getNome()));
+				}
+			}
+		}			
+	}
 
 	/**
 	 * Restituisce le tipologie di pacchetto disponibili

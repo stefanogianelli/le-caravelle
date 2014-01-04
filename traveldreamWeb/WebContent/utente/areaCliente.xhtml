@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<f:event listener="#{pacchetto.initMappa()}" type="preRenderView" />
+
 <div class="bloccoBianco">
 	<h1>I miei viaggi</h1>
 	<p:gmap center="46.1405286,16.7350414" zoom="4" type="HYBRID"   
