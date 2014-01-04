@@ -22,7 +22,7 @@
 </div>
 
 <ui:repeat var="p" value="#{pacchettoPredefinito.elencoPacchetti()}" varStatus="status">
-	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+	<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
 		<div class="pacchetto">
 			 <h:link outcome="dettagliPacchetto">
 			 	<f:param name="idPacchetto" value="#{p.id}" />
@@ -43,15 +43,16 @@
 			#{p.prezzo} €
 			</div>
 		</div>
-
-		<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliPacchetto">
+		
+		<div class="pulsanti">
+		<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliPacchetto">
 			<f:param name="idPacchetto" value="#{p.id}" />
-		</h:link>
+		</h:link></p>
 			
 		<h:form>
 			<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchettoPredefinito.eliminaPacchetto(p.id)}"/>
 		</h:form>
-	
+		</div>
 	</div>
 </ui:repeat>
 

@@ -11,6 +11,7 @@
 
 <ui:define name="content">
 
+<h3>Seleziona il collegamento</h3>
 	<f:metadata>
 		<f:viewParam name="idPacchetto" binding="#{idPacchetto}" />
 	</f:metadata>
@@ -37,13 +38,14 @@
 					</ul>
 					</div>
 					
-					<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento">
+					<div class="pulsantiVolo">
+					<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
 						<f:param name="idPacchetto" value="#{id.value}" />
 						<f:param name="codiceCollegamento" value="#{c.codice}" />
-					</h:link>
+					</h:link></p>
 					
-					<h:commandLink value="scegli" action="#{pacchettoPredefinito.aggiuntaCollegamento(idPacchetto,c)}" styleClass="flight-button" />			
-					
+					<p><h:commandLink value="Scegli" action="#{pacchettoPredefinito.aggiuntaCollegamento(idPacchetto,c)}" styleClass="detail-button" />			
+					</p></div>
 					<div class="dati">
 						<ul>
 							<li>#{c.cittaPartenza.nome} #{c.origine}</li>

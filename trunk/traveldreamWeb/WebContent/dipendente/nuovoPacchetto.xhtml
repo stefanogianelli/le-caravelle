@@ -30,17 +30,18 @@
 		<h:selectOneMenu id="partenza" styleClass="menu-input" binding="#{cittaText}">
 			<f:selectItems value="#{citta.nomiCitta}" />
 		</h:selectOneMenu></p>
-		<div class="bloccoButton">
+		
+		<div class="bloccoCitta">
 			<h:commandButton value="Salva città" styleClass="save-button" action="#{pacchettoPredefinito.aggiuntaCitta(cittaText.value)}" />
 			<p:dataList id="elencoCitta" styleClass="text-output" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta">  
 	   			<h:outputText value="#{citta.nome}" />
 			</p:dataList>	
-			<h:message for="partenza"/><br />
-		</div>
+			<h:message for="partenza"/><br /></div>
 		
 		<p><h:outputText for="data" styleClass="name-input" value="Date di partenza:" />
 		<p:calendar id="data" styleClass="data-input" binding="#{dataEntry}" locale="it" /></p>
-		<div class="bloccoButton">
+		
+		<div class="bloccoCitta">
 			<h:commandButton value="Salva data" styleClass="save-button" action="#{pacchettoPredefinito.aggiuntaData(dataEntry.value)}" update="elencoDate" />
 			<p:dataList id="elencoDate" styleClass="text-output" value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="data" type="ordered">  
 	   			<h:outputText value="#{data}">
@@ -50,9 +51,10 @@
 			<h:message for="data" /><br />
 		</div>
 		
-		<p><h:outputText for="durata" styleClass="name-input" value="Durate:" />
+		<p><h:outputText for="durata" styleClass="name-input" value="Durate (giorni):" />
 		<h:inputText id="durata" styleClass="text-input" binding="#{durataEntry}" /></p>
-		<div class="bloccoButton">
+		
+		<div class="bloccoCitta">
 		<h:commandButton value="Salva durata" styleClass="save-button" action="#{pacchettoPredefinito.aggiuntaDurata(durataEntry.value)}" update="elencoDurate" />
 		<p:dataList id="elencoDurate" styleClass="text-output" value="#{pacchettoPredefinito.pacchetto.durate}" var="durata" type="ordered">  
    			<h:outputText value="#{durata}" />
@@ -72,14 +74,14 @@
 </h:form>
 		
 <h:form>
-		<p><h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}" style="text-align: center;">
+		<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}" style="text-align: center;">
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
 				#{h.nome}
 			</h:column>
 			<h:column>
 				<f:facet name="header">Indirizzo</f:facet>
-				#{h.indirizzo} - #{h.citta.nome} (#{h.citta.nazione})
+				#{h.indirizzo} <br></br> #{h.citta.nome} (#{h.citta.nazione})
 			</h:column>	
 			<h:column>
 				<f:facet name="header">Prezzo</f:facet>
@@ -90,21 +92,9 @@
 				<p:rating value="#{h.stelle}" readonly="true" stars="5" />
 			</h:column>
 			<h:column>
-				<f:facet name="header">eMail</f:facet>
-				#{h.email}
+				<h:commandButton styleClass="flight-button" action="#{pacchettoPredefinito.creaPacchetto(h)}" value="Scegli" />
 			</h:column>
-			<h:column>
-				<f:facet name="header">Telefono</f:facet>
-				#{h.telefono}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Website</f:facet>
-				#{h.website}
-			</h:column>
-			<h:column>
-				<h:commandButton action="#{pacchettoPredefinito.creaPacchetto(h)}" value="Scegli" />
-			</h:column>
-		</h:dataTable></p>
+		</h:dataTable>
 	</h:form>
 	
 </div>

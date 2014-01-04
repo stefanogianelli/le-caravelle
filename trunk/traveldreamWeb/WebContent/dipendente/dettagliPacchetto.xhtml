@@ -21,7 +21,7 @@
 <h:form>
 	<h1 id="nomePacchetto" style="display: block;">
 		#{pacchettoPredefinito.pacchetto.nome}
-		<h:commandButton value="modifica" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		<h:commandButton styleClass="matita" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
 	</h1>
 	
 	<h1 id="modificaNome" style="display: none;">
@@ -37,11 +37,11 @@
 			<p>Città di partenza</p>
 			<h2>cittàPartenza</h2>
 			<br></br>
-			<p>Durata vacanza</p>
+			<p>Durata (giorni)</p>
 			<h2>durata</h2>
 		</div>
 		
-		<div class="descr">
+		<div class="pulsanti">
 		<div id="prezzo">#{pacchettoPredefinito.pacchetto.prezzo} €</div>
 		</div>
 	</div>
@@ -59,11 +59,13 @@
 				<p>#{pacchettoPredefinito.pacchetto.hotel.indirizzo}</p>
 				<p>#{pacchettoPredefinito.pacchetto.hotel.telefono}</p>
 			</div>
-			<h:link value="Modifica" styleClass="flight-button"/>
-			<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliHotel">
+			<div class="pulsanti">
+			<p><h:link value="Modifica" styleClass="detail-button"/></p>
+			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
 				<f:param name="idPacchetto" value="#{id.value}" />
 				<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
-			</h:link>			
+			</h:link></p>
+			</div>		
 		</div>
 	</div>
 	
@@ -86,12 +88,14 @@
 				</ul>
 				</div>
 				
-				<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento">
+				<div class="pulsantiVolo">
+				<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
 					<f:param name="idPacchetto" value="#{id.value}" />
 					<f:param name="codiceCollegamento" value="#{c.codice}" />
-				</h:link>
+				</h:link></p>
 				
-				<h:commandLink value="elimina" action="#{pacchettoPredefinito.rimuoviCollegamento(c)}" styleClass="flight-button" />			
+				<p><h:commandLink value="Elimina" action="#{pacchettoPredefinito.rimuoviCollegamento(c)}" styleClass="detail-button" />			
+				</p></div>
 				
 				<div class="dati">
 					<ul>
@@ -114,9 +118,9 @@
 			</div>
 		</div>
 	</ui:repeat>
-	<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
+	<p><h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
 		<f:param name="idPacchetto" value="#{id.value}" />
-	</h:link>	
+	</h:link></p>
 </h:form>
 
 <script type="text/javascript">
