@@ -21,10 +21,10 @@
 <p:messages showDetail="true" autoUpdate="true" />
 
 <h:panelGroup rendered="#{escursione.escursione.id != 0}">
-	<div class="bloccoRicerca">
+	<div class="bloccoModifica">
 		<h:form>
-			<h:commandLink value="Elimina" styleClass="search-button" action="#{escursione.eliminaEscursione(id.value)}" />
-			<h:link value="Modifica" styleClass="search-button" outcome="modificaEscursione">
+			<h:commandLink value="Elimina" action="#{escursione.eliminaEscursione(id.value)}" />
+			<h:link value="Modifica" outcome="modificaEscursione">
 				<f:param name="idEscursione" value="#{id.value}" />
 			</h:link>
 		</h:form>
@@ -45,7 +45,7 @@
 				<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 			</h:outputText>			
 		</p>
-		<p>Durata dell'escursione: #{escursione.escursione.durata}</p>
+		<p>Durata (ore): #{escursione.escursione.durata}</p>
 		<br></br>
 		<p>Prezzo: #{escursione.escursione.prezzo} €</p>
 		<br></br>

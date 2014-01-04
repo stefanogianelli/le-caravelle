@@ -13,14 +13,14 @@
 
 <h1>Elenco collegamenti</h1>
 
-<div class="bloccoRicerca">
+<div class="bloccoModifica">
 	<h:form>
 		<h:commandButton value="Nuovo collegamento" styleClass="search-button" action="nuovoCollegamento?faces-redirect=true" />
 	</h:form>
 </div>
 
 <ui:repeat var="c" value="#{collegamento.elencoCollegamenti()}" varStatus="status">
-	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+	<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
 		<div class="descr">
 			<p>Città di partenza: #{c.cittaPartenza.nome}</p>
 			<p>Città di arrivo: #{c.cittaArrivo.nome}</p>
@@ -33,14 +33,16 @@
 			</div>	
 		</div>
 		
-		<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+		<div class="pulsanti">
+		<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
 			<f:param name="codiceCollegamento" value="#{c.codice}" />
-		</h:link>
+		</h:link></p>
 			
 		<h:form>
 			<h:commandButton value="Elimina" styleClass="detail-button" action="#{collegamento.eliminaCollegamento(c.codice)}" />
 		</h:form>
-	
+		</div>
+		
 	</div>
 </ui:repeat>
 

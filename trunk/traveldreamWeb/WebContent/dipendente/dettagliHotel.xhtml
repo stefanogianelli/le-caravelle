@@ -19,10 +19,10 @@
 <h1>Dettagli hotel</h1>
 
 <h:panelGroup rendered="#{hotel.hotel.id != 0}">
-	<div class="bloccoRicerca">
+	<div class="bloccoModifica">
 		<h:form>
-			<h:commandLink value="Elimina" styleClass="search-button" action="#{hotel.eliminaHotel(id.value)}" />
-			<h:link value="Modifica" styleClass="search-button" outcome="modificaHotel">
+			<h:commandLink value="Elimina" action="#{hotel.eliminaHotel(id.value)}" />
+			<h:link value="Modifica"  outcome="modificaHotel">
 				<f:param name="idHotel" value="#{hotel.hotel.id}" />
 			</h:link>
 		</h:form>
@@ -30,7 +30,7 @@
 	
 	<div class="bloccoDett">
 		<h2>#{hotel.hotel.nome}</h2>
-		<p:rating styleClass="stelle-input" value="#{hotel.hotel.stelle}" readonly="true" stars="5" />
+		<p:rating styleClass="stelle-dip" value="#{hotel.hotel.stelle}" readonly="true" stars="5" />
 		<h:graphicImage library="images/hotel" name="#{hotel.hotel.immagine.equals('NULL') ? 'noImage.png' : hotel.hotel.immagine}" width="195" height="113" />
 		<p>Prezzo a notte: #{hotel.hotel.prezzo} €</p>
 		<br></br>

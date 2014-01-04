@@ -18,27 +18,30 @@
 <p:messages showDetail="true" autoUpdate="true" />
 
 <h:form>
+	<div class="bloccoModifica">
+		<h:commandButton value="Nuovo hotel" styleClass="search-button" action="nuovoHotel?faces-redirect=true" />
+	</div>
+	
 	<div class="bloccoRicerca">
 		<p>
 			<h:outputText styleClass="name-input" value="Scegli una città:" />
 			<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
 				<f:selectItems value="#{citta.nomiCitta}" />
-			</h:selectOneMenu>			
+			</h:selectOneMenu>
+		<h:commandButton value="Cerca" styleClass="flight-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />	
 		</p>
+
 	</div>
 	
-	<div class="bloccoRicerca">
-		<h:commandButton value="Cerca" styleClass="search-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />
-		<h:commandButton value="Nuovo hotel" styleClass="search-button" action="nuovoHotel?faces-redirect=true" />
-	</div>
+
 </h:form>
 
 <ui:repeat var="h" value="#{hotel.elenco}" varStatus="status" rendered="#{hotel.elenco.size() > 0}">
-	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+	<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
 			<div class="hotel">
 				<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />	
 				<p><b>#{h.nome}</b></p>
-				<p><p:rating value="#{h.stelle}" readonly="true" stars="5" /></p>
+				<p:rating value="#{h.stelle}" styleClass="stelle-dett" readonly="true" stars="5" />
 				<p>#{h.prezzo} €</p>
 			</div>
 		
@@ -49,13 +52,15 @@
 		</div>
 		
 		<h:form>
-			<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+		<div class="pulsanti">
+			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
 				<f:param name="idHotel" value="#{h.id}" />
-			</h:link>
-			<h:link value="Modifica" styleClass="detail-button" outcome="modificaHotel">
+			</h:link></p>
+			<p><h:link value="Modifica" styleClass="detail-button" outcome="modificaHotel">
 				<f:param name="idHotel" value="#{h.id}" />
-			</h:link>
+			</h:link></p>
 			<h:commandButton value="Elimina" styleClass="detail-button" action="#{hotel.eliminaHotel(h.id)}"/>
+		</div>
 		</h:form>
 		
 	</div>	
