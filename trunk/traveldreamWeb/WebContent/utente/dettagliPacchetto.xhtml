@@ -282,11 +282,11 @@
 				</ul>
 				</div>
 				
-				<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento" disabled="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
+				<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento" disabled="#{not pacchetto.esisteCollegamento(d.dataPartenza)}">
 					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 					<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataPartenza).codice}" />
 				</h:link>
-				<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataArrivo))}">
+				<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataPartenza))}">
 					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 					<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
 					<f:param name="cittaPartenza" value="#{d.citta.nome}" />
