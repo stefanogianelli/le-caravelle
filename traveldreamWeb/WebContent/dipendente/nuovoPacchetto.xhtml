@@ -18,58 +18,81 @@
 <p:messages showDetail="true" autoUpdate="true" />
 <br></br>
 	<h:form>
-		<p><h:outputText for="nome" styleClass="name-input" value="Nome pacchetto: " />
-		<h:inputText id="nome" styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.nome}" />
-		<h:message for="nome"/><br /></p>
+		<p><h:outputText styleClass="name-input" value="Nome pacchetto: " />
+		<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.nome}" /></p>
 		
-		<p><h:outputText for="prezzo" styleClass="name-input" value="Prezzo: " />
-		<h:inputText id="prezzo" styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.prezzo}" />
-		<h:message for="prezzo"/><br /></p>
+		<p><h:outputText styleClass="name-input" value="Prezzo: " />
+		<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.prezzo}" /><br /></p>
 		
-		<p><h:outputText for="partenza" styleClass="name-input" value="Città di partenza: " />
-		<h:selectOneMenu id="partenza" styleClass="menu-input" binding="#{cittaText}">
+		<p><h:outputText styleClass="name-input" value="Città di partenza: " />
+		<h:selectOneMenu styleClass="menu-input" binding="#{cittaText}">
 			<f:selectItems value="#{citta.nomiCitta}" />
 		</h:selectOneMenu></p>
 		
-		<div class="bloccoCitta">
-			<h:commandButton value="Salva città" styleClass="save-button" action="#{pacchettoPredefinito.aggiuntaCitta(cittaText.value)}" />
-			<p:dataList id="elencoCitta" styleClass="text-output" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta">  
-	   			<h:outputText value="#{citta.nome}" />
-			</p:dataList>	
-			<h:message for="partenza"/><br /></div>
-		
-		<p><h:outputText for="data" styleClass="name-input" value="Date di partenza:" />
-		<p:calendar id="data" styleClass="data-input" binding="#{dataEntry}" locale="it" /></p>
-		
-		<div class="bloccoCitta">
-			<h:commandButton value="Salva data" styleClass="save-button" action="#{pacchettoPredefinito.aggiuntaData(dataEntry.value)}" update="elencoDate" />
-			<p:dataList id="elencoDate" styleClass="text-output" value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="data" type="ordered">  
-	   			<h:outputText value="#{data}">
-	   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-	   			</h:outputText>
-			</p:dataList>
-			<h:message for="data" /><br />
+		<div class="bloccoCitta" style="height: auto;">
+			<h:commandButton value="Salva città" styleClass="save-button">
+				<f:ajax execute="@form" listener="#{pacchettoPredefinito.aggiuntaCitta(cittaText.value)}" render="elencoCitta" />
+			</h:commandButton>
+			
+			<h:panelGroup id="elencoCitta">
+				<ul>
+					<ui:repeat var="citta" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
+						<li><h:outputText value="#{citta.nome}" /></li>
+					</ui:repeat>	
+				</ul><br />
+			</h:panelGroup>
 		</div>
 		
-		<p><h:outputText for="durata" styleClass="name-input" value="Durate (giorni):" />
-		<h:inputText id="durata" styleClass="text-input" binding="#{durataEntry}" /></p>
+		<p>
+			<h:outputText styleClass="name-input" value="Date di partenza:" />
+			<p:calendar styleClass="data-input" binding="#{dataEntry}" locale="it" />
+		</p>
 		
-		<div class="bloccoCitta">
-		<h:commandButton value="Salva durata" styleClass="save-button" action="#{pacchettoPredefinito.aggiuntaDurata(durataEntry.value)}" update="elencoDurate" />
-		<p:dataList id="elencoDurate" styleClass="text-output" value="#{pacchettoPredefinito.pacchetto.durate}" var="durata" type="ordered">  
-   			<h:outputText value="#{durata}" />
-		</p:dataList>
-		<h:message for="durata" /><br />
+		<div class="bloccoCitta" style="height: auto;">
+			<h:commandButton value="Salva data" styleClass="save-button">
+				<f:ajax execute="@form" listener="#{pacchettoPredefinito.aggiuntaData(dataEntry.value)}" render="elencoDate" />
+			</h:commandButton>
+			
+			<h:panelGroup id="elencoDate">
+				<ul>
+					<ui:repeat var="data" value="#{pacchettoPredefinito.pacchetto.datePartenza}">
+						<li>
+				   			<h:outputText value="#{data}">
+				   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				   			</h:outputText>						
+						</li>
+					</ui:repeat>	
+				</ul><br />
+			</h:panelGroup>
 		</div>
 		
-		<p><h:outputText for="dest" styleClass="name-input" value="Città di destinazione: " />
-		<h:selectOneMenu id="dest" styleClass="menu-input" binding="#{nomeCitta}">
-			<f:selectItems value="#{citta.nomiCitta}" />
-		</h:selectOneMenu>		
-		<h:message for="dest"/><br /></p>
+		<p>
+			<h:outputText styleClass="name-input" value="Durate (giorni):" />
+			<h:inputText styleClass="text-input" binding="#{durataEntry}" />
+		</p>
+		
+		<div class="bloccoCitta" style="height: auto;">
+			<h:commandButton value="Salva durata" styleClass="save-button">
+				<f:ajax execute="@form" listener="#{pacchettoPredefinito.aggiuntaDurata(durataEntry.value)}" render="elencoDurate" />
+			</h:commandButton>
+			<h:panelGroup id="elencoDurate">
+				<ul>
+					<ui:repeat var="durata" value="#{pacchettoPredefinito.pacchetto.durate}">
+						<li><h:outputText value="#{durata}" /></li>
+					</ui:repeat>	
+				</ul><br />
+			</h:panelGroup>
+		</div>
+		
+		<p>
+			<h:outputText styleClass="name-input" value="Città di destinazione: " />
+			<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+				<f:selectItems value="#{citta.nomiCitta}" />
+			</h:selectOneMenu><br />
+		</p>
 		
 		<div class="bloccoButton">
-		<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" styleClass="button" value="Cerca" />
+			<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" styleClass="button" value="Cerca" />
 		</div>
 </h:form>
 		
