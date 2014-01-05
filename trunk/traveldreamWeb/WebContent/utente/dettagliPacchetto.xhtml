@@ -117,8 +117,8 @@
 
 <ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}">
 	
-		<!-- Data di arrivo -->
-		<p>Data di arrivo</p>
+		<!-- Data di partenza -->
+		<p>Data di partenza</p>
 		<div id="dataArrivo" style="display: block;">
 				<p><h:outputText value="#{d.dataArrivo}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
@@ -238,9 +238,9 @@
 			</h:link></p>
 		</div>
 
-		<!-- Data di partenza -->				
+		<!-- Data di ritorno -->				
 		
-			<p>Data di partenza</p>
+			<p>Data di ritorno</p>
 			<div id="dataPartenza" style="display: block;">
 				<p><h:outputText value="#{d.dataPartenza}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />

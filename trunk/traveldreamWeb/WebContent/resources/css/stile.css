@@ -20,7 +20,7 @@ p {
 	font-size: 26px;
 	text-align: left;
 	color:black;
-	border: 1px solid red;
+	border: 1px solid transparent;
 	margin: 20px 40px 0 40px;
 	}
 
@@ -29,7 +29,7 @@ h1 {
 	font-size: 70px;
 	color: #999999;
 	margin: 30px 40px;
-	border:1px solid red;
+	border:1px solid transparent;
 	text-align:left;
 	}
 h2 { 
@@ -37,7 +37,7 @@ h2 {
 	font-size: 44px;
 	font-weight:bold; 
 	color: #999999;
-	border:1px solid red;
+	border:1px solid transparent;
 	margin: 30px 40px;
 	}
 h3 { 
@@ -45,7 +45,7 @@ h3 {
 	font-size: 30px;
 	font-weight:bold;
 	color: #999999;
-	border:1px solid red;
+	border:1px solid transparent;
 	text-align: center;
 	margin: 30px 50px;
 	}
@@ -111,7 +111,7 @@ a:hover {
 	margin: -31px auto 0 -20px;
 	padding:5px;
 	left:50%;
-	border:1px solid red;
+	border:1px solid transparent;
 }
 .stelle-dip{
 	height:20px;
@@ -119,20 +119,20 @@ a:hover {
 	background-color:#dcdcdc;
 	margin: 20px auto 0 40px;
 	padding:5px;
-	border:1px solid red;
+	border:1px solid transparent;
 }
 .stelle-dett{
 	height:20px;
 	width:90px;
 	background-color:white;
-	border:1px solid red;
+	border:1px solid transparent;
 	margin: 0 auto 0 60px;
 }
 .stelle-descr{
 	height:20px;
 	width:90px;
 	background-color:white;
-	border:1px solid red;
+	border:1px solid transparent;
 	margin: 0 auto 0 255px;
 }
 .name-input{
@@ -140,7 +140,7 @@ a:hover {
 	font-size: 26px;
 	text-align: left;
 	color:black;
-	border: 1px solid red;
+	border: 1px solid transparent;
 	margin-bottom:20px;
 }
 .button{
@@ -403,15 +403,8 @@ select{
 	display:block;
 	float:none;
 	text-align:center;
-	border:1px solid red;
+	border:1px solid transparent;
 }
-.città{
-	display:block;
-	float:none;
-	text-align:center;
-	border:1px solid red;
-}
-
 .hotel
   {
   margin: 20px 40px;
@@ -437,7 +430,7 @@ select{
 .dettagliHotel{
 	width: 600px;
 	background-color: white;
-	border: 1px solid red;
+	border: 1px solid transparent;
 	dispay:block;
 	float:none;
 }
@@ -450,8 +443,10 @@ select{
 /*Aggiunta collegamento*/
 .volo{
 	background-color: #dcdcdc;
-	height:107px;
-	border:1px solid #dcdcdc;
+	height:110px;
+	border-top:5px solid white;
+	float:left;
+	width:100%;
 }
 .etichette {
 	background-color:#999999;
@@ -519,7 +514,7 @@ select{
 .descr {
 	width: auto;
 	margin: 20px 0 0 40px;
-	border:1px solid red;
+	border:1px solid transparent;
 	display: block;
 	float: left;
 }
@@ -532,7 +527,7 @@ select{
 .pulsanti {
 	width: auto;
 	margin: 20px 40px 0 0;
-	border:1px solid red;
+	border:1px solid transparent;
 	display: block;
 	float: right;
 }
@@ -543,7 +538,7 @@ select{
 .pulsantiVolo {
 	width: auto;
 	margin: 15px 20px 0 0;
-	border:1px solid red;
+	border:1px solid transparent;
 	display: block;
 	float: right;
 }
@@ -556,7 +551,7 @@ select{
 	font-size: 38px;
 	text-align: left;
 	color:black;
-	border: 1px solid red;
+	border: 1px solid transparent;
 }
 /*pagine di dettagli*/
 .bloccoDett {
@@ -591,9 +586,9 @@ select{
 .bloccoPacc {
 	background-color: white;
 	height: 300px;
-	width: 100%;
+	width: 99%;
 	border-top:1px solid white;
-	border:1px solid red;
+	border:1px solid transparent;
 }
 .bloccoPacc img{
 	float: left;
@@ -604,14 +599,17 @@ select{
 	height: 200px;
 	width: 100%;
 	border-top:1px solid white;
-	border:1px solid red;
+	border:1px solid transparent;
+}
+.bloccoPaccVolo p{
+	float:left;
 }
 .bloccoPaccEscursione {
 	background-color: white;
 	height: auto;
 	width: 100%;
 	border-top:1px solid white;
-	border:1px solid red;
+	border:1px solid transparent;
 }
 .hotelPacc
   {
@@ -627,7 +625,7 @@ select{
 }
 .descrHotel {
 	margin: 0px 20px;
-	border:1px solid red;
+	border:1px solid transparent;
 	display: block;
 	float: left;
 }
@@ -659,7 +657,7 @@ select{
 	text-align: center;
 	display:block;
 	float: left;
-	border: 1px solid red;
+	border: 1px solid transparent;
 }
 .bloccoModifica a:hover { 
 	color: #003333;
@@ -673,7 +671,7 @@ select{
 	text-align: left;
 	color:black;
 	margin: 10px 40px 0 40px;
-	border:1px solid red;
+	border:1px solid transparent;
 }
 .bloccoCitta {
 	background-color: #dcdcdc;
@@ -684,7 +682,7 @@ select{
 	text-align: left;
 	color:black;
 	margin: 10px 40px 0 40px;
-	border:1px solid red;
+	border:1px solid transparent;
 }
 /*Pagine info*/
 .info {
@@ -700,7 +698,7 @@ select{
 	font-size:22px;
 	text-align:justify;
 	color:black;
-	border: 1px solid red;
+	border: 1px solid transparent;
 	margin: 20px 40px 0 40px;
 }
 .bloccoLogin {

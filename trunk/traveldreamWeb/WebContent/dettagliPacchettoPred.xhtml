@@ -35,13 +35,13 @@
 				</h:selectOneMenu>
 			<br></br>
 			<br></br>
-			<p>Date partenza</p>
+			<p>Date di partenza</p>
 			<h:selectOneMenu styleClass="menu-pred" binding="#{dataPartenza}">
 					<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
 				</h:selectOneMenu>
 			<br></br>
 			<br></br>
-			<p>Durata vacanza</p>
+			<p>Durate (giorni)</p>
 			<h:selectOneMenu styleClass="menu-pred" binding="#{durata}">
 					<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
 			</h:selectOneMenu>
@@ -77,11 +77,10 @@
 
 <ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
 	<div class="bloccoPaccVolo">
-		<p>
-			<h:outputText value="#{c.dataPartenza}">
+		<p>Data di ritorno</p>
+		<p><h:outputText value="#{c.dataPartenza}">
 				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-			</h:outputText>		
-		</p>
+			</h:outputText></p>
 		<div class="volo">
 			<div class="etichette">
 			<ul>
