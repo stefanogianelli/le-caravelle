@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -77,7 +77,6 @@ public class PacchettiPredefiniti implements Serializable {
 				@JoinColumn(name="idCollegamento")
 				}
 			)
-	@OrderBy("dataPartenza ASC")
 	private List<Collegamenti> collegamenti;
 	
 	@OneToMany(cascade={CascadeType.MERGE}, mappedBy="pacchetto", orphanRemoval=true)
@@ -186,6 +185,7 @@ public class PacchettiPredefiniti implements Serializable {
 	}
 
 	public List<Collegamenti> getCollegamenti() {
+		Collections.sort(collegamenti);
 		return collegamenti;
 	}
 
