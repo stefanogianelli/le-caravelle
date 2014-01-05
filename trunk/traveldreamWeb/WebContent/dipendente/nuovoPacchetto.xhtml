@@ -17,61 +17,61 @@
 <br></br>
 <p:messages showDetail="true" autoUpdate="true" />
 <br></br>
-	<h:form>
-		<p><h:outputText styleClass="name-input" value="Nome pacchetto: " />
-		<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.nome}" /></p>
+<h:form>
+	<p><h:outputText styleClass="name-input" value="Nome pacchetto: " />
+	<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.nome}" /></p>
+	
+	<p><h:outputText styleClass="name-input" value="Prezzo: " />
+	<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.prezzo}" /><br /></p>
+	
+	<p><h:outputText styleClass="name-input" value="Città di partenza: " />
+	<h:selectOneMenu styleClass="menu-input" binding="#{cittaText}">
+		<f:selectItems value="#{citta.nomiCitta}" />
+	</h:selectOneMenu></p>
+	
+	<div class="bloccoCitta" style="height: auto;">
+		<h:commandButton value="Salva città" styleClass="save-button">
+			<f:ajax execute="@form" listener="#{pacchettoPredefinito.aggiuntaCitta(cittaText.value)}" render="elencoCitta" />
+		</h:commandButton>
 		
-		<p><h:outputText styleClass="name-input" value="Prezzo: " />
-		<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.prezzo}" /><br /></p>
+		<h:panelGroup id="elencoCitta">
+			<ul>
+				<ui:repeat var="citta" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
+					<li><h:outputText value="#{citta.nome}" /></li>
+				</ui:repeat>	
+			</ul><br />
+		</h:panelGroup>
+	</div>
+	
+	<p>
+		<h:outputText styleClass="name-input" value="Date di partenza:" />
+		<p:calendar styleClass="data-input" binding="#{dataEntry}" locale="it" />
+	</p>
+	
+	<div class="bloccoCitta" style="height: auto;">
+		<h:commandButton value="Salva data" styleClass="save-button">
+			<f:ajax execute="@form" listener="#{pacchettoPredefinito.aggiuntaData(dataEntry.value)}" render="elencoDate" />
+		</h:commandButton>
 		
-		<p><h:outputText styleClass="name-input" value="Città di partenza: " />
-		<h:selectOneMenu styleClass="menu-input" binding="#{cittaText}">
-			<f:selectItems value="#{citta.nomiCitta}" />
-		</h:selectOneMenu></p>
-		
-		<div class="bloccoCitta" style="height: auto;">
-			<h:commandButton value="Salva città" styleClass="save-button">
-				<f:ajax execute="@form" listener="#{pacchettoPredefinito.aggiuntaCitta(cittaText.value)}" render="elencoCitta" />
-			</h:commandButton>
-			
-			<h:panelGroup id="elencoCitta">
-				<ul>
-					<ui:repeat var="citta" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
-						<li><h:outputText value="#{citta.nome}" /></li>
-					</ui:repeat>	
-				</ul><br />
-			</h:panelGroup>
-		</div>
-		
-		<p>
-			<h:outputText styleClass="name-input" value="Date di partenza:" />
-			<p:calendar styleClass="data-input" binding="#{dataEntry}" locale="it" />
-		</p>
-		
-		<div class="bloccoCitta" style="height: auto;">
-			<h:commandButton value="Salva data" styleClass="save-button">
-				<f:ajax execute="@form" listener="#{pacchettoPredefinito.aggiuntaData(dataEntry.value)}" render="elencoDate" />
-			</h:commandButton>
-			
-			<h:panelGroup id="elencoDate">
-				<ul>
-					<ui:repeat var="data" value="#{pacchettoPredefinito.pacchetto.datePartenza}">
-						<li>
-				   			<h:outputText value="#{data}">
-				   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				   			</h:outputText>						
-						</li>
-					</ui:repeat>	
-				</ul><br />
-			</h:panelGroup>
-		</div>
-		
-		<p>
-			<h:outputText styleClass="name-input" value="Durate (giorni):" />
-			<h:inputText styleClass="text-input" binding="#{durataEntry}" />
-		</p>
-		
-		<div class="bloccoCitta" style="height: auto;">
+		<h:panelGroup id="elencoDate">
+			<ul>
+				<ui:repeat var="data" value="#{pacchettoPredefinito.pacchetto.datePartenza}">
+					<li>
+			   			<h:outputText value="#{data}">
+			   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			   			</h:outputText>						
+					</li>
+				</ui:repeat>	
+			</ul><br />
+		</h:panelGroup>
+	</div>
+	
+	<p>
+		<h:outputText styleClass="name-input" value="Durate (giorni):" />
+		<h:inputText styleClass="text-input" binding="#{durataEntry}" />
+	</p>
+	
+	<div class="bloccoCitta" style="height: auto;">
 			<h:commandButton value="Salva durata" styleClass="save-button">
 				<f:ajax execute="@form" listener="#{pacchettoPredefinito.aggiuntaDurata(durataEntry.value)}" render="elencoDurate" />
 			</h:commandButton>
@@ -92,33 +92,35 @@
 		</p>
 		
 		<div class="bloccoButton">
-			<h:commandButton action="#{hotel.cercaHotel(nomeCitta.value)}" styleClass="button" value="Cerca" />
+			<h:commandButton styleClass="button" value="Cerca">
+				<f:ajax execute="@form" listener="#{hotel.cercaHotel(nomeCitta.value)}" render="elencoHotel" />
+			</h:commandButton>
 		</div>
-</h:form>
 		
-<h:form>
-		<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}" style="text-align: center;">
-			<h:column>
-				<f:facet name="header">Nome</f:facet>
-				#{h.nome}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Indirizzo</f:facet>
-				#{h.indirizzo} <br></br> #{h.citta.nome} (#{h.citta.nazione})
-			</h:column>	
-			<h:column>
-				<f:facet name="header">Prezzo</f:facet>
-				#{h.prezzo}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Stelle</f:facet>
-				<p:rating value="#{h.stelle}" readonly="true" stars="5" />
-			</h:column>
-			<h:column>
-				<h:commandButton styleClass="flight-button" action="#{pacchettoPredefinito.creaPacchetto(h)}" value="Scegli" />
-			</h:column>
-		</h:dataTable>
-	</h:form>
+		<h:panelGroup id="elencoHotel">
+			<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}" style="text-align: center;">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					#{h.nome}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Indirizzo</f:facet>
+					#{h.indirizzo} <br></br> #{h.citta.nome} (#{h.citta.nazione})
+				</h:column>	
+				<h:column>
+					<f:facet name="header">Prezzo</f:facet>
+					#{h.prezzo}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Stelle</f:facet>
+					<p:rating value="#{h.stelle}" readonly="true" stars="5" />
+				</h:column>
+				<h:column>
+					<h:commandButton styleClass="flight-button" action="#{pacchettoPredefinito.creaPacchetto(h)}" value="Scegli" />
+				</h:column>
+			</h:dataTable>
+		</h:panelGroup>
+</h:form>
 	
 </div>
 </ui:define>
