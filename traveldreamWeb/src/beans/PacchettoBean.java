@@ -303,6 +303,7 @@ public class PacchettoBean {
 	public void modificaNomePacchetto () {
 		try {
 			pacchettoBean.modificaNomePacchetto(getPacchetto());
+			JsfUtil.infoMessage("Nome modificato!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
 		} catch (InsertException e) {
