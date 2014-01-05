@@ -66,6 +66,14 @@ a:hover {
 	margin: 0 auto 20px -180px;
 	left:50%;
 }
+.menu-pred{
+	height:32px;
+	width:300px;
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	margin: 0 0 0 -143px;
+}
 .text-input{
 	height:28px;
 	width:400px;
@@ -163,6 +171,16 @@ a:hover {
 	position: absolute;
 	left:50%;
 	margin: 5px 0 auto -120px;
+	font-size:18px;
+	font-family:arial;
+	text-align:center;
+	color: #003333;
+}
+.pacc-button{
+	height:40px;
+	width:240px;
+	float:left;
+	margin: 5px 75px auto 75px;
 	font-size:18px;
 	font-family:arial;
 	text-align:center;
