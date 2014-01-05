@@ -85,7 +85,7 @@
 					<h:panelGroup rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
 						<h:link value="modifica collegamento" outcome="aggiuntaCollegamentoTest">
 							<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-							<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+							<f:param name="dataPartenza" value="#{data.getData(d.dataArrivo)}" />
 							<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
 							<f:param name="cittaArrivo" value="#{d.citta.nome}" />
 						</h:link>
@@ -96,7 +96,7 @@
 				<h:panelGroup rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
 					<h:link value="aggiunta collegamento" outcome="aggiuntaCollegamentoTest">
 						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataArrivo)}" />
+						<f:param name="dataPartenza" value="#{data.getData(d.dataArrivo)}" />
 						<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
 						<f:param name="cittaArrivo" value="#{d.citta.nome}" />
 					</h:link>
@@ -105,16 +105,15 @@
 				<!--  Informazioni sulla destinazione -->
 				<h:panelGroup>
 					Dal
-					<h:outputText id="mostraData" value="#{d.dataArrivo}">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-					</h:outputText>
-					<h:commandButton value="modifica" onclick="toggle('modificaData'); return false;" />
-					
-					<div id="modificaData" style="display: none;">
-						<p:calendar value="#{d.dataArrivo}" id="dataArrivoCal" locale="it" pattern="dd/MM/yyyy">
+					<p:inplace id="dataArrivo" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
+						<p:ajax event="save" listener="#{pacchetto.modificaDataArrivo(d)}" update=":pacchettoForm:prezzo,:mainForm:destinazioni" />
+	            		<p:calendar value="#{d.dataArrivo}" id="dataArrivoCal" locale="it" pattern="dd/MM/yyyy">
 	            			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	            		</p:calendar>
-					</div>
+	            	</p:inplace>					
+					<h:outputText value="#{d.dataArrivo}" rendered="#{not pacchetto.tipoPersonalizzato}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
 					
 					al
 					<p:inplace id="dataPartenza" editor="true" rendered="#{pacchetto.tipoPersonalizzato}">  
@@ -187,7 +186,7 @@
 					<h:panelGroup rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
 						<h:link value="modifica collegamento" outcome="aggiuntaCollegamentoTest">
 							<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-							<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
+							<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
 							<f:param name="cittaPartenza" value="#{d.citta.nome}" />
 							<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />						
 						</h:link>
@@ -198,7 +197,7 @@
 				<h:panelGroup rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
 					<h:link value="aggiunta collegamento" outcome="aggiuntaCollegamentoTest">
 						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-						<f:param name="dataPartenza" value="#{pacchetto.getData(d.dataPartenza)}" />
+						<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
 						<f:param name="cittaPartenza" value="#{d.citta.nome}" />
 						<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />						
 					</h:link>
