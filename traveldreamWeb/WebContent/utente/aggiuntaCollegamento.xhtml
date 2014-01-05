@@ -111,22 +111,24 @@
 	        <h1>Crea il tuo pacchetto</h1>
 	        <h2>Aggiungi collegamento</h2>
 	        <h3>Seleziona il mezzo di trasporto</h3>
-			<h:selectOneMenu styleClass="menu-input" binding="#{tipo}">
+			<h:selectOneMenu styleClass="menu-input" binding="#{tipoCollegamentoPred}">
 				<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
 			</h:selectOneMenu>
 		</div>
 	
 		<div class="blocco">
-			<div class="città">
+		<h3>Specifica i punti di partenza e di arrivo</h3>
+			<div class="data">
 				<h3>Origine</h3>
-				<input type="text" name="origine"> </input> <br></br>
+				<input class="text-input" type="text" name="origine"> </input> <br></br>
 			</div>
 			
-			<div class="città">
+			<div class="data">
 				<h3>Destinazione</h3>
-				<input type="text" name="destinazione"> </input> <br></br>
+				<input class="text-input" type="text" name="destinazione"> </input> <br></br>
 			</div>
-			
+		</div>
+		<div class="blocco">	
 			<div class="data">
 				<h3>Data di partenza</h3>
 				<h:inputText styleClass="text-input" value="#{dataPartenza}" disabled="true">
@@ -137,13 +139,10 @@
 			<div class="data">
 	       		<h3>Numero di passeggeri</h3>
 				<h:inputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" disabled="true" />
-			</div>
-						
-		</div>
+			</div>		
 		
-		<div class="blocco" style="height: 130px;">
 			<div class="bloccoButton">
-				<h:commandButton value="Cerca" styleClass="button" action="#{collegamento.cercaCollegamentiPred(pacchetto.predefinito.id,dataPartenza,cittaPartenza,cittaArrivo,tipo.value)}" render="listaCollegamenti" />
+				<h:commandButton value="Cerca" styleClass="button" action="#{collegamento.cercaCollegamentiPred(pacchetto.predefinito.id,dataPartenza,cittaPartenza,cittaArrivo,tipoCollegamentoPred.value)}" render="listaCollegamenti" />
 			</div>			
 		</div>		
 		
