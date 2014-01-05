@@ -13,21 +13,32 @@
 
 <div class="bloccoDett">
 
+<br></br>
+<p:messages showDetail="false" autoUpdate="true" />
+
 <h1>Nuovo pacchetto</h1>
 <br></br>
-<p:messages showDetail="true" autoUpdate="true" />
-<br></br>
+
 <h:form>
-	<p><h:outputText styleClass="name-input" value="Nome pacchetto: " />
-	<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.nome}" /></p>
+	<p>
+		<h:outputText styleClass="name-input" value="Nome pacchetto: " />
+		<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.nome}" required="true" requiredMessage="Dare un nome al pacchetto" />
+	</p>
 	
-	<p><h:outputText styleClass="name-input" value="Prezzo: " />
-	<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.prezzo}" /><br /></p>
+	<p>
+		<h:outputText styleClass="name-input" value="Prezzo: " />
+		<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.prezzo}" required="true" requiredMessage="Inserire un prezzo" validatorMessage="Inserire un prezzo positivo">
+			<f:validateDoubleRange minimum="1.00" />
+		</h:inputText>
+		<br />
+	</p>
 	
-	<p><h:outputText styleClass="name-input" value="Città di partenza: " />
-	<h:selectOneMenu styleClass="menu-input" binding="#{cittaText}">
-		<f:selectItems value="#{citta.nomiCitta}" />
-	</h:selectOneMenu></p>
+	<p>
+		<h:outputText styleClass="name-input" value="Città di partenza: " />
+		<h:selectOneMenu styleClass="menu-input" binding="#{cittaText}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu>
+	</p>
 	
 	<div class="bloccoCitta" style="height: auto;">
 		<h:commandButton value="Salva città" styleClass="save-button">
@@ -45,7 +56,8 @@
 	
 	<p>
 		<h:outputText styleClass="name-input" value="Date di partenza:" />
-		<p:calendar styleClass="data-input" binding="#{dataEntry}" locale="it" />
+		<p:calendar styleClass="data-input" binding="#{dataEntry}" locale="it"
+			converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />
 	</p>
 	
 	<div class="bloccoCitta" style="height: auto;">
@@ -68,7 +80,9 @@
 	
 	<p>
 		<h:outputText styleClass="name-input" value="Durate (giorni):" />
-		<h:inputText styleClass="text-input" binding="#{durataEntry}" />
+		<h:inputText styleClass="text-input" binding="#{durataEntry}" converterMessage="Inserire una durata di tipo intero">
+			<f:convertNumber integerOnly="true"/>
+		</h:inputText>
 	</p>
 	
 	<div class="bloccoCitta" style="height: auto;">
