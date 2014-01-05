@@ -21,8 +21,8 @@
 <h1>#{pacchettoPredefinito.pacchetto.nome}</h1>
 
 <h:form>
-	<div class="bloccoRicerca">
-		<h:commandButton value="Scegli pacchetto" styleClass="search-button" action="#{pacchetto.salvaPacchettoPredefinito(id.value,cittaPartenza.value,dataPartenza.value,durata.value)}" />
+	<div class="bloccoModifica">
+		<h:commandButton value="Salva pacchetto" styleClass="search-button" action="#{pacchetto.salvaPacchettoPredefinito(id.value,cittaPartenza.value,dataPartenza.value,durata.value)}" />
 	</div>
 
 	<div class="bloccoPacc">
@@ -30,28 +30,24 @@
 		
 		<div class="descr">
 			<p>Città di partenza</p>
-			<h2>
-				<h:selectOneMenu styleClass="menu-input" binding="#{cittaPartenza}" style="width: 200px;">
+			<h:selectOneMenu styleClass="menu-pred" binding="#{cittaPartenza}">
 					<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
-				</h:selectOneMenu>		
-			</h2>
+				</h:selectOneMenu>
+			<br></br>
 			<br></br>
 			<p>Date partenza</p>
-			<h2>
-				<h:selectOneMenu styleClass="menu-input" binding="#{dataPartenza}" style="width: 200px;">
+			<h:selectOneMenu styleClass="menu-pred" binding="#{dataPartenza}">
 					<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
-				</h:selectOneMenu>			
-			</h2>		
+				</h:selectOneMenu>
+			<br></br>
 			<br></br>
 			<p>Durata vacanza</p>
-			<h2>
-				<h:selectOneMenu styleClass="menu-input" binding="#{durata}" style="width: 200px;">
+			<h:selectOneMenu styleClass="menu-pred" binding="#{durata}">
 					<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
-				</h:selectOneMenu>			
-			</h2>
+			</h:selectOneMenu>
 		</div>
 		
-		<div class="descr">
+		<div class="pulsanti">
 		<div id="prezzo">#{pacchettoPredefinito.pacchetto.prezzo} €</div>
 		</div>
 	</div>
@@ -68,6 +64,13 @@
 			<p><b>#{pacchettoPredefinito.pacchetto.hotel.nome}</b></p>
 			<p>#{pacchettoPredefinito.pacchetto.hotel.indirizzo}</p>
 			<p>#{pacchettoPredefinito.pacchetto.hotel.telefono}</p>
+		</div>
+		
+		<div class="pulsanti">
+		<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+			<f:param name="idPacchetto" value="#{id.value}" />
+			<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
+		</h:link></p>
 		</div>
 	</div>
 </div>
@@ -91,11 +94,12 @@
 			</ul>
 			</div>
 			
-			<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento">
+			<div class="pulsantiVolo">
+			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
 				<f:param name="idPacchetto" value="#{id.value}" />
 				<f:param name="codiceCollegamento" value="#{c.codice}" />
-			</h:link>			
-			
+			</h:link></p>	
+			</div>
 			<div class="dati">
 				<ul>
 					<li>#{c.cittaPartenza.nome} #{c.origine}</li>
