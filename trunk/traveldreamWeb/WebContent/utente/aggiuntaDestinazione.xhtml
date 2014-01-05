@@ -16,9 +16,9 @@
 		<f:event listener="#{pacchetto.getPacchetto(id.value)}" type="preRenderView" />
 	</f:metadata>
 	
-	<p:messages showDetail="true" autoUpdate="true" />
+	<p:messages showDetail="false" autoUpdate="true" />
 
-	<h:form>
+	<h:form rendered="#{pacchetto.pacchetto.id != 0}">
 		<div class="blocco">
 	        <h1>Crea il tuo pacchetto</h1>
 	        <h2>Aggiungi destinazione</h2>
@@ -31,12 +31,16 @@
 		<div class="blocco">
 			<div class="data">
 				<h3>Data di arrivo</h3>
-				<p:calendar label="Data Arrivo" styleClass="data-input" value="#{pacchetto.destinazione.dataArrivo}" locale="it"  required="true" />
+				<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataArrivo}" locale="it"
+					required="true" requiredMessage="Inserire una data di arrivo"
+					converterMessage="Inserire una data di arrivo nel formato dd/MM/yyyy (es.: 05/01/2014)" />
 			</div>
 			
 			<div class="data">
 				<h3>Data di partenza</h3>
-				<p:calendar label="Data Partenza" styleClass="data-input" value="#{pacchetto.destinazione.dataPartenza}" locale="it" required="true" requiredMessage="Inserire una data di partenza" />
+				<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataPartenza}" locale="it"
+					required="true" requiredMessage="Inserire una data di partenza"
+					converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />
 			</div>
 			
 			<div class="bloccoButton">
