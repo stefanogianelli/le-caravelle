@@ -20,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import utils.DataUtils;
 import dtos.AttivitaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
@@ -306,7 +307,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			} else
 				throw new InsertException("La città di partenza e la destinazione non possono essere uguali!");
 		} else
-			throw new InsertException("Date non valide");
+			throw new InsertException("Date non valide. La data di arrivo deve essere il " + DataUtils.getData(entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza()) + " o la data di partenza deve essere il " + DataUtils.getData(entity.getDestinazioni().get(0).getDataArrivo()));
 	}
 	
 	@Override
