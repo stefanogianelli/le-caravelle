@@ -36,7 +36,54 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Fiumicino', 'JFK', '2013-12-29', '11:50:00', '18:05:00', 50, 3, 2);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'El Prat', 'Malpensa', '2013-11-24', '20:50:00', '21:40:00', 50, 1, 4);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'El Prat', '2013-11-22', '14:40:00', '16:15:00', 50, 4, 1);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'Barcellona', '2014-03-11', '20:40:00', '22:10:00', 34, 4, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'Barcellona', '2014-02-01', '09:35:00', '11:05:00', 35, 4, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'Barcellona', '2014-02-01', '11:40:00', '13:15:00',44 , 4, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Ciampino', 'Barcellona', '2014-02-01', '08:15:00', '10:00:00', 29, 4, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Fiumicino', 'Barcellona', '2014-02-01', '07:15:00', '09:00:00', 45, 4, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Orio al Serio', '2014-02-08', '20:00:00', '21:45:00', 23, 1, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Malpensa', '2014-02-08', '13:50:00', '15:30:00', 29, 1, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Malpensa', '2014-02-16', '13:50:00', '15:30:00', 37, 1, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Malpensa', '2014-02-16', '18:25:00', '20:00:00', 55, 1, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Orio al Serio', '2014-02-15', '20:00:00', '21:45:00', 23, 1, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Malpensa', '2014-02-15', '13:50:00', '15:30:00', 25, 1, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Malpensa', '2014-02-23', '13:50:00', '15:30:00', 20, 1, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Malpensa', '2014-02-23', '21:55:00', '23:35:00', 29, 1, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Ciampino', '2014-02-08', '15:55:00', '17:40:00', 29, 2, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Ciampino', '2014-02-16', '15:55:00', '17:40:00', 53, 2, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Fiumicino', '2014-02-15', '14:35:00', '16:15:00', 45, 2, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Barcellona', 'Fiumicino', '2014-02-23', '18:15:00', '19:55:00', 65, 2, 4);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Ciampino', 'Barcellona', '2014-02-09', '08:15:00', '10:00:00', 41, 4, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'Barcellona', '2014-02-09', '07:00:00', '08:35:00', 34, 4, 1);
 
 INSERT INTO utenti (email, password) VALUES ('stefano@gmail.com', '05b9115df05a2a467841772eccc969822d884c9e71841050fe9e0893cce7d11b');
 INSERT INTO utenti (email, password) VALUES ('francesca@gmail.com', '5dfd46e27a5e3e8e06fcb92817b0955f7fd28048f5003bfd4e5be8e67bf417db');
+
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('Barcellona', 50, 10);
+
+INSERT INTO citta_origine_pred VALUES (1, 1);
+INSERT INTO citta_origine_pred VALUES (1, 2);
+
+INSERT INTO date_partenza VALUES ('2014-02-01', 1);
+INSERT INTO date_partenza VALUES ('2014-02-09', 1);
+
+INSERT INTO durate VALUES (7, 1);
+INSERT INTO durate VALUES (14, 1);
+
+INSERT INTO mezzi_trasporto_pred VALUES (7, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (8, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (9, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (10, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (11, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (12, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (13, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (14, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (15, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (16, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (17, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (18, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (19, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (20, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (21, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (22, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (23, 1);
+INSERT INTO mezzi_trasporto_pred VALUES (24, 1);

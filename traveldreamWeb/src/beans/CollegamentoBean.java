@@ -14,8 +14,10 @@ import utils.JsfUtil;
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.PacchettoInesistenteException;
 import ejbs.GestoreCitta;
 import ejbs.GestoreCollegamento;
+import ejbs.GestorePacchettoPredefinito;
 import enums.TipoCollegamento;
 
 @ManagedBean(name="collegamento")
@@ -27,6 +29,9 @@ public class CollegamentoBean {
 	
 	@EJB
 	private GestoreCitta cittaBean;
+	
+	@EJB
+	private GestorePacchettoPredefinito predefinitoBean;
 	
 	private CollegamentoDTO collegamento;
 	private List<CollegamentoDTO> elenco;
@@ -93,6 +98,27 @@ public class CollegamentoBean {
 		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(dataPartenza, cittaPartenza, cittaArrivo, tipo));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
+	}
+	
+	/**
+	 * Ricerca i collegamenti inseriti nel pacchetto predefinito tra due destinazioni nella data indicata
+	 * @param idPacchetto L'identificativo del pacchetto predefinito nel quale effettuare la ricerca
+	 * @param dataPartenza La data di partenza
+	 * @param cittaPartenza Il nome della città di partenza
+	 * @param cittaArrivo Il nome della città di arrivo
+	 * @param tipo La tipologia del collegamento
+	 */
+	public void cercaCollegamentiPred (int idPacchetto, Date dataPartenza, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
+		try {
+			List<CollegamentoDTO> col = predefinitoBean.getPacchetto(idPacchetto).getCollegamenti();
+			this.getElenco().clear();
+			for (CollegamentoDTO c : col) {
+				if (c.getDataPartenza().equals(dataPartenza) && c.getCittaPartenza().getNome().equals(cittaPartenza) && c.getCittaArrivo().getNome().equals(cittaArrivo) && c.getTipoCollegamento() == tipo)
+					this.getElenco().add(c);
+			}
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente!");
+		}
 	}
 	
 	/**

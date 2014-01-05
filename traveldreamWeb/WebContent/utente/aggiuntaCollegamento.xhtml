@@ -52,7 +52,7 @@
 			</div>
 			
 			<div class="data">
-	        <h3>Numero di passeggeri</h3>
+	        	<h3>Numero di passeggeri</h3>
 				<h:inputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" disabled="true" />
 			</div>
 							
@@ -112,108 +112,82 @@
 	        <h1>Crea il tuo pacchetto</h1>
 	        <h2>Aggiungi collegamento</h2>
 	        <h3>Seleziona il mezzo di trasporto</h3>
-			 <select>
-			  <option value="Aereo">Aereo</option> 	<!-- Da collegare al database -->
-			  <option value="Treno">Treno</option>
-			  <option value="Auto">Auto</option>
-			</select>
+			<h:selectOneMenu styleClass="menu-input" binding="#{tipo}">
+				<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
+			</h:selectOneMenu>
 		</div>
 	
 		<div class="blocco">
 			<div class="città">
 				<h3>Origine</h3>
-				<h:form>
 				<input type="text" name="origine"> </input> <br></br>
-				</h:form>
 			</div>
 			
 			<div class="città">
 				<h3>Destinazione</h3>
-				<h:form>
 				<input type="text" name="destinazione"> </input> <br></br>
-				</h:form>
 			</div>
 			
 			<div class="data">
 				<h3>Data di partenza</h3>
-				<h:form>
-				<input type="text" name="dataPartenza"> </input> <br></br>
-				</h:form>
+				<h:inputText styleClass="text-input" value="#{dataPartenza}" disabled="true">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:inputText>
 			</div>
 			
 			<div class="data">
-	        <h3>Numero di passeggeri</h3>
-				<h:form>
-				<input type="text" name="numPasse"> </input> <br></br>
-				</h:form>
+	       		<h3>Numero di passeggeri</h3>
+				<h:inputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" disabled="true" />
 			</div>
+						
 		</div>
+		
+		<div class="blocco" style="height: 130px;">
+			<div class="bloccoButton">
+				<h:commandButton value="Cerca" styleClass="button" action="#{collegamento.cercaCollegamentiPred(pacchetto.predefinito.id,dataPartenza,cittaPartenza,cittaArrivo,tipo.value)}" render="listaCollegamenti" />
+			</div>			
+		</div>		
 		
 		<div class="bloccoBianco">
 			<h2>Scegli il collegamento</h2>
-			<div class="volo">
-				<div class="etichette">
-				<ul>
-					<li>Da</li>
-					<li>A</li>
-					<li>Partenza</li>
-					<li>Arrivo</li>
-					<li>Scali</li>
-					<li>Prezzo</li>
-				</ul>
-				</div>
-				
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
 			
-				<div class="dati">
-				<ul>
-					<li>New York JFK</li>
-					<li>Milano Malpensa</li>
-					<li>22:20</li>
-					<li>12:05</li>
-					<li>0</li>
-					<li>468 euro</li>
-				</ul>
-				</div>
-			</div>
-			<br></br>
-			<div class="volo">
-				<div class="etichette">
-				<ul>
-					<li>Da</li>
-					<li>A</li>
-					<li>Partenza</li>
-					<li>Arrivo</li>
-					<li>Scali</li>
-					<li>Prezzo</li>
-				</ul>
-				</div>
+			<ui:repeat var="c" value="#{collegamento.elenco}" rendered="#{collegamento.elenco.size() > 0}">			
+				<div class="volo">
+					<div class="etichette">
+					<ul>
+						<li>Da</li>
+						<li>A</li>
+						<li>Partenza</li>
+						<li>Arrivo</li>
+						<li>Scali</li>
+						<li>Prezzo</li>
+					</ul>
+					</div>
+
+					<h:commandButton value="Dettagli" styleClass="flight-button"/>
+					<h:commandButton value="Scegli" styleClass="flight-button" action="#{pacchetto.aggiuntaCollegamento(id.value, c)}" />
 				
-			<h:form>
-				<h:commandButton value="Dettagli" styleClass="flight-button"/>
-			</h:form>
-		
-			<h:form>
-				<h:commandButton value="Scegli" styleClass="flight-button"/>
-			</h:form>
-			
-				<div class="dati">
-				<ul>
-					<li>New York JFK</li>
-					<li>Milano Malpensa</li>
-					<li>17:40</li>
-					<li>12:25</li>
-					<li>1</li>
-					<li>420 euro</li>
-				</ul>
+					<div class="dati">
+					<ul>
+						<li>#{c.cittaPartenza.nome} #{c.origine}</li>
+						<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
+						<li>
+							<h:outputText value="#{c.oraPartenza}">
+								<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>
+						</li>
+						<li>
+							<h:outputText value="#{c.oraArrivo}">
+								<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>
+						</li>
+						<li>0</li>
+						<li>#{c.prezzo} €</li>
+					</ul>
+					</div>
 				</div>
-			</div>
+				<br></br>
+			</ui:repeat>
 			
 		</div>
 	</h:form>		
