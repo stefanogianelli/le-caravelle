@@ -71,7 +71,7 @@
 				<h2 id="cittaPartenza" style="display: block;">
 					<h:outputText value="#{pacchetto.pacchetto.citta.nome}" />
 					<h:commandButton styleClass="flight-button" value="modifica" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
-					<h:commandButton styleClass="flight-button" value="modifica" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" rendered="#{pacchetto.tipoPredefinito}" />
+					<h:commandButton styleClass="flight-button" value="modifica" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" rendered="#{pacchetto.tipoPredefinito}" />					
 				</h2>
 				
 				<!-- Modifica della città di partenza -->
@@ -90,8 +90,7 @@
 					</h:selectOneMenu>
 					<h:commandButton action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" value="salva" />
 					<h:commandButton value="annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" />			
-				</h2>
-				
+				</h2>				
 			</div>
 			<br></br>
 			<p>Numero di partecipanti</p>
@@ -102,11 +101,10 @@
 			
 			<!-- Modifica del numero di partecipanti -->
 			<h2 id="modificaNumeroPartecipanti" style="display: none;">
-				<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true" />
-				<h:commandButton action="#{pacchetto.modificaNumeroPartecipanti()}" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="salva" />
-				<h:commandButton onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="annulla" />
-			</h2>
-			
+				<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true" style="width: 150px;" />
+				<h:commandButton styleClass="flight-button" action="#{pacchetto.modificaNumeroPartecipanti()}" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="salva" />
+				<h:commandButton styleClass="flight-button" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="annulla" />				
+			</h2>			
 		</div>
 		
 		<!-- Prezzo del pacchetto -->
