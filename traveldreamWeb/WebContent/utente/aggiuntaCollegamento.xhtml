@@ -28,7 +28,7 @@
 	        <h1>Crea il tuo pacchetto</h1>
 	        <h2>Aggiungi collegamento</h2>
 	        <h3>Seleziona il mezzo di trasporto</h3>
-			<h:selectOneMenu styleClass="menu-input" binding="#{tipo}">
+			<h:selectOneMenu styleClass="menu-input" binding="#{tipoCollegamento}">
 				<f:selectItems value="#{collegamento.getTipiCollegamento()}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.label}" />
 			</h:selectOneMenu>
 		</div>
@@ -59,7 +59,7 @@
 			</div>			
 		
 			<div class="bloccoButton">
-				<h:commandButton value="Cerca" styleClass="button" action="#{collegamento.cercaCollegamenti(dataPartenza,cittaPartenza,cittaArrivo,tipo.value)}" render="listaCollegamenti" />
+				<h:commandButton value="Cerca" styleClass="button" action="#{collegamento.cercaCollegamenti(dataPartenza,cittaPartenza,cittaArrivo,tipoCollegamento.value)}" render="listaCollegamenti" />
 			</div>			
 		</div>
 		
