@@ -34,16 +34,18 @@
 		</div>
 	
 		<div class="blocco">
-			<div class="città">
+		<h3>Specifica i punti di partenza e di arrivo</h3>
+			<div class="data">
 				<h3>Origine</h3>
 				<input class="text-input" type="text" name="origine"> </input> <br></br>
 			</div>
 			
-			<div class="città">
+			<div class="data">
 				<h3>Destinazione</h3>
 				<input class="text-input" type="text" name="destinazione"> </input> <br></br>
 			</div>
-			
+		</div>
+		<div class="blocco">
 			<div class="data">
 				<h3>Data di partenza</h3>
 				<h:inputText styleClass="text-input" value="#{dataPartenza}" disabled="true">
@@ -54,11 +56,8 @@
 			<div class="data">
 	        	<h3>Numero di passeggeri</h3>
 				<h:inputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" disabled="true" />
-			</div>
-							
-		</div>
+			</div>			
 		
-		<div class="blocco" style="height: 130px;">
 			<div class="bloccoButton">
 				<h:commandButton value="Cerca" styleClass="button" action="#{collegamento.cercaCollegamenti(dataPartenza,cittaPartenza,cittaArrivo,tipo.value)}" render="listaCollegamenti" />
 			</div>			
