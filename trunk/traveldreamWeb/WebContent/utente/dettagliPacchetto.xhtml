@@ -16,9 +16,9 @@
 	<f:event listener="#{pacchetto.getPacchetto(id.value)}" type="preRenderView" />
 </f:metadata>
 
-<p:messages showDetail="true" autoUpdate="true" />
+<p:messages showDetail="false" autoUpdate="true" />
 
-<h:form id="mainForm" rendered="#{pacchetto.pacchetto.id != 0}">
+<h:panelGroup id="mainPanel" rendered="#{pacchetto.pacchetto.id != 0}">
 
 	<!-- Nome del pacchetto -->
 	<h1 id="nomePacchetto" style="display: block;">
@@ -28,9 +28,11 @@
 		
 	<!-- Modifica nome del pacchetto -->
 	<h1 id="modificaNome" style="display: none;">
-		<h:inputText value="#{pacchetto.pacchetto.nome}" required="true" />
-		<h:commandButton value="salva" action="#{pacchetto.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
-		<h:commandButton value="annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		<h:form>
+			<h:inputText value="#{pacchetto.pacchetto.nome}" required="true" requiredMessage="Il pacchetto deve avere un nome" />
+			<h:commandButton value="salva" action="#{pacchetto.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+			<h:commandButton value="annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		</h:form>		
 	</h1>    
 	
 	<!-- Blocco con i pulsanti per l'eliminazione, la condivisione e l'acquisto del pacchetot -->
@@ -41,18 +43,20 @@
 		<!-- Dialog che compare in sovraimpressione per inserire i dati dell'amico -->
 		<p:dialog header="Condividi" widgetVar="condividiPacchetto" resizable="false">
 			<h:panelGroup>		
-   			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
-       				<h:outputLabel for="email" value="email:" />  
-         			<p:inputText id="email" binding="#{emailAmico}" />
-         			
-         			<h:outputLabel for="nome" value="Nome:" />  
-         			<p:inputText id="nome" binding="#{nomeAmico}" />
-         			
-         			<h:outputLabel for="cognome" value="Cognome:" />  
-         			<p:inputText id="cognome" binding="#{cognomeAmico}" />
-       			</h:panelGrid>  
- 
-       			<p:commandButton value="Condividi" action="#{pacchetto.condividiPacchetto(emailAmico.value,nomeAmico.value,cognomeAmico.value)}" oncomplete="PF('condividiPacchetto').hide();" />
+				<h:form>
+	   			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
+	       				<h:outputLabel for="email" value="email:" />  
+	         			<p:inputText id="email" binding="#{emailAmico}" />
+	         			
+	         			<h:outputLabel for="nome" value="Nome:" />  
+	         			<p:inputText id="nome" binding="#{nomeAmico}" />
+	         			
+	         			<h:outputLabel for="cognome" value="Cognome:" />  
+	         			<p:inputText id="cognome" binding="#{cognomeAmico}" />
+	       			</h:panelGrid>  
+	 
+	       			<p:commandButton value="Condividi" action="#{pacchetto.condividiPacchetto(emailAmico.value,nomeAmico.value,cognomeAmico.value)}" oncomplete="PF('condividiPacchetto').hide();" />
+      			</h:form>
       		</h:panelGroup>
 		</p:dialog>
 		
@@ -76,20 +80,24 @@
 				
 				<!-- Modifica della città di partenza -->
 				<h2 id="modificaCittaPartenza" style="display: none;">
-					<h:selectOneMenu binding="#{nuovaCittaPartenza}">
-						<f:selectItems value="#{citta.nomiCitta}" />
-					</h:selectOneMenu>			
-					<h:commandButton action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" value="salva" />
-					<h:commandButton value="annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" />
+					<h:form>
+						<h:selectOneMenu binding="#{nuovaCittaPartenza}">
+							<f:selectItems value="#{citta.nomiCitta}" />
+						</h:selectOneMenu>			
+						<h:commandButton action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" value="salva" />
+						<h:commandButton value="annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" />
+					</h:form>
 				</h2>
 				
 				<!-- Modifica della città di partenza di un pacchetto predefinito -->
 				<h2 id="modificaCittaPartenzaPred" style="display: none;">
-	                <h:selectOneMenu styleClass="menu-pred" binding="#{nuovaCittaPartenzaPred}">
-						<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
-					</h:selectOneMenu>
-					<h:commandButton action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" value="salva" />
-					<h:commandButton value="annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" />			
+					<h:form>
+		                <h:selectOneMenu styleClass="menu-pred" binding="#{nuovaCittaPartenzaPred}">
+							<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
+						</h:selectOneMenu>
+						<h:commandButton action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" value="salva" />
+						<h:commandButton value="annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" />			
+					</h:form>
 				</h2>				
 			</div>
 			<br></br>
@@ -101,9 +109,11 @@
 			
 			<!-- Modifica del numero di partecipanti -->
 			<h2 id="modificaNumeroPartecipanti" style="display: none;">
-				<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true" style="width: 150px;" />
-				<h:commandButton styleClass="flight-button" action="#{pacchetto.modificaNumeroPartecipanti()}" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="salva" />
-				<h:commandButton styleClass="flight-button" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="annulla" />				
+				<h:form>
+					<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true" style="width: 150px;" />
+					<h:commandButton styleClass="flight-button" action="#{pacchetto.modificaNumeroPartecipanti()}" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="salva" />
+					<h:commandButton styleClass="flight-button" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="annulla" />				
+				</h:form>
 			</h2>			
 		</div>
 		
@@ -118,27 +128,33 @@
 		<!-- Data di partenza -->
 		<p>Data di partenza</p>
 		<div id="dataArrivo" style="display: block;">
-			<p><h:outputText value="#{d.dataArrivo}">
-				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-			</h:outputText></p>
+			<p>
+				<h:outputText value="#{d.dataArrivo}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+			</p>
 			<h:commandButton value="modifica" onclick="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
 			<h:commandButton value="modifica" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" rendered="#{pacchetto.tipoPredefinito}" />
 		</div>
 		
 		<div id="modificaDataArrivo" style="display: none;">
-			<p:calendar value="#{d.dataArrivo}" locale="it" pattern="dd/MM/yyyy">
-           		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-           	</p:calendar>
-           	<h:commandButton value="salva" action="#{pacchetto.modificaDataArrivo(d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
-           	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
+			<h:form>
+				<p:calendar value="#{d.dataArrivo}" locale="it" pattern="dd/MM/yyyy">
+	           		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+	           	</p:calendar>
+	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataArrivo(d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
+	           	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
+           	</h:form>
 		</div>
 		
 		<div id="modificaDataArrivoPredefinito" style="display: none;">
-			<h:selectOneMenu binding="#{dataArrivoPred}">
-				<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="dataArrivo" itemLabel="#{data.getData(dataArrivo)}" itemValue="#{data.getData(dataArrivo)}" />			
-			</h:selectOneMenu>
-           	<h:commandButton value="salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
-           	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />									
+			<h:form>
+				<h:selectOneMenu binding="#{dataArrivoPred}">
+					<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="dataArrivo" itemLabel="#{data.getData(dataArrivo)}" itemValue="#{data.getData(dataArrivo)}" />			
+				</h:selectOneMenu>
+	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
+	           	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
+           	</h:form>							
 		</div>
 		
 					
@@ -210,7 +226,9 @@
 				<h2>#{d.citta.nome}</h2>
 			</div>
 			
-			<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchetto.eliminaDestinazione(d)}" disabled="#{not pacchetto.tipoPersonalizzato}"/>
+			<h:form>
+				<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchetto.eliminaDestinazione(d)}" disabled="#{not pacchetto.tipoPersonalizzato}"/>
+			</h:form>
 			
 			<!-- Informazioni sull'hotel -->
 			<div class="hotelPacc">
@@ -230,37 +248,45 @@
 		
 		<!-- Informazioni sulle escursioni -->
 		<div class="bloccoPaccEscursione">
-			<p><h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
-				<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-				<f:param name="idDestinazione" value="#{d.id}" />
-				<f:param name="regione" value="#{d.citta.regione}" />
-			</h:link></p>
+			<p>
+				<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
+					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+					<f:param name="idDestinazione" value="#{d.id}" />
+					<f:param name="regione" value="#{d.citta.regione}" />
+				</h:link>
+			</p>
 		</div>
 
 		<!-- Data di ritorno -->
 		<p>Data di ritorno</p>
 		<div id="dataPartenza" style="display: block;">
-			<p><h:outputText value="#{d.dataPartenza}">
-				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-			</h:outputText></p>
+			<p>
+				<h:outputText value="#{d.dataPartenza}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+			</p>
 			<h:commandButton value="modifica" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
 			<h:commandButton value="modifica" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" rendered="#{pacchetto.tipoPredefinito}" />					
 		</div>
 		
 		<div id="modificaDataPartenza" style="display: none;">
-			<p:calendar value="#{d.dataPartenza}" locale="it" pattern="dd/MM/yyyy">
-           		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-           	</p:calendar>
-           	<h:commandButton value="salva" action="#{pacchetto.modificaDataPartenza(d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
-           	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
+			<h:form>
+				<p:calendar value="#{d.dataPartenza}" locale="it" pattern="dd/MM/yyyy">
+	           		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+	           	</p:calendar>
+	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataPartenza(d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
+	           	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
+           	</h:form>
 		</div>
 		
 		<div id="modificaDurata" style="display: none;">
-               <h:selectOneMenu binding="#{durata}">
-				<f:selectItems value="#{pacchetto.predefinito.durate}" />
-			</h:selectOneMenu>					
-           	<h:commandButton value="salva" action="#{pacchetto.modificaDurata(durata.value,d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
-           	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />					
+			<h:form>
+				<h:selectOneMenu binding="#{durata}">
+					<f:selectItems value="#{pacchetto.predefinito.durate}" />
+				</h:selectOneMenu>					
+	           	<h:commandButton value="salva" action="#{pacchetto.modificaDurata(durata.value,d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
+	           	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
+           	</h:form>				
 		</div>
 
 		<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
@@ -313,12 +339,14 @@
 				
 				<!-- Blocco aggiunta volo -->
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
-                        <p><h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
-                        	<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-							<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
-							<f:param name="cittaPartenza" value="#{d.citta.nome}" />
-							<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
-						</h:link></p>
+                        <p>
+	                        <h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
+	                        	<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+								<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
+								<f:param name="cittaPartenza" value="#{d.citta.nome}" />
+								<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
+							</h:link>
+						</p>
                 </h:panelGroup>
 				
 			</div>
@@ -330,7 +358,7 @@
 		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 	</h:link></p>
 
-</h:form>	
+</h:panelGroup>	
 
 <script type="text/javascript">
 	function toggle(id) {
