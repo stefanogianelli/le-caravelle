@@ -94,6 +94,7 @@ public class CollegamentoBean {
 	 * @param tipo La tipologia del collegamento
 	 */
 	public void cercaCollegamenti (Date dataPartenza, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
+		System.out.println("data: " + dataPartenza + "\ncittà partenza: " + cittaPartenza + "\ncittaArrivo: " + cittaArrivo + "\ntipo: " + tipo.getLabel());
 		this.getElenco().clear();
 		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(dataPartenza, cittaPartenza, cittaArrivo, tipo));
 		if (this.getElenco().isEmpty())
