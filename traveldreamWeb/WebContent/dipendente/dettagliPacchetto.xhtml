@@ -71,11 +71,10 @@
 	
 	<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
 		<div class="bloccoPaccVolo">
-			<p>
-				<h:outputText value="#{c.dataPartenza}">
+			<p>Data di ritorno</p>
+			<p><h:outputText value="#{c.dataPartenza}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>		
-			</p>
+				</h:outputText></p>
 			<div class="volo">
 				<div class="etichette">
 				<ul>
