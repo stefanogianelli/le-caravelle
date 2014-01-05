@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -13,7 +14,8 @@ public class HotelDTO implements Serializable {
 
 	private int id;
 
-	@NotEmpty
+	@Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+            message="email non valida")
 	private String email;
 
 	@NotEmpty
@@ -24,8 +26,8 @@ public class HotelDTO implements Serializable {
 
 	private double prezzo;
 
-	@Min(1)
-	@Max(5)
+	@Min(value = 1, message = "Il numero di stelle deve essere maggiore o uguale a 1")
+	@Max(value = 5, message = "Il numero di stelle deve essere minore o uguale a 5")
 	private int stelle;
 
 	@NotEmpty
