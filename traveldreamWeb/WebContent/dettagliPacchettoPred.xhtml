@@ -67,7 +67,7 @@
 		</div>
 		
 		<div class="pulsanti">
-		<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+		<p><h:link value="Dettagli" styleClass="detail-button" outcome="/utente/dettagliHotel">
 			<f:param name="idPacchetto" value="#{id.value}" />
 			<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
 		</h:link></p>
@@ -94,7 +94,7 @@
 			</div>
 			
 			<div class="pulsantiVolo">
-			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+			<p><h:link value="Dettagli" styleClass="detail-button" outcome="/utente/dettagliCollegamento">
 				<f:param name="idPacchetto" value="#{id.value}" />
 				<f:param name="codiceCollegamento" value="#{c.codice}" />
 			</h:link></p>	
