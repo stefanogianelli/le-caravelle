@@ -583,7 +583,7 @@ select{
 }
 /*Dettagli pacchetto*/
 .bloccoPacc {
-	background-color: white;
+	background-color: #dcdcdc;
 	height: 300px;
 	width: 99%;
 	border-top:1px solid white;
