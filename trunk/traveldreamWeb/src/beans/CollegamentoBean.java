@@ -127,7 +127,11 @@ public class CollegamentoBean {
 	 */
 	public String creaCollegamento () {
 		try {
-			return "dettagliCollegamento?codiceCollegamento=" + collegamentoBean.creaCollegamento(this.getCollegamento()) + "&faces-redirect=true";
+			//controllo che la città di partenza e di arrivo non siano uguali
+			if (!this.getCollegamento().getCittaPartenza().equals(this.getCollegamento().getCittaArrivo()))
+				return "dettagliCollegamento?codiceCollegamento=" + collegamentoBean.creaCollegamento(this.getCollegamento()) + "&faces-redirect=true";
+			else
+				JsfUtil.errorMessage("La città di partenza e di arrivo devono essere diverse");
 		} catch (EntityExistsException e) {
 			JsfUtil.errorMessage("Il collegamento è già presente nel database!");
 		} catch (CittaInesistenteException e) {
