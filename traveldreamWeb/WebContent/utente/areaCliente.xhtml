@@ -13,14 +13,14 @@
 
 <f:event listener="#{pacchetto.initMappa()}" type="preRenderView" />
 
-<div class="bloccoBianco">
+<div class="bloccoBiancoArea">
 	<h1>I miei viaggi</h1>
 	<p:gmap center="46.1405286,16.7350414" zoom="4" type="HYBRID"   
-	        style="width: 90%;height: 380px; margin-left: 5%;"  
+	        style="width: 70%;height: 338px; margin-left: 150px;"  
 	        model="#{pacchetto.simpleModel}" />
 </div>
 
-<div class="blocco">
+<div class="bloccoArea">
 	<h1><a href="mieiPacchetti.xhtml">I miei pacchetti</a></h1>
 	<ui:repeat var="p" value="#{pacchetto.elencoTreMieiPacchetti()}">
 		<div class="pacchetto">
@@ -33,7 +33,7 @@
 	</ui:repeat>
 </div>
 
-<div class="bloccoBianco">
+<div class="bloccoBiancoArea">
 	<h1><a href="pacchettiCondivisi.xhtml">Pacchetti condivisi</a></h1>
 	<ui:repeat var="p" value="#{pacchetto.elencoTrePacchettiCondivisi()}">
 		<div class="pacchetto">
@@ -46,7 +46,7 @@
 	</ui:repeat>
 </div>
 
-<div class="blocco">
+<div class="bloccoArea">
 	<h1><a href="mieiRicordi.xhtml">I miei ricordi</a></h1>
 	<ui:repeat var="p" value="#{pacchetto.elencoTrePacchettiAcquistati()}">
 		<div class="pacchetto">
