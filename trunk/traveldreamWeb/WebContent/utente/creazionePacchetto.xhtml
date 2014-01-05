@@ -11,7 +11,7 @@
 
 <ui:define name="content">
 
-<p:messages showDetail="true" autoUpdate="true" />
+<p:messages showDetail="false" autoUpdate="true" />
 
 <h:form>
 	<div class="blocco">
@@ -27,12 +27,12 @@
 		<h3>Seleziona le date</h3>
 		<div class="data">
 			<h3>Data di partenza</h3>
-			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataArrivo}" locale="it" required="true" /> 
+			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataArrivo}" locale="it" required="true" requiredMessage="Inserire una data di partenza" /> 
 		</div>
 		
 		<div class="data">
 			<h3>Data di ritorno</h3>
-			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataPartenza}" locale="it" required="true" />
+			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataPartenza}" locale="it" required="true" requiredMessage="Inserire una data di ritorno" />
 		</div>
 	</div>
 	<div class="blocco">
@@ -45,7 +45,9 @@
 		
         <div class="data">
 	        <h3>Seleziona il numero di partecipanti</h3>
-			<h:inputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" />
+			<h:inputText styleClass="text-input" value="#{pacchetto.pacchetto.numPartecipanti}" 
+				required="true" requiredMessage="Inserire un numero di partecipanti" 
+				converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />
 		</div>
 		
 		<div class="bloccoButton">

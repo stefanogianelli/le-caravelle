@@ -16,7 +16,7 @@ public class PacchettoDTO implements Serializable {
 
 	private String nome;
 
-	@Min(1)
+	@Min(value = 1, message="Il numero dei partecipanti deve essere maggiore o uguale a 1")
 	private int numPartecipanti;
 
 	private double prezzo;
