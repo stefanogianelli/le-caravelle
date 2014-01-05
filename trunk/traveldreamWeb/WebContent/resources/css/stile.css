@@ -714,5 +714,21 @@ select{
 	height:40px;
 	width:40px;
 	background: url('matita.jpg.xhtml?ln=images');
+	background-size: 40px 35px;
 	margin-left:20px;
+}
+/*Area cliente*/
+.bloccoArea {
+	background-color: #dcdcdc;
+	height: 485px;
+	width: 100%;
+	border-top:1px solid #dcdcdc;
+	border-bottom:5px solid white;
+}
+
+.bloccoBiancoArea {
+	background-color: white;
+	height: 485px;
+	width: 100%;
+	border-bottom:5px solid white;
 }
