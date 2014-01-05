@@ -139,12 +139,19 @@ public class Collegamenti implements Serializable, Comparable<Collegamenti> {
 
 	@Override
 	public int compareTo(Collegamenti c) {
-		if (this.getDataPartenza().before(c.getDataPartenza()))
+		if (this.getDataPartenza().before(c.getDataPartenza())) {
 			return -1;
-		else if (this.getDataPartenza().compareTo(c.getDataPartenza()) == 0)
-			return 0;
-		else
+		} else if (this.getDataPartenza().compareTo(c.getDataPartenza()) == 0) {
+			if (this.getOraPartenza().before(c.getOraPartenza())) {
+				return -1;
+			} else if (this.getOraPartenza().compareTo(c.getOraPartenza()) == 0) {
+				return 0;
+			} else {
+				return 1;
+			}
+		} else {
 			return 1;
+		}
 	}
 
 }
