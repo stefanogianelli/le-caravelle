@@ -110,7 +110,9 @@
 			<!-- Modifica del numero di partecipanti -->
 			<h2 id="modificaNumeroPartecipanti" style="display: none;">
 				<h:form>
-					<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" required="true" style="width: 150px;" />
+					<p:inputText value="#{pacchetto.pacchetto.numPartecipanti}" style="width: 150px;"
+						required="true" requiredMessage="Inserire un numero di partecipanti" 
+						converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />
 					<h:commandButton styleClass="flight-button" action="#{pacchetto.modificaNumeroPartecipanti()}" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="salva" />
 					<h:commandButton styleClass="flight-button" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="annulla" />				
 				</h:form>
@@ -139,8 +141,10 @@
 		
 		<div id="modificaDataArrivo" style="display: none;">
 			<h:form>
-				<p:calendar value="#{d.dataArrivo}" locale="it" pattern="dd/MM/yyyy">
-	           		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				<p:calendar value="#{d.dataArrivo}" locale="it" pattern="dd/MM/yyyy"
+					required="true" requiredMessage="Inserire una data di partenza"
+					converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)">
+	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
 	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataArrivo(d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
 	           	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
@@ -271,8 +275,10 @@
 		
 		<div id="modificaDataPartenza" style="display: none;">
 			<h:form>
-				<p:calendar value="#{d.dataPartenza}" locale="it" pattern="dd/MM/yyyy">
-	           		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				<p:calendar value="#{d.dataPartenza}" locale="it" pattern="dd/MM/yyyy"
+					required="true" requiredMessage="Inserire una data di partenza"
+					converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)">
+	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
 	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataPartenza(d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
 	           	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
