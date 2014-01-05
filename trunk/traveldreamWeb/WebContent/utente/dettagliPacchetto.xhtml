@@ -23,7 +23,7 @@
 	<!-- Nome del pacchetto -->
 	<h1 id="nomePacchetto" style="display: block;">
 		#{pacchetto.pacchetto.nome}
-		<h:commandButton value="modifica" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" />
+		<h:commandButton styleClass="matita" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" />
 	</h1>
 		
 	<!-- Modifica nome del pacchetto -->
@@ -115,7 +115,7 @@
 		</h:panelGroup>
 	</div>	
 
-	<ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}">
+<ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}">
 	
 		<!-- Data di arrivo -->
 		<p>Data di arrivo</p>
@@ -141,6 +141,7 @@
             	<h:commandButton value="salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
             	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />									
 			</div>
+		</div>
 					
 		<!-- Collegamento di andata -->
 		<div class="bloccoPaccVolo">
@@ -325,7 +326,7 @@
 				
 			</div>
 		</h:panelGroup>		
-	</ui:repeat>
+</ui:repeat>
 		
 	<!-- Aggiunta destinazione -->
 	<p><h:link value="Aggiungi destinazione" outcome="aggiuntaDestinazione" disabled="#{not pacchetto.tipoPersonalizzato}">
