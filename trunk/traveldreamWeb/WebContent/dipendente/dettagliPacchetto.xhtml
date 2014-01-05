@@ -76,25 +76,24 @@
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText></p>
 			<div class="volo">
+
+				<div class="pulsantiVolo">
+				<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+					<f:param name="idPacchetto" value="#{id.value}" />
+					<f:param name="codiceCollegamento" value="#{c.codice}" />
+				</h:link></p>
+				<p><h:commandLink value="Elimina" action="#{pacchettoPredefinito.rimuoviCollegamento(c)}" styleClass="detail-button" />
+				</p></div>
+				
 				<div class="etichette">
 				<ul>
 					<li>Da</li>
 					<li>A</li>
 					<li>Partenza</li>
 					<li>Arrivo</li>
-					<li>Scali</li>
 					<li>Prezzo</li>
 				</ul>
 				</div>
-				
-				<div class="pulsantiVolo">
-				<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
-					<f:param name="idPacchetto" value="#{id.value}" />
-					<f:param name="codiceCollegamento" value="#{c.codice}" />
-				</h:link></p>
-				
-				<p><h:commandLink value="Elimina" action="#{pacchettoPredefinito.rimuoviCollegamento(c)}" styleClass="detail-button" />			
-				</p></div>
 				
 				<div class="dati">
 					<ul>
@@ -110,7 +109,6 @@
 								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 							</h:outputText>						
 						</li>
-						<li>0</li>
 						<li>#{c.prezzo} €</li>
 					</ul>
 				</div>

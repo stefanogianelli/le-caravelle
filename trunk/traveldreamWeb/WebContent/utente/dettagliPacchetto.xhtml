@@ -126,7 +126,11 @@
 	</div>	
 
 <ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}">
-	
+		
+					
+		<!-- Collegamento di andata -->
+		<div class="bloccoPaccVolo">
+
 		<!-- Data di partenza -->
 		<p>Data di partenza</p>
 		<div id="dataArrivo" style="display: block;">
@@ -160,35 +164,35 @@
 	           	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
            	</h:form>							
 		</div>
-		
-					
-		<!-- Collegamento di andata -->
-		<div class="bloccoPaccVolo">
+
 			<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).dataPartenza}" rendered="#{pacchetto.esisteCollegamento(d.dataArrivo)}">
 				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 			</h:outputText>
-			<div class="volo">	
+			<div class="volo">
+			
+				<div class="pulsantiVolo">
+				<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento" disabled="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
+					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+					<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataArrivo).codice}" />
+				</h:link></p>
+				<p><h:link value="Modifica" styleClass="detail-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataArrivo))}">
+					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+					<f:param name="dataPartenza" value="#{data.getData(d.dataArrivo)}" />
+					<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
+					<f:param name="cittaArrivo" value="#{d.citta.nome}" />			
+				</h:link></p>
+				</div>
+			
 				<div class="etichette">
 					<ul>
 						<li>Da</li>
 						<li>A</li>
 						<li>Partenza</li>
 						<li>Arrivo</li>
-						<li>Scali</li>
 						<li>Prezzo</li>
 					</ul>
 				</div>
-				
-				<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento" disabled="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
-					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-					<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataArrivo).codice}" />
-				</h:link>
-				<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataArrivo))}">
-					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-					<f:param name="dataPartenza" value="#{data.getData(d.dataArrivo)}" />
-					<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
-					<f:param name="cittaArrivo" value="#{d.citta.nome}" />			
-				</h:link>
+			
 				
 				<!-- Blocco dettagli volo -->
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.esisteCollegamento(d.dataArrivo)}">
@@ -205,7 +209,6 @@
 								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 							</h:outputText>
 						</li>
-						<li>0</li>
 						<li>#{pacchetto.getCollegamento(d.dataArrivo).prezzo} €</li>
 					</ul>
 				</h:panelGroup>
@@ -242,11 +245,13 @@
 					<p>#{d.hotel.indirizzo}</p>
 					<p>#{d.hotel.telefono}</p>
 				</div>
-				<h:link value="Modifica" styleClass="flight-button" disabled="#{not pacchetto.tipoPersonalizzato}"/>
-				<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliHotel">
+				<div class="pulsanti">
+				<p><h:link value="Modifica" styleClass="detail-button" disabled="#{not pacchetto.tipoPersonalizzato}"/></p>
+				<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
 					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 					<f:param name="idHotel" value="#{d.hotel.id}" />
-				</h:link>
+				</h:link></p>
+				</div>
 			</div>
 		</div>
 		
@@ -261,7 +266,10 @@
 			</p>
 		</div>
 
-		<!-- Data di ritorno -->
+		<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
+		<div class="bloccoPaccVolo">
+	
+			<!-- Data di ritorno -->
 		<p>Data di ritorno</p>
 		<div id="dataPartenza" style="display: block;">
 			<p>
@@ -294,34 +302,35 @@
 	           	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
            	</h:form>				
 		</div>
-
-		<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
-		<h:panelGroup styleClass="bloccoPaccVolo" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d)}">
+		
+		<h:panelGroup layout="block" rendered="#{pacchetto.isUltimaDestinazione(d)}">
 			<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).dataPartenza}" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 			</h:outputText>
 			<div class="volo">
+
+				<div class="pulsantiVolo">
+				<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento" disabled="#{not pacchetto.esisteCollegamento(d.dataPartenza)}">
+					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+					<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataPartenza).codice}" />
+				</h:link></p>
+				<p><h:link value="Modifica" styleClass="detail-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataPartenza))}">
+					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+					<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
+					<f:param name="cittaPartenza" value="#{d.citta.nome}" />
+					<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
+				</h:link></p>
+				</div>
+
 				<div class="etichette">
 				<ul>
 					<li>Da</li>
 					<li>A</li>
 					<li>Partenza</li>
 					<li>Arrivo</li>
-					<li>Scali</li>
 					<li>Prezzo</li>
 				</ul>
 				</div>
-				
-				<h:link value="Dettagli" styleClass="flight-button" outcome="dettagliCollegamento" disabled="#{not pacchetto.esisteCollegamento(d.dataPartenza)}">
-					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-					<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataPartenza).codice}" />
-				</h:link>
-				<h:link value="Modifica" styleClass="flight-button" outcome="aggiuntaCollegamento" disabled="#{not ((pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito) and pacchetto.esisteCollegamento(d.dataPartenza))}">
-					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-					<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
-					<f:param name="cittaPartenza" value="#{d.citta.nome}" />
-					<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
-				</h:link>
 				
 				<!-- Informazioni sul collegamento -->
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
@@ -338,7 +347,6 @@
 								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 							</h:outputText>
 						</li>
-						<li>0</li>
 						<li>#{pacchetto.getCollegamento(d.dataPartenza).prezzo} €</li>
 					</ul>
 				</h:panelGroup>
@@ -356,7 +364,8 @@
                 </h:panelGroup>
 				
 			</div>
-		</h:panelGroup>		
+		</h:panelGroup>
+	</div>	
 </ui:repeat>
 		
 	<!-- Aggiunta destinazione -->
