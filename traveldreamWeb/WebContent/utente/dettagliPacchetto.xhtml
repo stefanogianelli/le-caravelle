@@ -171,12 +171,16 @@
 		
 		<h:panelGroup id="modificaDataArrivoPredefinito" style="display: none;" layout="block">
 			<h:form>
-				<h:selectOneMenu binding="#{dataArrivoPred}">
+				<h:selectOneMenu styleClass="editData" binding="#{dataArrivoPred}">
 					<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="dataArrivo" itemLabel="#{data.getData(dataArrivo)}" itemValue="#{data.getData(dataArrivo)}" />			
 				</h:selectOneMenu>
+<<<<<<< .mine
+	           	<h:commandButton styleClass="data-button" value="Salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;" />
+=======
 	           	<h:commandButton styleClass="edit-button" value="Salva" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;">
 	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivoPredefinito :destinazioni:dataPartenza :destinazioni:pannelloVoloAndata" />
 	           	</h:commandButton>
+>>>>>>> .r303
 	           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;" />
            	</h:form>							
 		</h:panelGroup>
@@ -314,6 +318,21 @@
 	           	</h:form>
 			</h:panelGroup>
 	
+<<<<<<< .mine
+		<div id="modificaDurata" style="display: none;">
+			<h:form>
+				<h:selectOneMenu styleClass="editData" binding="#{durata}">
+					<f:selectItems value="#{pacchetto.predefinito.durate}" />
+				</h:selectOneMenu>					
+	           	<h:commandButton styleClass="data-button" value="Salva" action="#{pacchetto.modificaDurata(durata.value,d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
+	           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
+           	</h:form>				
+		</div>		
+		
+		<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).dataPartenza}" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+		</h:outputText>
+=======
 			<h:panelGroup id="modificaDurata" style="display: none;" layout="block">
 				<h:form>
 					<h:selectOneMenu binding="#{durata}">
@@ -325,6 +344,7 @@
 		           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDurata'); return false;" />
 	           	</h:form>				
 			</h:panelGroup>
+>>>>>>> .r303
 			
 			<h:panelGroup id="pannelloVoloRitorno" styleClass="volo" layout="block">
 	

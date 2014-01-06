@@ -11,7 +11,7 @@ INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Johannesburg', 'Gu
 INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Istanbul', 'Marmara', 'Turchia', 41.016667, 28.966667);
 INSERT INTO citta (nome, regione, nazione, lat, lon) VALUES ('Parigi', 'Île-de-France', 'Francia', 48.856667, 2.351944);
 
-INSERT INTO immagini_citta (idCitta, immagine) VALUES (1, 'milano1.jpg');
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (1, 'milano1.JPG');
 INSERT INTO immagini_citta (idCitta, immagine) VALUES (1, 'milano2.jpg');
 INSERT INTO immagini_citta (idCitta, immagine) VALUES (1, 'milano3.jpg');
 INSERT INTO immagini_citta (idCitta, immagine) VALUES (2, 'roma1.jpg');
@@ -41,7 +41,7 @@ INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, ci
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel Fenice', 3, 'Corso Buenos Aires 2', '+39 02 29525541', 'http://www.hotelfenice.it/it/', 'info@hotelfenice.it', 97.65, 1, 'fenice.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel Michelangelo', 4, 'Piazza Luigi di Savoia 6', '+39 0267551', 'http://www.michelangelohotelmilan.com/italiano/', 'michelangelo@milanhotel.it', 123.25, 1, 'michelangelo.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel Hilton', 5, 'Via Alberto Cadlolo 101', '+39 06 3509 1', 'http://www.romecavalieri.it/', 'info@romecavalieri.it', 200.0, 2, 'hiltonRoma.jpg');
-INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Welcome Piram Hotel', 4, 'Via Giovanni Amendola 7', '+39 06 48901248', 'http://www.welcomepiramhotel.com/it/', 'info@welcomepiramhotel.com', 79.0, 2, 'welcomePiramHotel.jpg');
+INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Piram Hotel', 4, 'Via Giovanni Amendola 7', '+39 06 48901248', 'http://www.welcomepiramhotel.com/it/', 'info@welcomepiramhotel.com', 79.0, 2, 'welcomePiramHotel.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel Sonya', 3, 'Via Del Viminale 58', '+39 06 4819911', 'http://www.hotelsonya.it/it/', 'info@hotelsonya.it', 84.0, 2, 'hotelSonya.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel Reina', 3, 'La Rambla 40', '+39 93 317-36-24', 'http://www.hotelreina.es/', 'info@hotelreina.es', 78.0, 4, 'hotelReina.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel Turin', 3, 'Pintor Fortuny 9', '+34 933024812', 'http://www.hotelturin.com/it/', 'reservas@hotelturin.com', 99.75, 4, 'hotelTurin.jpg');
@@ -56,10 +56,10 @@ INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, ci
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Hotel Alhambra', 2, '13 Rue De Malte', '+33 01 47 00 35 52', 'http://www.hotelalhambra.fr/', 'info@hotelalhambra.fr', 183.0, 12, 'alhambra.jpg');
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine) VALUES ('Novotel Tour Eiffel', 4, '61 Quai De Grenelle', '+33 1 40582000', 'http://www.novotel.com/it/hotel-3546-novotel-paris-tour-eiffel/index.shtml', 'H3546-RE4@accor.com', 215.0, 12, 'novotel.jpg');
 
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Malpensa', '2014-03-01', '22:20:00', '12:05:00', 50, 1, 3);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Malpensa', '2014-03-01', '16:00:00', '06:30:00', 50, 1, 3);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Malpensa', '2014-03-01', '22:20:00', '12:05:00', 550, 1, 3);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Malpensa', '2014-03-01', '16:00:00', '02:45:00', 480, 1, 3);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Linate', 'Fiumicino', '2014-03-08', '06:55:00', '08:10:00', 50, 2, 1);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Fiumicino', 'JFK', '2014-03-15', '11:50:00', '18:05:00', 50, 3, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Fiumicino', 'JFK', '2014-03-15', '11:50:00', '22:35:00', 650, 3, 2);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'El Prat', 'Malpensa', '2014-03-04', '20:50:00', '21:40:00', 50, 1, 4);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'El Prat', '2014-03-01', '14:40:00', '16:15:00', 50, 4, 1);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'El Prat', '2014-03-01', '09:35:00', '11:05:00', 35, 4, 1);
@@ -94,8 +94,30 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Fiumicino', 'Beauvais', '2014-03-01', '10:15:00', '11:35:00', 30, 12, 2);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Orly', 'Fiumicino', '2014-03-04', '18:25:00', '19:45:00', 70, 2, 12);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Orly', 'Fiumicino', '2014-03-04', '19:30:00', '20:50:00', 90, 2, 12);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Ciampino', 'Orio al Serio', '2014-03-04', '20:00:00', '21:20:00', 34, 2, 12);
-
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Beauvais', 'Ciampino', '2014-03-04', '20:00:00', '21:20:00', 34, 2, 12);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'JFK', '2014-03-08', '08:05:00', '18:50:00', 450, 3, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Linate', 'JFK', '2014-03-08', '12:50:00', '23:35:00', 500, 3, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'JFK', '2014-03-15', '08:05:00', '18:50:00', 450, 3, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Linate', 'JFK', '2014-03-15', '12:50:00', '23:35:00', 500, 3, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Fiumicino', 'JFK', '2014-03-08', '08:05:00', '18:50:00', 450, 3, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Ciampino', 'JFK', '2014-03-08', '12:50:00', '23:35:00', 500, 3, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Fiumicino', 'JFK', '2014-03-15', '08:05:00', '18:50:00', 450, 3, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'JFK', '2014-03-08', '07:00:00', '20:15:00', 295, 3, 5);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'JFK', '2014-03-08', '09:00:00', '22:15:00', 295, 3, 5);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'JFK', '2014-03-15', '09:00:00', '22:15:00', 295, 3, 5);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Fiumicino', 'JFK', '2014-03-01', '08:05:00', '18:50:00', 450, 3, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Ciampino', 'JFK', '2014-03-01', '12:50:00', '23:35:00', 500, 3, 2);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Linate', 'JFK', '2014-03-01', '12:50:00', '23:35:00', 500, 3, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'JFK', '2014-03-01', '08:05:00', '18:50:00', 450, 3, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Malpensa', '2014-03-08', '22:20:00', '12:05:00', 550, 1, 3);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Malpensa', '2014-03-15', '16:00:00', '02:45:00', 480, 1, 3);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Fiumicino', '2014-03-08', '22:20:00', '12:05:00', 550, 2, 3);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Ciampino', '2014-03-15', '16:00:00', '02:45:00', 480, 2, 3);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'Jose Marti', '2014-03-01', '08:00:00', '21:15:00', 620, 5, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Malpensa', 'Jose Marti', '2014-03-01', '12:00:00', '02:15:00', 780, 5, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'Malpensa', '2014-03-08', '07:00:00', '20:15:00', 595, 1, 5);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'Linate', '2014-03-08', '09:00:00', '22:15:00', 605, 1, 5);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'Malpensa', '2014-03-15', '09:00:00', '22:15:00', 795, 1, 5);
 
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castello Sforzesco', '2014-03-02', '10:00:00','3', 'CULTURA', 15, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Navigli', '2014-03-02', '17:00:00','5', 'RELAX', 8, 1);
