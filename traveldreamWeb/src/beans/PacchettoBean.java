@@ -15,7 +15,7 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
-import utils.DataBean;
+import utils.DataUtils;
 import utils.JsfUtil;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
@@ -116,7 +116,7 @@ public class PacchettoBean {
 		simpleModel = new DefaultMapModel();
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
 		for (PacchettoDTO p : pacchetti) {
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataBean.getDataOdierna())) {
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataUtils.getDataOdierna())) {
 				for (DestinazioneDTO d : p.getDestinazioni()) {
 					simpleModel.addOverlay(new Marker(new LatLng(d.getCitta().getLatitudine(), d.getCitta().getLongitudine()), d.getCitta().getNome()));
 				}
@@ -196,7 +196,7 @@ public class PacchettoBean {
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataBean.getDataOdierna()))
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataUtils.getDataOdierna()))
 				itr.remove();
 		}
 		pacchetti.addAll(pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PREDEFINITO));
@@ -242,7 +242,7 @@ public class PacchettoBean {
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(DataBean.getDataOdierna()))
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(DataUtils.getDataOdierna()))
 				itr.remove();
 		}
 		return pacchetti;
@@ -258,7 +258,7 @@ public class PacchettoBean {
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(DataBean.getDataOdierna()))
+			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(DataUtils.getDataOdierna()))
 				itr.remove();
 		}
 		return pacchetti;
@@ -390,8 +390,8 @@ public class PacchettoBean {
 			this.getPacchetto().setPacchettoPredefinito(pred);
 			this.getPacchetto().setPrezzo(pred.getPrezzo());
 			this.getPacchetto().setCitta(cittaBean.cercaCitta(cittaPartenza));
-			this.getDestinazione().setDataArrivo(DataBean.parseData(dataArrivo));
-			this.getDestinazione().setDataPartenza(DataBean.sommaGiorni(this.getDestinazione().getDataArrivo(), durata));
+			this.getDestinazione().setDataArrivo(DataUtils.parseData(dataArrivo));
+			this.getDestinazione().setDataPartenza(DataUtils.sommaGiorni(this.getDestinazione().getDataArrivo(), durata));
 			this.getDestinazione().setHotel(pred.getHotel());
 			this.getDestinazione().setCitta(this.getDestinazione().getHotel().getCitta());
 			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
@@ -414,7 +414,7 @@ public class PacchettoBean {
 	 * @param destinazione La destinazione che si vuole modificare
 	 */
 	public void modificaDurata (int durata, DestinazioneDTO destinazione) {
-		destinazione.setDataPartenza(DataBean.sommaGiorni(destinazione.getDataArrivo(), durata));	
+		destinazione.setDataPartenza(DataUtils.sommaGiorni(destinazione.getDataArrivo(), durata));	
 		try {
 			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
 			JsfUtil.infoMessage("Durata modificata!");
@@ -434,8 +434,8 @@ public class PacchettoBean {
 		try {
 			//calcolo durata corrente
 			int durata = (int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24));	
-			destinazione.setDataArrivo(DataBean.parseData(dataArrivo));
-			destinazione.setDataPartenza(DataBean.sommaGiorni(destinazione.getDataArrivo(), durata));
+			destinazione.setDataArrivo(DataUtils.parseData(dataArrivo));
+			destinazione.setDataPartenza(DataUtils.sommaGiorni(destinazione.getDataArrivo(), durata));
 			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
 			JsfUtil.infoMessage("Data modificata!");
 		} catch (PacchettoInesistenteException e) {
