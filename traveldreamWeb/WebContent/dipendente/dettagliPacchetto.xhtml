@@ -25,9 +25,9 @@
 	</h1>
 	
 	<h1 id="modificaNome" style="display: none;">
-		<h:inputText value="#{pacchettoPredefinito.pacchetto.nome}" required="true" />
-		<h:commandButton value="salva" action="#{pacchettoPredefinito.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
-		<h:commandButton value="annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		<h:inputText styleClass="editName" value="#{pacchettoPredefinito.pacchetto.nome}" required="true" />
+		<h:commandButton styleClass="edit-button" value="Salva" action="#{pacchettoPredefinito.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
 	</h1> 
 	
 	<div class="bloccoPacc">
@@ -71,7 +71,7 @@
 	
 	<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
 		<div class="bloccoPaccVolo">
-			<p>Data di ritorno</p>
+			<p>Data</p>
 			<p><h:outputText value="#{c.dataPartenza}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText></p>
