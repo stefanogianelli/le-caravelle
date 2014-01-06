@@ -7,6 +7,7 @@ import interfaces.GestoreHotelLocal;
 import interfaces.GestorePacchettoLocal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -63,12 +64,26 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	}
 
     @Override
-	public void modificaDateDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException {
-		Destinazioni entity = em.find(Destinazioni.class, destinazione.getId());
+	public Date modificaDataArrivo(DestinazioneDTO destinazione) throws DestinazioneInesistenteException {
+		Destinazioni entity = this.convertiInEntita(destinazione);
+		
+		Date vecchiaData = entity.getDataArrivo();
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
-		entity.setDataPartenza(destinazione.getDataPartenza());
+		
+		return vecchiaData;
 	}
+    
+    @Override
+    public Date modificaDataPartenza (DestinazioneDTO destinazione) throws DestinazioneInesistenteException {
+    	Destinazioni entity = this.convertiInEntita(destinazione);
+    	
+    	Date vecchiaData = entity.getDataPartenza();
+    	
+    	entity.setDataPartenza(destinazione.getDataPartenza());
+    	
+    	return vecchiaData;
+    }
     
     @Override
     public void modificaHotel (int idDestinazione, HotelDTO hotel) throws HotelInesistenteException, DestinazioneInesistenteException, InsertException {

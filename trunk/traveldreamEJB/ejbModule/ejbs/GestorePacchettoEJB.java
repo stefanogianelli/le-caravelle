@@ -311,13 +311,28 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
-	public void modificaDateDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException {
+	public void modificaDataArrivo (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, DestinazioneInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
-		this.destinazione.modificaDateDestinazione(destinazione);
+		Date vecchiaData = this.destinazione.modificaDataArrivo(destinazione);
 		
 		//rimuovo i collegamenti non più coerenti
-		this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataArrivo());
+		this.rimuoviCollegamenti(entity, vecchiaData, vecchiaData);
+		
+		//aggiorno il prezzo del pacchetto
+		entity.setPrezzo(this.calcolaPrezzo(entity));
+		
+		em.merge(entity);		
+	}	
+	
+	@Override
+	public void modificaDataPartenza (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, DestinazioneInesistenteException {
+		Pacchetti entity = this.convertiInEntita(pacchetto);
+		
+		Date vecchiaData = this.destinazione.modificaDataPartenza(destinazione);
+		
+		//rimuovo i collegamenti non più coerenti
+		this.rimuoviCollegamenti(entity, vecchiaData, vecchiaData);
 		
 		//aggiorno il prezzo del pacchetto
 		entity.setPrezzo(this.calcolaPrezzo(entity));
@@ -414,7 +429,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			c = itr.next();
 			if (c.getDataPartenza().equals(dataArrivo)) 
 				andata = c;
-			if (c.getDataPartenza().equals(dataPartenza))
+			if (dataArrivo.compareTo(dataPartenza) != 0 && c.getDataPartenza().equals(dataPartenza))
 				ritorno = c;
 		}		
 

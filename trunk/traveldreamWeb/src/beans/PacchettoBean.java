@@ -416,12 +416,12 @@ public class PacchettoBean {
 	public void modificaDurata (int durata, DestinazioneDTO destinazione) {
 		destinazione.setDataPartenza(DataUtils.sommaGiorni(destinazione.getDataArrivo(), durata));	
 		try {
-			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+			pacchettoBean.modificaDataPartenza(getPacchetto(), destinazione);
 			JsfUtil.infoMessage("Durata modificata!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
-		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città inesistente!");
+		} catch (DestinazioneInesistenteException e) {
+			JsfUtil.errorMessage("Destinazione inesistente!");
 		}	
 	}
 	
@@ -436,12 +436,13 @@ public class PacchettoBean {
 			int durata = (int)( (destinazione.getDataPartenza().getTime() - destinazione.getDataArrivo().getTime()) / (1000 * 60 * 60 * 24));	
 			destinazione.setDataArrivo(DataUtils.parseData(dataArrivo));
 			destinazione.setDataPartenza(DataUtils.sommaGiorni(destinazione.getDataArrivo(), durata));
-			pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+			pacchettoBean.modificaDataArrivo(getPacchetto(), destinazione);
+			pacchettoBean.modificaDataPartenza(getPacchetto(), destinazione);
 			JsfUtil.infoMessage("Data modificata!");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
-		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città inesistente!");
+		} catch (DestinazioneInesistenteException e) {
+			JsfUtil.errorMessage("Destinazione inesistente!");
 		}
 	}
 	
@@ -578,7 +579,7 @@ public class PacchettoBean {
 			if (this.isPrimaDestinazione(destinazione)) {
 				//se è la prima allora controllo che la data di arrivo sia antecedente la data di partenza
 				if (destinazione.getDataArrivo().before(destinazione.getDataPartenza())) {
-					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+					pacchettoBean.modificaDataArrivo(getPacchetto(), destinazione);
 					JsfUtil.infoMessage(success);
 				} else
 					JsfUtil.errorMessage("La data di arrivo deve precedere la data di partenza!");
@@ -588,16 +589,16 @@ public class PacchettoBean {
 				if (destinazione.getDataArrivo().after(precedente.getDataArrivo())) {
 					//modifico anche la data di partenza della destinazione precedente
 					precedente.setDataPartenza(destinazione.getDataArrivo());
-					pacchettoBean.modificaDateDestinazione(getPacchetto(), precedente);
-					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+					pacchettoBean.modificaDataPartenza(getPacchetto(), precedente);
+					pacchettoBean.modificaDataArrivo(getPacchetto(), destinazione);
 					JsfUtil.infoMessage(success);
 				} else
 					JsfUtil.errorMessage("La data scelta è in conflitto con la destinazione precedente!");
 			}
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
-		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta!");
+		} catch (DestinazioneInesistenteException e) {
+			JsfUtil.errorMessage("Destinazione inesistente!");
 		}
 	}
 	
@@ -612,7 +613,7 @@ public class PacchettoBean {
 			if(this.isUltimaDestinazione(destinazione)) {
 				//se è l'ultima verifico che la data di partenza sia successiva alla data di arrivo
 				if (destinazione.getDataPartenza().after(destinazione.getDataArrivo())) {
-					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+					pacchettoBean.modificaDataPartenza(getPacchetto(), destinazione);
 					JsfUtil.infoMessage(success);
 				} else
 					JsfUtil.errorMessage("La data di partenza deve essere successiva alla data di arrivo nella destinazione!");
@@ -622,16 +623,16 @@ public class PacchettoBean {
 				if (destinazione.getDataPartenza().before(successiva.getDataPartenza())) {
 					//modifico anche la data di arrivo nella destinazione successiva
 					successiva.setDataArrivo(destinazione.getDataPartenza());
-					pacchettoBean.modificaDateDestinazione(getPacchetto(), successiva);
-					pacchettoBean.modificaDateDestinazione(getPacchetto(), destinazione);
+					pacchettoBean.modificaDataArrivo(getPacchetto(), successiva);
+					pacchettoBean.modificaDataPartenza(getPacchetto(), destinazione);
 					JsfUtil.infoMessage(success);
 				} else
 					JsfUtil.errorMessage("La data scelta è in conflitto con la destinazione successiva!");
 			}
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente!");
-		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta!");
+		} catch (DestinazioneInesistenteException e) {
+			JsfUtil.errorMessage("Destinazione inesistente!");
 		}	
 	}
 	

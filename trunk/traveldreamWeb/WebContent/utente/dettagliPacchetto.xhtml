@@ -89,7 +89,7 @@
 							<f:selectItems value="#{citta.nomiCitta}" />
 						</h:selectOneMenu>			
 						<h:commandButton styleClass="city-button" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" value="Salva">
-							<f:ajax execute="@form" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" render=":pannelloCitta :prezzoPacchetto" />
+							<f:ajax execute="@form" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" render=":pannelloCitta :prezzoPacchetto :destinazioni:pannelloVoloAndata :destinazioni:pannelloVoloRitorno" />
 						</h:commandButton>
 						<h:commandButton styleClass="city-button" value="Annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" />
 					</h:form>
@@ -102,7 +102,7 @@
 							<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
 						</h:selectOneMenu>
 						<h:commandButton styleClass="city-button" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" value="Salva">
-							<f:ajax execute="@form" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" render=":pannelloCitta" />
+							<f:ajax execute="@form" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" render=":pannelloCitta :destinazioni:pannelloVoloAndata :destinazioni:pannelloVoloRitorno" />
 						</h:commandButton>
 						<h:commandButton styleClass="city-button" value="Annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" />			
 					</h:form>

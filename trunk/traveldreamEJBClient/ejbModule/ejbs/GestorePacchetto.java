@@ -127,15 +127,24 @@ public interface GestorePacchetto {
 	 * - le date scelte non sono valide (si ricorda che è possibile aggiungere una nuova destinazione in "testa" o in "coda" alla prima o all'ultima destinazione inserita nel pacchetto)
 	 */
 	void aggiuntaDestinazione (int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException;
-	
+
 	/**
-	 * Permette la modifica delle date di una destinazione
+	 * Permette la modifica della data di arrivo in una destinazione
 	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
 	 * @param destinazione La destinazione da modificare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
+	 */	
+	void modificaDataArrivo (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, DestinazioneInesistenteException;	
+	
+	/**
+	 * Permette la modifica della data di partenza da una destinazione
+	 * @param pacchetto Il pacchetto nel quale è contenuta la destinazione
+	 * @param destinazione La destinazione da modificare
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 */
-	void modificaDateDestinazione(PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, CittaInesistenteException;
+	void modificaDataPartenza (PacchettoDTO pacchetto, DestinazioneDTO destinazione) throws PacchettoInesistenteException, DestinazioneInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di una destinazione da un pacchetto
