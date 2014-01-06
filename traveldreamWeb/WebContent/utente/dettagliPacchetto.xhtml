@@ -125,7 +125,7 @@
 		</h:panelGroup>
 	</div>	
 
-<ui:repeat var="d" value="#{pacchetto.pacchetto.destinazioni}" varStatus="status">		
+<ui:repeat id="destinazioni" var="d" value="#{pacchetto.pacchetto.destinazioni}" varStatus="status">		
 					
 	<!-- Collegamento di andata -->
 	<div class="bloccoPaccVolo">
@@ -133,37 +133,37 @@
 		<!-- Data di partenza -->
 		<p>Data di partenza</p>
 		
-		<div id="dataArrivo" style="display: block;">
+		<h:panelGroup id="dataArrivo" style="display: block;" layout="block">
 			<p>
 				<h:outputText value="#{d.dataArrivo}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText>
 			</p>
-			<h:commandButton value="modifica" onclick="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
-			<h:commandButton value="modifica" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" rendered="#{pacchetto.tipoPredefinito}" />
-		</div>
+			<h:commandButton value="modifica" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
+			<h:commandButton value="modifica" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;" rendered="#{pacchetto.tipoPredefinito}" />
+		</h:panelGroup>
 		
-		<div id="modificaDataArrivo" style="display: none;">
+		<h:panelGroup id="modificaDataArrivo" style="display: none;" layout="block">
 			<h:form>
 				<p:calendar value="#{d.dataArrivo}" locale="it" pattern="dd/MM/yyyy"
 					required="true" requiredMessage="Inserire una data di partenza"
 					converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)">
 	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
-	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataArrivo(d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
-	           	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivo'); return false;" />
+	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataArrivo(d)}" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;" />
+	           	<h:commandButton value="annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;" />
            	</h:form>
-		</div>				
+		</h:panelGroup>				
 		
-		<div id="modificaDataArrivoPredefinito" style="display: none;">
+		<h:panelGroup id="modificaDataArrivoPredefinito" style="display: none;" layout="block">
 			<h:form>
 				<h:selectOneMenu binding="#{dataArrivoPred}">
 					<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="dataArrivo" itemLabel="#{data.getData(dataArrivo)}" itemValue="#{data.getData(dataArrivo)}" />			
 				</h:selectOneMenu>
-	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
-	           	<h:commandButton value="annulla" onclick="toggle('dataArrivo'); toggle('modificaDataArrivoPredefinito'); return false;" />
+	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;" />
+	           	<h:commandButton value="annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;" />
            	</h:form>							
-		</div>
+		</h:panelGroup>
 		
 		<div class="volo">
 					
