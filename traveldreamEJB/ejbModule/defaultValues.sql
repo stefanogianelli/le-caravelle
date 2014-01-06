@@ -90,6 +90,14 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Jose Marti', '2013-12-16', '12:00:00', '02:15:00', 380, 5, 3);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'JFK', '2013-12-23', '07:00:00', '20:15:00', 295, 3, 5);
 
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castello Sforzesco', '2013-12-17', '10:00:00','3', 'Cultura', 15, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Navigli', '2013-12-18', '17:00:00','5', 'Relax', 8, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Colosseo', '2013-12-25', '10:30:00','2', 'Cultura', 12, 2);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Parque Guell', '2013-11-23', '11:00:00','3', 'Cultura', 15, 4);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Museo del Louvre', '2014-02-15', '09:30:00','4', 'Cultura', 0, 12);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Museo Rodin', '2014-02-15', '16:00:00','2', 'Cultura', 8, 12);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Tour Eiffel', '2014-02-15', '19:00:00','2', 'Relax', 12, 12);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Auditorium della musica', '2013-12-26', '21:00:00','3', 'Relax', 30, 2);
 
 INSERT INTO utenti (email, password) VALUES ('stefano@gmail.com', '05b9115df05a2a467841772eccc969822d884c9e71841050fe9e0893cce7d11b');
 INSERT INTO utenti (email, password) VALUES ('francesca@gmail.com', '5dfd46e27a5e3e8e06fcb92817b0955f7fd28048f5003bfd4e5be8e67bf417db');
