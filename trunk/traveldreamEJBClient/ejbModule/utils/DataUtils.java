@@ -29,7 +29,7 @@ public class DataUtils {
 	/**
 	 * Fa il parsing di una stringa e ne restituisce la data
 	 * @param data La data da convertitre
-	 * @return L'oggetto java.util.Date corrispendente
+	 * @return L'oggetto java.util.Date corrispondente
 	 */
 	public static Date parseData (String data) {
 		try {
