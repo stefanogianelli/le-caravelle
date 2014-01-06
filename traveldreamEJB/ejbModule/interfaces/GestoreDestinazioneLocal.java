@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.util.Date;
+
 import javax.ejb.Local;
 
 import dtos.AttivitaDTO;
@@ -23,11 +25,20 @@ public interface GestoreDestinazioneLocal {
 	Destinazioni creaDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException;
 	
 	/**
-	 * Permette la modifica delle date di una destinazione
+	 * Permette la modifica della data di arrivo in una destinazione
 	 * @param destinazione La destinazione da modificare
-	 * @throws CittaInesistenteException  Quando non viene trovata la città nel database
+	 * @return La data di arrivo precedente
+	 * @throws DestinazioneInesistenteException  Quando non viene trovata la destinazione nel database
 	 */
-	void modificaDateDestinazione(DestinazioneDTO destinazione) throws CittaInesistenteException;
+	Date modificaDataArrivo(DestinazioneDTO destinazione) throws DestinazioneInesistenteException;
+	
+	/**
+	 * Permette la modifica della data di partenza da una destinazione
+	 * @param destinazione La destinazione da modificare
+	 * @return La data di partenza precedente
+	 * @throws DestinazioneInesistenteException  Quando non viene trovata la destinazione nel database
+	 */
+	Date modificaDataPartenza (DestinazioneDTO destinazione) throws DestinazioneInesistenteException;
 	
 	/**
 	 * Permette la conversione da un DTO alla rispettiva entità
