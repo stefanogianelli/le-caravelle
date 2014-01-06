@@ -20,20 +20,24 @@
 
 <h:panelGroup rendered="#{pacchetto.pacchetto.id != 0}">
 
-	<!-- Nome del pacchetto -->
-	<h1 id="nomePacchetto" style="display: block;">
-		#{pacchetto.pacchetto.nome}
-		<h:commandButton styleClass="matita" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" />
-	</h1>
-		
-	<!-- Modifica nome del pacchetto -->
-	<h1 id="modificaNome" style="display: none;">
-		<h:form>
-			<h:inputText styleClass="editName" value="#{pacchetto.pacchetto.nome}" required="true" requiredMessage="Il pacchetto deve avere un nome" />
-			<h:commandButton styleClass="edit-button" value="Salva" action="#{pacchetto.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
-			<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
-		</h:form>		
-	</h1>    
+	<h:panelGroup id="pannelloNomePacchetto" layout="block">
+		<!-- Nome del pacchetto -->
+		<h1 id="nomePacchetto" style="display: block;">
+			#{pacchetto.pacchetto.nome}
+			<h:commandButton styleClass="matita" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" />
+		</h1>
+			
+		<!-- Modifica nome del pacchetto -->
+		<h1 id="modificaNome" style="display: none;">
+			<h:form>
+				<h:inputText styleClass="editName" value="#{pacchetto.pacchetto.nome}" required="true" requiredMessage="Il pacchetto deve avere un nome" />
+				<h:commandButton styleClass="edit-button" value="Salva" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;">
+					<f:ajax execute="@form" listener="#{pacchetto.modificaNomePacchetto()}" render=":pannelloNomePacchetto" />
+				</h:commandButton>
+				<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+			</h:form>		
+		</h1> 
+	</h:panelGroup>   
 	
 	<!-- Blocco con i pulsanti per l'eliminazione, la condivisione e l'acquisto del pacchetot -->
 	<div class="bloccoModifica">
@@ -70,7 +74,7 @@
 		
 		<!-- Informazioni generali sul pacchetto -->
 		<div class="descr">		
-			<div>	
+			<h:panelGroup id="pannelloCitta" layout="block">	
 				<p>Città di partenza</p>
 				<h2 id="cittaPartenza" style="display: block;">
 					<h:outputText value="#{pacchetto.pacchetto.citta.nome}" />
@@ -84,7 +88,9 @@
 						<h:selectOneMenu styleClass="editCity" binding="#{nuovaCittaPartenza}">
 							<f:selectItems value="#{citta.nomiCitta}" />
 						</h:selectOneMenu>			
-						<h:commandButton styleClass="city-button" action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" value="Salva" />
+						<h:commandButton styleClass="city-button" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" value="Salva">
+							<f:ajax execute="@form" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" render=":pannelloCitta :prezzoPacchetto" />
+						</h:commandButton>
 						<h:commandButton styleClass="city-button" value="Annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" />
 					</h:form>
 				</h2>
@@ -95,28 +101,34 @@
 		                <h:selectOneMenu styleClass="editCity" binding="#{nuovaCittaPartenzaPred}">
 							<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
 						</h:selectOneMenu>
-						<h:commandButton styleClass="city-button" action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" value="Salva" />
+						<h:commandButton styleClass="city-button" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" value="Salva">
+							<f:ajax execute="@form" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" render=":pannelloCitta" />
+						</h:commandButton>
 						<h:commandButton styleClass="city-button" value="Annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" />			
 					</h:form>
 				</h2>				
-			</div>
+			</h:panelGroup>
 			<br></br>
 			<p>Numero di partecipanti</p>
-			<h2 id="numeroPartecipanti" style="display: block;">
-				<h:outputText value="#{pacchetto.pacchetto.numPartecipanti}" />
-				<h:commandButton styleClass="flight-button" value="Modifica" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" />
-			</h2>
-			
-			<!-- Modifica del numero di partecipanti -->
-			<h2 id="modificaNumeroPartecipanti" style="display: none;">
-				<h:form>
-					<p:inputText styleClass="editNumber" value="#{pacchetto.pacchetto.numPartecipanti}"
-						required="true" requiredMessage="Inserire un numero di partecipanti" 
-						converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />
-					<h:commandButton styleClass="edit-button" action="#{pacchetto.modificaNumeroPartecipanti()}" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="Salva" />
-					<h:commandButton styleClass="edit-button" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="Annulla" />				
-				</h:form>
-			</h2>			
+			<h:panelGroup id="pannelloPartecipanti" layout="block">
+				<h2 id="numeroPartecipanti" style="display: block;">
+					<h:outputText value="#{pacchetto.pacchetto.numPartecipanti}" />
+					<h:commandButton styleClass="flight-button" value="Modifica" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}" />
+				</h2>
+				
+				<!-- Modifica del numero di partecipanti -->
+				<h2 id="modificaNumeroPartecipanti" style="display: none;">
+					<h:form>
+						<p:inputText styleClass="editNumber" value="#{pacchetto.pacchetto.numPartecipanti}"
+							required="true" requiredMessage="Inserire un numero di partecipanti" 
+							converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />
+						<h:commandButton styleClass="edit-button" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="Salva">
+							<f:ajax execute="@form" listener="#{pacchetto.modificaNumeroPartecipanti()}" render=":pannelloPartecipanti :prezzoPacchetto" />
+						</h:commandButton>
+						<h:commandButton styleClass="edit-button" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="Annulla" />				
+					</h:form>
+				</h2>
+			</h:panelGroup>		
 		</div>
 		
 		<!-- Prezzo del pacchetto -->
@@ -151,8 +163,7 @@
 	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
 	           	<h:commandButton styleClass="edit-button" value="Salva" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;">
-	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataArrivo(d)}" render="@all" />
-	           		<f:param name="idPacchetto" value="#{id.value}" />
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataArrivo(d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivo :prezzoPacchetto" />
 	           	</h:commandButton>
 	           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;" />
            	</h:form>
@@ -163,7 +174,9 @@
 				<h:selectOneMenu binding="#{dataArrivoPred}">
 					<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="dataArrivo" itemLabel="#{data.getData(dataArrivo)}" itemValue="#{data.getData(dataArrivo)}" />			
 				</h:selectOneMenu>
-	           	<h:commandButton styleClass="edit-button" value="Salva" action="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;" />
+	           	<h:commandButton styleClass="edit-button" value="Salva" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;">
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivoPredefinito" />
+	           	</h:commandButton>
 	           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;" />
            	</h:form>							
 		</h:panelGroup>
@@ -277,40 +290,41 @@
 		
 		<!-- Data di ritorno -->
 		<p>Data di ritorno</p>
-		<div id="dataPartenza" style="display: block;">
+		<h:panelGroup id="dataPartenza" style="display: block;" layout="block">
 			<p>
 				<h:outputText value="#{d.dataPartenza}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText>
 			</p>
-			<h:commandButton value="Modifica" styleClass="edit-button" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
-			<h:commandButton value="Modifica" styleClass="edit-button" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" rendered="#{pacchetto.tipoPredefinito}" />					
-		</div>
+			<h:commandButton value="Modifica" styleClass="edit-button" onclick="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDataPartenza'); return false;" rendered="#{pacchetto.tipoPersonalizzato}" />
+			<h:commandButton value="Modifica" styleClass="edit-button" onclick="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDurata'); return false;" rendered="#{pacchetto.tipoPredefinito}" />					
+		</h:panelGroup>
 		
-		<div id="modificaDataPartenza" style="display: none;">
+		<h:panelGroup id="modificaDataPartenza" style="display: none;" layout="block">
 			<h:form>
 				<p:calendar value="#{d.dataPartenza}" locale="it" pattern="dd/MM/yyyy"
 					required="true" requiredMessage="Inserire una data di partenza"
 					converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)">
 	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
-	           	<h:commandButton value="Salva" styleClass="edit-button" oncomplete="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;">
-	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPartenza(d)}" render="@all" />
-	           		<f:param name="idPacchetto" value="#{id.value}" />	           	
+	           	<h:commandButton value="Salva" styleClass="edit-button" oncomplete="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDataPartenza'); return false;">
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPartenza(d)}" render=":destinazioni:dataPartenza :destinazioni:modificaDataPartenza :prezzoPacchetto" />           	
 	           	</h:commandButton>
-	           	<h:commandButton value="Annulla" styleClass="edit-button" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
+	           	<h:commandButton value="Annulla" styleClass="edit-button" onclick="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDataPartenza'); return false;" />
            	</h:form>
-		</div>
+		</h:panelGroup>
 	
-		<div id="modificaDurata" style="display: none;">
+		<h:panelGroup id="modificaDurata" style="display: none;" layout="block">
 			<h:form>
 				<h:selectOneMenu binding="#{durata}">
 					<f:selectItems value="#{pacchetto.predefinito.durate}" />
 				</h:selectOneMenu>					
-	           	<h:commandButton styleClass="edit-button" value="salva" action="#{pacchetto.modificaDurata(durata.value,d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
-	           	<h:commandButton styleClass="edit-button" value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDurata'); return false;" />
+	           	<h:commandButton styleClass="edit-button" value="Salva" action="#{pacchetto.modificaDurata(durata.value,d)}" oncomplete="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDurata'); return false;">
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDurata(durata.value,d)}" render=":destinazioni:dataPartenza :destinazioni:modificaDurata :prezzoPacchetto" /> 
+	           	</h:commandButton>
+	           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDurata'); return false;" />
            	</h:form>				
-		</div>		
+		</h:panelGroup>		
 		
 		<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).dataPartenza}" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
 				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
