@@ -12,18 +12,18 @@
 <ui:define name="content">
 
 	<f:metadata>
-		<f:viewParam name="idPacchetto" binding="#{id}" />
-		<f:viewParam name="dataPartenza" binding="#{dataPartenza}">
+		<f:viewParam name="idPacchetto" value="#{collegamento.idPacchetto}" />
+		<f:viewParam name="dataPartenza" value="#{collegamento.dataPartenza}">
 			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 		</f:viewParam>
-		<f:viewParam name="cittaPartenza" binding="#{cittaPartenza}" />
-		<f:viewParam name="cittaArrivo" binding="#{cittaArrivo}" />
-		<f:event listener="#{pacchetto.getPacchetto(id.value)}" type="preRenderView" />
+		<f:viewParam name="cittaPartenza" value="#{collegamento.cittaPartenza}" />
+		<f:viewParam name="cittaArrivo" value="#{collegamento.cittaArrivo}" />
+		<f:event listener="#{pacchetto.getPacchetto(collegamento.idPacchetto)}" type="preRenderView" />
 	</f:metadata>
 	
 	<p:messages showDetail="false" autoUpdate="true" />	
 
-	<h:form rendered="#{pacchetto.tipoPersonalizzato}">
+	<h:form id="mainForm" rendered="#{pacchetto.tipoPersonalizzato}">
 		<div class="blocco">
 	        <h1>Crea il tuo pacchetto</h1>
 	        <h2>Aggiungi collegamento</h2>
@@ -48,7 +48,7 @@
 		<div class="blocco">
 			<div class="data">
 				<h3>Data di partenza</h3>
-				<h:inputText styleClass="text-input" value="#{dataPartenza}" disabled="true">
+				<h:inputText styleClass="text-input" value="#{collegamento.dataPartenza}" disabled="true">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:inputText>
 			</div>
@@ -59,7 +59,9 @@
 			</div>			
 		
 			<div class="bloccoButton">
-				<h:commandButton value="Cerca" styleClass="button" action="#{collegamento.cercaCollegamenti(dataPartenza,cittaPartenza,cittaArrivo,tipoCollegamento.value)}" render="listaCollegamenti" />
+				<h:commandButton value="Cerca" styleClass="button">
+					<f:ajax execute="@form" listener="#{collegamento.cercaCollegamenti(tipoCollegamento.value)}" render=":mainForm:listaCollegamenti" />
+				</h:commandButton>
 			</div>			
 		</div>
 		
@@ -76,10 +78,10 @@
 						<li>Arrivo</li>
 						<li>Prezzo</li>
 					</ul>
-					</div>
+					</div>					
 					
 					<h:commandButton value="Dettagli" styleClass="flight-button"/>
-					<h:commandButton value="Scegli" styleClass="flight-button" action="#{pacchetto.aggiuntaCollegamento(id.value, c)}" />
+					<h:commandButton value="Scegli" styleClass="flight-button" action="#{pacchetto.aggiuntaCollegamento(collegamento.idPacchetto, c)}" />
 				
 					<div class="dati">
 					<ul>
@@ -104,7 +106,7 @@
 		</h:panelGroup>
 	</h:form>
 	
-	<h:form rendered="#{pacchetto.tipoPredefinito}">
+	<h:form id="formPred" rendered="#{pacchetto.tipoPredefinito}">
 		<div class="blocco">
 	        <h1>Crea il tuo pacchetto</h1>
 	        <h2>Aggiungi collegamento</h2>
@@ -140,29 +142,29 @@
 			</div>		
 		
 			<div class="bloccoButton">
-				<h:commandButton value="Cerca" styleClass="button" action="#{collegamento.cercaCollegamentiPred(pacchetto.predefinito.id,dataPartenza,cittaPartenza,cittaArrivo,tipoCollegamentoPred.value)}" render="listaCollegamenti" />
+				<h:commandButton value="Cerca" styleClass="button">
+					<f:ajax execute="@form" listener="#{collegamento.cercaCollegamentiPred(pacchetto.predefinito.id,tipoCollegamentoPred.value)}" render=":formPred:listaCollegamentiPred" />
+				</h:commandButton>
 			</div>			
 		</div>		
 		
-		<div class="bloccoBianco">
+		<h:panelGroup id="listaCollegamentiPred" styleClass="bloccoBianco" layout="block">
 			<h2>Scegli il collegamento</h2>
 			
 			<ui:repeat var="c" value="#{collegamento.elenco}" rendered="#{collegamento.elenco.size() > 0}">			
 				<div class="volo">
 					<div class="etichette">
-					<ul>
-						<li>Da</li>
-						<li>A</li>
-						<li>Partenza</li>
-						<li>Arrivo</li>
-						<li>Prezzo</li>
-					</ul>
+						<ul>
+							<li>Da</li>
+							<li>A</li>
+							<li>Partenza</li>
+							<li>Arrivo</li>
+							<li>Prezzo</li>
+						</ul>					
+					</div>
 					
-					</div>
-					<div class="pulsantiVolo">
-					<h:commandButton value="Dettagli" styleClass="detail-button"/>
-					<h:commandButton value="Scegli" styleClass="detail-button" action="#{pacchetto.aggiuntaCollegamento(id.value, c)}" />
-					</div>
+					<h:commandButton value="Dettagli" styleClass="flight-button"/>
+					<h:commandButton value="Scegli" styleClass="flight-button" action="#{pacchetto.aggiuntaCollegamento(collegamento.idPacchetto, c)}" />
 					
 					<div class="dati">
 					<ul>
@@ -185,7 +187,7 @@
 				<br></br>
 			</ui:repeat>
 			
-		</div>
+		</h:panelGroup>
 	</h:form>		
 
 </ui:define>

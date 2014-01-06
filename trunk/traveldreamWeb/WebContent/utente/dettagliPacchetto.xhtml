@@ -175,7 +175,7 @@
 					<f:selectItems value="#{pacchetto.predefinito.datePartenza}" var="dataArrivo" itemLabel="#{data.getData(dataArrivo)}" itemValue="#{data.getData(dataArrivo)}" />			
 				</h:selectOneMenu>
 	           	<h:commandButton styleClass="edit-button" value="Salva" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;">
-	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivoPredefinito" />
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPredefinito(dataArrivoPred.value,d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivoPredefinito :destinazioni:dataPartenza" />
 	           	</h:commandButton>
 	           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivoPredefinito'); return false;" />
            	</h:form>							
