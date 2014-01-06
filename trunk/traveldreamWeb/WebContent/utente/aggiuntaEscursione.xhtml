@@ -5,6 +5,44 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
-	</ui:composition>
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Aggiungi escursione</ui:define>
+
+<ui:define name="content">
+
+	<div class="blocco">
+        <h1>Crea il tuo pacchetto</h1>
+        <h2>Aggiungi escursione</h2>
+        <div class="data">
+        <h3>Seleziona la data</h3>
+		<p:calendar styleClass="data-input" value="#{}" locale="it"
+			required="true" requiredMessage="Inserire una data"
+			converterMessage="Inserire una data nel formato dd/MM/yyyy (es.: 05/01/2014)" />
+					
+        </div>
+	</div>
+
+	<div class="blocco">
+	
+        <div class="data">
+        <h3>Seleziona il numero di partecipanti</h3>
+		<h:inputText styleClass="text-input" value="#{}" 
+			required="true" requiredMessage="Inserire un numero di partecipanti" 
+			converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />
+				
+        </div>
+        
+		<h3>Seleziona una categoria</h3>
+	 	<h:selectOneMenu styleClass="menu-input" binding="#{categoriaEscursione}">
+			<f:selectItems value="#{escursione.categorie}" />
+		</h:selectOneMenu>
+		
+		<div class="bloccoButton">
+		</div>
+	</div>
+	
+	     
+</ui:define>
+</ui:composition>
 </html>
