@@ -150,7 +150,10 @@
 					converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)">
 	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
-	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataArrivo(d)}" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;" />
+	           	<h:commandButton value="salva" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;">
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataArrivo(d)}" render="@all" />
+	           		<f:param name="idPacchetto" value="#{id.value}" />
+	           	</h:commandButton>
 	           	<h:commandButton value="annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;" />
            	</h:form>
 		</h:panelGroup>				
@@ -291,7 +294,10 @@
 					converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)">
 	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
-	           	<h:commandButton value="salva" action="#{pacchetto.modificaDataPartenza(d)}" oncomplete="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
+	           	<h:commandButton value="salva" oncomplete="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;">
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPartenza(d)}" render="@all" />
+	           		<f:param name="idPacchetto" value="#{id.value}" />	           	
+	           	</h:commandButton>
 	           	<h:commandButton value="annulla" onclick="toggle('dataPartenza'); toggle('modificaDataPartenza'); return false;" />
            	</h:form>
 		</div>
