@@ -35,6 +35,10 @@ public class CollegamentoBean {
 	
 	private CollegamentoDTO collegamento;
 	private List<CollegamentoDTO> elenco;
+	private int idPacchetto;
+	private Date dataPartenza;
+	private String cittaPartenza;
+	private String cittaArrivo;
 	
 	@PostConstruct
 	public void setUp () {
@@ -56,6 +60,38 @@ public class CollegamentoBean {
 
 	public void setElenco(List<CollegamentoDTO> elenco) {
 		this.elenco = elenco;
+	}
+
+	public int getIdPacchetto() {
+		return idPacchetto;
+	}
+
+	public void setIdPacchetto(int idPacchetto) {
+		this.idPacchetto = idPacchetto;
+	}
+
+	public Date getDataPartenza() {
+		return dataPartenza;
+	}
+
+	public void setDataPartenza(Date dataPartenza) {
+		this.dataPartenza = dataPartenza;
+	}
+
+	public String getCittaPartenza() {
+		return cittaPartenza;
+	}
+
+	public void setCittaPartenza(String cittaPartenza) {
+		this.cittaPartenza = cittaPartenza;
+	}
+
+	public String getCittaArrivo() {
+		return cittaArrivo;
+	}
+
+	public void setCittaArrivo(String cittaArrivo) {
+		this.cittaArrivo = cittaArrivo;
 	}
 
 	/**
@@ -88,14 +124,11 @@ public class CollegamentoBean {
 
 	/**
 	 * Ricerca i collegamenti disponibili tra due destinazioni nella data indicata
-	 * @param dataPartenza La data di partenza
-	 * @param cittaPartenza Il nome della città di partenza
-	 * @param cittaArrivo Il nome della città di arrivo
 	 * @param tipo La tipologia del collegamento
 	 */
-	public void cercaCollegamenti (Date dataPartenza, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
+	public void cercaCollegamenti (TipoCollegamento tipo) {
 		this.getElenco().clear();
-		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(dataPartenza, cittaPartenza, cittaArrivo, tipo));
+		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(this.getDataPartenza(), this.getCittaPartenza(), this.getCittaArrivo(), tipo));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}
@@ -103,17 +136,14 @@ public class CollegamentoBean {
 	/**
 	 * Ricerca i collegamenti inseriti nel pacchetto predefinito tra due destinazioni nella data indicata
 	 * @param idPacchetto L'identificativo del pacchetto predefinito nel quale effettuare la ricerca
-	 * @param dataPartenza La data di partenza
-	 * @param cittaPartenza Il nome della città di partenza
-	 * @param cittaArrivo Il nome della città di arrivo
 	 * @param tipo La tipologia del collegamento
 	 */
-	public void cercaCollegamentiPred (int idPacchetto, Date dataPartenza, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
+	public void cercaCollegamentiPred (int idPacchetto, TipoCollegamento tipo) {
 		try {
 			List<CollegamentoDTO> col = predefinitoBean.getPacchetto(idPacchetto).getCollegamenti();
 			this.getElenco().clear();
 			for (CollegamentoDTO c : col) {
-				if (c.getDataPartenza().equals(dataPartenza) && c.getCittaPartenza().getNome().equals(cittaPartenza) && c.getCittaArrivo().getNome().equals(cittaArrivo) && c.getTipoCollegamento() == tipo)
+				if (c.getDataPartenza().equals(this.getDataPartenza()) && c.getCittaPartenza().getNome().equals(this.getCittaPartenza()) && c.getCittaArrivo().getNome().equals(this.getCittaArrivo()) && c.getTipoCollegamento() == tipo)
 					this.getElenco().add(c);
 			}
 		} catch (PacchettoInesistenteException e) {
