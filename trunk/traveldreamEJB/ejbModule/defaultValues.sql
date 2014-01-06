@@ -97,14 +97,14 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Ciampino', 'Orio al Serio', '2014-03-04', '20:00:00', '21:20:00', 34, 2, 12);
 
 
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castello Sforzesco', '2013-12-17', '10:00:00','3', 'CULTURA', 15, 1);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Navigli', '2013-12-18', '17:00:00','5', 'RELAX', 8, 1);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Colosseo', '2013-12-25', '10:30:00','2', 'CULTURA', 12, 2);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Parque Guell', '2013-11-23', '11:00:00','3', 'CULTURA', 15, 4);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Museo del Louvre', '2014-02-15', '09:30:00','4', 'CULTURA', 0, 12);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Museo Rodin', '2014-02-15', '16:00:00','2', 'CULTURA', 8, 12);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Tour Eiffel', '2014-02-15', '19:00:00','2', 'RELAX', 12, 12);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Auditorium della musica', '2013-12-26', '21:00:00','3', 'RELAX', 30, 2);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castello Sforzesco', '2014-03-02', '10:00:00','3', 'CULTURA', 15, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Navigli', '2014-03-02', '17:00:00','5', 'RELAX', 8, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Colosseo', '2014-03-02', '10:30:00','2', 'CULTURA', 12, 2);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Parque Guell', '2014-03-02', '11:00:00','3', 'CULTURA', 15, 4);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Museo del Louvre', '2014-03-02', '09:30:00','4', 'CULTURA', 0, 12);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Museo Rodin', '2014-03-02', '16:00:00','2', 'CULTURA', 8, 12);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Tour Eiffel', '2014-03-02', '19:00:00','2', 'RELAX', 12, 12);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Auditorium della musica', '2014-03-02', '21:00:00','3', 'RELAX', 30, 2);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Ostia', '2014-03-02', '10:00:00','8', 'MARE', 60, 2);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Il mercato della Boqueria', '2014-03-02', '12:00:00','3', 'RELAX', 0, 4);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('La Barceloneta', '2014-03-02', '15:00:00','3', 'MARE', 0, 4);
