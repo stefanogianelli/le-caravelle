@@ -125,7 +125,7 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'JFK', '2014-03-08', '07:00:00', '20:15:00', 295, 3, 5);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'JFK', '2014-03-08', '09:00:00', '22:15:00', 295, 3, 5);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Malpensa', '2014-03-08', '22:20:00', '12:05:00', 550, 1, 3);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Fiumicino', '2014-03-08', '21:20:00', '11:05:00', 550, 2, 3)
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Fiumicino', '2014-03-08', '21:20:00', '11:05:00', 550, 2, 3);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'JFK', 'Ciampino', '2014-03-15', '10:10:00', '20:55:00', 480, 2, 3);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'Malpensa', '2014-03-08', '07:00:00', '20:15:00', 595, 1, 5);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza) VALUES ('AEREO', 'Jose Marti', 'Linate', '2014-03-08', '09:00:00', '22:15:00', 605, 1, 5);
@@ -222,13 +222,11 @@ INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VAL
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Playas de Este', '2014-03-09', '10:00:00','6', 'MARE', 6, 5);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castillo De Los Tres Reyes Magos Del Morro', '2014-03-09', '17:00:00','2', 'CULTURA', 10, 5);
 
-
-
 INSERT INTO utenti (email, password) VALUES ('stefano@gmail.com', '05b9115df05a2a467841772eccc969822d884c9e71841050fe9e0893cce7d11b');
 INSERT INTO utenti (email, password) VALUES ('francesca@gmail.com', '5dfd46e27a5e3e8e06fcb92817b0955f7fd28048f5003bfd4e5be8e67bf417db');
 
---1 Pacchetto Parigi
-INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('From Paris with love', 230, 23);
+-- 1 Pacchetto Parigi
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('From Paris with love', 98, 23);
 
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (1, 1);
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (1, 2);
@@ -238,7 +236,6 @@ INSERT INTO date_partenza (data, idPacchettoPredefinito) VALUES ('2014-03-01', 1
 INSERT INTO durate (durata, idPacchettoPredefinito) VALUES (3, 1);
 
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (11, 1);
-INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (12, 1);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (12, 1);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (16, 1);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (17, 1);
@@ -250,8 +247,8 @@ INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (37, 1);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (38, 1);
 
---2 Pacchetto Parigi (vecchio)
-INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('Capodanno', 620, 25);
+-- 2 Pacchetto Parigi
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('Capodanno', 132, 25);
 
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (2, 1);
 
@@ -259,5 +256,62 @@ INSERT INTO date_partenza (data, idPacchettoPredefinito) VALUES ('2013-12-30', 2
 
 INSERT INTO durate (durata, idPacchettoPredefinito) VALUES (4, 2);
 
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (80, 2);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (81, 2);
-INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (82, 2);
+
+-- 3 Pacchetto Waka waka
+INSERT INTO pacchetti VALUES (1,'Waka waka',4,8880,'ACQUISTATO',1,NULL,'stefano@gmail.com');
+
+INSERT INTO `mezzi_trasporto` VALUES (1,76),(1,77);
+
+INSERT INTO `destinazioni` VALUES (1,'2013-12-01','2013-12-15',1,21,9);
+
+-- 4 Pacchetto Rodi
+
+INSERT INTO pacchetti VALUES (2,'Rodi',3,2901,'ACQUISTATO',1,NULL,'stefano@gmail.com');
+
+INSERT INTO `mezzi_trasporto` VALUES (2,78),(2,79);
+
+INSERT INTO `destinazioni` VALUES (2,'2013-08-08','2013-08-15',2,17,8);
+
+-- 5 Pacchetto Barcellona
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('La Rambla', 65, 11);
+
+INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (3, 1), (3, 2);
+
+INSERT INTO date_partenza (data, idPacchettoPredefinito) VALUES ('2014-03-01', 3);
+
+INSERT INTO durate (durata, idPacchettoPredefinito) VALUES (3, 3), (7, 3), (14, 3);
+
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (5, 3), (6, 3), (7, 3);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (27, 3), (28, 3), (29, 3), (30, 3), (43, 3), (44, 3), (45, 3), (63, 3), (64, 3);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (8, 3), (9, 3), (10, 3);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (31, 3), (32, 3), (46, 3), (47, 3), (74, 3), (75, 3);
+
+-- 6 Pacchetto New York
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('The big Apple', 153, 10);
+
+INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (4, 1), (4, 2);
+
+INSERT INTO date_partenza (data, idPacchettoPredefinito) VALUES ('2014-03-01', 4), ('2014-03-08', 4);
+
+INSERT INTO durate (durata, idPacchettoPredefinito) VALUES (7, 4), (14, 4);
+
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (21, 4), (22, 4), (48, 4), (49, 4);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (19, 4), (20, 4), (50, 4), (51, 4);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (54, 4), (71, 4);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (55, 4), (56, 4), (72, 4), (73, 4);
+
+-- 7 Pacchetto L'Avana
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('Cuba', 127, 14);
+
+INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (5, 1), (5, 3);
+
+INSERT INTO date_partenza (data, idPacchettoPredefinito) VALUES ('2014-03-01', 5);
+
+INSERT INTO durate (durata, idPacchettoPredefinito) VALUES (7, 5), (14, 5);
+
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (23, 5), (24, 5);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (57, 5), (58, 5), (67, 5);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (14, 5), (15, 5);
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (52, 5), (53, 5), (59, 5), (65, 5), (66, 5);
