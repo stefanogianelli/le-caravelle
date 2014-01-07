@@ -71,8 +71,8 @@ public class HotelBean {
 	/**
 	 * Mostra tutti gli hotel presenti nel database
 	 */
-	public void elencoHotel () {
-		if (paginator == null)
+	public void elencoHotel (boolean force) {
+		if (paginator == null || force == true)
 			paginator = new PaginatorBean(hotelBean.elencoHotel());
 	}
 
@@ -81,10 +81,11 @@ public class HotelBean {
 	 * @param citta Il nome della città
 	 */
 	public void cercaHotel (String citta) {
-		this.getElenco().clear();
-		this.getElenco().addAll(hotelBean.elencoHotel(citta));
-		if (this.getElenco().isEmpty())
+		List<HotelDTO> lista = hotelBean.elencoHotel(citta);
+		if (lista.isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
+		else
+			paginator = new PaginatorBean(lista);
 	}
 
 	/**

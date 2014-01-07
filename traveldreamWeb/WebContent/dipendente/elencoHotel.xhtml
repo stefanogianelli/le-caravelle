@@ -11,7 +11,7 @@
 
 <ui:define name="content">
 
-<f:event listener="#{hotel.elencoHotel()}" type="preRenderView" />
+<f:event listener="#{hotel.elencoHotel(false)}" type="preRenderView" />
 
 <h1>Elenco hotel</h1>
 
@@ -28,7 +28,8 @@
 			<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
 				<f:selectItems value="#{citta.nomiCitta}" />
 			</h:selectOneMenu>
-			<h:commandButton value="Cerca" styleClass="flight-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />	
+			<h:commandButton value="Tutti" styleClass="flight-button" action="#{hotel.elencoHotel(true)}" />
+			<h:commandButton value="Cerca" styleClass="flight-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />			
 		</p>
 	</div>
 </h:form>
