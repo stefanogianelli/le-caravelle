@@ -634,19 +634,19 @@ select{
 	padding:5px;
 	margin:30px 0 10px 40px;
 }
-.bloccoDett table{
+.tabella table{
 	width:940px;
 	text-align:center;
 	margin: 40px auto 0 40px;
 	border-collapse:collapse;
 }
-.bloccoDett td{
+.tabella td{
 	border: 1px solid black;
 	vertical-align:middle;
 	padding:15px;
 	font-size:22px;
 }
-.bloccoDett th{
+.tabella th{
 	font-size:26px;
 }
 /*Dettagli pacchetto*/

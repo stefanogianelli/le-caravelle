@@ -266,17 +266,49 @@
 			</div>
 		</div>
 	</div>
-		
+	
 	<!-- Informazioni sulle escursioni -->
-	<div class="bloccoPaccEscursione">
-		<p>
-			<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
-				<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-				<f:param name="idDestinazione" value="#{d.id}" />
-				<f:param name="regione" value="#{d.citta.regione}" />
-			</h:link>
-		</p>
+	<div class="bloccoPaccVolo" style="height: auto;">
+		<div class="tabella">
+			<h:dataTable value="#{d.attivita}" var="a" rendered="#{d.attivita.size() > 0}">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					#{a.escursione.nome}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Data</f:facet>
+					<h:outputText value="#{a.escursione.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ora</f:facet>
+					<h:outputText value="#{a.escursione.ora}">
+						<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+					</h:outputText>	
+				</h:column>
+				<h:column>
+					<f:facet name="header">Partecipanti</f:facet>
+					#{a.numeroPartecipanti}
+				</h:column>
+				<h:column>
+					<h:commandButton styleClass="flight-button" value="Modifica" />
+					<h:commandButton styleClass="flight-button" value="Elimina" />
+				</h:column>
+			</h:dataTable>
+		</div>
+		<div class="bloccoPaccEscursione" style="height: 52px;">
+			<p>
+				<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
+					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+					<f:param name="idDestinazione" value="#{d.id}" />
+					<f:param name="regione" value="#{d.citta.regione}" />
+				</h:link>
+			</p>
+		</div>	
 	</div>
+		
+
 
 	<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
 	<h:panelGroup layout="block" rendered="#{pacchetto.isUltimaDestinazione(d)}">
