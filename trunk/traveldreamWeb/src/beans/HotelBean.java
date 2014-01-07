@@ -28,6 +28,7 @@ public class HotelBean {
 	
 	private HotelDTO hotel;
 	private List<HotelDTO> elenco;
+	private PaginatorBean paginator;
 	
 	@PostConstruct
 	public void setUp () {
@@ -51,6 +52,10 @@ public class HotelBean {
 		this.elenco = elenco;
 	}
 	
+	public PaginatorBean getPaginator() {
+		return paginator;
+	}
+
 	/**
 	 * Permette la ricerca di un hotel tramite il suo identificativo
 	 * @param idHotel L'identificativo dell'hotel
@@ -67,8 +72,8 @@ public class HotelBean {
 	 * Mostra tutti gli hotel presenti nel database
 	 */
 	public void elencoHotel () {
-		if (this.getElenco().isEmpty())
-			this.getElenco().addAll(hotelBean.elencoHotel());
+		if (paginator == null)
+			paginator = new PaginatorBean(hotelBean.elencoHotel());
 	}
 
 	/**

@@ -28,43 +28,53 @@
 			<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
 				<f:selectItems value="#{citta.nomiCitta}" />
 			</h:selectOneMenu>
-		<h:commandButton value="Cerca" styleClass="flight-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />	
+			<h:commandButton value="Cerca" styleClass="flight-button" action="#{hotel.cercaHotel(nomeCitta.value)}" />	
 		</p>
-
 	</div>
-	
-
 </h:form>
 
-<ui:repeat var="h" value="#{hotel.elenco}" varStatus="status" rendered="#{hotel.elenco.size() > 0}">
-	<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
+<h:form id="elenco">
+	<ui:repeat var="h" value="#{hotel.paginator.model}" varStatus="status">
+		<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
 			<div class="hotel">
 				<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />	
 				<p><b>#{h.nome}</b></p>
 				<p:rating value="#{h.stelle}" styleClass="stelle-dett" readonly="true" stars="5" />
 				<p>#{h.prezzo} €</p>
 			</div>
-		
-		<div class="descr">
-			<h2>#{h.nome}</h2>
-			<br></br>
-			<div id="prezzo">#{h.citta.nome}</div>
-		</div>
-		
-		<h:form>
-		<div class="pulsanti">
-			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
-				<f:param name="idHotel" value="#{h.id}" />
-			</h:link></p>
-			<p><h:link value="Modifica" styleClass="detail-button" outcome="modificaHotel">
-				<f:param name="idHotel" value="#{h.id}" />
-			</h:link></p>
-			<h:commandButton value="Elimina" styleClass="detail-button" action="#{hotel.eliminaHotel(h.id)}"/>
-		</div>
-		</h:form>
-		
-	</div>	
-</ui:repeat>
+			
+			<div class="descr">
+				<h2>#{h.nome}</h2>
+				<br></br>
+				<div id="prezzo">#{h.citta.nome}</div>
+			</div>
+			
+			<div class="pulsanti">
+				<p>
+					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+						<f:param name="idHotel" value="#{h.id}" />
+					</h:link>
+				</p>
+				<p>
+					<h:link value="Modifica" styleClass="detail-button" outcome="modificaHotel">
+						<f:param name="idHotel" value="#{h.id}" />
+					</h:link>
+				</p>
+				<h:commandButton value="Elimina" styleClass="detail-button" action="#{hotel.eliminaHotel(h.id)}"/>
+			</div>			
+		</div>	
+	</ui:repeat>
+	<div style="text-align: center;">
+		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto;" >
+			<f:ajax execute="@form" listener="#{hotel.paginator.prev()}" render=":elenco" />
+		</h:commandButton>
+		<h:outputText value="#{hotel.paginator.pageIndex} / #{hotel.paginator.pages}" />
+		<h:commandButton styleClass="edit-button" value="Successiva &gt;" style="width: auto;">
+			<f:ajax execute="@form" listener="#{hotel.paginator.next()}" render=":elenco" />
+		</h:commandButton>
+		<h:inputHidden value="#{hotel.paginator.pageIndex}"/>
+	</div>
+</h:form>	
 
 </ui:define>
 

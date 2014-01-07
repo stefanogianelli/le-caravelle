@@ -30,6 +30,7 @@ public class PacchettoPredefinitoBean {
 
 	private PacchettoPredefinitoDTO pacchetto;
 	private List<PacchettoPredefinitoDTO> elenco;
+	private PaginatorBean paginator;
 	
 	@PostConstruct
 	public void setUp () {
@@ -53,12 +54,16 @@ public class PacchettoPredefinitoBean {
 		this.elenco = elenco;
 	}
 	
+	public PaginatorBean getPaginator() {
+		return paginator;
+	}
+
 	/**
 	 * Mostra tutti i pacchetti predefiniti presente nel database
-	 * @return L'elenco dei pacchetti trovati
 	 */
-	public List<PacchettoPredefinitoDTO> elencoPacchetti () {		
-		return pacchettoBean.elencoPacchetti();
+	public void elencoPacchetti () {		
+		if (paginator == null)
+			paginator = new PaginatorBean(pacchettoBean.elencoPacchetti());
 	}
 	
 	/**

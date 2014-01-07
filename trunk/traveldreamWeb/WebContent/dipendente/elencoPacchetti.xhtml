@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<f:event listener="#{pacchettoPredefinito.elencoPacchetti()}" type="preRenderView" />
+
 <h1>Elenco pacchetti</h1>
 
 <div class="bloccoModifica">
@@ -21,41 +23,52 @@
 
 </div>
 
-<ui:repeat var="p" value="#{pacchettoPredefinito.elencoPacchetti()}" varStatus="status">
-	<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
-		<div class="pacchetto">
-			 <h:link outcome="dettagliPacchetto">
-			 	<f:param name="idPacchetto" value="#{p.id}" />
-			 	<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(p.id)}" width="288" height="174" />
-			 </h:link>
-			 <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,11).toString().concat('...') : p.nome}</div> 
-		</div>
+<h:form id="elenco">
+	<ui:repeat var="p" value="#{pacchettoPredefinito.paginator.model}" varStatus="status">
+		<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
+			<div class="pacchetto">
+				 <h:link outcome="dettagliPacchetto">
+				 	<f:param name="idPacchetto" value="#{p.id}" />
+				 	<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(p.id)}" width="288" height="174" />
+				 </h:link>
+				 <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,11).toString().concat('...') : p.nome}</div> 
+			</div>
+				
+			<div class="descr">
+				<h2>
+					<h:link outcome="dettagliPacchetto">
+						<f:param name="idPacchetto" value="#{p.id}" />	
+						#{p.nome.length() > 25 ? p.nome.subSequence(0,26).toString().concat('...') : p.nome}
+					</h:link>			
+				</h2>
+				<br></br>
+				<div id="prezzo">
+				#{p.prezzo} €
+				</div>
+			</div>
 			
-		<div class="descr">
-			<h2>
-				<h:link outcome="dettagliPacchetto">
-					<f:param name="idPacchetto" value="#{p.id}" />	
-					#{p.nome.length() > 25 ? p.nome.subSequence(0,26).toString().concat('...') : p.nome}
-				</h:link>			
-			</h2>
-			<br></br>
-			<div id="prezzo">
-			#{p.prezzo} €
+			<div class="pulsanti">
+				<p>
+					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliPacchetto">
+						<f:param name="idPacchetto" value="#{p.id}" />
+					</h:link>
+				</p>
+				
+				<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchettoPredefinito.eliminaPacchetto(p.id)}"/>
 			</div>
 		</div>
-		
-		<div class="pulsanti">
-		<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliPacchetto">
-			<f:param name="idPacchetto" value="#{p.id}" />
-		</h:link></p>
-			
-		<h:form>
-			<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchettoPredefinito.eliminaPacchetto(p.id)}"/>
-		</h:form>
-		</div>
-	</div>
-</ui:repeat>
-
+	</ui:repeat>
+	<div style="text-align: center;">
+		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto;" >
+			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.prev()}" render=":elenco" />
+		</h:commandButton>
+		<h:outputText value="#{pacchettoPredefinito.paginator.pageIndex} / #{pacchettoPredefinito.paginator.pages}" />
+		<h:commandButton styleClass="edit-button" value="Successiva &gt;" style="width: auto;">
+			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.next()}" render=":elenco" />
+		</h:commandButton>
+		<h:inputHidden value="#{pacchettoPredefinito.paginator.pageIndex}"/>
+	</div>	
+</h:form>
 
 </ui:define>
 </ui:composition>
