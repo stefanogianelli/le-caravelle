@@ -44,8 +44,8 @@
         </div>
         <div class="data">
 		<h3>Seleziona una categoria</h3>
-	 	<h:selectOneMenu styleClass="menu-input" binding="#{categoriaEscursione}">
-			<f:selectItems value="#{escursione.categorie}" />
+	 	<h:selectOneMenu styleClass="menu-input" value="#{escursione.categoria}">
+			<f:selectItems value="#{escursione.categoriePerRicerca}"/>
 		</h:selectOneMenu>
 		</div>
 		<div class="bloccoButton">
