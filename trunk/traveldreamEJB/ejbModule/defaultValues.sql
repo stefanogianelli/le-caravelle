@@ -199,7 +199,10 @@ INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VAL
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Giro città guidato', '2014-03-05', '14:00:00','3', 'RELAX', 50, 3);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Gran teatro de La Havana', '2014-03-05', '14:00:00','3', 'RELAX', 60, 5);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Playas de Este', '2014-03-05', '10:00:00','6', 'MARE', 6, 5);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castillo De Los Tres Reyes Magos Del Morro', '2014-03-05', '17:00:00','2', 'CULTURA', 10, 5);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castillo De Los Tres Reyes Magos', '2014-03-05', '17:00:00','2', 'CULTURA', 10, 5);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Table Mountain', '2014-03-05', '10:00:00','6', 'SPORT', 0, 9);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Kirstenbosch National Gardens', '2014-03-05', '15:00:00','3', 'RELAX', 6, 9);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Robben Island', '2014-03-05', '09:30:00','5', 'CULTURA', 30, 9);
 
 -- Escursioni del 09/03
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castello Sforzesco', '2014-03-09', '10:00:00','3', 'CULTURA', 15, 1);
@@ -219,7 +222,11 @@ INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VAL
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Giro città guidato', '2014-03-09', '10:00:00','3', 'RELAX', 50, 3);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Gran teatro de La Havana', '2014-03-09', '14:00:00','3', 'RELAX', 60, 5);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Playas de Este', '2014-03-09', '10:00:00','6', 'MARE', 6, 5);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castillo De Los Tres Reyes Magos Del Morro', '2014-03-09', '17:00:00','2', 'CULTURA', 10, 5);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Castillo De Los Tres Reyes Magos', '2014-03-09', '17:00:00','2', 'CULTURA', 10, 5);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Table Mountain', '2014-03-09', '10:00:00','6', 'SPORT', 0, 9);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Kirstenbosch National Gardens', '2014-03-09', '15:00:00','3', 'RELAX', 6, 9);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Robben Island', '2014-03-09', '09:30:00','5', 'CULTURA', 30, 9);
+
 
 INSERT INTO utenti (email, password) VALUES ('stefano@gmail.com', '05b9115df05a2a467841772eccc969822d884c9e71841050fe9e0893cce7d11b');
 INSERT INTO utenti (email, password) VALUES ('francesca@gmail.com', '5dfd46e27a5e3e8e06fcb92817b0955f7fd28048f5003bfd4e5be8e67bf417db');

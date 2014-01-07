@@ -112,6 +112,7 @@
 			</div>
 			
 			<h:panelGroup id="elencoHotel">
+				<div class="tabella">
 				<h:dataTable value="#{hotel.elenco}" var="h" rendered="#{hotel.elenco.size() > 0}" style="text-align: center;">
 					<h:column>
 						<f:facet name="header">Nome</f:facet>
@@ -133,6 +134,7 @@
 						<h:commandButton styleClass="flight-button" action="#{pacchettoPredefinito.creaPacchetto(h)}" value="Scegli" />
 					</h:column>
 				</h:dataTable>
+				</div>
 			</h:panelGroup>
 	</h:form>
 	
