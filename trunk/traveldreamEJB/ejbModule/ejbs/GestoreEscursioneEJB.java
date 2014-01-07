@@ -5,6 +5,7 @@ import interfaces.GestoreEscursioneLocal;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	@Override
 	public List<EscursioneDTO> elencoEscursioni() {
 		List<Escursioni> escursioni = em.createNamedQuery("Escursioni.elenco", Escursioni.class).getResultList();
+		Collections.sort(escursioni);
 		List<EscursioneDTO> dto = new ArrayList<EscursioneDTO>();
 		for (Escursioni e : escursioni) {
 			dto.add(this.convertiInDTO(e));
@@ -65,7 +67,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 		Join<Escursioni, Citta> citta = escursione.join("citta");
 		predicati.add(cb.equal(citta.get("regione"), regione));
 		//categoria
-		if (!categoria.equals("Qualsiasi")) {
+		if (categoria != null && !categoria.isEmpty() && !categoria.equals("Qualsiasi")) {
 			for (CategoriaEscursione c : CategoriaEscursione.values()) {
 				if (categoria.equals(c.getLabel())) {
 					predicati.add(cb.equal(escursione.get("categoria"), c));
@@ -76,10 +78,15 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 		cq.where(predicati.toArray(new Predicate[]{}));
 		TypedQuery<Escursioni> q = em.createQuery(cq);
 		List<Escursioni> escursioni = q.getResultList();
+		Collections.sort(escursioni);
 		List<EscursioneDTO> dto = new ArrayList<EscursioneDTO>();
 		for (Escursioni e : escursioni) {
-			if (e.getData().equals(data))
-				dto.add(this.convertiInDTO(e));
+			//data (workaround fino a quando non si trova una soluzione per comparare le date con le Criteria API)
+			if (data != null) {
+				if (e.getData().equals(data))
+						dto.add(this.convertiInDTO(e));
+			} else
+				dto.add(this.convertiInDTO(e));			
 		}
 		return dto;
 	}

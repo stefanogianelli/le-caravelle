@@ -11,17 +11,26 @@
 
 <ui:define name="content">
 
-<f:event listener="#{escursione.elencoEscursioni()}" type="preRenderView" />
+<f:event listener="#{escursione.elencoEscursioni(false)}" type="preRenderView" />
 
 <h1>Elenco escursioni</h1>
 
-<div class="bloccoModifica">
-
 <h:form>
-	<h:commandButton value="Nuova escursione" styleClass="search-button" action="nuovaEscursione?faces-redirect=true" />
+	<div class="bloccoModifica">
+		<h:commandButton value="Nuova escursione" styleClass="search-button" action="nuovaEscursione?faces-redirect=true" />
+	</div>
+	
+	<div class="bloccoRicerca">
+		<p>
+			<h:outputText styleClass="name-input" value="Scegli una città:" />
+			<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+				<f:selectItems value="#{citta.nomiCitta}" />
+			</h:selectOneMenu>
+			<h:commandButton value="Tutti" styleClass="flight-button" action="#{escursione.elencoEscursioni(true)}" />
+			<h:commandButton value="Cerca" styleClass="flight-button" action="#{escursione.cercaPerNomeCitta(nomeCitta.value)}" update="elenco" />			
+		</p>
+	</div>
 </h:form>
-
-</div>
 
 <h:form id="elenco">
 	<ui:repeat var="e" value="#{escursione.paginator.model}" varStatus="status">

@@ -14,6 +14,7 @@ import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
+import ejbs.GestoreCitta;
 import ejbs.GestoreEscursione;
 import enums.CategoriaEscursione;
 
@@ -23,6 +24,9 @@ public class EscursioneBean {
 	
 	@EJB
 	private GestoreEscursione escursioneBean;
+	
+	@EJB
+	private GestoreCitta cittaBean;
 	
 	private EscursioneDTO escursione;
 	private List<EscursioneDTO> elenco;
@@ -112,9 +116,10 @@ public class EscursioneBean {
 	
 	/**
 	 * Elenca tutte le escursioni presenti nel database
+	 * @param force Per forzare la generazione di un nuovo elenco
 	 */
-	public void elencoEscursioni () {
-		if (paginator == null)
+	public void elencoEscursioni (boolean force) {
+		if (paginator == null || force == true)
 			paginator = new PaginatorBean(escursioneBean.elencoEscursioni());
 	}
 
@@ -122,10 +127,25 @@ public class EscursioneBean {
 	 * Ricerca le escursioni nella regione selezionata
 	 */
 	public void cercaEscursioni () {
-		this.getElenco().clear();
-		this.getElenco().addAll(escursioneBean.elencoEscursioni(this.getData(), this.getRegione(), this.getCategoria()));
-		if (this.getElenco().isEmpty())
+		List<EscursioneDTO> lista = escursioneBean.elencoEscursioni(this.getData(), this.getRegione(), this.getCategoria());
+		if (lista.isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
+		else
+			this.setElenco(lista);
+	}
+	
+	public void cercaPerNomeCitta (String nome) {
+		try {
+			this.setRegione(cittaBean.cercaCitta(nome).getRegione());
+			List<EscursioneDTO> lista = escursioneBean.elencoEscursioni(null, this.getRegione(), null);
+			if (lista.isEmpty())
+				JsfUtil.infoMessage("Nessun risultato");
+			else {
+				paginator = new PaginatorBean (lista);
+			}			
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città inesistente");
+		}	
 	}
 	
 	/**

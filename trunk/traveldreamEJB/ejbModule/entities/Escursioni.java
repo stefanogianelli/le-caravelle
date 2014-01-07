@@ -20,7 +20,7 @@ import java.util.Date;
 	@NamedQuery(name = "Escursioni.elenco", query = "SELECT e FROM Escursioni e"),
 	@NamedQuery(name = "Escursioni.getEscursioneDaNome", query = "SELECT e FROM Escursioni e WHERE e.nome = :nome AND e.citta.nome = :citta")
 })
-public class Escursioni implements Serializable {
+public class Escursioni implements Serializable, Comparable<Escursioni> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -110,6 +110,23 @@ public class Escursioni implements Serializable {
 
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
+	}
+
+	@Override
+	public int compareTo(Escursioni e) {
+		if (this.getData().before(e.getData())) {
+			return -1;
+		} else if (this.getData().compareTo(e.getData()) == 0) {
+			if (this.getOra().before(e.getOra())) {
+				return -1;
+			} else if (this.getOra().compareTo(e.getOra()) == 0) {
+				return 0;
+			} else {
+				return 1;
+			}
+		} else {
+			return 1;
+		}
 	}
 	
 }

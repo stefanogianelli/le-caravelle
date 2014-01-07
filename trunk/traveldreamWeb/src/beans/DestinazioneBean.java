@@ -23,7 +23,6 @@ public class DestinazioneBean {
 	
 	private DestinazioneDTO destinazione;
 	private int partecipanti;
-	private AttivitaDTO attivita;
 	
 	@PostConstruct
 	public void setUp () {
@@ -45,14 +44,6 @@ public class DestinazioneBean {
 
 	public void setPartecipanti(int partecipanti) {
 		this.partecipanti = partecipanti;
-	}
-
-	public AttivitaDTO getAttivita() {
-		return attivita;
-	}
-
-	public void setAttivita(AttivitaDTO attivita) {
-		this.attivita = attivita;
 	}
 
 	/**
@@ -77,14 +68,6 @@ public class DestinazioneBean {
 		return null;
 	}
 	
-	public void abilitaModifica (AttivitaDTO attivita) {
-		this.setAttivita(attivita);
-	}
-	
-	public void disabilitaModifica () {
-		this.setAttivita(null);
-	}
-	
 	/**
 	 * Permette la modifica del numero di partecipanti ad una escursione
 	 * @param attivita L'attività di riferimento
@@ -92,7 +75,6 @@ public class DestinazioneBean {
 	public void modificaEscursione (AttivitaDTO attivita) {
 		try {
 			destinazioneBean.modificaDatiEscursione(attivita);
-			this.setAttivita(null);
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
 		} catch (DestinazioneInesistenteException e) {
