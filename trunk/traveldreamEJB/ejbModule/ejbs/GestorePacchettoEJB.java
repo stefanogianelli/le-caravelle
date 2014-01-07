@@ -320,7 +320,10 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		this.rimuoviCollegamenti(entity, vecchiaData, vecchiaData);
 		
 		//aggiorno il prezzo del pacchetto
-		entity.setPrezzo(this.calcolaPrezzo(entity));
+		if (entity.getTipoPacchetto() == TipoPacchetto.PERSONALIZZATO)
+			entity.setPrezzo(this.calcolaPrezzo(entity));
+		else
+			entity.setPrezzo(this.calcolaPrezzoPredefinito(entity));
 		
 		em.merge(entity);		
 	}	
@@ -335,7 +338,10 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		this.rimuoviCollegamenti(entity, vecchiaData, vecchiaData);
 		
 		//aggiorno il prezzo del pacchetto
-		entity.setPrezzo(this.calcolaPrezzo(entity));
+		if (entity.getTipoPacchetto() == TipoPacchetto.PERSONALIZZATO)
+			entity.setPrezzo(this.calcolaPrezzo(entity));
+		else
+			entity.setPrezzo(this.calcolaPrezzoPredefinito(entity));
 		
 		em.merge(entity);
 	}
