@@ -70,6 +70,7 @@ public class HotelBean {
 
 	/**
 	 * Mostra tutti gli hotel presenti nel database
+	 * @param force Per forzare la generazione di un nuovo elenco
 	 */
 	public void elencoHotel (boolean force) {
 		if (paginator == null || force == true)

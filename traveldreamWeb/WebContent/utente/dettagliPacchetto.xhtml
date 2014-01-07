@@ -292,8 +292,10 @@
 					#{a.numeroPartecipanti}
 				</h:column>
 				<h:column>
-					<h:commandButton styleClass="flight-button" value="Modifica" />
-					<h:commandButton styleClass="flight-button" value="Elimina" />
+					<h:form>
+						<h:commandButton styleClass="flight-button" value="Elimina" action="#{destinazione.eliminaEscursione(a)}" />
+						<h:commandButton styleClass="flight-button" value="Modifica" />		
+					</h:form>			
 				</h:column>
 			</h:dataTable>
 		</div>
