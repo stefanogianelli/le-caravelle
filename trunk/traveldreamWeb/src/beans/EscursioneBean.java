@@ -28,6 +28,7 @@ public class EscursioneBean {
 	private List<EscursioneDTO> elenco;
 	private Date data;
 	private String regione;
+	private String categoria;
 	private PaginatorBean paginator;
 	
 	@PostConstruct
@@ -68,6 +69,14 @@ public class EscursioneBean {
 		this.regione = regione;
 	}
 
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
 	public PaginatorBean getPaginator() {
 		return paginator;
 	}
@@ -76,6 +85,15 @@ public class EscursioneBean {
 	 * Fornisce l'elenco di categorie disponibili
 	 * @return Le categorie di un'escursione
 	 */
+	public List<String> getCategoriePerRicerca () {
+		List<String> categorie = new ArrayList<String>();
+		categorie.add("Qualsiasi");
+		for (CategoriaEscursione c : CategoriaEscursione.values()) {
+			categorie.add(c.getLabel());
+		}
+		return categorie;
+	}
+	
 	public CategoriaEscursione [] getCategorie () {
 		return CategoriaEscursione.values();
 	}
@@ -105,7 +123,9 @@ public class EscursioneBean {
 	 */
 	public void cercaEscursioni () {
 		this.getElenco().clear();
-		this.getElenco().addAll(escursioneBean.elencoEscursioni(this.getData(), this.getRegione()));
+		this.getElenco().addAll(escursioneBean.elencoEscursioni(this.getData(), this.getRegione(), this.getCategoria()));
+		if (this.getElenco().isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
 	}
 	
 	/**

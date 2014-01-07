@@ -31,18 +31,10 @@ public interface GestoreEscursione {
      * Mostra l'elenco di tutte escursioni in una regione
      * @param data La data dell'escursione
      * @param regione Il nome della regione
+     * @param categoria La categoria dell'escursione
      * @return L'elenco delle escursioni
      */
-	List<EscursioneDTO> elencoEscursioni(Date data, String regione);
-	
-	/**
-	 * Mostra l'elenco di escursioni in un regione nell'intervallo di tempo indicato
-	 * @param dataArrivo La data di arrivo nella destinazione
-	 * @param dataPartenza La data di partenza dalla destinazione
-	 * @param regione La regione della destinazione
-	 * @return L'elenco delle escursioni trovate
-	 */
-	List<EscursioneDTO> elencoEscursioni(Date dataArrivo, Date dataPartenza, String regione);
+	List<EscursioneDTO> elencoEscursioni(Date data, String regione, String categoria);
 	
 	/**
 	 * Crea una nuova escursione nel database

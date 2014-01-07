@@ -13,12 +13,20 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
+import entities.Citta;
 import entities.Escursioni;
+import enums.CategoriaEscursione;
 
 /**
  * Session Bean implementation class GestoreEscursioneEJB
@@ -48,30 +56,30 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	}
 	
 	@Override
-	public List<EscursioneDTO> elencoEscursioni(Date data, String regione) {
-		Query q = em.createNamedQuery("Escursioni.elencoPerRegioneEData", Escursioni.class);
-		q.setParameter("regione", regione);
-		q.setParameter("data", data);
-		@SuppressWarnings("unchecked")
-		List<Escursioni> escursioni = q.getResultList();
-		List<EscursioneDTO> dto = new ArrayList<EscursioneDTO>();
-		for (Escursioni e : escursioni) {
-			dto.add(this.convertiInDTO(e));
+	public List<EscursioneDTO> elencoEscursioni(Date data, String regione, String categoria) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Escursioni> cq = cb.createQuery(Escursioni.class);
+		Root<Escursioni> escursione = cq.from(Escursioni.class);
+		List<Predicate> predicati = new ArrayList<Predicate>();
+		//regione
+		Join<Escursioni, Citta> citta = escursione.join("citta");
+		predicati.add(cb.equal(citta.get("regione"), regione));
+		//categoria
+		if (!categoria.equals("Qualsiasi")) {
+			for (CategoriaEscursione c : CategoriaEscursione.values()) {
+				if (categoria.equals(c.getLabel())) {
+					predicati.add(cb.equal(escursione.get("categoria"), c));
+					break;
+				}
+			}
 		}
-		return dto;
-	}	
-	
-	@Override
-	public List<EscursioneDTO> elencoEscursioni(Date dataArrivo, Date dataPartenza, String regione) {
-		Query q = em.createNamedQuery("Escursioni.elencoPerPeriodo", Escursioni.class);
-		q.setParameter("dataArrivo", dataArrivo);
-		q.setParameter("dataPartenza", dataPartenza);
-		q.setParameter("regione", regione);
-		@SuppressWarnings("unchecked")
+		cq.where(predicati.toArray(new Predicate[]{}));
+		TypedQuery<Escursioni> q = em.createQuery(cq);
 		List<Escursioni> escursioni = q.getResultList();
 		List<EscursioneDTO> dto = new ArrayList<EscursioneDTO>();
 		for (Escursioni e : escursioni) {
-			dto.add(this.convertiInDTO(e));
+			if (e.getData().equals(data))
+				dto.add(this.convertiInDTO(e));
 		}
 		return dto;
 	}
