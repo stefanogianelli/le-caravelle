@@ -170,23 +170,24 @@
 						<h:commandButton value="Dettagli" styleClass="flight-button"/>
 						<h:commandButton value="Scegli" styleClass="flight-button" action="#{pacchetto.aggiuntaCollegamento(collegamento.idPacchetto, c)}" />
 						
-						<div class="dati">
-							<ul>
-								<li>#{c.cittaPartenza.nome} #{c.origine}</li>
-								<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
-								<li>
-									<h:outputText value="#{c.oraPartenza}">
-										<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
-									</h:outputText>
-								</li>
-								<li>
-									<h:outputText value="#{c.oraArrivo}">
-										<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
-									</h:outputText>
-								</li>
-								<li>#{c.prezzo} €</li>
-							</ul>
-						</div>
+					</div>
+						
+					<div class="dati">
+						<ul>
+							<li>#{c.cittaPartenza.nome} #{c.origine}</li>
+							<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
+							<li>
+								<h:outputText value="#{c.oraPartenza}">
+									<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+								</h:outputText>
+							</li>
+							<li>
+								<h:outputText value="#{c.oraArrivo}">
+									<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
+								</h:outputText>
+							</li>
+							<li>#{c.prezzo} €</li>
+						</ul>
 					</div>
 				</div>
 				<br></br>

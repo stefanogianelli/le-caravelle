@@ -84,8 +84,10 @@ public class HotelBean {
 		List<HotelDTO> lista = hotelBean.elencoHotel(citta);
 		if (lista.isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
-		else
+		else {
 			paginator = new PaginatorBean(lista);
+			this.setElenco(lista);
+		}
 	}
 
 	/**
