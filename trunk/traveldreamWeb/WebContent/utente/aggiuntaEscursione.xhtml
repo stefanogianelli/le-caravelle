@@ -10,16 +10,17 @@
 <f:metadata>
 		<f:viewParam name="idPacchetto" binding="#{id}" />
 		<f:viewParam name="idDestinazione" binding="#{idDestinazione}" />
-		<f:viewParam name="regione" binding="#{escursione.regione}" />
-		<f:event listener="#{escursione.cercaEscursioni(regione)}" type="preRenderView" />
+		<f:viewParam name="regione" value="#{escursione.regione}" />
 	</f:metadata>
 
 <ui:define name="title">Aggiungi escursione</ui:define>
 
 <ui:define name="content">
 
+<div class="bloccoDett">
 <p:messages showDetail="false" autoUpdate="true" />
 
+<h:form>
 	<div class="blocco">
         <h1>Crea il tuo pacchetto</h1>
         <h2>Aggiungi escursione</h2>
@@ -41,17 +42,47 @@
 			converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />
 				
         </div>
-        
+        <div class="data">
 		<h3>Seleziona una categoria</h3>
 	 	<h:selectOneMenu styleClass="menu-input" binding="#{categoriaEscursione}">
 			<f:selectItems value="#{escursione.categorie}" />
 		</h:selectOneMenu>
-		
+		</div>
 		<div class="bloccoButton">
+			<h:commandButton styleClass="button" value="Cerca">
+				<f:ajax execute="@form" listener="#{escursione.cercaEscursioni()}" render="elenco" />
+			</h:commandButton>
 		</div>
 	</div>
 	
-	     
+	<h:panelGroup id="elenco" layout="block">
+		<h:dataTable value="#{escursione.elenco}" var="e" rendered="#{escursione.elenco.size() > 0}" style="text-align: center;">
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				#{e.nome}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ora</f:facet>
+				<h:outputText value="#{e.ora}">
+					<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:outputText>	
+			</h:column>
+			<h:column>
+				<f:facet name="header">Durata (ore)</f:facet>
+				#{e.durata}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				#{e.prezzo}€
+			</h:column>
+			<h:column>
+				<h:commandButton styleClass="flight-button" action="#{destinazione.aggiuntaEscursione(id.value,idDestinazione,e.id)}" value="Scegli" />
+			</h:column>
+		</h:dataTable>
+	</h:panelGroup>
+</h:form>	
+
+</div>	     
 </ui:define>
 </ui:composition>
 </html>
