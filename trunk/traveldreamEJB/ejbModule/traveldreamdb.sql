@@ -294,7 +294,6 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`escursioni` (
   `prezzo` DOUBLE NOT NULL,
   `idCitta` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE (`nome`, `idCitta`),
   INDEX `fk_Escursione_Citta 2_idx` (`idCitta` ASC),
   CONSTRAINT `fk_Escursione_Citta 2`
     FOREIGN KEY (`idCitta`)
