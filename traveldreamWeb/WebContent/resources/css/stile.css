@@ -281,8 +281,11 @@ select{
 	padding: 0; 
 	position: relative;
 	background-color: white;
-	border:1px solid #003333;
+	border:3px solid #003333;
 	}
+.page-wrapper border{
+	z-index:4;
+}
 
 /* template*/	
 .intro {
