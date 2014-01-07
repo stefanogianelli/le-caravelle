@@ -225,14 +225,14 @@
 				
 			<!-- Blocco aggiunta volo -->
 			<h:panelGroup styleClass="dati" layout="block" rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
-               	<p>
+				<div class="newColl">
                		<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
                   		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 						<f:param name="dataPartenza" value="#{data.getData(d.dataArrivo)}" />
 						<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
 						<f:param name="cittaArrivo" value="#{d.citta.nome}" />
                   	</h:link>
-                  </p>
+               	</div>
              </h:panelGroup>               
 			
 		</h:panelGroup>
@@ -298,13 +298,13 @@
 			</h:dataTable>
 		</div>
 		<div class="bloccoPaccEscursione" style="height: 52px;">
-			<p>
+			<div class="newEsc">
 				<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
 					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 					<f:param name="idDestinazione" value="#{d.id}" />
 					<f:param name="regione" value="#{d.citta.regione}" />
 				</h:link>
-			</p>
+			</div>
 		</div>	
 	</div>
 		
@@ -402,14 +402,14 @@
 				
 				<!-- Blocco aggiunta volo -->
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
-	            	<p>
+	            	<div class="newColl">
 	                	<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
 	                    	<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 							<f:param name="dataPartenza" value="#{data.getData(d.dataPartenza)}" />
 							<f:param name="cittaPartenza" value="#{d.citta.nome}" />
 							<f:param name="cittaArrivo" value="#{pacchetto.pacchetto.citta.nome}" />		
 						</h:link>
-					</p>
+					</div>
 	             </h:panelGroup>
 				
 			</h:panelGroup>		
@@ -418,11 +418,11 @@
 </ui:repeat>
 		
 <!-- Aggiunta destinazione -->
-<p>
+<div class="newDest">
 	<h:link value="Aggiungi destinazione" outcome="aggiuntaDestinazione" disabled="#{not pacchetto.tipoPersonalizzato}">
 		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 	</h:link>
-</p>
+</div>
 
 </h:panelGroup>	
 

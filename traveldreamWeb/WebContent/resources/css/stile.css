@@ -797,3 +797,51 @@ select{
 	width: 100%;
 	border-bottom:5px solid white;
 }
+.newColl a:link{
+	color: #FF3333;
+	margin-left: 35px;
+	font-size: 26px;
+	text-align: left;
+}
+.newColl a:hover { 
+	color: #003333;
+	}
+.newColl{
+	font-size: 26px;
+	text-align: left;
+	color:#dcdcdc;
+	border: 1px solid transparent;
+	margin: 10px 0 0 40px;
+}
+.newEsc a:link{
+	color: #669999;
+	margin-left:40px;
+	font-size: 26px;
+	text-align: left;
+}
+.newDest a:link{
+	color: #669999;
+	margin-left: 40px;
+	font-size: 30px;
+	text-align: left;
+}
+.newEsc{
+	font-size: 26px;
+	text-align: left;
+	color:#dcdcdc;
+	border: 1px solid transparent;
+	margin: 20px 40px 0 40px;
+}
+.newDest a:hover { 
+	color: #003333;
+	}
+.newEsc a:hover { 
+	color: #003333;
+	}
+.newDest{
+	font-size: 26px;
+	text-align: left;
+	color:#dcdcdc;
+	border: 1px solid transparent;
+	margin: 0 40px;
+}
