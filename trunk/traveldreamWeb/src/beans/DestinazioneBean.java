@@ -8,7 +8,6 @@ import javax.faces.bean.ViewScoped;
 import utils.JsfUtil;
 import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
-import dtos.EscursioneDTO;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
@@ -62,9 +61,9 @@ public class DestinazioneBean {
 	 * @param idDestinazione L'identificativo della destinazione nella quale aggiungere l'escursione
 	 * @param escursione L'escursione scelta
 	 */
-	public String aggiuntaEscursione (int idPacchetto, int idDestinazione, EscursioneDTO escursione) {
+	public String aggiuntaEscursione (int idPacchetto, int idDestinazione, int idEscursione) {
 		try {
-			destinazioneBean.aggiuntaEscursione(idDestinazione, escursione.getId(), this.getPartecipanti());
+			destinazioneBean.aggiuntaEscursione(idDestinazione, idEscursione, this.getPartecipanti());
 			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente!");
