@@ -21,7 +21,8 @@ import java.util.Date;
 	@NamedQuery(name = "Escursioni.getEscursioneDaNome", query = "SELECT e FROM Escursioni e WHERE e.nome = :nome AND e.citta.nome = :citta"),
 	@NamedQuery(name = "Escursioni.getEscursione", query = "SELECT e FROM Escursioni e WHERE e.id = :id"),
 	@NamedQuery(name = "Escursioni.elencoPerRegione", query = "SELECT e FROM Escursioni e WHERE e.citta.regione = :regione"),
-	@NamedQuery(name = "Escursioni.elencoPerPeriodo", query = "SELECT e FROM Escursioni e WHERE e.data >= :dataArrivo AND e.data <= :dataPartenza AND e.citta.regione = :regione")
+	@NamedQuery(name = "Escursioni.elencoPerPeriodo", query = "SELECT e FROM Escursioni e WHERE e.data >= :dataArrivo AND e.data <= :dataPartenza AND e.citta.regione = :regione"),
+	@NamedQuery(name = "Escursioni.elencoPerRegioneEData", query = "SELECT e FROM Escursioni e WHERE e.citta.regione = :regione AND e.data = :data")
 })
 public class Escursioni implements Serializable {
 	private static final long serialVersionUID = 1L;

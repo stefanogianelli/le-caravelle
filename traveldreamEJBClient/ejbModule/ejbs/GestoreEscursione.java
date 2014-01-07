@@ -29,10 +29,11 @@ public interface GestoreEscursione {
 	
     /**
      * Mostra l'elenco di tutte escursioni in una regione
+     * @param data La data dell'escursione
      * @param regione Il nome della regione
      * @return L'elenco delle escursioni
      */
-	List<EscursioneDTO> elencoEscursioni(String regione);
+	List<EscursioneDTO> elencoEscursioni(Date data, String regione);
 	
 	/**
 	 * Mostra l'elenco di escursioni in un regione nell'intervallo di tempo indicato
