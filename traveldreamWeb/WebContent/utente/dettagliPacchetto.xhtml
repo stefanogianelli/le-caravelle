@@ -88,9 +88,7 @@
 						<h:selectOneMenu styleClass="editCity" binding="#{nuovaCittaPartenza}">
 							<f:selectItems value="#{citta.nomiCitta}" />
 						</h:selectOneMenu>			
-						<h:commandButton styleClass="city-button" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" value="Salva">
-							<f:ajax execute="@form" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" render=":pannelloCitta :prezzoPacchetto :destinazioni:pannelloVoloAndata :destinazioni:pannelloVoloRitorno" />
-						</h:commandButton>
+						<h:commandButton styleClass="city-button" action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenza.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" value="Salva" />
 						<h:commandButton styleClass="city-button" value="Annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenza'); return false;" />
 					</h:form>
 				</h2>
@@ -101,9 +99,7 @@
 		                <h:selectOneMenu styleClass="editCity" binding="#{nuovaCittaPartenzaPred}">
 							<f:selectItems value="#{pacchetto.predefinito.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
 						</h:selectOneMenu>
-						<h:commandButton styleClass="city-button" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" value="Salva">
-							<f:ajax execute="@form" listener="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" render=":pannelloCitta :destinazioni:pannelloVoloAndata :destinazioni:pannelloVoloRitorno" />
-						</h:commandButton>
+						<h:commandButton styleClass="city-button" action="#{pacchetto.modificaCittaPartenza(nuovaCittaPartenzaPred.value)}" oncomplete="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" value="Salva" />
 						<h:commandButton styleClass="city-button" value="Annulla" onclick="toggle('cittaPartenza'); toggle('modificaCittaPartenzaPred'); return false;" />			
 					</h:form>
 				</h2>				
@@ -122,9 +118,7 @@
 						<p:inputText styleClass="editNumber" value="#{pacchetto.pacchetto.numPartecipanti}"
 							required="true" requiredMessage="Inserire un numero di partecipanti" 
 							converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />
-						<h:commandButton styleClass="edit-button" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="Salva">
-							<f:ajax execute="@form" listener="#{pacchetto.modificaNumeroPartecipanti()}" render=":pannelloPartecipanti :prezzoPacchetto" />
-						</h:commandButton>
+						<h:commandButton styleClass="edit-button" action="#{pacchetto.modificaNumeroPartecipanti()}" oncomplete="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="Salva" />
 						<h:commandButton styleClass="edit-button" onclick="toggle('numeroPartecipanti'); toggle('modificaNumeroPartecipanti'); return false;" value="Annulla" />				
 					</h:form>
 				</h2>

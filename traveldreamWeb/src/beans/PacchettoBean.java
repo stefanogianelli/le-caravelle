@@ -210,9 +210,15 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoTreMieiPacchetti () {
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PERSONALIZZATO);
-		if(pacchetti.size() < 3)
-			pacchetti.addAll(pacchettoBean.elencoTrePacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PREDEFINITO));
+		List<PacchettoDTO> pacchetti = new ArrayList<PacchettoDTO>();
+		int size = 0;
+		for (PacchettoDTO p : this.elencoMieiPacchetti()) {
+			if (size < 3) {
+				pacchetti.add(p);
+				size++;
+			} else
+				break;
+		}
 		return pacchetti;
 	}
 	
