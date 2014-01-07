@@ -39,6 +39,7 @@ public class CollegamentoBean {
 	private Date dataPartenza;
 	private String cittaPartenza;
 	private String cittaArrivo;
+	private PaginatorBean paginator;
 	
 	@PostConstruct
 	public void setUp () {
@@ -94,6 +95,10 @@ public class CollegamentoBean {
 		this.cittaArrivo = cittaArrivo;
 	}
 
+	public PaginatorBean getPaginator() {
+		return paginator;
+	}
+
 	/**
 	 * Ritorna l'elenco delle tipologie di collegamento
 	 * @return Le tipologie di collegamento disponibili
@@ -116,10 +121,11 @@ public class CollegamentoBean {
 	
 	/**
 	 * Elenca tutti i collegamenti presenti nel database
-	 * @return L'elenco dei collegamenti
 	 */
-	public List<CollegamentoDTO> elencoCollegamenti () {
-		return this.collegamentoBean.elencoCollegamenti();
+	public void elencoCollegamenti () {
+		if (this.getPaginator() == null) {
+			paginator = new PaginatorBean(this.collegamentoBean.elencoCollegamenti());
+		}
 	}
 
 	/**

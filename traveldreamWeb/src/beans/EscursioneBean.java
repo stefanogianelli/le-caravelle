@@ -28,6 +28,7 @@ public class EscursioneBean {
 	private List<EscursioneDTO> elenco;
 	private Date data;
 	private String regione;
+	private PaginatorBean paginator;
 	
 	@PostConstruct
 	public void setUp () {
@@ -67,6 +68,10 @@ public class EscursioneBean {
 		this.regione = regione;
 	}
 
+	public PaginatorBean getPaginator() {
+		return paginator;
+	}
+
 	/**
 	 * Fornisce l'elenco di categorie disponibili
 	 * @return Le categorie di un'escursione
@@ -89,10 +94,10 @@ public class EscursioneBean {
 	
 	/**
 	 * Elenca tutte le escursioni presenti nel database
-	 * @return L'elenco delle escursioni
 	 */
-	public List<EscursioneDTO> elencoEscursioni () {
-		return escursioneBean.elencoEscursioni();
+	public void elencoEscursioni () {
+		if (paginator == null)
+			paginator = new PaginatorBean(escursioneBean.elencoEscursioni());
 	}
 
 	/**

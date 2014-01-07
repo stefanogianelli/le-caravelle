@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<f:event listener="#{collegamento.elencoCollegamenti()}" type="preRenderView" />
+
 <h1>Elenco collegamenti</h1>
 
 <div class="bloccoModifica">
@@ -19,32 +21,44 @@
 	</h:form>
 </div>
 
-<ui:repeat var="c" value="#{collegamento.elencoCollegamenti()}" varStatus="status">
-	<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
-		<div class="descr">
-			<p>Città di partenza: #{c.cittaPartenza.nome}</p>
-			<p>Città di arrivo: #{c.cittaArrivo.nome}</p>
-			<p>Tipo di collegamento: #{c.tipoCollegamento.label}</p>
-			<br></br>
-			<div id="prezzo">Data:
-				<h:outputText value="#{c.dataPartenza}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>			
-			</div>	
-		</div>
-		
-		<div class="pulsanti">
-		<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
-			<f:param name="codiceCollegamento" value="#{c.codice}" />
-		</h:link></p>
+<h:form id="elenco">
+	<ui:repeat var="c" value="#{collegamento.paginator.model}" varStatus="status">
+		<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
+			<div class="descr">
+				<p>Città di partenza: #{c.cittaPartenza.nome}</p>
+				<p>Città di arrivo: #{c.cittaArrivo.nome}</p>
+				<p>Tipo di collegamento: #{c.tipoCollegamento.label}</p>
+				<br></br>
+				<div id="prezzo">Data:
+					<h:outputText value="#{c.dataPartenza}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>			
+				</div>	
+			</div>
 			
-		<h:form>
-			<h:commandButton value="Elimina" styleClass="detail-button" action="#{collegamento.eliminaCollegamento(c.codice)}" />
-		</h:form>
+			<div class="pulsanti">
+				<p>
+					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+						<f:param name="codiceCollegamento" value="#{c.codice}" />
+					</h:link>
+				</p>
+				
+				<h:commandButton value="Elimina" styleClass="detail-button" action="#{collegamento.eliminaCollegamento(c.codice)}" />
+			
+			</div>			
 		</div>
-		
+	</ui:repeat>
+	<div style="text-align: center;">
+		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto;" >
+			<f:ajax execute="@form" listener="#{collegamento.paginator.prev()}" render=":elenco" />
+		</h:commandButton>
+		<h:outputText value="#{collegamento.paginator.pageIndex} / #{collegamento.paginator.pages}" />
+		<h:commandButton styleClass="edit-button" value="Successiva &gt;" style="width: auto;">
+			<f:ajax execute="@form" listener="#{collegamento.paginator.next()}" render=":elenco" />
+		</h:commandButton>
+		<h:inputHidden value="#{collegamento.paginator.pageIndex}"/>
 	</div>
-</ui:repeat>
+</h:form>	
 
 </ui:define>
 
