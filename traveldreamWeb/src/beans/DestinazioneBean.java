@@ -11,6 +11,7 @@ import dtos.DestinazioneDTO;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
+import eccezioni.InsertException;
 import eccezioni.NumeroPartecipantiException;
 import ejbs.GestoreDestinazione;
 
@@ -64,6 +65,8 @@ public class DestinazioneBean {
 			JsfUtil.errorMessage("Escursione già inserita!");
 		} catch (NumeroPartecipantiException e) {
 			JsfUtil.errorMessage("Il numero di partecipanti all'escursione deve essere minore o uguale al numero di partecipanti al viaggio!");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("La data dell'escursione è al di fouri del periodo di permanenza nella destinazione");
 		}
 		return null;
 	}
