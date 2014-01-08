@@ -99,7 +99,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
     }
 	
 	@Override
-	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EntitaEsistenteException, NumeroPartecipantiException {
+	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EntitaEsistenteException, NumeroPartecipantiException, InsertException {
 		Destinazioni entity = this.convertiInEntita(idDestinazione);
 		
 		//Controllo che il numero di partecipanti all'escursione sia minore o uguale al numero di partecipanti al viaggio
@@ -112,15 +112,20 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 			q.setParameter("escursione", escursioneEntity);
 			
 			if (q.getResultList().isEmpty()) {
-				Attivita attivita = new Attivita();		
-				attivita.setEscursione(escursioneEntity);		
-				attivita.setNumPartecipanti(numeroPartecipanti);
-				
-				entity.addAttivita(attivita);
-				//aggiorno il prezzo del pacchetto
-				entity.getPacchetto().setPrezzo(entity.getPacchetto().getPrezzo() + escursioneEntity.getPrezzo()*numeroPartecipanti);
-				
-				em.merge(entity);		
+				//controllo che l'escursione sia all'interno delle date della destinazione
+				if (entity.getDataArrivo().before(escursioneEntity.getData()) && entity.getDataPartenza().after(escursioneEntity.getData())) {			
+					
+					Attivita attivita = new Attivita();		
+					attivita.setEscursione(escursioneEntity);		
+					attivita.setNumPartecipanti(numeroPartecipanti);
+					
+					entity.addAttivita(attivita);
+					//aggiorno il prezzo del pacchetto
+					entity.getPacchetto().setPrezzo(entity.getPacchetto().getPrezzo() + escursioneEntity.getPrezzo()*numeroPartecipanti);
+					
+					em.merge(entity);
+				} else
+					throw new InsertException();
 			} else
 				throw new EntitaEsistenteException();
 		} else
