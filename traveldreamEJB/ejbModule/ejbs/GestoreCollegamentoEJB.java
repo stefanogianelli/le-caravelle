@@ -80,6 +80,20 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		}
 		return dto;
 	}
+	
+	@Override
+	public List<CollegamentoDTO> elencoCollegamenti(String cittaPartenza, String cittaArrivo) {
+		Query q = em.createNamedQuery("Collegamenti.elencoTraCitta", Collegamenti.class);
+		q.setParameter("partenza", cittaPartenza);
+		q.setParameter("arrivo", cittaArrivo);
+		@SuppressWarnings("unchecked")
+		List<Collegamenti> collegamenti = q.getResultList();
+		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
+		for (Collegamenti c : collegamenti) {
+			dto.add(this.convertiInDTO(c));
+		}
+		return dto;		
+	}
 
 	@Override
 	public int creaCollegamento(CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException {

@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import enums.TipoCollegamento;
 
-public class CollegamentoDTO implements Serializable {
+public class CollegamentoDTO implements Serializable, Comparable<CollegamentoDTO> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -117,5 +117,22 @@ public class CollegamentoDTO implements Serializable {
 	public void setCittaPartenza(CittaDTO cittaPartenza) {
 		this.cittaPartenza = cittaPartenza;
 	}
+	
+	@Override
+	public int compareTo(CollegamentoDTO c) {
+		if (this.getDataPartenza().before(c.getDataPartenza())) {
+			return -1;
+		} else if (this.getDataPartenza().compareTo(c.getDataPartenza()) == 0) {
+			if (this.getOraPartenza().before(c.getOraPartenza())) {
+				return -1;
+			} else if (this.getOraPartenza().compareTo(c.getOraPartenza()) == 0) {
+				return 0;
+			} else {
+				return 1;
+			}
+		} else {
+			return 1;
+		}
+	}	
 	
 }
