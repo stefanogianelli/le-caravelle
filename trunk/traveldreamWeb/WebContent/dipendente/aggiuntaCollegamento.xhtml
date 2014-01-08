@@ -15,12 +15,13 @@
 	<f:metadata>
 		<f:viewParam name="idPacchetto" binding="#{idPacchetto}" />
 		<f:event listener="#{pacchettoPredefinito.getPacchetto(idPacchetto)}" type="preRenderView" />
+		<f:event listener="#{collegamento.elencoCollegamentiDipendente(pacchettoPredefinito.pacchetto.cittaPartenza,pacchettoPredefinito.pacchetto.hotel.citta.nome)}" type="preRenderView" />
 	</f:metadata>
 	
 	<p:messages showDetail="true" autoUpdate="true" />	
 	
 	<h:form>
-		<ui:repeat var="c" value="#{collegamento.elencoCollegamentiDipendente(pacchettoPredefinito.pacchetto.cittaPartenza,pacchettoPredefinito.pacchetto.hotel.citta.nome)}">
+		<ui:repeat var="c" value="#{collegamento.elenco}">
 			<div class="bloccoPaccVolo">
 				<p>
 					<h:outputText value="#{c.dataPartenza}">
@@ -29,23 +30,25 @@
 				</p>
 				<div class="volo">
 					<div class="etichette">
-					<ul>
-						<li>Da</li>
-						<li>A</li>
-						<li>Partenza</li>
-						<li>Arrivo</li>
-						<li>Prezzo</li>
-					</ul>
+						<ul>
+							<li>Da</li>
+							<li>A</li>
+							<li>Partenza</li>
+							<li>Arrivo</li>
+							<li>Prezzo</li>
+						</ul>
 					</div>
 					
 					<div class="pulsantiVolo">
-					<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
-						<f:param name="idPacchetto" value="#{id.value}" />
-						<f:param name="codiceCollegamento" value="#{c.codice}" />
-					</h:link></p>
+						<p>
+							<h:selectBooleanCheckbox value="#{c.selezionato}"/>
+						</p>
 					
-					<p><h:commandLink value="Scegli" action="#{pacchettoPredefinito.aggiuntaCollegamento(idPacchetto,c)}" styleClass="detail-button" />			
-					</p></div>
+						<p>
+							<h:commandLink value="Scegli" action="#{pacchettoPredefinito.aggiuntaCollegamento(idPacchetto,c)}" styleClass="detail-button" />			
+						</p>
+					</div>
+					
 					<div class="dati">
 						<ul>
 							<li>#{c.cittaPartenza.nome} #{c.origine}</li>
@@ -66,6 +69,7 @@
 				</div>
 			</div>
 		</ui:repeat>
+		<h:commandButton value="Aggiungi multipi" action="#{pacchettoPredefinito.aggiuntaCollegamenti(idPacchetto, collegamento.elenco)}" />
 	</h:form>
 
 </ui:define>

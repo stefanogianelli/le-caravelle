@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import utils.DataUtils;
 import utils.JsfUtil;
 import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
@@ -367,6 +368,32 @@ public class PacchettoPredefinitoBean {
 			JsfUtil.errorMessage("Collegamento già esistente");
 		}
 		return null;
+	}
+	
+	/**
+	 * Permettere di aggiungere più collegamenti nel pacchetto
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @param collegamenti I collegamento da aggiungere
+	 * @return L'indirizzo della pagina di dettaglio del pacchetto
+	 */
+	public String aggiuntaCollegamenti (int idPacchetto, List<CollegamentoDTO> collegamenti) {
+		for (CollegamentoDTO c : collegamenti) {
+			if (c.isSelezionato()) {
+				try {
+					pacchettoBean.aggiuntaCollegamento(idPacchetto, c);
+				} catch (CollegamentoInesistenteException e) {
+					JsfUtil.errorMessage("Collegamento inesistente");
+					return null;
+				} catch (PacchettoInesistenteException e) {
+					JsfUtil.errorMessage("Pacchetto inesistente");
+					return null;
+				} catch (InsertException e) {
+					JsfUtil.errorMessage("Il collegamento del " + DataUtils.getData(c.getDataPartenza()) + " da " + c.getCittaPartenza().getNome() + " a " + c.getCittaArrivo().getNome() + " è già stato inserito");
+					return null;
+				}
+			}
+		}
+		return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
 	}
 	
 	/**
