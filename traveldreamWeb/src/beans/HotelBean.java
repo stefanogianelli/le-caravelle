@@ -64,7 +64,7 @@ public class HotelBean {
 		try {
 			this.setHotel(hotelBean.getHotel(idHotel));
 		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel sconosciuto!");
+			JsfUtil.errorMessage("Hotel sconosciuto");
 		}
 	}
 
@@ -99,9 +99,9 @@ public class HotelBean {
 		try {
 			return "dettagliHotel?idHotel=" + hotelBean.creaHotel(this.getHotel()) + "&faces-redirect=true";
 		} catch (EntitaEsistenteException e) {
-			JsfUtil.errorMessage("L'hotel è già presente nel database!");
+			JsfUtil.errorMessage("L'hotel è già presente nel database");
 		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta!");
+			JsfUtil.errorMessage("Città sconosciuta");
 		}
 		return null;
 	}
@@ -115,9 +115,9 @@ public class HotelBean {
 			hotelBean.modificaDatiHotel(this.getHotel());			
 			return "dettagliHotel?idHotel=" + this.getHotel().getId() + "&faces-redirect=true";
 		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta!");
+			JsfUtil.errorMessage("Città sconosciuta");
 		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel sconosciuto!");
+			JsfUtil.errorMessage("Hotel sconosciuto");
 		}
 		return null;
 	}
@@ -132,7 +132,7 @@ public class HotelBean {
 			hotelBean.eliminaHotel(idHotel);
 			return "elencoHotel?faces-redirect=true";
 		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel sconosciuta!");
+			JsfUtil.errorMessage("Hotel sconosciuta");
 		}
 		return null;
 	}

@@ -115,7 +115,7 @@ public class CollegamentoBean {
 		try {
 			this.setCollegamento(collegamentoBean.getCollegamento(codiceCollegamento));
 		} catch (CollegamentoInesistenteException e) {
-			JsfUtil.errorMessage("Collegamento inesistente!");
+			JsfUtil.errorMessage("Collegamento inesistente");
 		}
 	}
 	
@@ -153,7 +153,7 @@ public class CollegamentoBean {
 					this.getElenco().add(c);
 			}
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
 	}
 	
@@ -169,9 +169,9 @@ public class CollegamentoBean {
 			else
 				JsfUtil.errorMessage("La città di partenza e di arrivo devono essere diverse");
 		} catch (EntityExistsException e) {
-			JsfUtil.errorMessage("Il collegamento è già presente nel database!");
+			JsfUtil.errorMessage("Il collegamento è già presente nel database");
 		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta!");
+			JsfUtil.errorMessage("Città sconosciuta");
 		}
 		return null;
 	}
@@ -185,9 +185,9 @@ public class CollegamentoBean {
 			collegamentoBean.modificaDatiCollegamento(this.getCollegamento());
 			return "dettagliCollegamento?codiceCollegamento=" + this.getCollegamento().getCodice() + "&faces-redirect=true";
 		} catch (CollegamentoInesistenteException e) {
-			JsfUtil.errorMessage("Collegamento inesistente!");
+			JsfUtil.errorMessage("Collegamento inesistente");
 		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta!");
+			JsfUtil.errorMessage("Città sconosciuta");
 		}
 		return null;
 	}
@@ -202,7 +202,7 @@ public class CollegamentoBean {
 			collegamentoBean.eliminaCollegamento(codiceCollegamento);
 			return "elencoCollegamenti?faces-redirect=true";
 		} catch (CollegamentoInesistenteException e) {
-			JsfUtil.errorMessage("Collegamento inesistente!");
+			JsfUtil.errorMessage("Collegamento inesistente");
 		}
 		return null;
 	}	

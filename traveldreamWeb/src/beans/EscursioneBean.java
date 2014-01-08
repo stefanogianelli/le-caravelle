@@ -110,7 +110,7 @@ public class EscursioneBean {
 		try {
 			this.setEscursione(escursioneBean.getEscursione(idEscursione));
 		} catch (EscursioneInesistenteException e) {
-			JsfUtil.errorMessage("Escursione inesistente!");
+			JsfUtil.errorMessage("Escursione inesistente");
 		}
 	}
 	
@@ -156,9 +156,9 @@ public class EscursioneBean {
 		try {
 			return "dettagliEscursione?idEscursione=" + escursioneBean.creaEscursione(this.getEscursione()) + "&faces-redirect=true";
 		} catch (EntitaEsistenteException e) {
-			JsfUtil.errorMessage("L'escursione è già presente nel database!");
+			JsfUtil.errorMessage("L'escursione è già presente nel database");
 		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Regione sconosciuta!");
+			JsfUtil.errorMessage("Regione sconosciuta");
 		}
 		return null;
 	}
@@ -172,9 +172,9 @@ public class EscursioneBean {
 			escursioneBean.modificaDatiEscursione(this.getEscursione());
 			return "dettagliEscursione?idEscursione=" + this.getEscursione().getId() + "&faces-redirect=true";
 		} catch (EscursioneInesistenteException e) {
-			JsfUtil.errorMessage("Escursione inesistente!");
+			JsfUtil.errorMessage("Escursione inesistente");
 		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Regione sconosciuta!");
+			JsfUtil.errorMessage("Regione sconosciuta");
 		}
 		return null;
 	}
@@ -189,7 +189,7 @@ public class EscursioneBean {
 			escursioneBean.eliminaEscursione(idEscursione);
 			return "elencoEscursioni?faces-redirect=true";
 		} catch (EscursioneInesistenteException e) {
-			JsfUtil.errorMessage("Escursione inesistente!");
+			JsfUtil.errorMessage("Escursione inesistente");
 		}
 		return null;
 	}

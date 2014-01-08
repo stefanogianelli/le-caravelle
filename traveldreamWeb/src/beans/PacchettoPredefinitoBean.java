@@ -74,7 +74,7 @@ public class PacchettoPredefinitoBean {
 		try {
 			this.setPacchetto(pacchettoBean.getPacchetto(id));
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class PacchettoPredefinitoBean {
 			} else
 				return "noImage.png";
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
 		return null;
 	}	
@@ -106,7 +106,7 @@ public class PacchettoPredefinitoBean {
 		//verifico che la data non sia già stata inserita
 		if (this.getPacchetto().getDatePartenza().indexOf(data) == -1) {
 			this.getPacchetto().getDatePartenza().add(data);
-			JsfUtil.infoMessage("Data aggiunta!");
+			JsfUtil.infoMessage("Data aggiunta");
 		} else
 			JsfUtil.errorMessage("Data già inserita");
 	}
@@ -119,7 +119,7 @@ public class PacchettoPredefinitoBean {
 		//verifico che la durata non sia già stata inserita
 		if (this.getPacchetto().getDurate().indexOf(durata) == -1) {
 			this.getPacchetto().getDurate().add(durata);
-			JsfUtil.infoMessage("Durata aggiunta!");
+			JsfUtil.infoMessage("Durata aggiunta");
 		} else
 			JsfUtil.errorMessage("Durata già inserita");
 	}
@@ -134,7 +134,7 @@ public class PacchettoPredefinitoBean {
 		//verifico che la città non sia già stata inserita
 		if (this.getPacchetto().getCittaPartenza().indexOf(citta) == -1) {
 			this.getPacchetto().getCittaPartenza().add(citta);
-			JsfUtil.infoMessage("Città aggiunta!");
+			JsfUtil.infoMessage("Città aggiunta");
 		} else
 			JsfUtil.errorMessage("Città già inserita");
 	}
@@ -166,20 +166,20 @@ public class PacchettoPredefinitoBean {
 							this.getPacchetto().setHotel(hotel);
 							return "dettagliPacchetto?idPacchetto=" + pacchettoBean.creaPacchetto(getPacchetto()) + "&faces-redirect=true";
 						} catch (HotelInesistenteException e) {
-							JsfUtil.errorMessage("Hotel inesistente!");
+							JsfUtil.errorMessage("Hotel inesistente");
 						} catch (CittaInesistenteException w) {
-							JsfUtil.errorMessage("Città inesistente!");
+							JsfUtil.errorMessage("Città inesistente");
 						} catch (InsertException e) {
-							JsfUtil.errorMessage("Nome già usato!");
+							JsfUtil.errorMessage("Nome già usato");
 						}		
 					} else
-						JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza!");
+						JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza");
 				} else
-					JsfUtil.errorMessage("Inserire almeno una durata!");
+					JsfUtil.errorMessage("Inserire almeno una durata");
 			} else
-				JsfUtil.errorMessage("Inserire almeno una data di partenza!");
+				JsfUtil.errorMessage("Inserire almeno una data di partenza");
 		} else
-			JsfUtil.errorMessage("Inserire almeno una città di partenza!");
+			JsfUtil.errorMessage("Inserire almeno una città di partenza");
 		
 		return null;
 	}
@@ -194,7 +194,7 @@ public class PacchettoPredefinitoBean {
 			pacchettoBean.eliminaPacchetto(idPacchetto);
 			return "elencoPacchetti?faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
 		return null;
 	}
@@ -205,11 +205,11 @@ public class PacchettoPredefinitoBean {
 	public void modificaNomePacchetto () {
 		try {
 			pacchettoBean.modificaNomePacchetto(getPacchetto());
-			JsfUtil.infoMessage("Nome modificato!");
+			JsfUtil.infoMessage("Nome modificato");
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		} catch (InsertException e) {
-			JsfUtil.errorMessage("Nome già usato!");
+			JsfUtil.errorMessage("Nome già usato");
 		}
 	}
 	
@@ -219,9 +219,9 @@ public class PacchettoPredefinitoBean {
 	public void modificaPrezzoPacchetto () {
 		try {
 			pacchettoBean.modificaPrezzo(getPacchetto());
-			JsfUtil.infoMessage("Prezzo modificato!");
+			JsfUtil.infoMessage("Prezzo modificato");
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
 	}
 	
@@ -236,11 +236,11 @@ public class PacchettoPredefinitoBean {
 			pacchettoBean.modificaHotel(idPacchetto, hotel);
 			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel inesistente!");
+			JsfUtil.errorMessage("Hotel inesistente");
 		} catch (InsertException e) {
-			JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza!");
+			JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza");
 		}
 		return null;
 	}
@@ -254,11 +254,11 @@ public class PacchettoPredefinitoBean {
 			pacchettoBean.aggiuntaCittaPartenza(getPacchetto(), nome);
 			JsfUtil.infoMessage("Città aggiunta");
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città inesistente!");
+			JsfUtil.errorMessage("Città inesistente");
 		} catch (InsertException e) {
-			JsfUtil.errorMessage("Città già inserita!");
+			JsfUtil.errorMessage("Città già inserita");
 		}
 	}
 	
@@ -271,14 +271,14 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getCittaPartenza().size() > 1) {
 			try {
 				pacchettoBean.rimuoviCittaPartenza(getPacchetto(), citta);
-				JsfUtil.infoMessage("Città rimossa!");
+				JsfUtil.infoMessage("Città rimossa");
 			} catch (PacchettoInesistenteException e) {
-				JsfUtil.errorMessage("Pacchetto inesistente!");
+				JsfUtil.errorMessage("Pacchetto inesistente");
 			} catch (CittaInesistenteException e) {
-				JsfUtil.errorMessage("Città inesistente!");
+				JsfUtil.errorMessage("Città inesistente");
 			}
 		} else
-			JsfUtil.errorMessage("Ultima città rimasta, impossibile eliminare!");
+			JsfUtil.errorMessage("Ultima città rimasta, impossibile eliminare");
 	}
 	
 	/**
@@ -292,10 +292,10 @@ public class PacchettoPredefinitoBean {
 				pacchettoBean.aggiuntaDataPartenza(getPacchetto(), data);
 				JsfUtil.infoMessage("Data aggiunta");
 			} catch (PacchettoInesistenteException e) {
-				JsfUtil.errorMessage("Pacchetto inesistente!");
+				JsfUtil.errorMessage("Pacchetto inesistente");
 			}
 		} else
-			JsfUtil.errorMessage("Data già inserita!");
+			JsfUtil.errorMessage("Data già inserita");
 	}
 	
 	/**
@@ -307,12 +307,12 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getDatePartenza().size() > 1) {
 			try {
 				pacchettoBean.rimuoviDataPartenza(getPacchetto(), data);
-				JsfUtil.infoMessage("Data rimossa!");
+				JsfUtil.infoMessage("Data rimossa");
 			} catch (PacchettoInesistenteException e) {
-				JsfUtil.errorMessage("Pacchetto inesistente!");
+				JsfUtil.errorMessage("Pacchetto inesistente");
 			}
 		} else
-			JsfUtil.errorMessage("Ultima data rimasta, impossibile eliminare!");
+			JsfUtil.errorMessage("Ultima data rimasta, impossibile eliminare");
 	}
 	
 	/**
@@ -324,12 +324,12 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getDurate().indexOf(durata) == -1) {
 			try {
 				pacchettoBean.aggiuntaDurata(getPacchetto(), durata);
-				JsfUtil.infoMessage("Durata aggiunta!");
+				JsfUtil.infoMessage("Durata aggiunta");
 			} catch (PacchettoInesistenteException e) {
-				JsfUtil.errorMessage("Pacchetto inesistente!");
+				JsfUtil.errorMessage("Pacchetto inesistente");
 			}
 		} else
-			JsfUtil.errorMessage("Durata già esistente!");
+			JsfUtil.errorMessage("Durata già esistente");
 	}
 	
 	/**
@@ -341,12 +341,12 @@ public class PacchettoPredefinitoBean {
 		if (this.getPacchetto().getDurate().size() > 1) {
 			try {
 				pacchettoBean.rimuoviDurata(getPacchetto(), durata);
-				JsfUtil.infoMessage("Durata rimossa!");
+				JsfUtil.infoMessage("Durata rimossa");
 			} catch (PacchettoInesistenteException e) {
-				JsfUtil.errorMessage("Pacchetto inesistente!");
+				JsfUtil.errorMessage("Pacchetto inesistente");
 			}
 		} else
-			JsfUtil.errorMessage("Impossibile rimuovere la durata!");
+			JsfUtil.errorMessage("Impossibile rimuovere la durata");
 	}
 	
 	/**
@@ -360,11 +360,11 @@ public class PacchettoPredefinitoBean {
 			pacchettoBean.aggiuntaCollegamento(idPacchetto, collegamento);
 			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
 		} catch (CollegamentoInesistenteException e) {
-			JsfUtil.errorMessage("Collegamento inesistente!");
+			JsfUtil.errorMessage("Collegamento inesistente");
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		} catch (InsertException e) {
-			JsfUtil.errorMessage("Collegamento già esistente!");
+			JsfUtil.errorMessage("Collegamento già esistente");
 		}
 		return null;
 	}
@@ -376,11 +376,11 @@ public class PacchettoPredefinitoBean {
 	public void rimuoviCollegamento (CollegamentoDTO collegamento) {
 		try {
 			pacchettoBean.rimuoviCollegamento(getPacchetto(), collegamento);
-			JsfUtil.infoMessage("Collegamento rimosso!");
+			JsfUtil.infoMessage("Collegamento rimosso");
 		} catch (CollegamentoInesistenteException e) {
-			JsfUtil.errorMessage("Collegamento inesistente!");
+			JsfUtil.errorMessage("Collegamento inesistente");
 		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente!");
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
 	}
 }

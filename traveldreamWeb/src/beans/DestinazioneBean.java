@@ -58,13 +58,13 @@ public class DestinazioneBean {
 			destinazioneBean.aggiuntaEscursione(idDestinazione, idEscursione, this.getPartecipanti());
 			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
 		} catch (EscursioneInesistenteException e) {
-			JsfUtil.errorMessage("Escursione inesistente!");
+			JsfUtil.errorMessage("Escursione inesistente");
 		} catch (DestinazioneInesistenteException e) {
-			JsfUtil.errorMessage("Destinazione inesistente!");
+			JsfUtil.errorMessage("Destinazione inesistente");
 		} catch (EntitaEsistenteException e) {
-			JsfUtil.errorMessage("Escursione già inserita!");
+			JsfUtil.errorMessage("Escursione già inserita");
 		} catch (NumeroPartecipantiException e) {
-			JsfUtil.errorMessage("Il numero di partecipanti all'escursione deve essere minore o uguale al numero di partecipanti al viaggio!");
+			JsfUtil.errorMessage("Il numero di partecipanti all'escursione deve essere minore o uguale al numero di partecipanti al viaggio");
 		} catch (InsertException e) {
 			JsfUtil.errorMessage("La data dell'escursione è al di fouri del periodo di permanenza nella destinazione");
 		}
@@ -79,11 +79,11 @@ public class DestinazioneBean {
 		try {
 			destinazioneBean.modificaDatiEscursione(attivita);
 		} catch (EscursioneInesistenteException e) {
-			JsfUtil.errorMessage("Escursione inesistente!");
+			JsfUtil.errorMessage("Escursione inesistente");
 		} catch (DestinazioneInesistenteException e) {
-			JsfUtil.errorMessage("Destinazione inesistente!");
+			JsfUtil.errorMessage("Destinazione inesistente");
 		} catch (NumeroPartecipantiException e) {
-			JsfUtil.errorMessage("Il numero di partecipanti all'escursione deve essere minore o uguale al numero di partecipanti al viaggio!");
+			JsfUtil.errorMessage("Il numero di partecipanti all'escursione deve essere minore o uguale al numero di partecipanti al viaggio");
 		}
 	}
 	
@@ -94,11 +94,11 @@ public class DestinazioneBean {
 	public void eliminaEscursione (AttivitaDTO attivita) {
 		try {
 			destinazioneBean.eliminaEscursione(attivita);
-			JsfUtil.infoMessage("Escursione eliminata!");
+			JsfUtil.infoMessage("Escursione eliminata");
 		} catch (EscursioneInesistenteException e) {
-			JsfUtil.errorMessage("Escursione inesistente!");
+			JsfUtil.errorMessage("Escursione inesistente");
 		} catch (DestinazioneInesistenteException e) {
-			JsfUtil.errorMessage("Destinazione inesistente!");
+			JsfUtil.errorMessage("Destinazione inesistente");
 		}
 	}
 }
