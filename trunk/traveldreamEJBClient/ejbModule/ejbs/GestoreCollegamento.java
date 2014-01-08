@@ -46,6 +46,14 @@ public interface GestoreCollegamento {
 	List<CollegamentoDTO> elencoCollegamenti(Date data, String idCittaPartenza, String idCittaArrivo, TipoCollegamento tipo);
 	
 	/**
+	 * Mostra l'elenco dei collegamenti disponibili tra due destinazioni
+	 * @param cittaPartenza Il nome della città di partenza
+	 * @param cittaArrivo Il nome della città di arrivo
+	 * @return La lista dei collegamenti trovati
+	 */
+	List<CollegamentoDTO> elencoCollegamenti(String cittaPartenza, String cittaArrivo);	
+	
+	/**
 	 * Aggiunge un nuovo collegamento nel database
 	 * @param collegamento I dati del collegamento da aggiungere
 	 * @return L'identificativo del nuovo collegamento creato

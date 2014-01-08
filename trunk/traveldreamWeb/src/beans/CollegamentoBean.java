@@ -1,6 +1,7 @@
 package beans;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityExistsException;
 
 import utils.JsfUtil;
+import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
@@ -126,6 +128,22 @@ public class CollegamentoBean {
 		if (this.getPaginator() == null) {
 			paginator = new PaginatorBean(this.collegamentoBean.elencoCollegamenti());
 		}
+	}
+	
+	/**
+	 * Ricerca i collegamenti di andata e ritorno verso tutte le combinazioni di citta di partenza e arrivo
+	 * @param cittaPartenza L'elenco delle città di partenza
+	 * @param cittaArrivo La città di arrivo
+	 * @return La lista dei collegamenti trovati
+	 */
+	public List<CollegamentoDTO> elencoCollegamentiDipendente (List<CittaDTO> cittaPartenza, String cittaArrivo) {
+		List<CollegamentoDTO> elenco = new ArrayList<CollegamentoDTO>();
+		for (CittaDTO c : cittaPartenza) {
+			elenco.addAll(this.collegamentoBean.elencoCollegamenti(c.getNome(), cittaArrivo));
+			elenco.addAll(this.collegamentoBean.elencoCollegamenti(cittaArrivo, c.getNome()));
+		}
+		Collections.sort(elenco);
+		return elenco;
 	}
 
 	/**

@@ -14,12 +14,13 @@
 <h3>Seleziona il collegamento</h3>
 	<f:metadata>
 		<f:viewParam name="idPacchetto" binding="#{idPacchetto}" />
+		<f:event listener="#{pacchettoPredefinito.getPacchetto(idPacchetto)}" type="preRenderView" />
 	</f:metadata>
 	
 	<p:messages showDetail="true" autoUpdate="true" />	
 	
 	<h:form>
-		<ui:repeat var="c" value="#{collegamento.elencoCollegamenti()}">
+		<ui:repeat var="c" value="#{collegamento.elencoCollegamentiDipendente(pacchettoPredefinito.pacchetto.cittaPartenza,pacchettoPredefinito.pacchetto.hotel.citta.nome)}">
 			<div class="bloccoPaccVolo">
 				<p>
 					<h:outputText value="#{c.dataPartenza}">
