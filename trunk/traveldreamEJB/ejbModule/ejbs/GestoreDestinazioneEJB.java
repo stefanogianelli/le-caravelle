@@ -14,7 +14,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import dtos.AttivitaDTO;
 import dtos.DestinazioneDTO;
@@ -107,7 +107,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 			Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
 			
 			//controllo che l'escursione non sia già stata aggiunta
-			Query q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+			TypedQuery<Attivita> q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
 			q.setParameter("destinazione", entity);
 			q.setParameter("escursione", escursioneEntity);
 			
@@ -201,10 +201,10 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	
 	@Override
 	public Attivita convertiInEntita (AttivitaDTO attivita) {
-		Query q = em.createNamedQuery("Attivita.getAttivitaDaId", Attivita.class);
+		TypedQuery<Attivita> q = em.createNamedQuery("Attivita.getAttivitaDaId", Attivita.class);
 		q.setParameter("destinazione", attivita.getDestinazione().getId());
 		q.setParameter("escursione", attivita.getEscursione().getId());
-		return (Attivita) q.getSingleResult();
+		return q.getSingleResult();
 	}
 	
 	@Override

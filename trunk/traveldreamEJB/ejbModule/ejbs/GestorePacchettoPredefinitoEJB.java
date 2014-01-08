@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
@@ -59,11 +59,11 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	
 	@Override
 	public PacchettoPredefinitoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException {
-		Query q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaId", PacchettiPredefiniti.class);
+		TypedQuery<PacchettiPredefiniti> q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaId", PacchettiPredefiniti.class);
 		q.setParameter("id", idPacchetto);
 		PacchettiPredefiniti pacchetto;
 		try {
-			pacchetto = (PacchettiPredefiniti) q.getSingleResult();
+			pacchetto = q.getSingleResult();
 		} catch (NoResultException e) {
 			throw new PacchettoInesistenteException();
 		}
@@ -85,7 +85,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();
 		
 		//Controllo che il nome del pacchetto non sia già stato utilizzato
-		Query q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaNome", PacchettiPredefiniti.class);
+		TypedQuery<PacchettiPredefiniti> q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaNome", PacchettiPredefiniti.class);
 		q.setParameter("nome", pacchetto.getNome());
 		if (q.getResultList().isEmpty()) {		
 			entity.setNome(pacchetto.getNome());
@@ -153,10 +153,10 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	public void rimuoviDataPartenza(PacchettoPredefinitoDTO pacchetto, Date data) throws PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 
-		Query q = em.createNamedQuery("DatePartenza.getDataPartenza", DatePartenza.class);
+		TypedQuery<DatePartenza> q = em.createNamedQuery("DatePartenza.getDataPartenza", DatePartenza.class);
 		q.setParameter("pacchetto", entity);
 		q.setParameter("data", data);
-		DatePartenza dataPartenza = (DatePartenza) q.getSingleResult();
+		DatePartenza dataPartenza = q.getSingleResult();
 		
 		entity.removeDataPartenza(dataPartenza);
 		
@@ -179,10 +179,10 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	public void rimuoviDurata(PacchettoPredefinitoDTO pacchetto, int durata) throws PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
-		Query q = em.createNamedQuery("Durate.getDurata", Durate.class);
+		TypedQuery<Durate> q = em.createNamedQuery("Durate.getDurata", Durate.class);
 		q.setParameter("pacchetto", entity);
 		q.setParameter("durata", durata);
-		Durate d = (Durate) q.getSingleResult();
+		Durate d = q.getSingleResult();
 		
 		entity.removeDurata(d);
 		
@@ -233,10 +233,10 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		
 		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
 		
-		Query q = em.createNamedQuery("AttivitaPred.getAttivita", AttivitaPred.class);
+		TypedQuery<AttivitaPred> q = em.createNamedQuery("AttivitaPred.getAttivita", AttivitaPred.class);
 		q.setParameter("pacchetto", entity);
 		q.setParameter("escursione", escursioneEntity);
-		AttivitaPred attivita = (AttivitaPred) q.getSingleResult();
+		AttivitaPred attivita = q.getSingleResult();
 		
 		entity.removeAttivita(attivita);
 		
@@ -248,7 +248,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
 		//Controllo che il nome del pacchetto non sia già stato utilizzato
-		Query q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaNome", PacchettiPredefiniti.class);
+		TypedQuery<PacchettiPredefiniti> q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaNome", PacchettiPredefiniti.class);
 		q.setParameter("nome", pacchetto.getNome());
 		if (q.getResultList().isEmpty()) {	
 			entity.setNome(pacchetto.getNome());

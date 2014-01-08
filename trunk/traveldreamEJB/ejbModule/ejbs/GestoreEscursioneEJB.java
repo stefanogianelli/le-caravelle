@@ -13,7 +13,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -94,7 +93,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 	@Override
 	public int creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException, EntitaEsistenteException {
 		//verifico che non esista già un'escursione con lo stesso nome nella stessa città
-		Query q = em.createNamedQuery("Escursioni.getEscursioneDaNome", Escursioni.class);
+		TypedQuery<Escursioni> q = em.createNamedQuery("Escursioni.getEscursioneDaNome", Escursioni.class);
 		q.setParameter("nome", escursione.getNome());
 		q.setParameter("citta", escursione.getCitta().getNome());
 		if(!q.getResultList().isEmpty())
