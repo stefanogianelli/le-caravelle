@@ -845,3 +845,13 @@ select{
 	border: 1px solid transparent;
 	margin: 0 40px;
 }
+
+/* Primefaces override */
+
+.ui-inplace-content {
+	font-size:15px!important;
+}
+
+.ui-inputtext {
+	width: 25px!important;
+}

@@ -270,7 +270,7 @@
 	<!-- Informazioni sulle escursioni -->
 	<div class="bloccoPaccVolo" style="height: auto;">
 		<div class="tabella">
-			<h:dataTable value="#{d.attivita}" var="a" rendered="#{d.attivita.size() > 0}">
+			<h:dataTable id="escursioni" value="#{d.attivita}" var="a" rendered="#{d.attivita.size() > 0}">
 				<h:column>
 					<f:facet name="header">Nome</f:facet>
 					#{a.escursione.nome}
@@ -289,13 +289,17 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">Partecipanti</f:facet>
-					#{a.numeroPartecipanti}
+					<h:form>
+						<p:inplace editor="true">  
+							<p:ajax event="save" listener="#{destinazione.modificaEscursione(a)}" update=":prezzoPacchetto" />
+			                <p:inputText value="#{a.numeroPartecipanti}" required="true" />   								                
+			            </p:inplace>
+		            </h:form>
 				</h:column>
 				<h:column>
 					<h:form>
 						<h:commandButton styleClass="flight-button" value="Elimina" action="#{destinazione.eliminaEscursione(a)}" />
-						<h:commandButton styleClass="flight-button" value="Modifica" />		
-					</h:form>			
+					</h:form>
 				</h:column>
 			</h:dataTable>
 		</div>
