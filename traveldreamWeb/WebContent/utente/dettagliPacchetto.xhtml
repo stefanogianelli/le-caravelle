@@ -226,7 +226,7 @@
 			<!-- Blocco aggiunta volo -->
 			<h:panelGroup styleClass="dati" layout="block" rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
 				<div class="newColl">
-               		<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
+               		<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento" disabled="#{not pacchetto.destinazioneCoerente(d)}">
                   		<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 						<f:param name="dataPartenza" value="#{data.getData(d.dataArrivo)}" />
 						<f:param name="cittaPartenza" value="#{pacchetto.getCittaPartenza(d)}" />
