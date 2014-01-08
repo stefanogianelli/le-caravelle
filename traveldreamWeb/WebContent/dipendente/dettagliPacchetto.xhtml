@@ -16,7 +16,7 @@
 	<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
 </f:metadata>
 
-<p:messages showDetail="true" autoUpdate="true" />
+<p:messages showDetail="false" autoUpdate="true" />
 
 <h:form>
 	<h1 id="nomePacchetto" style="display: block;">
@@ -35,10 +35,21 @@
 		
 		<div class="descr">
 			<p>Città di partenza</p>
-			<h2>cittàPartenza</h2>
+			<h:selectOneMenu styleClass="menu-pred" binding="#{cittaPartenza}">
+					<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
+				</h:selectOneMenu>
 			<br></br>
-			<p>Durata (giorni)</p>
-			<h2>durata</h2>
+			<br></br>
+			<p>Date di partenza</p>
+			<h:selectOneMenu styleClass="menu-pred" binding="#{dataPartenza}">
+					<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
+				</h:selectOneMenu>
+			<br></br>
+			<br></br>
+			<p>Durate (giorni)</p>
+			<h:selectOneMenu styleClass="menu-pred" binding="#{durata}">
+					<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
+			</h:selectOneMenu>
 		</div>
 		
 		<div class="pulsanti">

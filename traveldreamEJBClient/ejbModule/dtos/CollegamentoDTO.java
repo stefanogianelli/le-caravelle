@@ -33,6 +33,8 @@ public class CollegamentoDTO implements Serializable, Comparable<CollegamentoDTO
 	
 	private CittaDTO cittaPartenza;
 	
+	private boolean selezionato;
+	
 	public CollegamentoDTO () {
 		cittaArrivo = new CittaDTO();
 		cittaPartenza = new CittaDTO();
@@ -118,6 +120,14 @@ public class CollegamentoDTO implements Serializable, Comparable<CollegamentoDTO
 		this.cittaPartenza = cittaPartenza;
 	}
 	
+	public boolean isSelezionato() {
+		return selezionato;
+	}
+
+	public void setSelezionato(boolean selezionato) {
+		this.selezionato = selezionato;
+	}
+
 	@Override
 	public int compareTo(CollegamentoDTO c) {
 		if (this.getDataPartenza().before(c.getDataPartenza())) {
