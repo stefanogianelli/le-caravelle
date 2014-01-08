@@ -48,9 +48,9 @@ public class ProfiloBean {
 		try {
 			profiloBean.registrazioneUtente(profilo.getEmail());
 		} catch (MessagingException e) {
-			JsfUtil.errorMessage("Errore!");
+			JsfUtil.errorMessage("Errore");
 		} catch (EntitaEsistenteException e) {
-			JsfUtil.errorMessage("email già usata!");
+			JsfUtil.errorMessage("email già usata");
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class ProfiloBean {
 		try {
 			profiloBean.resetPassword(datiUtente);
 		} catch (MessagingException e) {
-			JsfUtil.errorMessage("Errore!");
+			JsfUtil.errorMessage("Errore");
 		}
 	}
 
