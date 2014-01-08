@@ -848,10 +848,10 @@ select{
 
 /* Primefaces override */
 
-.ui-inplace-content {
+.tabella .ui-inplace-content {
 	font-size:15px!important;
 }
 
-.ui-inputtext {
+.tabella .ui-inputtext {
 	width: 25px!important;
 }
