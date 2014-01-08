@@ -38,12 +38,12 @@ public interface GestoreCollegamento {
 	/**
 	 * Mostra l'elenco dei collegamenti disponibili tra due destinazioni nella data indicate e della tipologia selezionata
 	 * @param data La data del collegamento
-	 * @param idCittaPartenza L'identificativo della città di partenza
-	 * @param idCittaArrivo L'identificativo della città di arrivo
+	 * @param cittaPartenza Il nome della città di partenza
+	 * @param cittaArrivo Il nome della città di arrivo
 	 * @param tipo La tipologia del collegamento
 	 * @return L'elenco dei collegamenti trovati
 	 */
-	List<CollegamentoDTO> elencoCollegamenti(Date data, String idCittaPartenza, String idCittaArrivo, TipoCollegamento tipo);
+	List<CollegamentoDTO> elencoCollegamenti(Date data, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo);
 	
 	/**
 	 * Mostra l'elenco dei collegamenti disponibili tra due destinazioni
