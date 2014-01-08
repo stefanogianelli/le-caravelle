@@ -290,40 +290,53 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		Pacchetti entity = this.convertiInEntita(idPacchetto);
 		int numeroDestinazioni = entity.getDestinazioni().size();
 		
-		boolean check = false;
+		boolean checkDate = false;
+		boolean checkDest = true;
 		
 		//controllo le date della destinazione
 		if (destinazione.getDataPartenza().equals(entity.getDestinazioni().get(0).getDataArrivo())) {
-			check = true;
+			checkDate = true;
 		} else if (destinazione.getDataArrivo().equals(entity.getDestinazioni().get(numeroDestinazioni - 1).getDataPartenza())) {
-			check = true;
+			checkDate = true;
 		} else {
 			for (int i = 0; i < numeroDestinazioni - 1; i++) {
 				if (destinazione.getDataArrivo().equals(entity.getDestinazioni().get(i).getDataPartenza()) && destinazione.getDataPartenza().equals(entity.getDestinazioni().get(i + 1).getDataArrivo()) && !entity.getDestinazioni().get(i).getDataPartenza().equals(entity.getDestinazioni().get(i + 1).getDataArrivo())) {
-					check = true;
+					checkDate = true;
 					break;
 				}
 			}
 		}
 		
-		//controllo le date della destinazione
-		if (check) {
-			//impedisco all'utente di selezionare un hotel nella stessa città di partenza
-			if (!destinazione.getCitta().getNome().equalsIgnoreCase(entity.getCitta().getNome())) {
-				//controllo che la data di arrivo sia minore della data di partenza dalla destinazione
-				if (destinazione.getDataArrivo().before(destinazione.getDataPartenza())) {			
-					entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));					
-					this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
-					//aggiorno il prezzo del pacchetto
-					entity.setPrezzo(this.calcolaPrezzo(entity));
-					
-					em.merge(entity);
+		//controllo che la destinazione non sia già stata inserita
+		for (Destinazioni d : entity.getDestinazioni()) {
+			if (destinazione.getCitta().getNome().equals(d.getCitta().getNome())) {
+				checkDest = false;
+				break;
+			}
+		}
+		
+		//controllo che la destinazione non sia già stata inserita
+		if (checkDest) {
+			//controllo le date della destinazione
+			if (checkDate) {
+				//impedisco all'utente di selezionare un hotel nella stessa città di partenza
+				if (!destinazione.getCitta().getNome().equalsIgnoreCase(entity.getCitta().getNome())) {
+					//controllo che la data di arrivo sia minore della data di partenza dalla destinazione
+					if (destinazione.getDataArrivo().before(destinazione.getDataPartenza())) {			
+						entity.addDestinazione(this.destinazione.creaDestinazione(destinazione));					
+						this.rimuoviCollegamenti(entity, destinazione.getDataArrivo(), destinazione.getDataPartenza());
+						//aggiorno il prezzo del pacchetto
+						entity.setPrezzo(this.calcolaPrezzo(entity));
+						
+						em.merge(entity);
+					} else
+						throw new InsertException("La data di arrivo deve essere precedente alla data di partenza");
 				} else
-					throw new InsertException("La data di arrivo deve essere precedente alla data di partenza!");
+					throw new InsertException("La città di partenza e la destinazione non possono essere uguali");
 			} else
-				throw new InsertException("La città di partenza e la destinazione non possono essere uguali!");
+				throw new InsertException("Date non valide");
 		} else
-			throw new InsertException("Date non valide.");
+			throw new InsertException("Destinazione già inserita");
 	}
 	
 	@Override
