@@ -20,7 +20,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import utils.DataUtils;
 import dtos.AttivitaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
@@ -289,9 +288,26 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	@Override
 	public void aggiuntaDestinazione(int idPacchetto, DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException, PacchettoInesistenteException, InsertException {
 		Pacchetti entity = this.convertiInEntita(idPacchetto);
+		int numeroDestinazioni = entity.getDestinazioni().size();
+		
+		boolean check = false;
 		
 		//controllo le date della destinazione
-		if (destinazione.getDataPartenza().compareTo(entity.getDestinazioni().get(0).getDataArrivo()) == 0 || destinazione.getDataArrivo().compareTo(entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza()) == 0) {
+		if (destinazione.getDataPartenza().equals(entity.getDestinazioni().get(0).getDataArrivo())) {
+			check = true;
+		} else if (destinazione.getDataArrivo().equals(entity.getDestinazioni().get(numeroDestinazioni - 1).getDataPartenza())) {
+			check = true;
+		} else {
+			for (int i = 0; i < numeroDestinazioni - 1; i++) {
+				if (destinazione.getDataArrivo().equals(entity.getDestinazioni().get(i).getDataPartenza()) && destinazione.getDataPartenza().equals(entity.getDestinazioni().get(i + 1).getDataArrivo()) && !entity.getDestinazioni().get(i).getDataPartenza().equals(entity.getDestinazioni().get(i + 1).getDataArrivo())) {
+					check = true;
+					break;
+				}
+			}
+		}
+		
+		//controllo le date della destinazione
+		if (check) {
 			//impedisco all'utente di selezionare un hotel nella stessa città di partenza
 			if (!destinazione.getCitta().getNome().equalsIgnoreCase(entity.getCitta().getNome())) {
 				//controllo che la data di arrivo sia minore della data di partenza dalla destinazione
@@ -307,7 +323,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			} else
 				throw new InsertException("La città di partenza e la destinazione non possono essere uguali!");
 		} else
-			throw new InsertException("Date non valide. La data di arrivo deve essere il " + DataUtils.getData(entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).getDataPartenza()) + " o la data di partenza deve essere il " + DataUtils.getData(entity.getDestinazioni().get(0).getDataArrivo()));
+			throw new InsertException("Date non valide.");
 	}
 	
 	@Override

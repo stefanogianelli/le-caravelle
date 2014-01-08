@@ -682,6 +682,20 @@ public class PacchettoBean {
 		}
 	}
 	
+	/**
+	 * Verifica se la destinazione è coerente, cioè se la data di arrivo nella destinazione coincide con la data di partenza dalla destinazione precedente, eccetto la prima destinazione inserita nel pacchetto
+	 * @param destinazione La destinazione
+	 * @return true se la destinazione è coerente, false altrimenti
+	 */
+	public boolean destinazioneCoerente (DestinazioneDTO destinazione) {
+		if (this.getPacchetto().getDestinazioni().indexOf(destinazione) == 0)
+			return true;
+		else if (destinazione.getDataArrivo().equals(this.getPacchetto().getDestinazioni().get(this.getPacchetto().getDestinazioni().indexOf(destinazione) - 1).getDataPartenza()))
+			return true;
+		else
+			return false;
+	}
+	
 	/*
 	 * Metodi relativi alla gestione dei collegamenti
 	 */
