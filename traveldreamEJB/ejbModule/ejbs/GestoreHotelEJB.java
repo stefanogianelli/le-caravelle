@@ -10,7 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
@@ -47,9 +47,8 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	
 	@Override
 	public List<HotelDTO> elencoHotel(String nomeCitta) {
-		Query q = em.createNamedQuery("Hotel.elencoPerCitta", Hotel.class);
+		TypedQuery<Hotel> q = em.createNamedQuery("Hotel.elencoPerCitta", Hotel.class);
 		q.setParameter("citta", nomeCitta);
-		@SuppressWarnings("unchecked")
 		List<Hotel> hotel = q.getResultList();
 		List<HotelDTO> dto = new ArrayList<HotelDTO>();
 		for (Hotel h : hotel) {
@@ -61,7 +60,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	@Override
 	public int creaHotel(HotelDTO hotel) throws CittaInesistenteException, EntitaEsistenteException {
 		//controllo che non esista un hotel con lo stesso nome nella stessa città
-		Query q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
+		TypedQuery<Hotel> q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
 		q.setParameter("nome", hotel.getNome());
 		q.setParameter("citta", hotel.getCitta().getNome());
 		if (!q.getResultList().isEmpty())

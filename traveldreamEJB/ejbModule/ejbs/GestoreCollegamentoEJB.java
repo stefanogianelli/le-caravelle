@@ -14,7 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
@@ -52,9 +52,8 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo) {
-		Query q = em.createNamedQuery("Collegamenti.elencoPerTipo", Collegamenti.class);
+		TypedQuery<Collegamenti> q = em.createNamedQuery("Collegamenti.elencoPerTipo", Collegamenti.class);
 		q.setParameter("tipo", tipo);
-		@SuppressWarnings("unchecked")
 		List<Collegamenti> collegamenti = q.getResultList();
 		Collections.sort(collegamenti);
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
@@ -66,12 +65,11 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti(Date data, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
-		Query q = em.createNamedQuery("Collegamenti.elencoTraDestinazioni", Collegamenti.class);
+		TypedQuery<Collegamenti> q = em.createNamedQuery("Collegamenti.elencoTraDestinazioni", Collegamenti.class);
 		q.setParameter("data", data);
 		q.setParameter("partenza", cittaPartenza);
 		q.setParameter("arrivo", cittaArrivo);
 		q.setParameter("tipo", tipo);
-		@SuppressWarnings("unchecked")
 		List<Collegamenti> collegamenti = q.getResultList();
 		Collections.sort(collegamenti);
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
@@ -83,10 +81,9 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti(String cittaPartenza, String cittaArrivo) {
-		Query q = em.createNamedQuery("Collegamenti.elencoTraCitta", Collegamenti.class);
+		TypedQuery<Collegamenti> q = em.createNamedQuery("Collegamenti.elencoTraCitta", Collegamenti.class);
 		q.setParameter("partenza", cittaPartenza);
 		q.setParameter("arrivo", cittaArrivo);
-		@SuppressWarnings("unchecked")
 		List<Collegamenti> collegamenti = q.getResultList();
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
 		for (Collegamenti c : collegamenti) {

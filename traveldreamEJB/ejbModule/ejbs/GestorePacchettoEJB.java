@@ -18,7 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import dtos.AttivitaDTO;
 import dtos.CollegamentoDTO;
@@ -81,10 +81,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	
 	@Override
 	public List<PacchettoDTO> elencoPacchetti(String email, TipoPacchetto tipo) {		
-		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
+		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
 		q.setParameter("utente", email);
 		q.setParameter("tipo", tipo);
-		@SuppressWarnings("unchecked")
 		List<Pacchetti> pacchetti = q.getResultList();
 		List<PacchettoDTO> pacchettiDTO = new ArrayList<PacchettoDTO>();
 		for (Pacchetti p : pacchetti) {
@@ -95,10 +94,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	
 	@Override
 	public List<PacchettoDTO> elencoTrePacchetti(String email, TipoPacchetto tipo) {		
-		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
+		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
 		q.setParameter("utente", email);
 		q.setParameter("tipo", tipo);
-		@SuppressWarnings("unchecked")
 		List<Pacchetti> pacchetti = q.setMaxResults(3).getResultList();
 		List<PacchettoDTO> pacchettiDTO = new ArrayList<PacchettoDTO>();
 		for (Pacchetti p : pacchetti) {
@@ -115,7 +113,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		while (!check) {
 			entity.setNome("Pacchetto " + (MIN_PACCHETTO + (int)(Math.random() * ((MAX_PACCHETTO - MIN_PACCHETTO) + 1))));
 			//controllo che il nome del pacchetto non esista nel database
-			Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
+			TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 			q.setParameter("nome", pacchetto.getNome());
 			q.setParameter("utente", pacchetto.getUtente().getEmail());
 			if (q.getResultList().isEmpty())
@@ -142,7 +140,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		
 		//controllo che il nome del pacchetto non esista nel database
-		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
+		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 		q.setParameter("nome", pacchetto.getNome());
 		q.setParameter("utente", pacchetto.getUtente().getEmail());
 		if (!q.getResultList().isEmpty())
@@ -196,7 +194,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		Pacchetti entity = new Pacchetti();
 		
 		//controllo che il nome del pacchetto non esista nel database
-		Query q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
+		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 		q.setParameter("nome", pacchetto.getNome());
 		q.setParameter("utente", pacchetto.getUtente().getEmail());
 		if(q.getResultList().isEmpty()) {		
@@ -233,14 +231,14 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	public void condividiPacchetto(PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException, EscursioneInesistenteException {
 		Amici amico = new Amici();
 		//verifico se l'indirizzo email è già esistente
-		Query q = em.createNamedQuery("Amici.getAmico", Amici.class);
+		TypedQuery<Amici> q = em.createNamedQuery("Amici.getAmico", Amici.class);
 		q.setParameter("email", email);
 		if (q.getResultList().isEmpty()) {
 			amico.setEmail(email);
 			amico.setNome(nome);
 			amico.setCognome(cognome);			
 		} else {
-			amico = (Amici) q.getResultList().get(0);
+			amico = q.getResultList().get(0);
 		}
 		
 		Pacchetti entity = new Pacchetti();
@@ -274,9 +272,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		if (pacchetto.getTipoPacchetto() == TipoPacchetto.CONDIVISO) {
 			//rimuovo tutte le condivisione del pacchetto
-			Query q = em.createNamedQuery("Amici.getPacchetti", Amici.class);
+			TypedQuery<Amici> q = em.createNamedQuery("Amici.getPacchetti", Amici.class);
 			q.setParameter("id", pacchetto.getId());
-			@SuppressWarnings("unchecked")
 			List<Amici> amici = q.getResultList();
 			for (Amici a : amici) {
 				a.removePacchetto(entity);
