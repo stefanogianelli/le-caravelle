@@ -131,7 +131,22 @@
 		</h:panelGroup>
 	</div>	
 
-<ui:repeat id="destinazioni" var="d" value="#{pacchetto.pacchetto.destinazioni}" varStatus="status">		
+<ui:repeat id="destinazioni" var="d" value="#{pacchetto.pacchetto.destinazioni}" varStatus="status">	
+
+	<h:panelGroup styleClass="warning-div ui-corner-all" layout="block" rendered="#{not pacchetto.destinazioneCoerente(d)}">
+		<span class="ui-messages-warn-icon" style="margin-top: 0px;"></span> 
+		<div class="warning-text">
+			Aggiungi una destinazione dal
+				<h:outputText value="#{pacchetto.pacchetto.destinazioni.get(pacchetto.pacchetto.destinazioni.indexOf(d) - 1).dataPartenza}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>			
+			al
+				<h:outputText value="#{d.dataArrivo}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>			
+			per completare il pacchetto
+		</div>
+	</h:panelGroup>		
 					
 	<!-- Collegamento di andata -->
 	<div class="bloccoPaccVolo">
