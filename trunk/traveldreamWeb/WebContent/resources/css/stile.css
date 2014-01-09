@@ -855,3 +855,20 @@ select{
 .tabella .ui-inputtext {
 	width: 25px!important;
 }
+
+/* Warning message nella pagina dettagli pacchetto */
+
+.warning-div {
+	border: 1px solid;
+	margin: 20px 0px 0px 0px;
+	padding: 10px 10px 10px 10px;	
+	color: #c09853;
+	background-color: #fcf8e3;
+	border-color: #fbeed5;
+}
+
+.warning-text {
+	margin-left: 35px;
+	font-size: 20px;
+	font-weight: bold;
+}
