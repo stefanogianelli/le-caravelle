@@ -11,17 +11,28 @@
 
 <ui:define name="content">
 
-<f:event listener="#{pacchettoPredefinito.elencoPacchetti()}" type="preRenderView" />
+<f:event listener="#{pacchettoPredefinito.elencoPacchetti(false)}" type="preRenderView" />
+
+<p:messages showDetail="false" autoUpdate="true" />
 
 <h1>Elenco pacchetti</h1>
 
-<div class="bloccoModifica">
-
 <h:form>
-	<h:commandButton value="Nuovo pacchetto" styleClass="search-button" action="nuovoPacchetto?faces-redirect=true" />
-</h:form>
+	<div class="bloccoModifica">		
+		<h:commandButton value="Nuovo pacchetto" styleClass="search-button" action="nuovoPacchetto?faces-redirect=true" />		
+	</div>
 
-</div>
+	<div class="bloccoRicerca">
+		<p>
+			<h:outputText styleClass="name-input" value="Scegli una città:" />
+			<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+				<f:selectItems value="#{citta.nomiCitta}" />
+			</h:selectOneMenu>
+			<h:commandButton value="Tutti" styleClass="flight-button" action="#{pacchettoPredefinito.elencoPacchetti(true)}" />
+			<h:commandButton value="Cerca" styleClass="flight-button" action="#{pacchettoPredefinito.cercaPacchettoPerCitta(nomeCitta.value)}" update="elenco" />			
+		</p>
+	</div>
+</h:form>
 
 <h:form id="elenco">
 	<ui:repeat var="p" value="#{pacchettoPredefinito.paginator.model}" varStatus="status">

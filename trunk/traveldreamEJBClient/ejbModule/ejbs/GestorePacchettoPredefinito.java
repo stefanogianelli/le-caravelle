@@ -35,6 +35,13 @@ public interface GestorePacchettoPredefinito {
 	List<PacchettoPredefinitoDTO> elencoPacchetti();
 	
 	/**
+	 * Ricerca tutti i pacchetti in una città
+	 * @param nomeCitta Il nome della città da cercare
+	 * @return L'elenco dei pacchetti
+	 */
+	List<PacchettoPredefinitoDTO> elencoPacchettoPerCitta (String nomeCitta);
+	
+	/**
 	 * Permette la creazione di un nuovo pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
 	 * @return L'identificativo del pacchetto creato
