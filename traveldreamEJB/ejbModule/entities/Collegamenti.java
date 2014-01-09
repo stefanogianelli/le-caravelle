@@ -20,8 +20,7 @@ import java.util.Date;
 	@NamedQuery(name = "Collegamenti.elencoPerTipo", query = "SELECT c FROM Collegamenti c WHERE c.tipoCollegamento = :tipo"),
 	@NamedQuery(name = "Collegamenti.elencoTraDestinazioni", 
 		query = "SELECT c FROM Collegamenti c WHERE (c.dataPartenza = :data AND c.cittaPartenza.nome = :partenza AND c.cittaArrivo.nome = :arrivo AND c.tipoCollegamento = :tipo)"),
-	@NamedQuery(name = "Collegamenti.getCollegamentoDaData", query = "SELECT c FROM Collegamenti c WHERE c.dataPartenza = :data"),
-	@NamedQuery(name = "Collegamenti.elencoTraCitta", query = "SELECT c FROM Collegamenti c WHERE (c.cittaPartenza.nome = :partenza AND c.cittaArrivo.nome = :arrivo)")
+	@NamedQuery(name = "Collegamenti.getCollegamentoDaData", query = "SELECT c FROM Collegamenti c WHERE c.dataPartenza = :data")
 })
 public class Collegamenti implements Serializable, Comparable<Collegamenti> {
 	

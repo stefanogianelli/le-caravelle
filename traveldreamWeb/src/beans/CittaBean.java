@@ -29,4 +29,18 @@ public class CittaBean {
 		}
 		return nomi;
 	}
+	
+	/**
+	 * Mostra l'elenco di città presenti nel database più il campo "Qualsiasi" per i campi di ricerca
+	 * @return I nomi delle città
+	 */
+	public List<String> getNomiCittaPerRicerca () {
+		List<CittaDTO> citta = this.citta.elencoCitta();
+		List<String> nomi = new ArrayList<String>();
+		nomi.add("Qualsiasi");
+		for (CittaDTO c : citta) {
+			nomi.add(c.getNome());
+		}
+		return nomi;
+	}	
 }

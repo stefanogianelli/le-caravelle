@@ -15,10 +15,16 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import dtos.CollegamentoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import entities.Citta;
 import entities.Collegamenti;
 import enums.TipoCollegamento;
 
@@ -81,12 +87,24 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti(String cittaPartenza, String cittaArrivo) {
-		TypedQuery<Collegamenti> q = em.createNamedQuery("Collegamenti.elencoTraCitta", Collegamenti.class);
-		q.setParameter("partenza", cittaPartenza);
-		q.setParameter("arrivo", cittaArrivo);
-		List<Collegamenti> collegamenti = q.getResultList();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Collegamenti> cq = cb.createQuery(Collegamenti.class);
+		Root<Collegamenti> collegamenti = cq.from(Collegamenti.class);		
+		List<Predicate> predicati = new ArrayList<Predicate>();
+		if (cittaPartenza != null & !cittaPartenza.isEmpty() && !cittaPartenza.equals("Qualsiasi")) {
+			Join<Collegamenti, Citta> partenza = collegamenti.join("cittaPartenza");
+			predicati.add(cb.equal(partenza.get("nome"), cittaPartenza));
+		}
+		if (cittaArrivo != null & !cittaArrivo.isEmpty() && !cittaArrivo.equals("Qualsiasi")) {
+			Join<Collegamenti, Citta> arrivo = collegamenti.join("cittaArrivo");
+			predicati.add(cb.equal(arrivo.get("nome"), cittaArrivo));
+		}		
+		cq.where(predicati.toArray(new Predicate[]{}));
+		TypedQuery<Collegamenti> q = em.createQuery(cq);
+		List<Collegamenti> elenco = q.getResultList();
+		Collections.sort(elenco);		
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
-		for (Collegamenti c : collegamenti) {
+		for (Collegamenti c : elenco) {
 			dto.add(this.convertiInDTO(c));
 		}
 		return dto;		
@@ -143,7 +161,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 			throw new CollegamentoInesistenteException ();
 	}
 	
-	@EJB
+	@Override
 	public Collegamenti convertiInEntita (int codiceCollegamento) throws CollegamentoInesistenteException {
 		Collegamenti collegamentoEntity = em.find(Collegamenti.class, codiceCollegamento);
 		if (collegamentoEntity != null)
