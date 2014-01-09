@@ -11,15 +11,30 @@
 
 <ui:define name="content">
 
-<f:event listener="#{collegamento.elencoCollegamenti()}" type="preRenderView" />
+<f:event listener="#{collegamento.elencoCollegamenti(false)}" type="preRenderView" />
 
 <h1>Elenco collegamenti</h1>
 
-<div class="bloccoModifica">
-	<h:form>
+<h:form>
+	<div class="bloccoModifica">		
 		<h:commandButton value="Nuovo collegamento" styleClass="search-button" action="nuovoCollegamento?faces-redirect=true" />
-	</h:form>
-</div>
+	</div>
+
+	<div class="bloccoRicercaCollegamenti">
+		<p>
+			<h:outputText styleClass="name-input" value="Partenza:" />
+			<h:selectOneMenu styleClass="menu-input" binding="#{partenza}">
+				<f:selectItems value="#{citta.nomiCittaPerRicerca}" />
+			</h:selectOneMenu><br /><br />
+			<h:outputText styleClass="name-input" value="Arrivo:" />
+			<h:selectOneMenu styleClass="menu-input" binding="#{arrivo}">
+				<f:selectItems value="#{citta.nomiCittaPerRicerca}" />
+			</h:selectOneMenu>			
+			<h:commandButton value="Tutti" styleClass="flight-search-button" action="#{collegamento.elencoCollegamenti(true)}" />
+			<h:commandButton value="Cerca" styleClass="flight-search-button" action="#{collegamento.cercaCollegamenti(partenza.value,arrivo.value)}" update="elenco" />			
+		</p>
+	</div>
+</h:form>
 
 <h:form id="elenco">
 	<ui:repeat var="c" value="#{collegamento.paginator.model}" varStatus="status">

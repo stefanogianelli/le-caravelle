@@ -68,6 +68,10 @@ public class PacchettoPredefinitoBean {
 			paginator = new PaginatorBean(pacchettoBean.elencoPacchetti());
 	}
 	
+	/**
+	 * Ricerca tutti i pacchetti in una città
+	 * @param citta Il nome della città
+	 */
 	public void cercaPacchettoPerCitta (String citta) {
 		List<PacchettoPredefinitoDTO> lista = pacchettoBean.elencoPacchettoPerCitta(citta);
 		if (lista.isEmpty())

@@ -123,9 +123,10 @@ public class CollegamentoBean {
 	
 	/**
 	 * Elenca tutti i collegamenti presenti nel database
+	 * @param force Per forzare l'aggiornamento della lista
 	 */
-	public void elencoCollegamenti () {
-		if (this.getPaginator() == null) {
+	public void elencoCollegamenti (boolean force) {
+		if (this.getPaginator() == null || force == true) {
 			paginator = new PaginatorBean(this.collegamentoBean.elencoCollegamenti());
 		}
 	}
@@ -152,6 +153,19 @@ public class CollegamentoBean {
 		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(this.getDataPartenza(), this.getCittaPartenza(), this.getCittaArrivo(), tipo));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
+	}
+	
+	/**
+	 * Ricerca i collegamenti disponibili tra le città selezionate
+	 * @param partenza La città di partenza
+	 * @param arrivo La città di arrivo
+	 */
+	public void cercaCollegamenti (String partenza, String arrivo) {
+		List<CollegamentoDTO> lista = collegamentoBean.elencoCollegamenti(partenza, arrivo);
+		if (lista.isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
+		else
+			paginator = new PaginatorBean(lista);
 	}
 	
 	/**
