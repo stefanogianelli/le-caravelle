@@ -61,10 +61,19 @@ public class PacchettoPredefinitoBean {
 
 	/**
 	 * Mostra tutti i pacchetti predefiniti presente nel database
+	 * @param force Per forzare la generazione di un nuovo elenco
 	 */
-	public void elencoPacchetti () {		
-		if (paginator == null)
+	public void elencoPacchetti (boolean force) {		
+		if (paginator == null || force == true)
 			paginator = new PaginatorBean(pacchettoBean.elencoPacchetti());
+	}
+	
+	public void cercaPacchettoPerCitta (String citta) {
+		List<PacchettoPredefinitoDTO> lista = pacchettoBean.elencoPacchettoPerCitta(citta);
+		if (lista.isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
+		else
+			paginator = new PaginatorBean (lista);
 	}
 	
 	/**

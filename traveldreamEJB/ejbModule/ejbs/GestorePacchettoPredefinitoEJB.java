@@ -79,6 +79,17 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		}
 		return pacchettiDTO;
 	}
+	
+	@Override
+	public List<PacchettoPredefinitoDTO> elencoPacchettoPerCitta (String nomeCitta) {
+		TypedQuery<PacchettiPredefiniti> q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaCitta", PacchettiPredefiniti.class);
+		q.setParameter("citta", nomeCitta);
+		List<PacchettoPredefinitoDTO> elenco = new ArrayList<PacchettoPredefinitoDTO>();
+		for (PacchettiPredefiniti p : q.getResultList()) {
+			elenco.add(this.convertiInDTO(p));
+		}
+		return elenco;
+	}
 
 	@Override
 	public int creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException {
