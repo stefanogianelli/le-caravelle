@@ -269,7 +269,7 @@
 	
 	<!-- Informazioni sulle escursioni -->
 	<div class="bloccoPaccVolo" style="height: auto;">
-		<div class="tabella">
+		<h:panelGroup id="elencoEscursioni" styleClass="tabella" layout="block">
 			<h:dataTable id="escursioni" value="#{d.attivita}" var="a" rendered="#{d.attivita.size() > 0}">
 				<h:column>
 					<f:facet name="header">Nome</f:facet>
@@ -298,11 +298,13 @@
 				</h:column>
 				<h:column>
 					<h:form>
-						<h:commandButton styleClass="flight-button" value="Elimina" action="#{destinazione.eliminaEscursione(a)}" />
+						<h:commandButton styleClass="flight-button" value="Elimina">
+							<f:ajax execute="@form" listener="#{destinazione.eliminaEscursione(a)}" render=":prezzoPacchetto :destinazioni:elencoEscursioni" />
+						</h:commandButton>
 					</h:form>
 				</h:column>
 			</h:dataTable>
-		</div>
+		</h:panelGroup>
 		<div class="bloccoPaccEscursione" style="height: 52px;">
 			<div class="newEsc">
 				<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
