@@ -77,12 +77,12 @@
 						<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />
 						<p>Prezzo a notte: #{h.prezzo} €</p>
 						<br></br>
-						<p>Indirizzo: #{h.indirizzo}</p>
+						<p>Indirizzo: #{h.indirizzo} (<a href="http://maps.google.com/?q=#{h.indirizzo}, #{h.citta.nome}, #{h.citta.nazione}" target="_blank">mappa</a>)</p>
 						<p>Città: #{h.citta.nome}</p>
 						<br></br>
 						<p>Telefono: #{h.telefono}</p>
-						<p>Website: #{h.website}</p>
-						<p>Email: #{h.email}</p>
+						<p>Website: <a href="#{h.website}" target="_blank">#{h.website}</a></p>
+						<p>Email: <a href="mailto:#{h.email}">#{h.email}</a></p>
 					</h:panelGroup>
 				</p:dialog>
 				

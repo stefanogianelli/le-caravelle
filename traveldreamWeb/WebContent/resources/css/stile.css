@@ -873,6 +873,14 @@ select{
 	width: 25px!important;
 }
 
+#prezzo .ui-inplace-content {
+	font-size:22px!important;
+}
+
+#prezzo .ui-inputtext {
+	width: 100px!important;
+}
+
 /* Warning message nella pagina dettagli pacchetto */
 
 .warning-div {
