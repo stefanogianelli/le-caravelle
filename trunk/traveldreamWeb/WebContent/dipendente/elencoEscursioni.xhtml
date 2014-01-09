@@ -38,7 +38,11 @@
 	<ui:repeat var="e" value="#{escursione.paginator.model}" varStatus="status">
 		<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
 			<div class="descr">
-				<h2>#{e.nome}</h2>
+				<h2>
+					<h:link value="#{e.nome}" outcome="dettagliEscursione">
+						<f:param name="idEscursione" value="#{e.id}" />
+					</h:link>				
+				</h2>
 				<p>
 					<h:outputText value="#{e.data}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
