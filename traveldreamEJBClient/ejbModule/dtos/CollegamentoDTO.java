@@ -15,14 +15,14 @@ public class CollegamentoDTO implements Serializable, Comparable<CollegamentoDTO
 
 	private Date dataPartenza;
 
-	@NotEmpty
+	@NotEmpty(message="Inserire una destinazione")
 	private String destinazione;
 
 	private Date oraArrivo;
 
 	private Date oraPartenza;
 
-	@NotEmpty
+	@NotEmpty(message="Inserire un'origine")
 	private String origine;
 	
 	private double prezzo;

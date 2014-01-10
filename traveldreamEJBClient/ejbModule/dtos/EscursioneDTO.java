@@ -22,7 +22,7 @@ public class EscursioneDTO implements Serializable {
 	@Min(value = 1, message="Inserire una durata positiva")
 	private int durata;
 
-	@NotEmpty
+	@NotEmpty(message = "Inserire un nome")
 	private String nome;
 
 	private Date ora;
