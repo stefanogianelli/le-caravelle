@@ -31,6 +31,8 @@ public class HotelDTO implements Serializable {
 	private int stelle;
 
 	@NotEmpty
+	@Pattern(regexp="\\+39\\s\\d{2,3}\\s\\d{4,8}",
+			message="Numero di telefono non valido")
 	private String telefono;
 
 	@NotEmpty
