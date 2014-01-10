@@ -92,10 +92,11 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 
 	@Override
 	public int creaEscursione(EscursioneDTO escursione) throws CittaInesistenteException, EntitaEsistenteException {
-		//verifico che non esista già un'escursione con lo stesso nome nella stessa città
-		TypedQuery<Escursioni> q = em.createNamedQuery("Escursioni.getEscursioneDaNome", Escursioni.class);
+		//verifico che non esista già un'escursione con lo stesso nome nella stessa città e nello stesso giorno
+		TypedQuery<Escursioni> q = em.createNamedQuery("Escursioni.getEscursioneDaNomeEData", Escursioni.class);
 		q.setParameter("nome", escursione.getNome());
 		q.setParameter("citta", escursione.getCitta().getNome());
+		q.setParameter("data", escursione.getData());
 		if(!q.getResultList().isEmpty())
 			throw new EntitaEsistenteException();
 		
