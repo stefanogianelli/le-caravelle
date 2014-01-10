@@ -2,6 +2,8 @@ package dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
+
 public class AttivitaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -10,6 +12,7 @@ public class AttivitaDTO implements Serializable {
 	
 	private EscursioneDTO escursione;
 	
+	@Min(value = 1, message = "Il numero di partecipanti all'escursione deve essere maggiore o uguale a 1")
 	private int numeroPartecipanti;
 	
 	public AttivitaDTO () {

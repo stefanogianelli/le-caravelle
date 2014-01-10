@@ -13,7 +13,7 @@ public class PacchettoPredefinitoDTO implements Serializable {
 
 	private int id;
 
-	@NotEmpty
+	@NotEmpty(message="Dare un nome al pacchetto")
 	private String nome;
 
 	private double prezzo;

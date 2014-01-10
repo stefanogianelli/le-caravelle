@@ -133,6 +133,7 @@
 
 <ui:repeat id="destinazioni" var="d" value="#{pacchetto.pacchetto.destinazioni}" varStatus="status">	
 
+	<!-- Messaggio visualizzato se la destinazione corrente non è coerente con la precedente -->
 	<h:panelGroup styleClass="warning-div ui-corner-all" layout="block" rendered="#{not pacchetto.destinazioneCoerente(d)}">
 		<span class="ui-messages-warn-icon" style="margin-top: 0px;"></span> 
 		<div class="warning-text">
@@ -307,7 +308,8 @@
 					<h:form>
 						<p:inplace editor="true">  
 							<p:ajax event="save" listener="#{destinazione.modificaEscursione(a)}" update=":prezzoPacchetto" />
-			                <p:inputText value="#{a.numeroPartecipanti}" required="true" />   								                
+			                <p:inputText value="#{a.numeroPartecipanti}" required="true" requiredMessage="Inserire un numero di partecipanti" 
+								converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />   								                
 			            </p:inplace>
 		            </h:form>
 				</h:column>

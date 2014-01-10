@@ -18,10 +18,10 @@ public class HotelDTO implements Serializable {
             message="email non valida")
 	private String email;
 
-	@NotEmpty
+	@NotEmpty(message = "Inserire un indirizzo")
 	private String indirizzo;
 
-	@NotEmpty
+	@NotEmpty(message = "Inserire un nome")
 	private String nome;
 
 	private double prezzo;
@@ -29,13 +29,12 @@ public class HotelDTO implements Serializable {
 	@Min(value = 1, message = "Il numero di stelle deve essere maggiore o uguale a 1")
 	@Max(value = 5, message = "Il numero di stelle deve essere minore o uguale a 5")
 	private int stelle;
-
-	@NotEmpty
+	
 	@Pattern(regexp="\\+39\\s\\d{2,3}\\s\\d{4,8}",
 			message="Numero di telefono non valido")
 	private String telefono;
 
-	@NotEmpty
+	@NotEmpty(message = "Inserire l'indirizzo del sito web")
 	private String website;
 
 	private CittaDTO citta;
