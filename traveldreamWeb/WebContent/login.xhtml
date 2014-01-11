@@ -45,14 +45,15 @@
        <h3>Step 2: ricevi una password personale</h3>
 		<br></br>
 		<h:form>
-			<p><h:outputText styleClass="name-input" value="Email: " />
-			<h:inputText styleClass="text-input"/>
-			<h:message/><br /></p>
-		</h:form>
+			<p>
+				<h:outputText styleClass="name-input" value="Email: " />
+				<h:inputText styleClass="text-input" value="#{profilo.profilo.email}"/><br />
+			</p>		
 		
-		<div class="bloccoButton">
-		<h:commandButton styleClass="button" value="Conferma" />
-		</div>
+			<div class="bloccoButton">
+				<h:commandButton styleClass="button" value="Conferma" action="#{profilo.registrazione()}" />
+			</div>
+		</h:form>
 </div>
 	
 	<div class="consigli">
