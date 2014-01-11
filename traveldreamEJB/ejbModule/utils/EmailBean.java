@@ -18,7 +18,7 @@ import javax.mail.internet.MimeMessage;
 @Stateless
 public class EmailBean implements EmailBeanLocal {
 
-	@Resource(name = "mail/traveldreaminfo@gmail.com")
+	@Resource(name = "mail/traveldream")
 	private Session mailSession;
     
     /**
