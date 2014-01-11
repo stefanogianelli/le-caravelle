@@ -10,23 +10,28 @@
 	<ui:define name="title">Login</ui:define>
 	
 <ui:define name="content">
+
+<p:messages showDetail="false" autoUpdate="true" />
 	
 <div class="bloccoLogin">
        <h1>Accedi alla tua area personale</h1>
        <h2>Effettua il login</h2>
 		<br></br>
 	<h:form>
-		<p><h:outputText styleClass="name-input" value="Email: " />
-		<h:inputText styleClass="text-input"/>
-		<h:message/><br /></p>
-		<p><h:outputText styleClass="name-input" value="Password: " />
-		<h:inputText styleClass="text-input"/>
-		<h:message/><br /></p>
-	</h:form>
+		<p>
+			<h:outputText styleClass="name-input" value="Email: " />
+			<h:inputText styleClass="text-input" value="#{profilo.profilo.email}" /><br />
+		</p>
+		
+		<p>
+			<h:outputText styleClass="name-input" value="Password: " />
+			<h:inputSecret styleClass="text-input" value="#{profilo.profilo.password}" /><br />
+		</p>	
 	
-	<div class="bloccoButton">
-	<h:commandButton styleClass="button" value="Accedi" />
-	</div>
+		<div class="bloccoButton">
+			<h:commandButton styleClass="button" value="Accedi" action="#{profilo.login()}" />
+		</div>
+	</h:form>
 	
 	<br></br>
 	<h3>Hai dimenticato la password?</h3>
