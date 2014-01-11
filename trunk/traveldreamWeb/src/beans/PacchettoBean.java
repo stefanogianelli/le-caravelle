@@ -740,6 +740,8 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Collegamento inesistente");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Il collegamento selezionato non è coerente col pacchetto");
 		}
 		return null;
 	}
