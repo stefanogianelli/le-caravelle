@@ -24,6 +24,8 @@ import dtos.AttivitaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
+import dtos.PersonaDTO;
+import eccezioni.AcquistoException;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
@@ -36,6 +38,7 @@ import entities.Attivita;
 import entities.Collegamenti;
 import entities.Destinazioni;
 import entities.Pacchetti;
+import entities.Persone;
 import enums.TipoPacchetto;
 
 /**
@@ -223,12 +226,31 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void acquistaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException {
-		Pacchetti entity = this.convertiInEntita(pacchetto);
-
-		entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
-			
-		em.merge(entity);
+	public void acquistaPacchetto(int idPacchetto, List<PersonaDTO> partecipanti) throws PacchettoInesistenteException, AcquistoException {
+		Pacchetti entity = this.convertiInEntita(idPacchetto);
+		
+		//controllo che il pacchetto sia completo
+		int numeroDestinazioni = entity.getDestinazioni().size();
+		int numeroCollegamenti = entity.getCollegamenti().size();
+		
+		if (numeroCollegamenti == numeroDestinazioni + 1) {
+			//aggiungo i dati dei partecipanti nel pacchetto
+			if (entity.getNumPartecipanti() == partecipanti.size()) {
+				for (PersonaDTO p : partecipanti) {
+					Persone persona = new Persone();
+					persona.setNome(p.getNome());
+					persona.setCognome(p.getCognome());
+					persona.setDataNascita(p.getDataNascita());
+					persona.setDocumentoIdentita(p.getDocumentoIdentita());
+					persona.setTelefono(p.getTelefono());
+					entity.addPartecipante(persona);
+				}			
+				entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);					
+				em.merge(entity);
+			} else
+				throw new AcquistoException("Errore: il numero di partecipanti non combacia con il numero di partecipanti del pacchetto");
+		} else
+			throw new AcquistoException("Il pacchetto è incompleto");
 	}
 
 	@Override

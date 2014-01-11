@@ -7,6 +7,8 @@ import javax.ejb.Local;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
+import dtos.PersonaDTO;
+import eccezioni.AcquistoException;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
 import eccezioni.DestinazioneInesistenteException;
@@ -88,10 +90,12 @@ public interface GestorePacchetto {
 	
 	/**
 	 * Permette l'acquisto di un pacchetto
-	 * @param pacchetto Il pacchetto da acquistare
+	 * @param idPacchetto L'identificativo pacchetto da acquistare
+	 * @param partecipanti I dati personali dei partecipanti al viaggio
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws AcquistoException Quando il pacchetto è incompleto o quando il dati dei partecipanti e il numero di partecipanti del pacchetto non combaciano
 	 */
-	void acquistaPacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
+	void acquistaPacchetto (int idPacchetto, List<PersonaDTO> partecipanti) throws PacchettoInesistenteException, AcquistoException;
 	
 	/**
 	 * Permette la condivisione di un pacchetto
