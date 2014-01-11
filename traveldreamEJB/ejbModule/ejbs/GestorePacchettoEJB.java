@@ -386,23 +386,41 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void aggiuntaCollegamento(int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException {
+	public void aggiuntaCollegamento(int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException, InsertException {
 		Pacchetti entity = this.convertiInEntita(idPacchetto);
-	
-		//rimuovo l'eventuale collegamento già presente nella stessa data
-		for (Collegamenti c : entity.getCollegamenti()) {
-			if (collegamento.getDataPartenza().compareTo(c.getDataPartenza()) == 0) {
-				entity.removeCollegamento(c);
+		boolean check = false;
+		
+		//controllo che il collegamento che si vuole aggiungere sia coerente col pacchetto
+		for (Destinazioni d : entity.getDestinazioni()) {			
+			if (entity.getDestinazioni().indexOf(d) == 0 && collegamento.getDataPartenza().equals(d.getDataArrivo()) && collegamento.getCittaPartenza().getNome().equals(entity.getCitta().getNome()) && collegamento.getCittaArrivo().getNome().equals(d.getCitta().getNome())) {
+				check = true;
+				break;
+			} else if (entity.getDestinazioni().indexOf(d) > 0 && collegamento.getDataPartenza().equals(d.getDataArrivo()) && collegamento.getCittaPartenza().getNome().equals(entity.getDestinazioni().get(entity.getDestinazioni().indexOf(d) - 1).getCitta().getNome()) && collegamento.getCittaArrivo().getNome().equals(d.getCitta().getNome())) {
+				check = true;
+				break;
+			}  else if ((entity.getDestinazioni().indexOf(d) == entity.getDestinazioni().size() - 1) && collegamento.getDataPartenza().equals(d.getDataPartenza()) && collegamento.getCittaPartenza().getNome().equals(d.getCitta().getNome()) && collegamento.getCittaArrivo().getNome().equals(entity.getCitta().getNome())) {
+				check = true;
 				break;
 			}
 		}
-		
-		entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
-		//aggiorno il prezzo del pacchetto
-		if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
-			entity.setPrezzo(this.calcolaPrezzo(entity));
-		
-		em.merge(entity);
+	
+		if (check) {
+			//rimuovo l'eventuale collegamento già presente nella stessa data
+			for (Collegamenti c : entity.getCollegamenti()) {
+				if (collegamento.getDataPartenza().compareTo(c.getDataPartenza()) == 0) {
+					entity.removeCollegamento(c);
+					break;
+				}
+			}
+			
+			entity.addCollegamento(this.collegamento.convertiInEntita(collegamento));
+			//aggiorno il prezzo del pacchetto
+			if (entity.getTipoPacchetto() != TipoPacchetto.PREDEFINITO)
+				entity.setPrezzo(this.calcolaPrezzo(entity));
+			
+			em.merge(entity);
+		} else
+			throw new InsertException();
 	}
 	
 	/**

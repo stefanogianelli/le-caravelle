@@ -4,7 +4,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import utils.JsfUtil;
 import dtos.UtenteDTO;
@@ -53,6 +56,32 @@ public class ProfiloBean {
 			JsfUtil.errorMessage("email già usata");
 		}
 	}
+	
+	public String login () {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+	    
+	    try {
+	    	request.login(this.getProfilo().getEmail(), this.getProfilo().getPassword());
+	    } catch (ServletException e) {
+	    	JsfUtil.errorMessage("Login fallito");
+	    	return null;
+	    }
+	    return "/utente/areaPersonale.xhtml?faces-redirect=true";
+	}
+	
+	public String logout () {
+	    FacesContext context = FacesContext.getCurrentInstance();
+	    HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+	    
+	    try {
+	    	request.logout();
+	    } catch (ServletException e) {
+	      	JsfUtil.errorMessage("Logout fallito");
+	      	return null;
+	    }
+	    return "/homepage.xhtml?faces-redirect=true";
+    }
 	
 	/**
 	 * Consente l'aggiunta dei dati personali di un utente

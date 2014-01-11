@@ -161,7 +161,8 @@ public interface GestorePacchetto {
 	 * @param collegamento Il collegamento selezionato
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws InsertException Quando il collegamento che si vuole aggiungere non è coerente con il pacchetto
 	 */
-	void aggiuntaCollegamento (int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
+	void aggiuntaCollegamento (int idPacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException, InsertException;
 
 }
