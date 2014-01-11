@@ -41,7 +41,6 @@ public class ProfiloBean {
 	 * @return Il DTO dell'utente corrente
 	 */
 	public UtenteDTO getUtente () {
-		System.out.println("utente: " + profiloBean.getUtenteCorrente().getEmail());
 		return profiloBean.getUtenteCorrente();
 	}
 	
@@ -51,14 +50,18 @@ public class ProfiloBean {
 	public void registrazione () {
 		try {
 			profiloBean.registrazioneUtente(profilo.getEmail());
+			JsfUtil.infoMessage("Registrazione effettuata con successo. Controlla la tua casella di posta, riceverai una mail con la password per accedere ai servizi.");
 		} catch (MessagingException e) {
-			JsfUtil.errorMessage("Errore");
-			e.printStackTrace();
+			JsfUtil.errorMessage("Errore nell'invio della email");
 		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("email già usata");
 		}
 	}
 	
+	/**
+	 * Permette il login nel sistema
+	 * @return L'indirizzo della pagina personale nel caso dell'utente o l'indirizzo dell'homepage del dipendente
+	 */
 	public String login () {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -75,6 +78,10 @@ public class ProfiloBean {
 	    return null;
 	}
 	
+	/**
+	 * Permette il logout
+	 * @return L'indirizzo dell'homepage
+	 */
 	public String logout () {
 	    FacesContext context = FacesContext.getCurrentInstance();
 	    HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -112,7 +119,7 @@ public class ProfiloBean {
 		try {
 			profiloBean.resetPassword(datiUtente);
 		} catch (MessagingException e) {
-			JsfUtil.errorMessage("Errore");
+			JsfUtil.errorMessage("Errore nell'invio dell'email");
 		}
 	}
 

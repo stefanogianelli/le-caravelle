@@ -453,22 +453,22 @@ public class PacchettoBean {
 	/**
 	 * Permette l'acquisto di un pacchetto
 	 */
-	public void acquistaPacchetto () {		
+	public String acquistaPacchetto () {		
 		int numeroDestinazioni = this.getPacchetto().getDestinazioni().size();
 		int numeroCollegamenti = this.getPacchetto().getCollegamenti().size();
+		boolean utente = false;
 		
-		try {	
-			//controllo che il pacchetto sia completo
-			if (numeroCollegamenti == numeroDestinazioni + 1) {
-				//TODO: check dati utente e aggiunta dati dei passeggeri
-				pacchettoBean.acquistaPacchetto(this.getPacchetto());
-				JsfUtil.infoMessage("Pacchetto acquistato");
+		//controllo che il pacchetto sia completo
+		if (numeroCollegamenti == numeroDestinazioni + 1) {
+			//verifico se l'utente non ha inserito i dati
+			if (profiloBean.getUtenteCorrente().getPersona().getNome() == null) {
+				utente = true;
 			}
-			else
-				JsfUtil.errorMessage("Pacchetto incompleto");
-		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente");
+			return "datiPartecipanti?idPacchetto=" + this.getPacchetto().getId() + "&utente=" + utente + "&numeroPartecipanti=" + (this.getPacchetto().getNumPartecipanti() - 1) + "&faces-redirect=true";
 		}
+		else
+			JsfUtil.errorMessage("Pacchetto incompleto");
+		return null;
 	}
 	
 	/**

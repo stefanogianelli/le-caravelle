@@ -10,24 +10,106 @@
 <ui:define name="title">Dati partecipante</ui:define>
 
 <ui:define name="content">
-<h1>Dati partecipante</h1>
-<div class="bloccoDett">
-<p>Nome: nome</p>
-<p>Cognome: cognome</p>
-<br></br>
-<p>Data di nascita: dataNascita</p>
-<br></br>
-<p>Documento d'identità: documentoIdentità</p>
-<br></br>
-<p>Numero di telefono: telefono</p>
 
-<h:form>
-	<div class="bloccoButton">
-	<h:commandButton styleClass="button" value="Conferma" />
+<f:metadata>
+	<f:viewParam name="idPacchetto" value="#{datiPartecipanti.idPacchetto}" />
+	<f:viewParam name="utente" value="#{datiPartecipanti.insertUserData}" />
+	<f:viewParam name="numeroPartecipanti" value="#{datiPartecipanti.numeroPartecipanti}" />
+	<f:event type="preRenderView" listener="#{datiPartecipanti.setUp()}" />
+</f:metadata>
+
+<p:messages showDetail="false" autoUpdate="true" />
+
+<h1>Dati partecipante</h1>
+
+<h:form>	
+	<div class="bloccoDett" style="height: auto;">
+		<!-- Dati utente -->
+		<h:panelGroup rendered="#{datiPartecipanti.insertUserData}">
+			<h3>Utente</h3>
+			
+			<br />
+			
+			<p>
+				<h:outputText tyleClass="name-input" value="Nome:" />
+				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.nome}" />
+			</p>
+			<p>
+				<h:outputText tyleClass="name-input" value="Cognome:" />
+				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.cognome}" />
+			</p>
+					
+			
+			<br />
+			
+			<p>
+				<h:outputText tyleClass="name-input" value="Data di nascita:" />
+				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.dataNascita}" />		
+			</p>
+			
+			<br />
+			
+			<p>
+				<h:outputText tyleClass="name-input" value="Documento di identità:" />
+				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.documentoIdentita}" />		
+			</p>
+			
+			<br />
+			
+			<p>
+				<h:outputText tyleClass="name-input" value="Numero di telefono:" />
+				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.telefono}" />		
+			</p>	
+			
+			<br />			
+		</h:panelGroup>
+	
+		<!-- Dati partecipanti -->
+		<ui:repeat var="d" value="#{datiPartecipanti.dati}" varStatus="status">
+			<h3>Partecipante ##{status.index + 1}</h3>
+			
+			<br />
+			
+			<p>
+				<h:outputText tyleClass="name-input" value="Nome:" />
+				<h:inputText styleClass="text-input" value="#{d.nome}" />
+			</p>
+			<p>
+				<h:outputText tyleClass="name-input" value="Cognome:" />
+				<h:inputText styleClass="text-input" value="#{d.cognome}" />
+			</p>
+					
+			
+			<br />
+			
+			<p>
+				<h:outputText tyleClass="name-input" value="Data di nascita:" />
+				<h:inputText styleClass="text-input" value="#{d.dataNascita}" />		
+			</p>
+			
+			<br />
+			
+			<p>
+				<h:outputText tyleClass="name-input" value="Documento di identità:" />
+				<h:inputText styleClass="text-input" value="#{d.documentoIdentita}" />		
+			</p>
+			
+			<br />
+			
+			<p>
+				<h:outputText tyleClass="name-input" value="Numero di telefono:" />
+				<h:inputText styleClass="text-input" value="#{d.telefono}" />		
+			</p>	
+			
+			<br />		
+		</ui:repeat>
+		
+		<div class="bloccoButton">
+			<h:commandButton styleClass="button" value="Conferma" action="#{datiPartecipanti.acquista()}" />
+		</div>
 	</div>
 </h:form>
 
-</div>
 </ui:define>
 </ui:composition>
 </html>

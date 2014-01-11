@@ -40,7 +40,7 @@ public class EmailBean implements EmailBeanLocal {
     
     @Override
     public void inviaPassword (String email, String password) throws MessagingException {
-    	String messaggio = "Benvenuto!\nDati d'accesso:\n- email: " + email + "\n- password: " + password;
+    	String messaggio = "Benvenuto!\n\nEcco i dati che utilizzerai per accedere ai servizi:\n\n- email: " + email + "\n\n- password: " + password;
     	this.inviaMessaggio(email, "Benvenuto in TravelDream!", messaggio);
     }
     
