@@ -76,13 +76,17 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	
 	@Override
 	public PacchettoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException {
-		return this.convertiInDTO(this.convertiInEntita(idPacchetto));
+		Pacchetti pacchetto = this.convertiInEntita(idPacchetto);
+		if (profilo.getUtente().equals(pacchetto.getUtente()))
+			return this.convertiInDTO(pacchetto);
+		else
+			throw new PacchettoInesistenteException();
 	}
 	
 	@Override
-	public List<PacchettoDTO> elencoPacchetti(String email, TipoPacchetto tipo) {		
+	public List<PacchettoDTO> elencoPacchetti(TipoPacchetto tipo) {		
 		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
-		q.setParameter("utente", email);
+		q.setParameter("utente", profilo.getUtente().getEmail());
 		q.setParameter("tipo", tipo);
 		List<Pacchetti> pacchetti = q.getResultList();
 		List<PacchettoDTO> pacchettiDTO = new ArrayList<PacchettoDTO>();
@@ -93,9 +97,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
-	public List<PacchettoDTO> elencoTrePacchetti(String email, TipoPacchetto tipo) {		
+	public List<PacchettoDTO> elencoTrePacchetti(TipoPacchetto tipo) {		
 		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
-		q.setParameter("utente", email);
+		q.setParameter("utente", profilo.getUtente().getEmail());
 		q.setParameter("tipo", tipo);
 		List<Pacchetti> pacchetti = q.setMaxResults(3).getResultList();
 		List<PacchettoDTO> pacchettiDTO = new ArrayList<PacchettoDTO>();
@@ -115,7 +119,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			//controllo che il nome del pacchetto non esista nel database
 			TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 			q.setParameter("nome", pacchetto.getNome());
-			q.setParameter("utente", pacchetto.getUtente().getEmail());
+			q.setParameter("utente", profilo.getUtente().getEmail());
 			if (q.getResultList().isEmpty())
 				check = true;
 		}
@@ -126,7 +130,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			entity.addDestinazione(this.destinazione.creaDestinazione(d));
 		}
 		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));	
-		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+		entity.setUtente(this.profilo.getUtente());
 		entity.setPrezzo(this.calcolaPrezzo(entity));
 		
 		em.persist(entity);
@@ -196,7 +200,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		//controllo che il nome del pacchetto non esista nel database
 		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
 		q.setParameter("nome", pacchetto.getNome());
-		q.setParameter("utente", pacchetto.getUtente().getEmail());
+		q.setParameter("utente", profilo.getUtente().getEmail());
 		if(q.getResultList().isEmpty()) {		
 			entity.setNome(pacchetto.getNome());
 			entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
@@ -206,7 +210,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			}
 			entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));
 			entity.setPacchettoPredefinito(this.predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
-			entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+			entity.setUtente(this.profilo.getUtente());
 			entity.setPrezzo(this.calcolaPrezzoPredefinito(entity));
 			
 			em.persist(entity);

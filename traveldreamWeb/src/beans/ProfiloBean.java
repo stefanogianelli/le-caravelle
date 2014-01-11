@@ -41,6 +41,7 @@ public class ProfiloBean {
 	 * @return Il DTO dell'utente corrente
 	 */
 	public UtenteDTO getUtente () {
+		System.out.println("utente: " + profiloBean.getUtenteCorrente().getEmail());
 		return profiloBean.getUtenteCorrente();
 	}
 	

@@ -114,7 +114,7 @@ public class PacchettoBean {
 	public void initMappa () {
 		//genero i marker sulla mappa
 		simpleModel = new DefaultMapModel();
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(TipoPacchetto.ACQUISTATO);
 		for (PacchettoDTO p : pacchetti) {
 			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataUtils.getDataOdierna())) {
 				for (DestinazioneDTO d : p.getDestinazioni()) {
@@ -181,7 +181,7 @@ public class PacchettoBean {
 	 */
 	public void cercaPacchetti (TipoPacchetto tipo) {
 		this.getElenco().clear();
-		this.getElenco().addAll(pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), tipo));
+		this.getElenco().addAll(pacchettoBean.elencoPacchetti(tipo));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}
@@ -192,15 +192,15 @@ public class PacchettoBean {
 	 */
 	public List<PacchettoDTO> elencoMieiPacchetti () {
 		PacchettoDTO p;
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
 			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataUtils.getDataOdierna()))
 				itr.remove();
 		}
-		pacchetti.addAll(pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PREDEFINITO));
-		pacchetti.addAll(pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.PERSONALIZZATO));
+		pacchetti.addAll(pacchettoBean.elencoPacchetti(TipoPacchetto.PREDEFINITO));
+		pacchetti.addAll(pacchettoBean.elencoPacchetti(TipoPacchetto.PERSONALIZZATO));
 		
 		return pacchetti;
 	}
@@ -227,7 +227,7 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoTrePacchettiCondivisi () {
-		return pacchettoBean.elencoTrePacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.CONDIVISO);
+		return pacchettoBean.elencoTrePacchetti(TipoPacchetto.CONDIVISO);
 	}
 	
 	/**
@@ -235,7 +235,7 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoPacchettiCondivisi () {
-		return pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.CONDIVISO);
+		return pacchettoBean.elencoPacchetti(TipoPacchetto.CONDIVISO);
 	}
 	
 	/**
@@ -244,7 +244,7 @@ public class PacchettoBean {
 	 */
 	public List<PacchettoDTO> elencoTrePacchettiAcquistati () {
 		PacchettoDTO p;
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti(TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
@@ -260,7 +260,7 @@ public class PacchettoBean {
 	 */
 	public List<PacchettoDTO> elencoPacchettiAcquistati () {
 		PacchettoDTO p;
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(profiloBean.getUtenteCorrente().getEmail(), TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
 		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
 			p = itr.next();
@@ -280,8 +280,7 @@ public class PacchettoBean {
 			//impedisco all'utente di selezionare un hotel nella stessa città di partenza
 			if (!hotel.getCitta().getNome().equalsIgnoreCase(getPacchetto().getCitta().getNome())) {
 				//controllo che la data di arrivo sia minore della data di partenza dalla destinazione
-				if (getDestinazione().getDataArrivo().before(getDestinazione().getDataPartenza())) {
-					this.getPacchetto().setUtente(profiloBean.getUtenteCorrente());					
+				if (getDestinazione().getDataArrivo().before(getDestinazione().getDataPartenza())) {				
 					this.getDestinazione().setHotel(hotel);
 					this.getDestinazione().setCitta(hotel.getCitta());
 					this.getPacchetto().getDestinazioni().add(this.getDestinazione());
@@ -391,7 +390,6 @@ public class PacchettoBean {
 		try {			
 			PacchettoPredefinitoDTO pred = predefinitoBean.getPacchetto(idPacchetto);
 			
-			this.getPacchetto().setUtente(profiloBean.getUtenteCorrente());
 			this.getPacchetto().setNome(pred.getNome());
 			this.getPacchetto().setPacchettoPredefinito(pred);
 			this.getPacchetto().setPrezzo(pred.getPrezzo());
