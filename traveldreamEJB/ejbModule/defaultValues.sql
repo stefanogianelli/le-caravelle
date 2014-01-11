@@ -227,9 +227,16 @@ INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VAL
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Kirstenbosch National Gardens', '2014-03-09', '15:00:00','3', 'RELAX', 6, 9);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta) VALUES ('Robben Island', '2014-03-09', '09:30:00','5', 'CULTURA', 30, 9);
 
-
+-- emai: stefano@gmail.com - password: stefano
 INSERT INTO utenti (email, password) VALUES ('stefano@gmail.com', '05b9115df05a2a467841772eccc969822d884c9e71841050fe9e0893cce7d11b');
+-- emai: francesca@gmail.com - password: francesca
 INSERT INTO utenti (email, password) VALUES ('francesca@gmail.com', '5dfd46e27a5e3e8e06fcb92817b0955f7fd28048f5003bfd4e5be8e67bf417db');
+-- emai: dipendente@gmail.com - password: dipendente
+INSERT INTO utenti (email, password) VALUES ('dipendente@gmail.com', '24d331432e0ea5ffa4664d35d57e993224f3c08aa7034b3468010c63b14e0cdd');
+
+INSERT INTO gruppi VALUES ('stefano@gmail.com' , 'UTENTE');
+INSERT INTO gruppi VALUES ('francesca@gmail.com' , 'UTENTE');
+INSERT INTO gruppi VALUES ('dipendente@gmail.com' , 'DIPENDENTE');
 
 -- 1 Pacchetto Parigi
 INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('From Paris with love', 98, 23);

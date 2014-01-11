@@ -63,11 +63,14 @@ public class ProfiloBean {
 	    
 	    try {
 	    	request.login(this.getProfilo().getEmail(), this.getProfilo().getPassword());
+	    	if (request.isUserInRole("UTENTE"))
+	    		return "/utente/areaCliente?faces-redirect=true";
+	    	else
+	    		return "/dipendente/homepageDip?faces-redirect=true";
 	    } catch (ServletException e) {
 	    	JsfUtil.errorMessage("Login fallito");
-	    	return null;
 	    }
-	    return "/utente/areaPersonale.xhtml?faces-redirect=true";
+	    return null;
 	}
 	
 	public String logout () {
