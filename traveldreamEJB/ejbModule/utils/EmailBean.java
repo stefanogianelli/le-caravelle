@@ -18,15 +18,8 @@ import javax.mail.internet.MimeMessage;
 @Stateless
 public class EmailBean implements EmailBeanLocal {
 
-	@Resource(name = "mail/[email-account-name]")
+	@Resource(name = "mail/traveldreaminfo@gmail.com")
 	private Session mailSession;
-	
-    /**
-     * Default constructor. 
-     */
-    public EmailBean() {
-       
-    }
     
     /**
      * Permette l'invio di email

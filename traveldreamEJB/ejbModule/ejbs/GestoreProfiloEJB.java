@@ -65,10 +65,10 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		utente.setGruppi(gruppi);		
 		String password = this.generaPassword();
 		utente.setPassword(password);
+		this.email.inviaPassword(email, password);
 		/*
-		 * Per eseguire i test viene disabilitato l'invio dell'email con la password
+		 * DEBUG
 		 */
-		//this.email.inviaPassword(email, password);
 		System.out.println("Utente: " + email + "\nPassword: " + password);
 		
 		em.persist(utente);
