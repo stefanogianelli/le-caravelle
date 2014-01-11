@@ -3,6 +3,8 @@ package ejbs;
 import interfaces.EmailBeanLocal;
 import interfaces.GestoreProfiloLocal;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +15,6 @@ import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import org.apache.commons.lang3.RandomStringUtils;
 
 import dtos.PersonaDTO;
 import dtos.UtenteDTO;
@@ -125,7 +125,7 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	 * @return La password generata in chiaro
 	 */
 	private String generaPassword () {
-		String password = RandomStringUtils.random(LUNGHEZZA_PASSWORD);
+		String password = new BigInteger(130, new SecureRandom()).toString(32).substring(0, LUNGHEZZA_PASSWORD);
 		
 		return password;
 	}

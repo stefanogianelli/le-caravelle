@@ -1,7 +1,10 @@
 package dtos;
 
 import java.io.Serializable;
+
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class UtenteDTO implements Serializable {
 
@@ -11,6 +14,7 @@ public class UtenteDTO implements Serializable {
             message="email non valida")
 	private String email;
 
+	@NotEmpty(message = "Inserire una password")
 	private String password;
 	
 	private PersonaDTO persona;
