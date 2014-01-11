@@ -116,5 +116,13 @@ public class Utenti implements Serializable {
 		
 		return pacchetto;
 	}
+	
+	@Override
+	public boolean equals (Object other) {
+		if (this.getEmail().equals(((Utenti) other).getEmail()))
+			return true;
+		else
+			return false;
+	}
 
 }

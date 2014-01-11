@@ -7,6 +7,12 @@ import entities.Utenti;
 
 @Local
 public interface GestoreProfiloLocal {
+	
+	/**
+	 * Restituisce il profilo dell'utente corrente
+	 * @return I dati dell'utente
+	 */
+	Utenti getUtente();	
 
 	/**
 	 * Permette la conversione da un DTO alla rispettiva entità
@@ -21,4 +27,5 @@ public interface GestoreProfiloLocal {
 	 * @return Il relativo DTO
 	 */
 	UtenteDTO convertiInDTO (Utenti utente);
+
 }

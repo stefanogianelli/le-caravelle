@@ -42,13 +42,14 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	
 	@Override
 	public UtenteDTO getUtenteCorrente() {
-		/*
-		 * Per eseguire i test viene temporaneamente utilizzato un account di prova
-		 */
-		//String email = context.getCallerPrincipal().getName();
-		String email = "stefano@gmail.com";
-		return this.convertiInDTO(em.find(Utenti.class, email));
+		return this.convertiInDTO(this.getUtente());
 	}
+	
+	@Override
+	public Utenti getUtente() {
+		String email = context.getCallerPrincipal().getName();
+		return em.find(Utenti.class, email);
+	}	
 
 	@Override
 	public void registrazioneUtente(String email) throws MessagingException, EntitaEsistenteException {
