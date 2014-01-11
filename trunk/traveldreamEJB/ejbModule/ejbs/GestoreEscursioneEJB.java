@@ -74,18 +74,17 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 				}
 			}
 		}
+		//data
+		predicati.add(cb.lessThanOrEqualTo(escursione.<Date>get("data"), data));
+		predicati.add(cb.greaterThanOrEqualTo(escursione.<Date>get("data"), data));
+		
 		cq.where(predicati.toArray(new Predicate[]{}));
 		TypedQuery<Escursioni> q = em.createQuery(cq);
 		List<Escursioni> escursioni = q.getResultList();
 		Collections.sort(escursioni);
 		List<EscursioneDTO> dto = new ArrayList<EscursioneDTO>();
 		for (Escursioni e : escursioni) {
-			//data (workaround fino a quando non si trova una soluzione per comparare le date con le Criteria API)
-			if (data != null) {
-				if (e.getData().equals(data))
-						dto.add(this.convertiInDTO(e));
-			} else
-				dto.add(this.convertiInDTO(e));			
+			dto.add(this.convertiInDTO(e));			
 		}
 		return dto;
 	}
