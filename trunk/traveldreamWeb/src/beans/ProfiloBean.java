@@ -53,6 +53,7 @@ public class ProfiloBean {
 			profiloBean.registrazioneUtente(profilo.getEmail());
 		} catch (MessagingException e) {
 			JsfUtil.errorMessage("Errore");
+			e.printStackTrace();
 		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("email già usata");
 		}
