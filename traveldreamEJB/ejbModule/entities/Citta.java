@@ -1,8 +1,16 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -105,6 +113,14 @@ public class Citta implements Serializable {
 		immagini.setCitta(null);
 
 		return immagini;
+	}
+	
+	@Override
+	public boolean equals (Object other) {		
+		if (this.getNome().equals(((Citta) other).getNome()))
+			return true;
+		else
+			return false;
 	}
 
 }

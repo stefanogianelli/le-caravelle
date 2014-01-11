@@ -8,6 +8,7 @@ import interfaces.GestorePacchettoLocal;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -71,6 +72,15 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		
 		entity.setDataArrivo(destinazione.getDataArrivo());
 		
+		//rimuovo le escursioni non più valide
+    	Attivita a = null;
+		for (Iterator<Attivita> itr = entity.getAttivita().iterator(); itr.hasNext();) {
+			a = itr.next();
+			if (a.getEscursione().getData().before(destinazione.getDataArrivo())) {
+				itr.remove();
+			}
+		} 
+		
 		return vecchiaData;
 	}
     
@@ -81,6 +91,15 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
     	Date vecchiaData = entity.getDataPartenza();
     	
     	entity.setDataPartenza(destinazione.getDataPartenza());
+    	
+		//rimuovo le escursioni non più valide
+    	Attivita a = null;
+		for (Iterator<Attivita> itr = entity.getAttivita().iterator(); itr.hasNext();) {
+			a = itr.next();
+			if (a.getEscursione().getData().after(destinazione.getDataPartenza())) {
+				itr.remove();
+			}
+		} 	
     	
     	return vecchiaData;
     }
@@ -113,19 +132,22 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 			
 			if (q.getResultList().isEmpty()) {
 				//controllo che l'escursione sia all'interno delle date della destinazione
-				if (entity.getDataArrivo().before(escursioneEntity.getData()) && entity.getDataPartenza().after(escursioneEntity.getData())) {			
-					
-					Attivita attivita = new Attivita();		
-					attivita.setEscursione(escursioneEntity);		
-					attivita.setNumPartecipanti(numeroPartecipanti);
-					
-					entity.addAttivita(attivita);
-					//aggiorno il prezzo del pacchetto
-					entity.getPacchetto().setPrezzo(entity.getPacchetto().getPrezzo() + escursioneEntity.getPrezzo()*numeroPartecipanti);
-					
-					em.merge(entity);
+				if (entity.getDataArrivo().before(escursioneEntity.getData()) && entity.getDataPartenza().after(escursioneEntity.getData())) {
+					//controllo che l'escursione sia nella stessa città della destinazione
+					if (entity.getCitta().equals(escursioneEntity.getCitta())) {						
+						Attivita attivita = new Attivita();		
+						attivita.setEscursione(escursioneEntity);		
+						attivita.setNumPartecipanti(numeroPartecipanti);
+						
+						entity.addAttivita(attivita);
+						//aggiorno il prezzo del pacchetto
+						entity.getPacchetto().setPrezzo(entity.getPacchetto().getPrezzo() + escursioneEntity.getPrezzo()*numeroPartecipanti);
+						
+						em.merge(entity);
+					} else
+						throw new InsertException("L'escursione non è nella stessa regione della destinazione");
 				} else
-					throw new InsertException();
+					throw new InsertException("La data dell'escursione è al di fouri del periodo di permanenza nella destinazione");
 			} else
 				throw new EntitaEsistenteException();
 		} else
