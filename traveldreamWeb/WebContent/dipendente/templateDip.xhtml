@@ -22,7 +22,10 @@
 		</div> 
 		
 		<div class="access">
-			<a href="../login.xhtml">Area personale</a>
+			<h:form>
+				<h:commandLink style="width: 135px;" value="Logout" action="#{profilo.logout()}" rendered="#{facesContext.externalContext.isUserInRole('DIPENDENTE')}" />
+				<h:link style="width: 135px;" value="Area Personale" outcome="homepageDip" rendered="#{facesContext.externalContext.isUserInRole('DIPENDENTE')}" />
+			</h:form>
 		</div>
 		
 	</div>
