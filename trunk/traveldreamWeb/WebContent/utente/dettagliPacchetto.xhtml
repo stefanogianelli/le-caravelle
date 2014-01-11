@@ -134,20 +134,22 @@
 <ui:repeat id="destinazioni" var="d" value="#{pacchetto.pacchetto.destinazioni}" varStatus="status">	
 
 	<!-- Messaggio visualizzato se la destinazione corrente non è coerente con la precedente -->
-	<h:panelGroup styleClass="warning-div ui-corner-all" layout="block" rendered="#{not pacchetto.destinazioneCoerente(d)}">
-		<span class="ui-messages-warn-icon" style="margin-top: 0px;"></span> 
-		<div class="warning-text">
-			Aggiungi una destinazione dal
-				<h:outputText value="#{pacchetto.pacchetto.destinazioni.get(pacchetto.pacchetto.destinazioni.indexOf(d) - 1).dataPartenza}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>			
-			al
-				<h:outputText value="#{d.dataArrivo}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>			
-			per completare il pacchetto
-		</div>
-	</h:panelGroup>		
+	<h:panelGroup id="destinazioneIncoerente">
+		<h:panelGroup styleClass="warning-div ui-corner-all" layout="block" rendered="#{not pacchetto.destinazioneCoerente(d)}">
+			<span class="ui-messages-warn-icon" style="margin-top: 0px;"></span> 
+			<div class="warning-text">
+				Aggiungi una destinazione dal
+					<h:outputText value="#{pacchetto.pacchetto.destinazioni.get(pacchetto.pacchetto.destinazioni.indexOf(d) - 1).dataPartenza}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>			
+				al
+					<h:outputText value="#{d.dataArrivo}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>			
+				per completare il pacchetto
+			</div>
+		</h:panelGroup>
+	</h:panelGroup>
 					
 	<!-- Collegamento di andata -->
 	<div class="bloccoPaccVolo">
@@ -173,7 +175,7 @@
 	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
 	           	<h:commandButton styleClass="edit-button" value="Salva" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;">
-	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataArrivo(d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivo :destinazioni:pannelloVoloAndata :prezzoPacchetto :destinazioni:elencoEscursioni" />
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataArrivo(d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivo :destinazioni:pannelloVoloAndata :prezzoPacchetto :destinazioni:elencoEscursioni :destinazioni:destinazioneIncoerente" />
 	           	</h:commandButton>
 	           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;" />
            	</h:form>
