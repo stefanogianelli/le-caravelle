@@ -33,7 +33,7 @@ public interface GestoreDestinazione {
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
 	 * @throws EntitaEsistenteException Quando l'escursione è già stata inserita
 	 * @throws NumeroPartecipantiException Quando il numero di partecipanti inserito non è valido
-	 * @throws InsertException Quando la data dell'escursione è al di fuori delle date della destinazione
+	 * @throws InsertException Quando la data dell'escursione è al di fuori delle date della destinazione o se le regioni non combaciano
 	 */
 	void aggiuntaEscursione (int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EntitaEsistenteException, NumeroPartecipantiException, InsertException;
 	

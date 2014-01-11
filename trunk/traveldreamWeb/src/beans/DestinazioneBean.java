@@ -68,7 +68,7 @@ public class DestinazioneBean {
 			} catch (NumeroPartecipantiException e) {
 				JsfUtil.errorMessage("Il numero di partecipanti all'escursione deve essere minore o uguale al numero di partecipanti al viaggio");
 			} catch (InsertException e) {
-				JsfUtil.errorMessage("La data dell'escursione è al di fouri del periodo di permanenza nella destinazione");
+				JsfUtil.errorMessage(e.getMessage());
 			}
 		} else
 			JsfUtil.errorMessage("Il numero dei partecipanti deve essere maggiore o uguale a 1");

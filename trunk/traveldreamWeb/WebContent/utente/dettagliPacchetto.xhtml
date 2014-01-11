@@ -173,7 +173,7 @@
 	           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 	           	</p:calendar>
 	           	<h:commandButton styleClass="edit-button" value="Salva" oncomplete="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;">
-	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataArrivo(d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivo :destinazioni:pannelloVoloAndata :prezzoPacchetto" />
+	           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataArrivo(d)}" render=":destinazioni:dataArrivo :destinazioni:modificaDataArrivo :destinazioni:pannelloVoloAndata :prezzoPacchetto :destinazioni:elencoEscursioni" />
 	           	</h:commandButton>
 	           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataArrivo'); toggle('destinazioni:#{status.index}:modificaDataArrivo'); return false;" />
            	</h:form>
@@ -359,7 +359,7 @@
 		           			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 		           	</p:calendar>
 		           	<h:commandButton value="Salva" styleClass="edit-button" oncomplete="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDataPartenza'); return false;">
-		           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPartenza(d)}" render=":destinazioni:dataPartenza :destinazioni:modificaDataPartenza :destinazioni:pannelloVoloRitorno :prezzoPacchetto" />           	
+		           		<f:ajax execute="@form" listener="#{pacchetto.modificaDataPartenza(d)}" render=":destinazioni:dataPartenza :destinazioni:modificaDataPartenza :destinazioni:pannelloVoloRitorno :prezzoPacchetto :destinazioni:elencoEscursioni" />           	
 		           	</h:commandButton>
 		           	<h:commandButton value="Annulla" styleClass="edit-button" onclick="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDataPartenza'); return false;" />
 	           	</h:form>
