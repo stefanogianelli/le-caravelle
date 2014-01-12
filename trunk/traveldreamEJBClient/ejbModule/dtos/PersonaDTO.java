@@ -3,25 +3,27 @@ package dtos;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class PersonaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
+	@NotEmpty(message="Inserire un nome")
 	private String nome;
 
-	@NotEmpty
+	@NotEmpty(message="Inserire un cognome")
 	private String cognome;
 
-	@NotEmpty
 	private Date dataNascita;
 	
-	@NotEmpty
+	@NotEmpty(message="Inserire un documento d'identità")
 	private String documentoIdentita;
 
-	@NotEmpty
+	@Pattern(regexp="\\+39\\s\\d{2,3}\\s\\d{4,8}",
+			message="Numero di telefono non valido")
 	private String telefono;
 
 	public String getNome() {
