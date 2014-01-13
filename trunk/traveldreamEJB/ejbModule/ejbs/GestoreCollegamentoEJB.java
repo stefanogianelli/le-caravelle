@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -45,6 +46,22 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		return this.convertiInDTO(this.convertiInEntita(codiceCollegamento));
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getOrigini (String nomeCitta) {
+		Query q = em.createNamedQuery("Collegamenti.getOrigini");
+		q.setParameter("nomeCitta", nomeCitta);
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getDestinazioni (String nomeCitta) {
+		Query q = em.createNamedQuery("Collegamenti.getDestinazioni");
+		q.setParameter("nomeCitta", nomeCitta);
+		return q.getResultList();
+	}
+	
 	@Override
 	public List<CollegamentoDTO> elencoCollegamenti() {
 		List<Collegamenti> collegamenti = em.createNamedQuery("Collegamenti.elenco", Collegamenti.class).getResultList();
@@ -57,7 +74,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	}
 	
 	@Override
-	public List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo) {
+	public List<CollegamentoDTO> elencoCollegamenti (TipoCollegamento tipo) {
 		TypedQuery<Collegamenti> q = em.createNamedQuery("Collegamenti.elencoPerTipo", Collegamenti.class);
 		q.setParameter("tipo", tipo);
 		List<Collegamenti> collegamenti = q.getResultList();
@@ -70,16 +87,34 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	}	
 	
 	@Override
-	public List<CollegamentoDTO> elencoCollegamenti(Date data, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo) {
-		TypedQuery<Collegamenti> q = em.createNamedQuery("Collegamenti.elencoTraDestinazioni", Collegamenti.class);
-		q.setParameter("data", data);
-		q.setParameter("partenza", cittaPartenza);
-		q.setParameter("arrivo", cittaArrivo);
-		q.setParameter("tipo", tipo);
-		List<Collegamenti> collegamenti = q.getResultList();
-		Collections.sort(collegamenti);
+	public List<CollegamentoDTO> elencoCollegamenti(Date data, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo, String origine, String destinazione) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Collegamenti> cq = cb.createQuery(Collegamenti.class);
+		Root<Collegamenti> collegamenti = cq.from(Collegamenti.class);		
+		List<Predicate> predicati = new ArrayList<Predicate>();
+		//data
+		predicati.add(cb.lessThanOrEqualTo(collegamenti.<Date>get("dataPartenza"), data));
+		predicati.add(cb.greaterThanOrEqualTo(collegamenti.<Date>get("dataPartenza"), data));
+		//citta partenza
+		Join<Collegamenti, Citta> partenza = collegamenti.join("cittaPartenza");
+		predicati.add(cb.equal(partenza.get("nome"), cittaPartenza));
+		//citta arrivo
+		Join<Collegamenti, Citta> arrivo = collegamenti.join("cittaArrivo");
+		predicati.add(cb.equal(arrivo.get("nome"), cittaArrivo));
+		//tipo
+		predicati.add(cb.equal(collegamenti.get("tipoCollegamento"), tipo));
+		//origine
+		if (origine != null && !origine.equals("Qualsiasi"))
+			predicati.add(cb.equal(collegamenti.get("origine"), origine));
+		//destinazione
+		if (destinazione != null && !destinazione.equals("Qualsiasi"))
+			predicati.add(cb.equal(collegamenti.get("destinazione"), destinazione));		
+		cq.where(predicati.toArray(new Predicate[]{}));
+		TypedQuery<Collegamenti> q = em.createQuery(cq);
+		List<Collegamenti> elenco = q.getResultList();
+		Collections.sort(elenco);
 		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
-		for (Collegamenti c : collegamenti) {
+		for (Collegamenti c : elenco) {
 			dto.add(this.convertiInDTO(c));
 		}
 		return dto;

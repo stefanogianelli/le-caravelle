@@ -37,12 +37,18 @@
 		<h3>Specifica i punti di partenza e di arrivo</h3>
 			<div class="data">
 				<h3>Origine</h3>
-				<input class="text-input" type="text" name="origine"> </input> <br></br>
+			 	<h:selectOneMenu styleClass="menu-input" binding="#{origineCollegamento}">
+					<f:selectItems value="#{collegamento.elencoOrigini()}"/>
+				</h:selectOneMenu> 
+				<br />
 			</div>
 			
 			<div class="data">
 				<h3>Destinazione</h3>
-				<input class="text-input" type="text" name="destinazione"> </input> <br></br>
+			 	<h:selectOneMenu styleClass="menu-input" binding="#{destinazioneCollegamento}">
+					<f:selectItems value="#{collegamento.elencoDestinazioni()}"/>
+				</h:selectOneMenu> 
+				<br></br>
 			</div>
 		</div>
 		<div class="blocco">
@@ -60,7 +66,7 @@
 		
 			<div class="bloccoButton">
 				<h:commandButton value="Cerca" styleClass="button">
-					<f:ajax execute="@form" listener="#{collegamento.cercaCollegamenti(tipoCollegamento.value)}" render=":mainForm:listaCollegamenti" />
+					<f:ajax execute="@form" listener="#{collegamento.cercaCollegamenti(tipoCollegamento.value, origineCollegamento.value, destinazioneCollegamento.value)}" render=":mainForm:listaCollegamenti" />
 				</h:commandButton>
 			</div>			
 		</div>
@@ -164,11 +170,8 @@
 						</ul>					
 					</div>
 					
-					<div class="pulsantiVolo">
-					
-						<h:commandButton value="Dettagli" styleClass="flight-button"/>
-						<h:commandButton value="Scegli" styleClass="flight-button" action="#{pacchetto.aggiuntaCollegamento(collegamento.idPacchetto, c)}" />
-						
+					<div class="pulsantiVolo">					
+						<h:commandButton value="Scegli" styleClass="flight-button" action="#{pacchetto.aggiuntaCollegamento(collegamento.idPacchetto, c)}" />						
 					</div>
 						
 					<div class="dati">
