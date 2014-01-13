@@ -50,16 +50,16 @@
 				<h:form>
 	   			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
 	       				<h:outputLabel for="email" value="email:" />  
-	         			<p:inputText id="email" binding="#{emailAmico}" />
+	         			<p:inputText id="email" value="#{pacchetto.amico.email}" />
 	         			
 	         			<h:outputLabel for="nome" value="Nome:" />  
-	         			<p:inputText id="nome" binding="#{nomeAmico}" />
+	         			<p:inputText id="nome" value="#{pacchetto.amico.nome}" />
 	         			
 	         			<h:outputLabel for="cognome" value="Cognome:" />  
-	         			<p:inputText id="cognome" binding="#{cognomeAmico}" />
+	         			<p:inputText id="cognome" value="#{pacchetto.amico.cognome}" />
 	       			</h:panelGrid>  
 	 
-	       			<p:commandButton value="Condividi" action="#{pacchetto.condividiPacchetto(emailAmico.value,nomeAmico.value,cognomeAmico.value)}" oncomplete="PF('condividiPacchetto').hide();" />
+	       			<p:commandButton value="Condividi" action="#{pacchetto.condividiPacchetto()}" oncomplete="PF('condividiPacchetto').hide();" />
       			</h:form>
       		</h:panelGroup>
 		</p:dialog>

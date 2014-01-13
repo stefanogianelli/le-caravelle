@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.mail.MessagingException;
 
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -17,6 +18,7 @@ import org.primefaces.model.map.Marker;
 
 import utils.DataUtils;
 import utils.JsfUtil;
+import dtos.AmicoDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.HotelDTO;
@@ -60,12 +62,14 @@ public class PacchettoBean {
 	private List<PacchettoDTO> elenco;
 	private PacchettoPredefinitoDTO predefinito;
 	private MapModel simpleModel;
+	private AmicoDTO amico;
 	
 	@PostConstruct
 	public void setUp () {
 		pacchetto = new PacchettoDTO();
 		destinazione = new DestinazioneDTO();
 		elenco = new ArrayList<PacchettoDTO>();
+		amico = new AmicoDTO();
 	}
 
 	public PacchettoDTO getPacchetto() {
@@ -104,10 +108,18 @@ public class PacchettoBean {
 		return simpleModel;
 	}	
 	
+	public AmicoDTO getAmico() {
+		return amico;
+	}
+
+	public void setAmico(AmicoDTO amico) {
+		this.amico = amico;
+	}
+	
 	/*
 	 * Metodi relativi alla gestione del pacchetto
-	 */
-	
+	 */	
+
 	/**
 	 * Inizializza la mappa con i marker delle varie destinazioni visitate
 	 */
@@ -475,33 +487,26 @@ public class PacchettoBean {
 	 * @param nome Il nome dell'amico
 	 * @param cognome il cognome dell'amico
 	 */
-	public void condividiPacchetto (String email, String nome, String cognome) {
+	public void condividiPacchetto () {
 		int numeroDestinazioni = this.getPacchetto().getDestinazioni().size();
 		int numeroCollegamenti = this.getPacchetto().getCollegamenti().size();
 		
 		//controllo che il pacchetto sia completo
 		if (numeroCollegamenti == numeroDestinazioni + 1) {
-			if(email != null && !email.isEmpty()) {
-				if (nome != null && !nome.isEmpty()) {
-					if (cognome != null && !cognome.isEmpty()) {
-						try {
-							pacchettoBean.condividiPacchetto(this.getPacchetto(), email, nome, cognome);
-							JsfUtil.infoMessage("Pacchetto condiviso con " + nome);
-						} catch (CittaInesistenteException e) {
-							JsfUtil.errorMessage("Città sconosciuta");
-						} catch (HotelInesistenteException e) {
-							JsfUtil.errorMessage("Hotel inesistente");
-						} catch (CollegamentoInesistenteException e) {
-							JsfUtil.errorMessage("Collegamento inesistente");
-						} catch (EscursioneInesistenteException e) {
-							JsfUtil.errorMessage("Escursione inesistente");
-						}
-					} else
-						JsfUtil.errorMessage("Inserire un cognome");
-				} else
-					JsfUtil.errorMessage("Inserire un nome");
-			} else
-				JsfUtil.errorMessage("Inserire un indirizzo email");
+			try {
+				pacchettoBean.condividiPacchetto(this.getPacchetto(), this.getAmico());
+				JsfUtil.infoMessage("Pacchetto condiviso con " + this.getAmico().getNome());
+			} catch (CittaInesistenteException e) {
+				JsfUtil.errorMessage("Città sconosciuta");
+			} catch (HotelInesistenteException e) {
+				JsfUtil.errorMessage("Hotel inesistente");
+			} catch (CollegamentoInesistenteException e) {
+				JsfUtil.errorMessage("Collegamento inesistente");
+			} catch (EscursioneInesistenteException e) {
+				JsfUtil.errorMessage("Escursione inesistente");
+			} catch (MessagingException e) {
+				JsfUtil.errorMessage("Errore nell'invio della email");
+			}
 		} else
 			JsfUtil.errorMessage("Pacchetto Incompleto! Impossibile condividere.");
 	}

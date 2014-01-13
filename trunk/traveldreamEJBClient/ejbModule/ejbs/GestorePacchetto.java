@@ -3,7 +3,9 @@ package ejbs;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.mail.MessagingException;
 
+import dtos.AmicoDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
@@ -100,15 +102,14 @@ public interface GestorePacchetto {
 	/**
 	 * Permette la condivisione di un pacchetto
 	 * @param pacchetto Il pacchetto da condividere
-	 * @param email L'indirizzo email dell'amico con cui condividere il paccheto
-	 * @param nome Il nome dell'amico
-	 * @param cognome Il cognome dell'amico
+	 * @param datiAmico I dati dell'amico
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 * @throws EscursioneInesistenteException Quando non viene trovata l'escursione nel database
+	 * @param MessagingException Quando si verifica un errore nell'invio della email
 	 */
-	void condividiPacchetto (PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException, EscursioneInesistenteException;
+	void condividiPacchetto (PacchettoDTO pacchetto, AmicoDTO datiAmico) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, MessagingException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
