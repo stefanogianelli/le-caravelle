@@ -94,9 +94,6 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	public void modificaDatiPersonali(UtenteDTO datiUtente) {
 		Utenti utente = this.convertiInEntita(datiUtente);
 		
-		utente.setEmail(datiUtente.getEmail());
-		utente.setPassword(datiUtente.getPassword());
-		
 		Persone persona = utente.getPersona();
 		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
 		persona.setTelefono(datiUtente.getPersona().getTelefono());
