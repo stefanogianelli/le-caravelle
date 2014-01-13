@@ -22,6 +22,20 @@ public interface GestoreCollegamento {
 	 */
 	CollegamentoDTO getCollegamento (int codiceCollegamento) throws CollegamentoInesistenteException;
 	
+	/**
+	 * Ritorna tutte le origini nella città selezionata
+	 * @param nomeCitta Il nome della città
+	 * @return La lista delle origini
+	 */
+	List<String> getOrigini (String nomeCitta);
+	
+	/**
+	 * Ritorna tutte le destinazioni nella città selezionata
+	 * @param nomeCitta Il nome della città
+	 * @return La lista delle destinazioni
+	 */
+	List<String> getDestinazioni (String nomeCitta);
+	
     /**
      * Mostra l'elenco dei collegamenti disponibili
      * @return L'elenco dei collegamenti
@@ -41,9 +55,11 @@ public interface GestoreCollegamento {
 	 * @param cittaPartenza Il nome della città di partenza
 	 * @param cittaArrivo Il nome della città di arrivo
 	 * @param tipo La tipologia del collegamento
+	 * @param origine L'origine del collegamento
+	 * @param destinazione La destinazione del collegamento
 	 * @return L'elenco dei collegamenti trovati
 	 */
-	List<CollegamentoDTO> elencoCollegamenti(Date data, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo);
+	List<CollegamentoDTO> elencoCollegamenti(Date data, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo, String origine, String destinazione);
 	
 	/**
 	 * Mostra l'elenco dei collegamenti disponibili tra due destinazioni

@@ -110,6 +110,28 @@ public class CollegamentoBean {
 	}
 	
 	/**
+	 * Mostra l'elenco delle origini nella città di partenza
+	 * @return L'elenco delle origini
+	 */
+	public List<String> elencoOrigini () {
+		List<String> elenco = new ArrayList<String>();
+		elenco.add("Qualsiasi");
+		elenco.addAll(collegamentoBean.getOrigini(this.getCittaPartenza()));
+		return elenco;
+	}	
+	
+	/**
+	 * Mostra l'elenco delle destinazioni nella città di arrivo
+	 * @return L'elenco delle destinazioni
+	 */
+	public List<String> elencoDestinazioni () {
+		List<String> elenco = new ArrayList<String>();
+		elenco.add("Qualsiasi");
+		elenco.addAll(collegamentoBean.getDestinazioni(this.getCittaArrivo()));
+		return elenco;
+	}
+	
+	/**
 	 * Permette la ricerca di un collegamento tramite il suo codice
 	 * @param codiceCollegamento Il codice del collegamento
 	 */
@@ -147,10 +169,12 @@ public class CollegamentoBean {
 	/**
 	 * Ricerca i collegamenti disponibili tra due destinazioni nella data indicata
 	 * @param tipo La tipologia del collegamento
+	 * @param origine L'origine del collegamento
+	 * @param destinazione La destinazione del collegamento
 	 */
-	public void cercaCollegamenti (TipoCollegamento tipo) {
+	public void cercaCollegamenti (TipoCollegamento tipo, String origine, String destinazione) {
 		this.getElenco().clear();
-		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(this.getDataPartenza(), this.getCittaPartenza(), this.getCittaArrivo(), tipo));
+		this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(this.getDataPartenza(), this.getCittaPartenza(), this.getCittaArrivo(), tipo, origine, destinazione));
 		if (this.getElenco().isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 	}
