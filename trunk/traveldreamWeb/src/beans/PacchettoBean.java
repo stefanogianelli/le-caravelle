@@ -456,15 +456,10 @@ public class PacchettoBean {
 	public String acquistaPacchetto () {		
 		int numeroDestinazioni = this.getPacchetto().getDestinazioni().size();
 		int numeroCollegamenti = this.getPacchetto().getCollegamenti().size();
-		boolean utente = false;
 		
 		//controllo che il pacchetto sia completo
 		if (numeroCollegamenti == numeroDestinazioni + 1) {
-			//verifico se l'utente non ha inserito i dati
-			if (profiloBean.getUtenteCorrente().getPersona().getNome() == null) {
-				utente = true;
-			}
-			return "datiPartecipanti?idPacchetto=" + this.getPacchetto().getId() + "&utente=" + utente + "&numeroPartecipanti=" + (this.getPacchetto().getNumPartecipanti() - 1) + "&faces-redirect=true";
+			return "datiPartecipanti?idPacchetto=" + this.getPacchetto().getId() + "&numeroPartecipanti=" + (this.getPacchetto().getNumPartecipanti() - 1) + "&faces-redirect=true";
 		}
 		else
 			JsfUtil.errorMessage("Pacchetto incompleto");

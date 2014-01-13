@@ -235,7 +235,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		
 		if (numeroCollegamenti == numeroDestinazioni + 1) {
 			//aggiungo i dati dei partecipanti nel pacchetto
-			if (entity.getNumPartecipanti() == partecipanti.size()) {
+			if (entity.getNumPartecipanti() == partecipanti.size() + 1) {
 				for (PersonaDTO p : partecipanti) {
 					Persone persona = new Persone();
 					persona.setNome(p.getNome());

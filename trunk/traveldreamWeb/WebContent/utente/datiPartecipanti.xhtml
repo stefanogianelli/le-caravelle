@@ -13,7 +13,6 @@
 
 <f:metadata>
 	<f:viewParam name="idPacchetto" value="#{datiPartecipanti.idPacchetto}" />
-	<f:viewParam name="utente" value="#{datiPartecipanti.insertUserData}" />
 	<f:viewParam name="numeroPartecipanti" value="#{datiPartecipanti.numeroPartecipanti}" />
 	<f:event type="preRenderView" listener="#{datiPartecipanti.setUp()}" />
 </f:metadata>
@@ -25,7 +24,7 @@
 <h:form>	
 	<div class="bloccoDett" style="height: auto;">
 		<!-- Dati utente -->
-		<h:panelGroup rendered="#{datiPartecipanti.insertUserData}">
+		<h:panelGroup>
 			<h3>Utente</h3>
 			
 			<br />

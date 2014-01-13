@@ -52,6 +52,7 @@ public class Persone implements Serializable {
 	private List<Pacchetti> pacchetti;
 
 	public Persone() {
+		id = new PersonePK();
 		pacchetti = new ArrayList<Pacchetti>();
 	}
 
