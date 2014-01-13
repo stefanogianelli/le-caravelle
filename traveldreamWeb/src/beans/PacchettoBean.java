@@ -243,13 +243,16 @@ public class PacchettoBean {
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoTrePacchettiAcquistati () {
-		PacchettoDTO p;
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoTrePacchetti(TipoPacchetto.ACQUISTATO);
-		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
-		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
-			p = itr.next();
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().after(DataUtils.getDataOdierna()))
-				itr.remove();
+		List<PacchettoDTO> elenco = pacchettoBean.elencoPacchetti(TipoPacchetto.ACQUISTATO);
+		List<PacchettoDTO> pacchetti = new ArrayList<PacchettoDTO>();
+		int cont = 0;
+		int index = 0;
+		while (cont < 3 && index < elenco.size()) {
+			if (elenco.get(index).getDestinazioni().get(elenco.get(index).getDestinazioni().size() - 1).getDataPartenza().before(DataUtils.getDataOdierna())) {
+				pacchetti.add(elenco.get(index));
+				cont++;
+			}
+			index++;
 		}
 		return pacchetti;
 	}
