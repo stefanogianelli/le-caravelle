@@ -49,4 +49,10 @@ public class EmailBean implements EmailBeanLocal {
     	String messaggio = "La tua nuova password è: " + password;
     	this.inviaMessaggio(email, "Reset Password", messaggio);
     }
+    
+    @Override
+    public void condividiPacchetto (String nome, String emailAmico, int idPacchetto) throws MessagingException {
+    	String messaggio = nome + " ha condiviso un pacchetto con te!\n\nPuoi vedere i dettagli del pacchetto cliccando sul link:\nhttp://localhost:8080/traveldreamWeb/dettagliPacchettoCondiviso?idPacchetto=" + idPacchetto + "&email=" + emailAmico;
+    	this.inviaMessaggio(emailAmico, "Condivisione pacchetto", messaggio);
+    }
 }

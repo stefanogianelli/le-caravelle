@@ -129,7 +129,6 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	
 	@Override
 	public Utenti convertiInEntita (UtenteDTO utente) {
-		System.out.println(utente.getEmail());
 		return em.find(Utenti.class, utente.getEmail());
 	}
 	

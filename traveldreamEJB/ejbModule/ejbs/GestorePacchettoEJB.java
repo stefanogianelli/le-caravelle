@@ -1,5 +1,6 @@
 package ejbs;
 
+import interfaces.EmailBeanLocal;
 import interfaces.GestoreCittaLocal;
 import interfaces.GestoreCollegamentoLocal;
 import interfaces.GestoreDestinazioneLocal;
@@ -16,10 +17,12 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import dtos.AmicoDTO;
 import dtos.AttivitaDTO;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
@@ -76,6 +79,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	
 	@EJB
 	private GestoreEscursioneLocal escursione;
+	
+	@EJB
+	private EmailBeanLocal emailBean;
 	
 	@Override
 	public PacchettoDTO getPacchetto (int idPacchetto) throws PacchettoInesistenteException {
@@ -254,22 +260,22 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void condividiPacchetto(PacchettoDTO pacchetto, String email, String nome, String cognome) throws CittaInesistenteException, HotelInesistenteException, CollegamentoInesistenteException, EscursioneInesistenteException {
+	public void condividiPacchetto(PacchettoDTO pacchetto, AmicoDTO datiAmico) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, MessagingException {
 		Amici amico = new Amici();
 		//verifico se l'indirizzo email è già esistente
 		TypedQuery<Amici> q = em.createNamedQuery("Amici.getAmico", Amici.class);
-		q.setParameter("email", email);
+		q.setParameter("email", datiAmico.getEmail());
 		if (q.getResultList().isEmpty()) {
-			amico.setEmail(email);
-			amico.setNome(nome);
-			amico.setCognome(cognome);			
+			amico.setEmail(datiAmico.getEmail());
+			amico.setNome(datiAmico.getNome());
+			amico.setCognome(datiAmico.getCognome());			
 		} else {
 			amico = q.getResultList().get(0);
 		}
 		
 		Pacchetti entity = new Pacchetti();
 		
-		entity.setNome(pacchetto.getNome() + " (Condiviso con " + nome + " " + cognome + ")");
+		entity.setNome(pacchetto.getNome() + " (Condiviso con " + datiAmico.getNome() + " " + datiAmico.getCognome() + ")");
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);
@@ -288,9 +294,14 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
 		
+		em.persist(entity);
+		
 		amico.addPacchetto(entity);	
 		
 		em.merge(amico);
+		em.flush();
+		
+		emailBean.condividiPacchetto(pacchetto.getUtente().getPersona() != null ? pacchetto.getUtente().getPersona().getNome() : pacchetto.getUtente().getEmail(), amico.getEmail(), entity.getId());
 	}
 
 	@Override

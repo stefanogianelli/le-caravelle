@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -34,7 +33,7 @@ public class Amici implements Serializable {
 
 	private String cognome;	
 
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval=true)
+	@OneToMany(orphanRemoval=true)
 	@JoinTable(
 			name="condiviso_con"
 			, joinColumns={
