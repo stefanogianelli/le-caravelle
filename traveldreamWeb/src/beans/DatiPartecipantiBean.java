@@ -26,19 +26,19 @@ public class DatiPartecipantiBean {
 	private GestorePacchetto pacchettoBean;
 	
 	private int idPacchetto;
-	private boolean insertUserData;
 	private int numeroPartecipanti;
 	private UtenteDTO utente;
 	private List<PersonaDTO> dati;
+	private boolean noUserData;
 	
 	public void setUp () {
-		utente = new UtenteDTO();
+		utente = profiloBean.getUtenteCorrente();
+		if (utente.getPersona() == null)
+			this.noUserData = true;
 		dati = new ArrayList<PersonaDTO>();
 		for (int i = 0; i < numeroPartecipanti; i++) {
 			dati.add(new PersonaDTO());
 		}
-		if (!this.isInsertUserData() && this.getNumeroPartecipanti() == 0)
-			this.acquista();
 	}
 	
 	public int getIdPacchetto() {
@@ -47,14 +47,6 @@ public class DatiPartecipantiBean {
 
 	public void setIdPacchetto(int idPacchetto) {
 		this.idPacchetto = idPacchetto;
-	}
-
-	public boolean isInsertUserData() {
-		return insertUserData;
-	}
-
-	public void setInsertUserData(boolean insertUserData) {
-		this.insertUserData = insertUserData;
 	}
 
 	public int getNumeroPartecipanti() {
@@ -81,14 +73,24 @@ public class DatiPartecipantiBean {
 		this.dati = dati;
 	}
 	
+	public boolean isNoUserData() {
+		return noUserData;
+	}
+
+	public void setNoUserData(boolean noUserData) {
+		this.noUserData = noUserData;
+	}
+
 	/**
 	 * Permette l'acquisto di un pacchetto
 	 * @return l'indirizzo della pagina personale dell'utente
 	 */
 	public String acquista () {
-		//salvo i dati dell'utente (se necessario)
-		if (this.isInsertUserData())
-			profiloBean.aggiuntaDatiPersonali(getUtente());
+		if (this.isNoUserData())
+			profiloBean.aggiuntaDatiPersonali(getUtente());	
+		else
+			profiloBean.modificaDatiPersonali(getUtente());
+		
 		try {
 			pacchettoBean.acquistaPacchetto(getIdPacchetto(), getDati());
 			return "areaCliente?faces-redirect=true";
