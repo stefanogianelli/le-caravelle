@@ -291,7 +291,9 @@
 			<h:dataTable id="escursioni" value="#{d.attivita}" var="a" rendered="#{d.attivita.size() > 0}">
 				<h:column>
 					<f:facet name="header">Nome</f:facet>
-					#{a.escursione.nome}
+					<h:link value="#{a.escursione.nome}" outcome="dettagliEscursione">
+						<f:param name="idEscursione" value="#{a.escursione.id}" />
+					</h:link>
 				</h:column>
 				<h:column>
 					<f:facet name="header">Data</f:facet>
