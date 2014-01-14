@@ -105,8 +105,9 @@ public interface GestorePacchetto {
 	 * @param partecipanti I dati personali dei partecipanti al viaggio
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 * @throws AcquistoException Quando il pacchetto è incompleto o quando il dati dei partecipanti e il numero di partecipanti del pacchetto non combaciano
+	 * @throws MessagingException Quando si verifica un errore nell'invio della email
 	 */
-	void acquistaPacchetto (int idPacchetto, List<PersonaDTO> partecipanti) throws PacchettoInesistenteException, AcquistoException;
+	void acquistaPacchetto (int idPacchetto, List<PersonaDTO> partecipanti) throws PacchettoInesistenteException, AcquistoException, MessagingException;
 	
 	/**
 	 * Permette la condivisione di un pacchetto

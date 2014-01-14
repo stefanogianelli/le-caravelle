@@ -244,7 +244,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void acquistaPacchetto(int idPacchetto, List<PersonaDTO> partecipanti) throws PacchettoInesistenteException, AcquistoException {
+	public void acquistaPacchetto(int idPacchetto, List<PersonaDTO> partecipanti) throws PacchettoInesistenteException, AcquistoException, MessagingException {
 		Pacchetti entity = this.convertiInEntita(idPacchetto);
 		
 		//controllo che il pacchetto sia completo
@@ -265,6 +265,9 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 				}			
 				entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);					
 				em.merge(entity);
+				
+				//TODO: da abilitare
+				//emailBean.confermaAcquisto(entity.getUtente().getEmail(), entity.getNome());
 			} else
 				throw new AcquistoException("Errore: il numero di partecipanti non combacia con il numero di partecipanti del pacchetto");
 		} else

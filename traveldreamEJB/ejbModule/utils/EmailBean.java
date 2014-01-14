@@ -55,4 +55,10 @@ public class EmailBean implements EmailBeanLocal {
     	String messaggio = nome + " ha condiviso un pacchetto con te!\n\nPuoi vedere i dettagli del pacchetto cliccando sul link:\nhttp://localhost:8080/traveldreamWeb/dettagliPacchettoCondiviso.xhtml?idPacchetto=" + idPacchetto + "&email=" + emailAmico;
     	this.inviaMessaggio(emailAmico, "Condivisione pacchetto", messaggio);
     }
+    
+    @Override
+    public void confermaAcquisto (String email, String nomePacchetto) throws MessagingException {
+    	String messaggio = "Grazie per aver acquistato il pacchetto " + nomePacchetto;
+    	this.inviaMessaggio(email, "Conferma acquisto", messaggio);
+    }
 }

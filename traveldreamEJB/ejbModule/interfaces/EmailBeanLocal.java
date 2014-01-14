@@ -30,4 +30,12 @@ public interface EmailBeanLocal {
 	  * @throws MessagingException Quando non è possibile inviare la mail
 	  */
 	void condividiPacchetto (String utente, String emailAmico, int idPacchetto) throws MessagingException;
+	
+	/**
+	 * Invia l'email di conferma dell'acquisto di un pacchetto
+	 * @param email L'indirizzo email dell'utente
+	 * @param nomePacchetto Il nome del pacchetto acquistato
+	 * @throws MessagingException Quando non è possibile inviare la mail
+	 */
+	void confermaAcquisto (String email, String nomePacchetto) throws MessagingException;
 }
