@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/template.xhtml">
+<ui:define name="title">Dettagli collegamento</ui:define>
+
+<ui:define name="content">
+
+<f:metadata>
+	<f:viewParam name="codiceCollegamento" binding="#{codice}" />
+	<f:event listener="#{collegamento.getCollegamento(codice.value)}" type="preRenderView" />
+</f:metadata>
+
+<h1>Dettagli collegamento</h1>
+
+<p:messages showDetail="false" autoUpdate="true" />
+
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{collegamento.collegamento.codice != 0}">
+	<p>Città di partenza: #{collegamento.collegamento.cittaPartenza.nome}</p>
+	<p>Città di arrivo: #{collegamento.collegamento.cittaArrivo.nome}</p>
+	<br></br>
+	<p>Data:
+		<h:outputText value="#{collegamento.collegamento.dataPartenza}">
+			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+		</h:outputText>
+	</p>
+	<p>Ora di partenza:
+		<h:outputText value="#{collegamento.collegamento.oraPartenza}">
+			<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:outputText>	
+	</p>
+	<p>Ora di arrivo:
+		<h:outputText value="#{collegamento.collegamento.oraArrivo}">
+			<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+		</h:outputText>
+	</p>
+	<br></br>
+	<p>Tipo di collegamento: #{collegamento.collegamento.tipoCollegamento.label}</p>
+	<p>Origine: #{collegamento.collegamento.origine}</p>
+	<p>Destinazione: #{collegamento.collegamento.destinazione}</p>
+	<br></br>
+	<p>Prezzo: #{collegamento.collegamento.prezzo} €</p>
+</h:panelGroup>
+
+</ui:define>
+</ui:composition>
+</html>

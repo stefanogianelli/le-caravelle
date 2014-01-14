@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Dettagli hotel</ui:define>
+
+<ui:define name="content">
+
+<f:metadata>
+	<f:viewParam name="idHotel" binding="#{id}" />
+	<f:event listener="#{hotel.getHotel(id.value)}" type="preRenderView" />
+</f:metadata>
+
+<h1>Dettagli hotel</h1>
+
+<p:messages showDetail="false" autoUpdate="true" />
+
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{hotel.hotel.id != 0}">
+	<h2>#{hotel.hotel.nome}</h2>
+	<p:rating styleClass="stelle-dip" value="#{hotel.hotel.stelle}" readonly="true" stars="5" />
+	<h:graphicImage library="images/hotel" name="#{hotel.hotel.immagine.equals('NULL') ? 'noImage.png' : hotel.hotel.immagine}" width="195" height="113" />
+	<p>Prezzo a notte: #{hotel.hotel.prezzo} €</p>
+	<br></br>
+	<p>Indirizzo: #{hotel.hotel.indirizzo} (<a href="http://maps.google.com/?q=#{hotel.hotel.indirizzo}, #{hotel.hotel.citta.nome}, #{hotel.hotel.citta.nazione}" target="_blank">mappa</a>)</p>
+	<p>Città: #{hotel.hotel.citta.nome}</p>
+	<br></br>
+	<p>Telefono: #{hotel.hotel.telefono}</p>
+	<p>Website: <a href="#{hotel.hotel.website}" target="_blank">#{hotel.hotel.website}</a></p>
+	<p>Email: <a href="mailto:#{hotel.hotel.email}">#{hotel.hotel.email}</a></p>
+</h:panelGroup>
+</ui:define>
+
+</ui:composition>
+</html>
