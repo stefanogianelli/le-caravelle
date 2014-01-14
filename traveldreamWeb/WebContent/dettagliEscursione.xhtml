@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Dettagli escursione</ui:define>
+
+<ui:define name="content">
+
+<f:metadata>
+	<f:viewParam name="idEscursione" binding="#{id}" />
+	<f:event listener="#{escursione.getEscursione(id.value)}" type="preRenderView" />
+</f:metadata>
+
+<h1>Dettagli escursione</h1>
+
+<p:messages showDetail="true" autoUpdate="true" />
+
+<h:panelGroup rendered="#{escursione.escursione.id != 0}">	
+	<div class="bloccoDett">
+		<h2>#{escursione.escursione.nome}</h2>
+		<br></br>
+		<p>Città: #{escursione.escursione.citta.nome}</p>
+		<br></br>
+		<p>Data:
+			<h:outputText value="#{escursione.escursione.data}">
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			</h:outputText>		
+		</p>
+		<p>Ora di partenza:
+			<h:outputText value="#{escursione.escursione.ora}">
+				<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+			</h:outputText>			
+		</p>
+		<p>Durata (ore): #{escursione.escursione.durata}</p>
+		<br></br>
+		<p>Prezzo: #{escursione.escursione.prezzo} €</p>
+		<br></br>
+		<p>Tipo di escursione: #{escursione.escursione.categoria.label}</p>
+	</div>
+</h:panelGroup>
+
+</ui:define>
+
+</ui:composition>
+</html>
