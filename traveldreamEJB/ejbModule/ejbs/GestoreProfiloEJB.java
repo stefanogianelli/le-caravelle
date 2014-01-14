@@ -92,7 +92,7 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	
 	@Override
 	public void modificaDatiPersonali(UtenteDTO datiUtente) {
-		Utenti utente = this.convertiInEntita(datiUtente);
+		Utenti utente = this.getUtente();
 		
 		Persone persona = utente.getPersona();
 		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
