@@ -315,6 +315,35 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		
 		emailBean.condividiPacchetto(pacchetto.getUtente().getPersona() != null ? pacchetto.getUtente().getPersona().getNome() : pacchetto.getUtente().getEmail(), amico.getEmail(), entity.getId());
 	}
+	
+	@Override
+	public int salvaPacchettoCondiviso (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException {
+		Pacchetti entity = new Pacchetti();
+		
+		entity.setNome(pacchetto.getNome());
+		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());		
+		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
+		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
+			entity.addDestinazione(this.destinazione.creaDestinazione(d));
+			for (AttivitaDTO a : d.getAttivita()) {
+				Attivita attivita = new Attivita();
+				attivita.setEscursione(this.escursione.convertiInEntita(a.getEscursione()));
+				attivita.setNumPartecipanti(a.getNumeroPartecipanti());
+				entity.getDestinazioni().get(entity.getDestinazioni().size() - 1).addAttivita(attivita);
+			}
+		}
+		for (CollegamentoDTO c : pacchetto.getCollegamenti()) {
+			entity.addCollegamento(this.collegamento.convertiInEntita(c));
+		}
+		entity.setCitta(this.citta.getCitta(pacchetto.getCitta().getNome()));	
+		entity.setUtente(this.profilo.getUtente());
+		entity.setPrezzo(pacchetto.getPrezzo());
+		
+		em.persist(entity);
+		em.flush();
+		
+		return entity.getId();		
+	}
 
 	@Override
 	public void eliminaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException {

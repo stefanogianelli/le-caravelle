@@ -540,6 +540,25 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Pacchetto Incompleto! Impossibile condividere.");
 	}
 	
+	/**
+	 * Permette il salvataggio di un pacchetto condiviso
+	 * @return L'indirizzo della pagina coi dettagli del pacchetto creato
+	 */
+	public String salvaPacchettoCondiviso () {
+		try {
+			return "/utente/dettagliPacchetto.xhtml?idPacchetto=" + pacchettoBean.salvaPacchettoCondiviso(getPacchetto()) + "&faces-redirect=true";
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città inesistente");
+		} catch (HotelInesistenteException e) {
+			JsfUtil.errorMessage("Hotel inesistente");
+		} catch (EscursioneInesistenteException e) {
+			JsfUtil.errorMessage("Escursione inesistente");
+		} catch (CollegamentoInesistenteException e) {
+			JsfUtil.errorMessage("Collegamento inesistente");
+		}
+		return null;
+	}
+	
 	/*
 	 * Metodi relativi alla gestione delle destinazioni
 	 */

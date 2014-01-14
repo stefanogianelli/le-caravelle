@@ -112,13 +112,24 @@ public interface GestorePacchetto {
 	 * Permette la condivisione di un pacchetto
 	 * @param pacchetto Il pacchetto da condividere
 	 * @param datiAmico I dati dell'amico
-	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 * @throws CittaInesistenteException Quando la città non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 * @throws EscursioneInesistenteException Quando non viene trovata l'escursione nel database
 	 * @param MessagingException Quando si verifica un errore nell'invio della email
 	 */
 	void condividiPacchetto (PacchettoDTO pacchetto, AmicoDTO datiAmico) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, MessagingException;
+	
+	/**
+	 * Permette il salvataggio di un pacchetto condiviso
+	 * @param pacchetto Il pacchetto condiviso da salvare
+	 * @return L'identificativo del pacchetto creato
+	 * @throws CittaInesistenteException Quando la città non viene trovata la città nel database
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws EscursioneInesistenteException Quando non viene trovata l'escursione nel database
+	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
+	 */
+	int salvaPacchettoCondiviso (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
