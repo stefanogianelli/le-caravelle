@@ -309,17 +309,18 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">Partecipanti</f:facet>
-					<h:form>
+					<h:form rendered="#{pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito}">
 						<p:inplace editor="true">  
 							<p:ajax event="save" listener="#{destinazione.modificaEscursione(a)}" update=":prezzoPacchetto" />
 			                <p:inputText value="#{a.numeroPartecipanti}" required="true" requiredMessage="Inserire un numero di partecipanti" 
 								converterMessage="Il numero di partecipanti deve essere composto solo da numeri" />   								                
 			            </p:inplace>
 		            </h:form>
+		            <h:outputText value="#{a.numeroPartecipanti}" rendered="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}" />
 				</h:column>
 				<h:column>
 					<h:form>
-						<h:commandButton styleClass="flight-button" value="Elimina">
+						<h:commandButton styleClass="flight-button" value="Elimina" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}">
 							<f:ajax execute="@form" listener="#{destinazione.eliminaEscursione(a)}" render=":prezzoPacchetto :destinazioni:elencoEscursioni" />
 						</h:commandButton>
 					</h:form>

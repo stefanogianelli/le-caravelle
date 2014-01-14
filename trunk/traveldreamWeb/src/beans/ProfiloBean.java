@@ -45,6 +45,15 @@ public class ProfiloBean {
 	}
 	
 	/**
+	 * Restituisce il nome dell'utente corrente
+	 * @return Il nome dell'utente (se presente) o l'indirizzo email
+	 */
+	public String getNome () {
+		UtenteDTO utente = this.getUtente();
+		return utente.getPersona().getNome() != null ? utente.getPersona().getNome() : utente.getEmail();
+	}
+	
+	/**
 	 * Permette la creazione di un nuovo utente
 	 */
 	public void registrazione () {
@@ -88,6 +97,7 @@ public class ProfiloBean {
 	    
 	    try {
 	    	request.logout();
+	    	profilo = new UtenteDTO();
 	    } catch (ServletException e) {
 	      	JsfUtil.errorMessage("Logout fallito");
 	      	return null;

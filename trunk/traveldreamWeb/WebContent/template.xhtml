@@ -30,6 +30,7 @@
 				<h:commandLink style="width: 135px;" value="Logout" action="#{profilo.logout()}" rendered="#{facesContext.externalContext.isUserInRole('UTENTE') or facesContext.externalContext.isUserInRole('DIPENDENTE')}" />
 				<h:link style="width: 135px;" value="Area Personale" outcome="/utente/areaCliente" rendered="#{facesContext.externalContext.isUserInRole('UTENTE')}" />
 			</h:form>
+			<h:outputText value="Benvenuto #{profilo.nome}" style="margin: 20px 0px 0px 0px; display: block; float: left;" rendered="#{facesContext.externalContext.isUserInRole('UTENTE')}" />
 		</div>
 		
 	</div>

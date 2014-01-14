@@ -33,7 +33,7 @@ public class DatiPartecipantiBean {
 	
 	public void setUp () {
 		utente = profiloBean.getUtenteCorrente();
-		if (utente.getPersona() == null)
+		if (utente.getPersona().getNome() == null)
 			this.noUserData = true;
 		dati = new ArrayList<PersonaDTO>();
 		for (int i = 0; i < numeroPartecipanti; i++) {
