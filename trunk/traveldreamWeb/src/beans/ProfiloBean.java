@@ -97,7 +97,6 @@ public class ProfiloBean {
 	    
 	    try {
 	    	request.logout();
-	    	profilo = new UtenteDTO();
 	    } catch (ServletException e) {
 	      	JsfUtil.errorMessage("Logout fallito");
 	      	return null;
