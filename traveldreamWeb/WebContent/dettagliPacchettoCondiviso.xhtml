@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Dettagli pacchetto condiviso</ui:define>
+
+<ui:define name="content">
+
+<f:metadata>
+	<f:viewParam name="idPacchetto" binding="#{id}" />
+	<f:viewParam name="email" binding="#{email}" />
+	<f:event listener="#{pacchetto.getPacchettoCondiviso(id.value, email)}" type="preRenderView" />
+</f:metadata>
+
+<p:messages showDetail="false" autoUpdate="true" />
+
+<h:panelGroup rendered="#{pacchetto.pacchetto.id != 0}">
+
+	<h:panelGroup id="pannelloNomePacchetto" layout="block">
+		<!-- Nome del pacchetto -->
+		<h1 id="nomePacchetto" style="display: block;">
+			#{pacchetto.pacchetto.nome}
+		</h1>
+	</h:panelGroup>   
+	
+	<div class="bloccoModifica">
+	</div>	
+	
+	<!-- Dettagli del pacchetto -->
+	<div id="dettagliPacchetto" class="bloccoPacc">
+		<!-- Immagine del pacchetto -->
+		<h:graphicImage library="images/citta" name="#{pacchetto.getImmagineCondiviso(id.value)}" width="288" height="174" />
+		
+		<!-- Informazioni generali sul pacchetto -->
+		<div class="descr">		
+			<h:panelGroup id="pannelloCitta" layout="block">	
+				<p>Città di partenza</p>
+				<h2 id="cittaPartenza" style="display: block;">
+					<h:outputText value="#{pacchetto.pacchetto.citta.nome}" />
+				</h2>				
+			</h:panelGroup>
+			<br />
+			<p>Numero di partecipanti</p>
+			<h:panelGroup id="pannelloPartecipanti" layout="block">
+				<h2 id="numeroPartecipanti" style="display: block;">
+					<h:outputText value="#{pacchetto.pacchetto.numPartecipanti}" />
+				</h2>
+			</h:panelGroup>		
+		</div>
+		
+		<!-- Prezzo del pacchetto -->
+		<h:panelGroup id="prezzoPacchetto" styleClass="pulsanti" layout="block">
+			<div id="prezzo">#{pacchetto.pacchetto.prezzo} €</div>
+		</h:panelGroup>
+	</div>	
+
+<ui:repeat id="destinazioni" var="d" value="#{pacchetto.pacchetto.destinazioni}" varStatus="status">	
+	
+	<!-- Collegamento di andata -->
+	<div class="bloccoPaccVolo">
+
+		<!-- Data di partenza -->
+		<p>Data di partenza</p>
+		
+		<h:panelGroup id="dataArrivo" style="display: block;" layout="block">
+			<p>
+				<h:outputText value="#{d.dataArrivo}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+			</p>
+		</h:panelGroup>
+		
+		<h:panelGroup id="pannelloVoloAndata" styleClass="volo" layout="block">
+					
+			<div class="pulsantiVolo">
+				<p>
+					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataArrivo).codice}" />
+					</h:link>
+				</p>
+				<p>
+					<h:link value="Modifica" styleClass="detail-button" disabled="true" />
+				</p>
+			</div>
+			
+			<div class="etichette">
+				<ul>
+					<li>Da</li>
+					<li>A</li>
+					<li>Partenza</li>
+					<li>Arrivo</li>
+					<li>Prezzo</li>
+				</ul>
+			</div>			
+				
+			<!-- Blocco dettagli volo -->
+			<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.esisteCollegamento(d.dataArrivo)}">
+				<ul>
+					<li>#{pacchetto.getCollegamento(d.dataArrivo).cittaPartenza.nome} #{pacchetto.getCollegamento(d.dataArrivo).origine}</li>
+					<li>#{pacchetto.getCollegamento(d.dataArrivo).cittaArrivo.nome} #{pacchetto.getCollegamento(d.dataArrivo).destinazione}</li>
+					<li>
+						<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).oraPartenza}">
+							<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+						</h:outputText>
+					</li>
+					<li>
+						<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).oraArrivo}">
+							<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+						</h:outputText>
+					</li>
+					<li>#{pacchetto.getCollegamento(d.dataArrivo).prezzo} €</li>
+				</ul>
+			</h:panelGroup>             
+			
+		</h:panelGroup>
+	</div>
+		
+	<!-- Informazioni sulla destinazione -->
+	<div class="bloccoPacc">
+		<div class="descr">
+			<p>Città di destinazione</p>
+			<h2>#{d.citta.nome}</h2>
+		</div>
+			
+		<!-- Informazioni sull'hotel -->
+		<div class="hotelPacc">
+			<h:graphicImage library="images/hotel" name="#{d.hotel.immagine.equals('NULL') ? 'noImage.png' : d.hotel.immagine}" width="195" height="113" />
+			<div class="descrHotel">
+				<p><b>#{d.hotel.nome}</b></p>
+				<p>#{d.hotel.indirizzo}</p>
+				<p>#{d.hotel.telefono}</p>
+			</div>
+			<div class="pulsanti">
+				<p>
+					<h:link value="Modifica" styleClass="detail-button" disabled="true"/>
+				</p>
+				<p>
+					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="idHotel" value="#{d.hotel.id}" />
+					</h:link>
+				</p>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Informazioni sulle escursioni -->
+	<div class="bloccoPaccVolo" style="height: auto;">
+		<h:panelGroup id="elencoEscursioni" styleClass="tabella" layout="block">
+			<h:dataTable id="escursioni" value="#{d.attivita}" var="a" rendered="#{d.attivita.size() > 0}">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					#{a.escursione.nome}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Data</f:facet>
+					<h:outputText value="#{a.escursione.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ora</f:facet>
+					<h:outputText value="#{a.escursione.ora}">
+						<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+					</h:outputText>	
+				</h:column>
+				<h:column>
+					<f:facet name="header">Partecipanti</f:facet>
+				</h:column>
+				<h:column>
+					<h:form>
+						<h:commandButton styleClass="flight-button" value="Elimina" disabled="true" />
+					</h:form>
+				</h:column>
+			</h:dataTable>
+		</h:panelGroup>
+		<div class="bloccoPaccEscursione" style="height: 52px;">
+			<div class="newEsc">
+				<h:link value="Aggiungi escursione" disabled="true" />
+			</div>
+		</div>	
+	</div>
+
+	<!-- Collegamento di ritorno (visualizzazto solo nell'ultima destinazione) -->
+	<h:panelGroup layout="block" rendered="#{pacchetto.isUltimaDestinazione(d)}">
+		<div class="bloccoPaccVolo">
+		
+			<!-- Data di ritorno -->
+			<p>Data di ritorno</p>
+			<h:panelGroup id="dataPartenza" style="display: block;" layout="block">
+				<p>
+					<h:outputText value="#{d.dataPartenza}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+				</p>
+			</h:panelGroup>
+			
+			<h:panelGroup id="pannelloVoloRitorno" styleClass="volo" layout="block">
+		
+				<div class="pulsantiVolo">
+					<p>
+						<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+							<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+							<f:param name="codiceCollegamento" value="#{pacchetto.getCollegamento(d.dataPartenza).codice}" />
+						</h:link>
+					</p>
+					<p>
+						<h:link value="Modifica" styleClass="detail-button" disabled="true" />
+					</p>
+				</div>
+
+				<div class="etichette">
+					<ul>
+						<li>Da</li>
+						<li>A</li>
+						<li>Partenza</li>
+						<li>Arrivo</li>
+						<li>Prezzo</li>
+					</ul>
+				</div>
+				
+				<!-- Informazioni sul collegamento -->
+				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and pacchetto.esisteCollegamento(d.dataPartenza)}">
+					<ul>
+						<li>#{pacchetto.getCollegamento(d.dataPartenza).cittaPartenza.nome} #{pacchetto.getCollegamento(d.dataPartenza).origine}</li>
+						<li>#{pacchetto.getCollegamento(d.dataPartenza).cittaArrivo.nome} #{pacchetto.getCollegamento(d.dataPartenza).destinazione}</li>
+						<li>
+							<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).oraPartenza}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>
+						</li>
+						<li>
+							<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).oraArrivo}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>
+						</li>
+						<li>#{pacchetto.getCollegamento(d.dataPartenza).prezzo} €</li>
+					</ul>
+				</h:panelGroup>
+				
+			</h:panelGroup>		
+		</div>	
+	</h:panelGroup>
+</ui:repeat>
+		
+<!-- Aggiunta destinazione -->
+<div class="newDest">
+	<h:link value="Aggiungi destinazione" disabled="true" />
+</div>
+
+</h:panelGroup>	
+
+
+</ui:define>
+
+</ui:composition>
+</html>

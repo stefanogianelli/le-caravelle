@@ -159,6 +159,19 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Cerca il pacchetto condiviso corrispondente all'identificativo e all'indirizzo email
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @param email L'indirizzo email dell'amico
+	 */
+	public void getPacchettoCondiviso (int idPacchetto, String email) {
+		try {
+			this.setPacchetto(pacchettoBean.getPacchettoCondiviso(idPacchetto, email));
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente");
+		}
+	}
+	
+	/**
 	 * Ritorna il nome di un immagine casuale tra le destinazioni inserite nel pacchetto
 	 * @param idPacchetto L'identificativo del pacchetto
 	 * @return Il nome dell'immagine
@@ -179,6 +192,22 @@ public class PacchettoBean {
 		}
 		return null;
 	}
+	
+	/**
+	 * Ritorna il nome di un immagine casuale tra le destinazioni inserite nel pacchetto
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @return Il nome dell'immagine
+	 */
+	public String getImmagineCondiviso (int idPacchetto) {
+		int size = pacchetto.getDestinazioni().size();
+		int index = 0 + (int)(Math.random() * size);
+		int immSize = pacchetto.getDestinazioni().get(index).getCitta().getImmagini().size();
+		if (immSize != 0) {
+			int immIndex = 0 + (int)(Math.random() * immSize);
+			return pacchetto.getDestinazioni().get(index).getCitta().getImmagini().get(immIndex);
+		} else
+			return "noImage.png";
+	}	
 	
 	/**
 	 * Ricerca tutti i pacchetti personalizzati posseduti dall'utente

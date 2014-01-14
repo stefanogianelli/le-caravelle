@@ -93,6 +93,18 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
+	public PacchettoDTO getPacchettoCondiviso (int idPacchetto, String email)  throws PacchettoInesistenteException {
+		//controllo che il pacchetto sia stato effettivamente condiviso con l'amico
+		TypedQuery<Amici> q = em.createNamedQuery("Amici.controlloCondivisione", Amici.class);
+		q.setParameter("id", idPacchetto);
+		q.setParameter("email", email);
+		if (!q.getResultList().isEmpty())
+			return this.convertiInDTO(this.convertiInEntita(idPacchetto));
+		else
+			throw new PacchettoInesistenteException();
+	}
+	
+	@Override
 	public List<PacchettoDTO> elencoPacchetti(TipoPacchetto tipo) {		
 		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
 		q.setParameter("utente", profilo.getUtente().getEmail());
