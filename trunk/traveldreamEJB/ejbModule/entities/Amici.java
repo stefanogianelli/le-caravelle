@@ -21,7 +21,7 @@ import javax.persistence.OneToMany;
 @NamedQueries({
 	@NamedQuery(name="Amici.elenco", query="SELECT a FROM Amici a"),
 	@NamedQuery(name="Amici.getAmico", query="SELECT a FROM Amici a WHERE a.email = :email"),
-	@NamedQuery(name="Amici.getPacchetti", query="SELECT a FROM Amici a JOIN a.pacchetti p WHERE p.id = :id")
+	@NamedQuery(name="Amici.controlloCondivisione", query="SELECT a FROM Amici a JOIN a.pacchetti p WHERE p.id = :id AND a.email = :email")
 })
 public class Amici implements Serializable {
 	private static final long serialVersionUID = 1L;
