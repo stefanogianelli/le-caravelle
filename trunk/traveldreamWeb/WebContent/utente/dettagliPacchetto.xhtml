@@ -328,7 +328,7 @@
 		</h:panelGroup>
 		<div class="bloccoPaccEscursione" style="height: 52px;">
 			<div class="newEsc">
-				<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not pacchetto.tipoPersonalizzato}">
+				<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}">
 					<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
 					<f:param name="idDestinazione" value="#{d.id}" />
 					<f:param name="regione" value="#{d.citta.regione}" />
