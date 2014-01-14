@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.mail.MessagingException;
 
 import utils.JsfUtil;
 import dtos.PersonaDTO;
@@ -98,6 +99,8 @@ public class DatiPartecipantiBean {
 			JsfUtil.errorMessage("Pacchetto inesistente");
 		} catch (AcquistoException e) {
 			JsfUtil.errorMessage(e.getMessage());
+		} catch (MessagingException e) {
+			JsfUtil.errorMessage("Errore nell'invio della email");
 		}
 		return null;
 	}
