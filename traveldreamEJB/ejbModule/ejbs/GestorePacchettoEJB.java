@@ -316,7 +316,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		em.merge(amico);
 		em.flush();
 		
-		emailBean.condividiPacchetto(pacchetto.getUtente().getPersona() != null ? pacchetto.getUtente().getPersona().getNome() : pacchetto.getUtente().getEmail(), amico.getEmail(), entity.getId());
+		emailBean.condividiPacchetto(pacchetto.getUtente().getPersona().getNome() != null ? pacchetto.getUtente().getPersona().getNome() : pacchetto.getUtente().getEmail(), amico.getEmail(), entity.getId());
 	}
 	
 	@Override
