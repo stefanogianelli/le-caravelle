@@ -17,6 +17,8 @@ import javax.mail.internet.MimeMessage;
  */
 @Stateless
 public class EmailBean implements EmailBeanLocal {
+	
+	private final String domain = "http://localhost:8080/traveldreamWeb/";
 
 	@Resource(name = "mail/traveldream")
 	private Session mailSession;
@@ -52,7 +54,7 @@ public class EmailBean implements EmailBeanLocal {
     
     @Override
     public void condividiPacchetto (String nome, String emailAmico, int idPacchetto) throws MessagingException {
-    	String messaggio = nome + " ha condiviso un pacchetto con te!\n\nPuoi vedere i dettagli del pacchetto cliccando sul link:\nhttp://localhost:8080/traveldreamWeb/dettagliPacchettoCondiviso.xhtml?idPacchetto=" + idPacchetto + "&email=" + emailAmico;
+    	String messaggio = nome + " ha condiviso un pacchetto con te!\n\nPuoi vedere i dettagli del pacchetto cliccando sul link:\n" + domain + "dettagliPacchettoCondiviso.xhtml?idPacchetto=" + idPacchetto + "&email=" + emailAmico;
     	this.inviaMessaggio(emailAmico, "Condivisione pacchetto", messaggio);
     }
     
