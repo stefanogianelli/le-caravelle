@@ -276,11 +276,18 @@
 				<p>#{d.hotel.telefono}</p>
 			</div>
 			<div class="pulsanti">
-			<p><h:link value="Modifica" styleClass="detail-button" disabled="#{not pacchetto.tipoPersonalizzato}"/></p>
-			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
-				<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
-				<f:param name="idHotel" value="#{d.hotel.id}" />
-			</h:link></p>
+				<p>
+					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+						<f:param name="idPacchetto" value="#{pacchetto.pacchetto.id}" />
+						<f:param name="idHotel" value="#{d.hotel.id}" />
+					</h:link>
+				</p>
+				<p>
+					<h:link value="Modifica" styleClass="detail-button" outcome="modificaHotel" disabled="#{not pacchetto.tipoPersonalizzato}">
+						<f:param name="idPacchetto" value="#{id.value}" />
+						<f:param name="idDestinazione" value="#{d.id}" />
+					</h:link>
+				</p>				
 			</div>
 		</div>
 	</div>

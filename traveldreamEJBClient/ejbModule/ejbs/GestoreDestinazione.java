@@ -3,6 +3,7 @@ package ejbs;
 import javax.ejb.Local;
 
 import dtos.AttivitaDTO;
+import dtos.DestinazioneDTO;
 import dtos.HotelDTO;
 import eccezioni.DestinazioneInesistenteException;
 import eccezioni.EntitaEsistenteException;
@@ -13,6 +14,14 @@ import eccezioni.NumeroPartecipantiException;
 
 @Local
 public interface GestoreDestinazione {
+	
+	/**
+	 * Restituisce una destinazione
+	 * @param idDestinazione L'identificativo della destinazione
+	 * @return La destinazione richiesta
+	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
+	 */
+	DestinazioneDTO getDestinazione (int idDestinazione) throws DestinazioneInesistenteException;
 	
 	/**
 	 * Permette la modifica dell'hotel di una destinazione
