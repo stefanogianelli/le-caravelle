@@ -16,18 +16,20 @@
         <h1><a href="/traveldreamWeb/utente/creazionePacchetto.xhtml">Crea il tuo pacchetto</a></h1>
         <h2>Inizia la vacanza...</h2>
         <h3>Seleziona la destinazione</h3>
-		<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+		<h:selectOneMenu styleClass="menu-input" value="#{home.citta}">
 			<f:selectItems value="#{citta.nomiCitta}" />
-		</h:selectOneMenu>
+		</h:selectOneMenu><br />
+		<h:commandButton styleClass="button" value="Crea" action="#{home.creaPacchetto()}" />
 	</div>
 	
 	<div class="blocco">
         <h1><a href="/traveldreamWeb/pacchettiPredefiniti.xhtml">Scegli il tuo pacchetto</a></h1>
         <h2>Scopri la vacanza...</h2>
         <h3>Seleziona la destinazione</h3>
-		 <select>
-		  <option value="Milano">Milano</option> 	<!-- Da collegare al database -->
-		</select>
+		 <h:selectOneMenu styleClass="menu-input" value="#{home.cittaPred}">
+			<f:selectItems value="#{citta.nomiCitta}" />
+		</h:selectOneMenu><br />
+		<h:commandButton styleClass="button" value="Cerca" action="#{home.cercaPacchettoPred()}" />
 	</div>
  
  	<div class="bloccoBianco">

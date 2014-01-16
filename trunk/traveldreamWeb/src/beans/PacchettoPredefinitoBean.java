@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import utils.DataUtils;
 import utils.JsfUtil;
@@ -32,11 +33,16 @@ public class PacchettoPredefinitoBean {
 	private PacchettoPredefinitoDTO pacchetto;
 	private List<PacchettoPredefinitoDTO> elenco;
 	private PaginatorBean paginator;
+	private String citta;
 	
 	@PostConstruct
 	public void setUp () {
-		pacchetto = new PacchettoPredefinitoDTO();
 		elenco = new ArrayList<PacchettoPredefinitoDTO>();
+		this.setCitta(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("citta"));
+		if (this.getCitta() == null)
+			this.elencoPacchetti(false);
+		else
+			this.cercaPacchettoPerCitta();
 	}
 
 	public PacchettoPredefinitoDTO getPacchetto() {
@@ -59,6 +65,14 @@ public class PacchettoPredefinitoBean {
 		return paginator;
 	}
 
+	public String getCitta() {
+		return citta;
+	}
+
+	public void setCitta(String citta) {
+		this.citta = citta;
+	}
+
 	/**
 	 * Mostra tutti i pacchetti predefiniti presente nel database
 	 * @param force Per forzare la generazione di un nuovo elenco
@@ -70,14 +84,15 @@ public class PacchettoPredefinitoBean {
 	
 	/**
 	 * Ricerca tutti i pacchetti in una città
-	 * @param citta Il nome della città
 	 */
-	public void cercaPacchettoPerCitta (String citta) {
-		List<PacchettoPredefinitoDTO> lista = pacchettoBean.elencoPacchettoPerCitta(citta);
-		if (lista.isEmpty())
-			JsfUtil.infoMessage("Nessun risultato");
-		else
-			paginator = new PaginatorBean (lista);
+	public void cercaPacchettoPerCitta () {
+		if (!this.getCitta().isEmpty()) {
+			List<PacchettoPredefinitoDTO> lista = pacchettoBean.elencoPacchettoPerCitta(this.getCitta());
+			if (lista.isEmpty())
+				JsfUtil.infoMessage("Nessun risultato");
+			else
+				paginator = new PaginatorBean (lista);
+		}
 	}
 	
 	/**

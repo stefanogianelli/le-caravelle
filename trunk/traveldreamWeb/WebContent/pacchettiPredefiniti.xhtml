@@ -11,8 +11,6 @@
 
 <ui:define name="content">
 
-<f:event listener="#{pacchettoPredefinito.elencoPacchetti(false)}" type="preRenderView" />
-
 <p:messages showDetail="false" autoUpdate="true" />
 
 <h1>Scegli il tuo pacchetto</h1>
@@ -21,11 +19,11 @@
 	<div class="bloccoRicerca">
 		<p>
 			<h:outputText styleClass="name-input" value="Scegli una città:" />
-			<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+			<h:selectOneMenu styleClass="menu-input" value="#{pacchettoPredefinito.citta}">
 				<f:selectItems value="#{citta.nomiCitta}" />
 			</h:selectOneMenu>
 			<h:commandButton value="Tutti" styleClass="flight-button" action="#{pacchettoPredefinito.elencoPacchetti(true)}" />
-			<h:commandButton value="Cerca" styleClass="flight-button" action="#{pacchettoPredefinito.cercaPacchettoPerCitta(nomeCitta.value)}" update="elenco" />			
+			<h:commandButton value="Cerca" styleClass="flight-button" action="#{pacchettoPredefinito.cercaPacchettoPerCitta()}" update="elenco" />			
 		</p>
 	</div>
 </h:form>
