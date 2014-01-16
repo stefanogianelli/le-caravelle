@@ -86,13 +86,11 @@ public class PacchettoPredefinitoBean {
 	 * Ricerca tutti i pacchetti in una città
 	 */
 	public void cercaPacchettoPerCitta () {
-		if (!this.getCitta().isEmpty()) {
-			List<PacchettoPredefinitoDTO> lista = pacchettoBean.elencoPacchettoPerCitta(this.getCitta());
-			if (lista.isEmpty())
-				JsfUtil.infoMessage("Nessun risultato");
-			else
-				paginator = new PaginatorBean (lista);
-		}
+		List<PacchettoPredefinitoDTO> lista = pacchettoBean.elencoPacchettoPerCitta(this.getCitta());
+		if (lista.isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
+		else
+			paginator = new PaginatorBean (lista);
 	}
 	
 	/**
