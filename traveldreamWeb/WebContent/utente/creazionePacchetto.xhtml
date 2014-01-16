@@ -11,6 +11,10 @@
 
 <ui:define name="content">
 
+<f:metadata>
+	<f:viewParam name="citta" value="#{pacchetto.citta}" />
+</f:metadata>
+
 <p:messages showDetail="false" autoUpdate="true" />
 
 <h:form>
@@ -18,7 +22,7 @@
         <h1>Crea il tuo pacchetto</h1>
         <h2>Inizia la vacanza...</h2>
         <h3>Seleziona la destinazione</h3>
-		<h:selectOneMenu styleClass="menu-input" binding="#{nomeCitta}">
+		<h:selectOneMenu styleClass="menu-input" value="#{pacchetto.citta}">
 			<f:selectItems value="#{citta.nomiCitta}" />
 		</h:selectOneMenu>	
 	</div>
@@ -56,7 +60,7 @@
 		
 		<div class="bloccoButton">
 			<h:commandButton value="Cerca" styleClass="button">
-				<f:ajax execute="@form" listener="#{hotel.cercaHotel(nomeCitta.value)}" render="listaHotel" />
+				<f:ajax execute="@form" listener="#{hotel.cercaHotel(pacchetto.citta)}" render="listaHotel" />
 			</h:commandButton>
 		</div>
 	</div>

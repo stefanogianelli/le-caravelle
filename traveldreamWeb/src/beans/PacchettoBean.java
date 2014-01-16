@@ -63,6 +63,7 @@ public class PacchettoBean {
 	private PacchettoPredefinitoDTO predefinito;
 	private MapModel simpleModel;
 	private AmicoDTO amico;
+	private String citta;
 	
 	@PostConstruct
 	public void setUp () {
@@ -114,6 +115,14 @@ public class PacchettoBean {
 
 	public void setAmico(AmicoDTO amico) {
 		this.amico = amico;
+	}
+
+	public String getCitta() {
+		return citta;
+	}
+
+	public void setCitta(String citta) {
+		this.citta = citta;
 	}
 	
 	/*
