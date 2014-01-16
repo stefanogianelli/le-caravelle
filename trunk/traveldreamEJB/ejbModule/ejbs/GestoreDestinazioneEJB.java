@@ -52,6 +52,11 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	@EJB
 	private GestoreCittaLocal citta;
 	
+	@Override
+	public DestinazioneDTO getDestinazione (int idDestinazione) throws DestinazioneInesistenteException {
+		return this.convertiInDTO(this.convertiInEntita(idDestinazione));
+	}
+	
     @Override
     public Destinazioni creaDestinazione (DestinazioneDTO destinazione) throws CittaInesistenteException, HotelInesistenteException {
 		Destinazioni entity = new Destinazioni();

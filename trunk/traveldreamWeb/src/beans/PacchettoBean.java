@@ -159,6 +159,18 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Cerca la destinazione corrispondente all'identificativo
+	 * @param idDestinazione L'identificativo della destinazione
+	 */
+	public void getDestinazione (int idDestinazione) {
+		try {
+			this.setDestinazione(destinazioneBean.getDestinazione(idDestinazione));
+		} catch (DestinazioneInesistenteException e) {
+			JsfUtil.errorMessage("Destinazione inesistente");
+		}
+	}
+	
+	/**
 	 * Cerca il pacchetto condiviso corrispondente all'identificativo e all'indirizzo email
 	 * @param idPacchetto L'identificativo del pacchetto
 	 * @param email L'indirizzo email dell'amico
