@@ -196,15 +196,29 @@ public class CollegamentoBean {
 	 * Ricerca i collegamenti inseriti nel pacchetto predefinito tra due destinazioni nella data indicata
 	 * @param idPacchetto L'identificativo del pacchetto predefinito nel quale effettuare la ricerca
 	 * @param tipo La tipologia del collegamento
+	 * @param origine L'origine del collegamento
+	 * @param destinazione La destinazione del collegamento
 	 */
-	public void cercaCollegamentiPred (int idPacchetto, TipoCollegamento tipo) {
+	public void cercaCollegamentiPred (int idPacchetto, TipoCollegamento tipo, String origine, String destinazione) {
 		try {
 			List<CollegamentoDTO> col = predefinitoBean.getPacchetto(idPacchetto).getCollegamenti();
 			this.getElenco().clear();
 			for (CollegamentoDTO c : col) {
 				if (c.getDataPartenza().equals(this.getDataPartenza()) && c.getCittaPartenza().getNome().equals(this.getCittaPartenza()) && c.getCittaArrivo().getNome().equals(this.getCittaArrivo()) && c.getTipoCollegamento() == tipo)
-					this.getElenco().add(c);
+					if (origine != null && destinazione != null && !origine.equals("Qualsiasi") && !destinazione.equals("Qualsiasi")) {
+						if (c.getOrigine().equals(origine) && c.getDestinazione().equals(destinazione))
+							this.getElenco().add(c);
+					} else if (origine != null && !origine.equals("Qualsiasi")) {
+						if (c.getOrigine().equals(origine))
+							this.getElenco().add(c);
+					} else if (destinazione != null && !destinazione.equals("Qualsiasi")) {
+						if (c.getDestinazione().equals(destinazione))
+							this.getElenco().add(c);
+					} else
+						this.getElenco().add(c);				
 			}
+			if (this.getElenco().isEmpty())
+				JsfUtil.infoMessage("Nessun risultato");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
