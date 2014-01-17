@@ -556,6 +556,8 @@ public class PacchettoBean {
 				JsfUtil.errorMessage("Escursione inesistente");
 			} catch (MessagingException e) {
 				JsfUtil.errorMessage("Errore nell'invio della email");
+			} catch (PacchettoInesistenteException e) {
+				JsfUtil.errorMessage("Pacchetto inesistente");
 			}
 		} else
 			JsfUtil.errorMessage("Pacchetto Incompleto! Impossibile condividere.");
@@ -576,6 +578,8 @@ public class PacchettoBean {
 			JsfUtil.errorMessage("Escursione inesistente");
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
 		return null;
 	}
