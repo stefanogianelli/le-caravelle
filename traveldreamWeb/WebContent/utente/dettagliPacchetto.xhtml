@@ -41,7 +41,19 @@
 	
 	<!-- Blocco con i pulsanti per l'eliminazione, la condivisione e l'acquisto del pacchetot -->
 	<div class="bloccoModifica">
-		<p:commandButton value="Elimina pacchetto" styleClass="pacc-button" action="#{pacchetto.eliminaPacchetto()}"/>
+		<p:commandButton value="Elimina pacchetto" styleClass="pacc-button" onclick="PF('eliminaPacchetto').show()" />
+		
+		<!-- Dialog di conferma eliminazione pacchetto -->
+		<p:dialog header="Elimina pacchetto" widgetVar="eliminaPacchetto" resizable="false">
+			<h:panelGroup>		
+				<h:form>
+	   			 	<h:outputText value="Vuoi davvero eliminare il pacchetto?" /><br />	 
+	       			<p:commandButton id="si" value="Sì" action="#{pacchetto.eliminaPacchetto()}" oncomplete="PF('eliminaPacchetto').hide();" />
+	       			<p:commandButton id="no" value="No" oncomplete="PF('eliminaPacchetto').hide();" />
+      			</h:form>
+      		</h:panelGroup>
+		</p:dialog>
+				
 		<p:commandButton value="Condividi pacchetto" styleClass="pacc-button" onclick="PF('condividiPacchetto').show()" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}" />
 		
 		<!-- Dialog che compare in sovraimpressione per inserire i dati dell'amico -->
