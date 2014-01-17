@@ -275,7 +275,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 
 	@Override
-	public void condividiPacchetto(PacchettoDTO pacchetto, AmicoDTO datiAmico) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, MessagingException {
+	public void condividiPacchetto(PacchettoDTO pacchetto, AmicoDTO datiAmico) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, MessagingException, PacchettoInesistenteException {
 		Amici amico = new Amici();
 		//verifico se l'indirizzo email è già esistente
 		TypedQuery<Amici> q = em.createNamedQuery("Amici.getAmico", Amici.class);
@@ -308,6 +308,8 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 		}
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
 		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+		if (pacchetto.getTipoPacchetto() == TipoPacchetto.PREDEFINITO)
+			entity.setPacchettoPredefinito(predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		
 		em.persist(entity);
 		
@@ -320,12 +322,16 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 	}
 	
 	@Override
-	public int salvaPacchettoCondiviso (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException {
+	public int salvaPacchettoCondiviso (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, PacchettoInesistenteException {
 		Pacchetti entity = new Pacchetti();
 		
 		entity.setNome(pacchetto.getNome());
-		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());		
-		entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
+		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());	
+		if (pacchetto.getPacchettoPredefinito() != null) {
+			entity.setPacchettoPredefinito(predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
+			entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
+		} else
+			entity.setTipoPacchetto(TipoPacchetto.PERSONALIZZATO);
 		for (DestinazioneDTO d : pacchetto.getDestinazioni()) {
 			entity.addDestinazione(this.destinazione.creaDestinazione(d));
 			for (AttivitaDTO a : d.getAttivita()) {

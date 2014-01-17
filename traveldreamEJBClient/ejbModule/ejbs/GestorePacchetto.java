@@ -118,8 +118,9 @@ public interface GestorePacchetto {
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
 	 * @throws EscursioneInesistenteException Quando non viene trovata l'escursione nel database
 	 * @param MessagingException Quando si verifica un errore nell'invio della email
+	 * @throws PacchettoInesistenteException Quando non viene trovato il pacchetto predefinito originale
 	 */
-	void condividiPacchetto (PacchettoDTO pacchetto, AmicoDTO datiAmico) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, MessagingException;
+	void condividiPacchetto (PacchettoDTO pacchetto, AmicoDTO datiAmico) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, MessagingException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette il salvataggio di un pacchetto condiviso
@@ -129,8 +130,9 @@ public interface GestorePacchetto {
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws EscursioneInesistenteException Quando non viene trovata l'escursione nel database
 	 * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
+	 * @throws PacchettoInesistenteException Quando non viene trovato il pacchetto predefinito originale
 	 */
-	int salvaPacchettoCondiviso (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException;
+	int salvaPacchettoCondiviso (PacchettoDTO pacchetto) throws CittaInesistenteException, HotelInesistenteException, EscursioneInesistenteException, CollegamentoInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un pacchetto
