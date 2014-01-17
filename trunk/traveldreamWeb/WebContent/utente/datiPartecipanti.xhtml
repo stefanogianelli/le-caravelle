@@ -106,7 +106,7 @@
 		</ui:repeat>
 		
 		<div class="bloccoButton">
-			<h:commandButton styleClass="button" value="Conferma" action="#{datiPartecipanti.acquista()}" />
+			<h:commandButton styleClass="button" value="Conferma" action="#{datiPartecipanti.acquista()}" onclick="jQuery(this).addClass('ui-state-disabled')" />
 		</div>
 	</div>
 </h:form>
