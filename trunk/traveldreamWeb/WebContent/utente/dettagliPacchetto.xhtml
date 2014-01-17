@@ -48,8 +48,8 @@
 			<h:panelGroup>		
 				<h:form>
 	   			 	<h:outputText value="Vuoi davvero eliminare il pacchetto?" /><br />	 
-	       			<p:commandButton id="si" value="Sì" action="#{pacchetto.eliminaPacchetto()}" oncomplete="PF('eliminaPacchetto').hide();" />
-	       			<p:commandButton id="no" value="No" oncomplete="PF('eliminaPacchetto').hide();" />
+	       			<p:commandButton value="Sì" action="#{pacchetto.eliminaPacchetto()}" oncomplete="PF('eliminaPacchetto').hide();" />
+	       			<p:commandButton value="No" oncomplete="PF('eliminaPacchetto').hide();" />
       			</h:form>
       		</h:panelGroup>
 		</p:dialog>
@@ -276,8 +276,19 @@
 		</div>
 			
 		<h:form>
-			<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchetto.eliminaDestinazione(d)}" disabled="#{not pacchetto.tipoPersonalizzato}"/>
-		</h:form>
+			<p:commandButton value="Elimina" styleClass="detail-button" onclick="PF('eliminaDestinazione').show();" disabled="#{not pacchetto.tipoPersonalizzato}"/>
+		</h:form>		
+		
+		<!-- Dialog di conferma eliminazione destinazione -->
+		<p:dialog header="Elimina destinazione" widgetVar="eliminaDestinazione" resizable="false">
+			<h:panelGroup>		
+				<h:form>
+	   			 	<h:outputText value="Vuoi davvero eliminare la destinazione?" /><br />	 
+	       			<p:commandButton value="Sì" action="#{pacchetto.eliminaDestinazione(d)}" oncomplete="PF('eliminaDestinazione').hide();" ajax="false" />
+	       			<p:commandButton value="No" oncomplete="PF('eliminaDestinazione').hide();" />
+      			</h:form>
+      		</h:panelGroup>
+		</p:dialog>		
 			
 		<!-- Informazioni sull'hotel -->
 		<div class="hotelPacc">
@@ -339,10 +350,19 @@
 				</h:column>
 				<h:column>
 					<h:form>
-						<h:commandButton styleClass="flight-button" value="Elimina" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}">
-							<f:ajax execute="@form" listener="#{destinazione.eliminaEscursione(a)}" render=":prezzoPacchetto :destinazioni:elencoEscursioni" />
-						</h:commandButton>
+						<p:commandButton styleClass="flight-button" value="Elimina" onclick="PF('eliminaEscursione').show();" disabled="#{not (pacchetto.tipoPersonalizzato or pacchetto.tipoPredefinito)}" />
 					</h:form>
+
+					<!-- Dialog di conferma eliminazione escursione -->
+					<p:dialog header="Elimina escursione" widgetVar="eliminaEscursione" resizable="false">
+						<h:panelGroup>		
+							<h:form>
+				   			 	<h:outputText value="Vuoi davvero eliminare l'escursione?" /><br />	 
+				       			<p:commandButton value="Sì" action="#{destinazione.eliminaEscursione(a)}" oncomplete="PF('eliminaEscursione').hide();" update=":prezzoPacchetto :destinazioni:elencoEscursioni" />
+				       			<p:commandButton value="No" oncomplete="PF('eliminaEscursione').hide();" />
+			      			</h:form>
+			      		</h:panelGroup>
+					</p:dialog>						
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
