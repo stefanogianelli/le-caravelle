@@ -27,6 +27,14 @@ public class DataUtils {
 	}
 	
 	/**
+	 * Restituisce la date di domani
+	 * @return La data di domani
+	 */
+	public static Date getDataGiornoSuccessivo () {
+		return sommaGiorni(getDataOdierna(),1);
+	}
+	
+	/**
 	 * Fa il parsing di una stringa e ne restituisce la data
 	 * @param data La data da convertitre
 	 * @return L'oggetto java.util.Date corrispondente
