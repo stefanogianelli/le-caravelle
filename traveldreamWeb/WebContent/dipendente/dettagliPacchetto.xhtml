@@ -79,11 +79,17 @@
 				<p>#{pacchettoPredefinito.pacchetto.hotel.telefono}</p>
 			</div>
 			<div class="pulsanti">
-			<p><h:link value="Modifica" styleClass="detail-button"/></p>
-			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
-				<f:param name="idPacchetto" value="#{id.value}" />
-				<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
-			</h:link></p>
+			<p>
+				<h:link value="Modifica" styleClass="detail-button" outcome="modificaHotelPacchetto">
+					<f:param name="idPacchetto" value="#{id.value}" />
+				</h:link>
+			</p>
+			<p>
+				<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+					<f:param name="idPacchetto" value="#{id.value}" />
+					<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
+				</h:link>
+			</p>
 			</div>		
 		</div>
 	</div>

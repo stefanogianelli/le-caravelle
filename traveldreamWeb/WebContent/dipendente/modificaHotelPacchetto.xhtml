@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Modifica Hotel</ui:define>
+
+<ui:define name="content">
+
+	<f:metadata>
+		<f:viewParam name="idPacchetto" binding="#{id}" />
+		<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
+		<f:event listener="#{hotel.cercaHotel(pacchettoPredefinito.pacchetto.hotel.citta.nome)}" type="preRenderView" />
+	</f:metadata>
+	
+	<p:messages showDetail="false" autoUpdate="true" />
+
+	<h:form rendered="#{pacchettoPredefinito.pacchetto.id != 0}">
+		<div class="blocco">
+	        <h3>Destinazione</h3>
+	        <h:outputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.hotel.citta.nome}" />
+		</div>
+		
+		<h:panelGroup id="listaHotel" styleClass="bloccoBianco" layout="block">
+			<p:carousel value="#{hotel.elenco}" styleClass="elencoHotel" var="h" rendered="#{hotel.elenco.size() > 0}">  
+			    <f:facet name="header">Seleziona l'hotel</f:facet>
+				<div class="hotel">
+					<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />
+					<p><b>#{h.nome}</b></p>
+					<p:rating value="#{h.stelle}" styleClass="stelle-dett" readonly="true" stars="5" />
+					<p>#{h.prezzo} €</p>
+					
+					<p:dialog header="#{h.nome}" widgetVar="#{h.nome}" modal="true" resizable="false">  
+						<h:panelGroup styleClass="dettagliHotel" layout="block" style="height: auto;">
+							<h2>#{h.nome}</h2>
+							<p:rating value="#{h.stelle}" styleClass="stelle-descr" readonly="true" stars="5" />
+							<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />
+							<p>Prezzo a notte: #{h.prezzo} €</p>
+							<br></br>
+							<p>Indirizzo: #{h.indirizzo} (<a href="http://maps.google.com/?q=#{h.indirizzo}, #{h.citta.nome}, #{h.citta.nazione}" target="_blank">mappa</a>)</p>
+							<p>Città: #{h.citta.nome}</p>
+							<br></br>
+							<p>Telefono: #{h.telefono}</p>
+							<p>Website: <a href="#{h.website}" target="_blank">#{h.website}</a></p>
+							<p>Email: <a href="mailto:#{h.email}">#{h.email}</a></p>
+						</h:panelGroup>
+					</p:dialog>					
+					
+					<p:commandButton value="Scegli" action="#{pacchettoPredefinito.modificaHotel(id.value, h)}" />
+		
+					<p:commandButton value="Dettagli" onclick="PF('#{h.nome}').show();"/>			
+				</div>		
+			</p:carousel>
+		</h:panelGroup>
+	</h:form>
+
+</ui:define>
+
+	
+	</ui:composition>
+</html>
