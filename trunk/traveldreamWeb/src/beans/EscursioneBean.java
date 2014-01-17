@@ -134,6 +134,10 @@ public class EscursioneBean {
 			this.setElenco(lista);
 	}
 	
+	/**
+	 * Cerca le escursioni presenti in una città
+	 * @param nome Il nome della città
+	 */
 	public void cercaPerNomeCitta (String nome) {
 		try {
 			this.setRegione(cittaBean.cercaCitta(nome).getRegione());
