@@ -21,12 +21,23 @@
 <h:panelGroup rendered="#{hotel.hotel.id != 0}">
 	<div class="bloccoModifica">
 		<h:form>
-			<h:commandLink value="Elimina" action="#{hotel.eliminaHotel(id.value)}" />
+			<h:commandLink value="Elimina" onclick="PF('eliminaHotel').show(); return false;" />
 			<h:link value="Modifica"  outcome="modificaHotel">
 				<f:param name="idHotel" value="#{hotel.hotel.id}" />
 			</h:link>
 		</h:form>
 	</div>
+	
+	<!-- Dialog di conferma eliminazione hotel -->
+	<p:dialog header="Elimina hotel" widgetVar="eliminaHotel" resizable="false">
+		<h:panelGroup>		
+			<h:form>
+   			 	<h:outputText value="Vuoi davvero eliminare l'hotel?" /><br />	 
+       			<p:commandButton value="Sì" action="#{hotel.eliminaHotel(id.value)}" oncomplete="PF('eliminaHotel').hide();" />
+       			<p:commandButton value="No" oncomplete="PF('eliminaHotel').hide();" />
+     		</h:form>
+     	</h:panelGroup>
+	</p:dialog>	
 	
 	<div class="bloccoDett">
 		<h2>#{hotel.hotel.nome}</h2>

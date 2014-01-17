@@ -23,7 +23,17 @@
 <h:panelGroup rendered="#{collegamento.collegamento.codice != 0}">	
 	<div class="bloccoModifica">
 		<h:form>
-			<h:commandLink value="Elimina" action="#{collegamento.eliminaCollegamento(codice.value)}" />
+			<h:commandLink value="Elimina" onclick="PF('eliminaCollegamento').show(); return false;" />
+			
+			<!-- Dialog di conferma eliminazione collegamento -->
+			<p:dialog header="Elimina collegamento" widgetVar="eliminaCollegamento" resizable="false">
+				<h:panelGroup>
+	   			 	<h:outputText value="Vuoi davvero eliminare il collegamento?" /><br />	 
+	       			<p:commandButton value="Sì" action="#{collegamento.eliminaCollegamento(codice.value)}" oncomplete="PF('eliminaCollegamento').hide();" ajax="false" />
+	       			<p:commandButton value="No" oncomplete="PF('eliminaCollegamento').hide();" />
+	      		</h:panelGroup>
+			</p:dialog>
+						
 			<h:link value="Modifica" outcome="modificaCollegamento">
 				<f:param name="codiceCollegamento" value="#{collegamento.collegamento.codice}" />
 			</h:link>

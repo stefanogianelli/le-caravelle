@@ -30,6 +30,22 @@
 		<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
 	</h1> 
 	
+	<!-- Blocco con il pulsante per l'eliminazione del pacchetot -->
+	<div class="bloccoModifica">
+		<p:commandButton value="Elimina pacchetto" styleClass="pacc-button" onclick="PF('eliminaPacchetto').show()" />
+		
+		<!-- Dialog di conferma eliminazione pacchetto -->
+		<p:dialog header="Elimina pacchetto" widgetVar="eliminaPacchetto" resizable="false">
+			<h:panelGroup>		
+				<h:form>
+	   			 	<h:outputText value="Vuoi davvero eliminare il pacchetto?" /><br />	 
+	       			<p:commandButton value="Sì" action="#{pacchettoPredefinito.eliminaPacchetto(id.value)}" oncomplete="PF('eliminaPacchetto').hide();" ajax="false" />
+	       			<p:commandButton value="No" oncomplete="PF('eliminaPacchetto').hide();" />
+      			</h:form>
+      		</h:panelGroup>
+		</p:dialog>
+	</div>	
+	
 	<div class="bloccoPacc">
 		<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(id.value)}" width="288" height="174" />
 		
@@ -38,14 +54,14 @@
 			<h:selectOneMenu styleClass="menu-pred" binding="#{cittaPartenza}">
 					<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
 				</h:selectOneMenu>
-			<br></br>
-			<br></br>
+			<br />
+			<br />
 			<p>Date di partenza</p>
 			<h:selectOneMenu styleClass="menu-pred" binding="#{dataPartenza}">
 					<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
 				</h:selectOneMenu>
-			<br></br>
-			<br></br>
+			<br />
+			<br />
 			<p>Durate (giorni)</p>
 			<h:selectOneMenu styleClass="menu-pred" binding="#{durata}">
 					<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
