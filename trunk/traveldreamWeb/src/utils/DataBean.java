@@ -18,4 +18,20 @@ public class DataBean {
 		return DataUtils.getData(data);
 	}
 	
+	/**
+	 * Restituisce la data odierna
+	 * @return La data odierna
+	 */
+	public Date getDataOdierna () {
+		return DataUtils.getDataOdierna();
+	}
+	
+	/**
+	 * Restituisce la date di domani
+	 * @return La data di domani
+	 */
+	public Date getDataGiornoSuccessivo () {
+		return DataUtils.getDataGiornoSuccessivo();
+	}
+	
 }
