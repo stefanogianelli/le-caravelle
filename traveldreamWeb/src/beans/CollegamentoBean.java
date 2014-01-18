@@ -160,8 +160,8 @@ public class CollegamentoBean {
 	 */
 	public void elencoCollegamentiDipendente (List<CittaDTO> cittaPartenza, String cittaArrivo) {
 		for (CittaDTO c : cittaPartenza) {
-			this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(c.getNome(), cittaArrivo));
-			this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(cittaArrivo, c.getNome()));
+			this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(null, c.getNome(), cittaArrivo, null, null, null));
+			this.getElenco().addAll(this.collegamentoBean.elencoCollegamenti(null, cittaArrivo, c.getNome(), null, null, null));
 		}
 		Collections.sort(this.getElenco());
 	}
@@ -185,7 +185,7 @@ public class CollegamentoBean {
 	 * @param arrivo La città di arrivo
 	 */
 	public void cercaCollegamenti (String partenza, String arrivo) {
-		List<CollegamentoDTO> lista = collegamentoBean.elencoCollegamenti(partenza, arrivo);
+		List<CollegamentoDTO> lista = collegamentoBean.elencoCollegamenti(null, partenza, arrivo, null, null, null);
 		if (lista.isEmpty())
 			JsfUtil.infoMessage("Nessun risultato");
 		else
