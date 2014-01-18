@@ -93,16 +93,23 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		Root<Collegamenti> collegamenti = cq.from(Collegamenti.class);		
 		List<Predicate> predicati = new ArrayList<Predicate>();
 		//data
-		predicati.add(cb.lessThanOrEqualTo(collegamenti.<Date>get("dataPartenza"), data));
-		predicati.add(cb.greaterThanOrEqualTo(collegamenti.<Date>get("dataPartenza"), data));
+		if (data != null) {
+			predicati.add(cb.lessThanOrEqualTo(collegamenti.<Date>get("dataPartenza"), data));
+			predicati.add(cb.greaterThanOrEqualTo(collegamenti.<Date>get("dataPartenza"), data));
+		}
 		//citta partenza
-		Join<Collegamenti, Citta> partenza = collegamenti.join("cittaPartenza");
-		predicati.add(cb.equal(partenza.get("nome"), cittaPartenza));
+		if (cittaPartenza != null && !cittaPartenza.isEmpty() && !cittaPartenza.equals("Qualsiasi")) {
+			Join<Collegamenti, Citta> partenza = collegamenti.join("cittaPartenza");
+			predicati.add(cb.equal(partenza.get("nome"), cittaPartenza));
+		}
 		//citta arrivo
-		Join<Collegamenti, Citta> arrivo = collegamenti.join("cittaArrivo");
-		predicati.add(cb.equal(arrivo.get("nome"), cittaArrivo));
+		if (cittaArrivo != null && !cittaArrivo.isEmpty() && !cittaArrivo.equals("Qualsiasi")) {
+			Join<Collegamenti, Citta> arrivo = collegamenti.join("cittaArrivo");
+			predicati.add(cb.equal(arrivo.get("nome"), cittaArrivo));
+		}
 		//tipo
-		predicati.add(cb.equal(collegamenti.get("tipoCollegamento"), tipo));
+		if (tipo != null)
+			predicati.add(cb.equal(collegamenti.get("tipoCollegamento"), tipo));
 		//origine
 		if (origine != null && !origine.equals("Qualsiasi"))
 			predicati.add(cb.equal(collegamenti.get("origine"), origine));
@@ -120,31 +127,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		return dto;
 	}
 	
-	@Override
-	public List<CollegamentoDTO> elencoCollegamenti(String cittaPartenza, String cittaArrivo) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Collegamenti> cq = cb.createQuery(Collegamenti.class);
-		Root<Collegamenti> collegamenti = cq.from(Collegamenti.class);		
-		List<Predicate> predicati = new ArrayList<Predicate>();
-		if (cittaPartenza != null & !cittaPartenza.isEmpty() && !cittaPartenza.equals("Qualsiasi")) {
-			Join<Collegamenti, Citta> partenza = collegamenti.join("cittaPartenza");
-			predicati.add(cb.equal(partenza.get("nome"), cittaPartenza));
-		}
-		if (cittaArrivo != null & !cittaArrivo.isEmpty() && !cittaArrivo.equals("Qualsiasi")) {
-			Join<Collegamenti, Citta> arrivo = collegamenti.join("cittaArrivo");
-			predicati.add(cb.equal(arrivo.get("nome"), cittaArrivo));
-		}		
-		cq.where(predicati.toArray(new Predicate[]{}));
-		TypedQuery<Collegamenti> q = em.createQuery(cq);
-		List<Collegamenti> elenco = q.getResultList();
-		Collections.sort(elenco);		
-		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
-		for (Collegamenti c : elenco) {
-			dto.add(this.convertiInDTO(c));
-		}
-		return dto;		
-	}
-
 	@Override
 	public int creaCollegamento(CollegamentoDTO collegamento) throws CittaInesistenteException, EntityExistsException {
 		Collegamenti entity = new Collegamenti ();
