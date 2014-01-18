@@ -253,7 +253,7 @@
 				</ul>
 			</h:panelGroup>
 				
-			<!-- Blocco aggiunta volo -->
+			<!-- Blocco aggiunta collegamento -->
 			<h:panelGroup styleClass="dati" layout="block" rendered="#{not pacchetto.esisteCollegamento(d.dataArrivo)}">
 				<div class="newColl">
                		<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento" disabled="#{not pacchetto.destinazioneCoerente(d)}">
@@ -469,7 +469,7 @@
 					</ul>
 				</h:panelGroup>
 				
-				<!-- Blocco aggiunta volo -->
+				<!-- Blocco aggiunta collegamento -->
 				<h:panelGroup styleClass="dati" layout="block" rendered="#{pacchetto.isUltimaDestinazione(d) and (not pacchetto.esisteCollegamento(d.dataPartenza))}">
 	            	<div class="newColl">
 	                	<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">

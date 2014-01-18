@@ -50,8 +50,9 @@ public interface GestoreEscursione {
 	 * @param escursione L'escursione da modifciare
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws CittaInesistenteException Quando non viene trovata la città nel database
+	 * @throws EntitaEsistenteException Qunado i dati inseriti sono uguali ad un'altra escursione presente nel database
 	 */
-	void modificaDatiEscursione (EscursioneDTO escursione) throws EscursioneInesistenteException, CittaInesistenteException;
+	void modificaDatiEscursione (EscursioneDTO escursione) throws EscursioneInesistenteException, CittaInesistenteException, EntitaEsistenteException;
 	
 	/**
 	 * Permette l'eliminazione di una escursione dal database

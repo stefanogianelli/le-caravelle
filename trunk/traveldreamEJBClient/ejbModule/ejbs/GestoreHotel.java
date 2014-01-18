@@ -47,8 +47,9 @@ public interface GestoreHotel {
 	 * @param hotel L'hotel da modificare
 	 * @throws CittaInesistenteException Quando non viene trovata la città nel database
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws EntitaEsistenteException Quando i dati inseriti sono uguali ad un altro hotel presente nel database
 	 */
-	void modificaDatiHotel (HotelDTO hotel) throws CittaInesistenteException, HotelInesistenteException;
+	void modificaDatiHotel (HotelDTO hotel) throws CittaInesistenteException, HotelInesistenteException, EntitaEsistenteException;
 	
 	/**
 	 * Permette l'eliminazione di un hotel dal database
