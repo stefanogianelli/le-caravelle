@@ -118,6 +118,8 @@ public class HotelBean {
 			JsfUtil.errorMessage("Città sconosciuta");
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel sconosciuto");
+		} catch (EntitaEsistenteException e) {
+			JsfUtil.errorMessage("I dati inseriti sono uguali a quelli di un altro hotel");
 		}
 		return null;
 	}

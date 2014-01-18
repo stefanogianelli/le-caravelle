@@ -179,6 +179,8 @@ public class EscursioneBean {
 			JsfUtil.errorMessage("Escursione inesistente");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Regione sconosciuta");
+		} catch (EntitaEsistenteException e) {
+			JsfUtil.errorMessage("I dati inseriti sono uguali a quelli di un'altra escursione");
 		}
 		return null;
 	}
