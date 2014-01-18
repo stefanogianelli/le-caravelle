@@ -18,16 +18,18 @@
 
 <p:messages showDetail="false" autoUpdate="true" />
 
-<h:form id="mainForm">
+<h:panelGroup rendered="#{pacchettoPredefinito.pacchetto.id != 0}">
 	<h1 id="nomePacchetto" style="display: block;">
 		#{pacchettoPredefinito.pacchetto.nome}
 		<h:commandButton styleClass="matita" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
 	</h1>
 	
 	<h1 id="modificaNome" style="display: none;">
-		<h:inputText styleClass="editName" value="#{pacchettoPredefinito.pacchetto.nome}" required="true" />
-		<h:commandButton styleClass="edit-button" value="Salva" action="#{pacchettoPredefinito.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
-		<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		<h:form>
+			<h:inputText styleClass="editName" value="#{pacchettoPredefinito.pacchetto.nome}" required="true" />
+			<h:commandButton styleClass="edit-button" value="Salva" action="#{pacchettoPredefinito.modificaNomePacchetto()}" oncomplete="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+			<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		</h:form>
 	</h1> 
 	
 	<!-- Blocco con il pulsante per l'eliminazione del pacchetot -->
@@ -41,8 +43,8 @@
 	   			 	<h:outputText value="Vuoi davvero eliminare il pacchetto?" /><br />	 
 	       			<p:commandButton value="Sì" action="#{pacchettoPredefinito.eliminaPacchetto(id.value)}" oncomplete="PF('eliminaPacchetto').hide();" ajax="false" />
 	       			<p:commandButton value="No" oncomplete="PF('eliminaPacchetto').hide();" />
-      			</h:form>
-      		</h:panelGroup>
+	   			</h:form>
+	   		</h:panelGroup>
 		</p:dialog>
 	</div>	
 	
@@ -52,31 +54,33 @@
 		<div class="descr">
 			<p>Città di partenza</p>
 			<h:selectOneMenu styleClass="menu-pred" binding="#{cittaPartenza}">
-					<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
-				</h:selectOneMenu>
+				<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
+			</h:selectOneMenu>
 			<br />
 			<br />
 			<p>Date di partenza</p>
 			<h:selectOneMenu styleClass="menu-pred" binding="#{dataPartenza}">
-					<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
-				</h:selectOneMenu>
+				<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
+			</h:selectOneMenu>
 			<br />
 			<br />
 			<p>Durate (giorni)</p>
 			<h:selectOneMenu styleClass="menu-pred" binding="#{durata}">
-					<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
+				<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
 			</h:selectOneMenu>
 		</div>
 		
 		<h:panelGroup id="prezzoPacchetto" styleClass="pulsanti" layout="block">
-			<div id="prezzo">	
-				<p:inplace editor="true">  
-					<p:ajax event="save" listener="#{pacchettoPredefinito.modificaPrezzoPacchetto()}" update=":mainForm:prezzoPacchetto" />
-	                <p:inputText value="#{pacchettoPredefinito.pacchetto.prezzo}" required="true" requiredMessage="Inserire un prezzo" validatorMessage="Inserire un prezzo positivo" converterMessage="Il prezzo deve essere numerico">
-	                	<f:validateDoubleRange minimum="1.00" />
-	                </p:inputText>	                							                
-	            </p:inplace>	
-	            <h:outputText value=" €" />		
+			<div id="prezzo">
+				<h:form>
+					<p:inplace editor="true">  
+						<p:ajax event="save" listener="#{pacchettoPredefinito.modificaPrezzoPacchetto()}" update=":prezzoPacchetto" />
+		                <p:inputText value="#{pacchettoPredefinito.pacchetto.prezzo}" required="true" requiredMessage="Inserire un prezzo" validatorMessage="Inserire un prezzo positivo" converterMessage="Il prezzo deve essere numerico">
+		                	<f:validateDoubleRange minimum="1.00" />
+		                </p:inputText>	                							                
+		            </p:inplace>	
+		            <h:outputText value=" €" />	
+	            </h:form>	
 			</div>
 		</h:panelGroup>
 	</div>
@@ -110,30 +114,86 @@
 		</div>
 	</div>
 	
+	<!-- Informazioni sulle escursioni -->
+	<div class="bloccoPaccVolo" style="height: auto;">
+		<h:panelGroup id="elencoEscursioni" styleClass="tabella" layout="block">
+			<h:dataTable id="escursioni" value="#{pacchettoPredefinito.pacchetto.attivita}" var="a" rendered="#{pacchettoPredefinito.pacchetto.attivita.size() > 0}">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:link value="#{a.escursione.nome}" outcome="dettagliEscursione">
+						<f:param name="idEscursione" value="#{a.escursione.id}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Data</f:facet>
+					<h:outputText value="#{a.escursione.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ora</f:facet>
+					<h:outputText value="#{a.escursione.ora}">
+						<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+					</h:outputText>	
+				</h:column>
+				<h:column>
+					<p:commandButton styleClass="flight-button" value="Elimina" onclick="PF('eliminaEscursione').show();" />				
+	
+					<!-- Dialog di conferma eliminazione escursione -->
+					<p:dialog header="Elimina escursione" widgetVar="eliminaEscursione" resizable="false">
+						<h:panelGroup>
+							<h:form>
+				   			 	<h:outputText value="Vuoi davvero eliminare l'escursione?" /><br />	 
+				       			<p:commandButton value="Sì" action="#{pacchettoPredefinito.eliminaEscursione(a)}" oncomplete="PF('eliminaEscursione').hide();" update=":elencoEscursioni" />
+				       			<p:commandButton value="No" oncomplete="PF('eliminaEscursione').hide();" />
+			       			</h:form>
+			      		</h:panelGroup>
+					</p:dialog>						
+				</h:column>
+			</h:dataTable>
+		</h:panelGroup>
+		<div class="bloccoPaccEscursione" style="height: 52px;">
+			<div class="newEsc">
+				<h:link value="Aggiungi escursione" outcome="aggiuntaEscursione.xhtml">
+					<f:param name="idPacchetto" value="#{pacchettoPredefinito.pacchetto.id}" />
+					<f:param name="regione" value="#{pacchettoPredefinito.pacchetto.hotel.citta.regione}" />
+				</h:link>
+			</div>
+		</div>	
+	</div>	
+	
 	<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
 		<div class="bloccoPaccVolo">
 			<p>Data</p>
-			<p><h:outputText value="#{c.dataPartenza}">
+			<p>
+				<h:outputText value="#{c.dataPartenza}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText></p>
+				</h:outputText>
+			</p>
+				
 			<div class="volo">
-
 				<div class="pulsantiVolo">
-				<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
-					<f:param name="idPacchetto" value="#{id.value}" />
-					<f:param name="codiceCollegamento" value="#{c.codice}" />
-				</h:link></p>
-				<p><h:commandLink value="Elimina" action="#{pacchettoPredefinito.rimuoviCollegamento(c)}" styleClass="detail-button" />
-				</p></div>
+					<p>
+						<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+							<f:param name="idPacchetto" value="#{id.value}" />
+							<f:param name="codiceCollegamento" value="#{c.codice}" />
+						</h:link>
+					</p>
+					<p>
+						<h:form>
+							<h:commandLink value="Elimina" action="#{pacchettoPredefinito.rimuoviCollegamento(c)}" styleClass="detail-button" />
+						</h:form>
+					</p>
+				</div>
 				
 				<div class="etichette">
-				<ul>
-					<li>Da</li>
-					<li>A</li>
-					<li>Partenza</li>
-					<li>Arrivo</li>
-					<li>Prezzo</li>
-				</ul>
+					<ul>
+						<li>Da</li>
+						<li>A</li>
+						<li>Partenza</li>
+						<li>Arrivo</li>
+						<li>Prezzo</li>
+					</ul>
 				</div>
 				
 				<div class="dati">
@@ -159,7 +219,7 @@
 	<p><h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
 		<f:param name="idPacchetto" value="#{id.value}" />
 	</h:link></p>
-</h:form>
+</h:panelGroup>
 
 <script type="text/javascript">
      function toggle(id) {

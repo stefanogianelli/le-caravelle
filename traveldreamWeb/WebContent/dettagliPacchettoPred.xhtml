@@ -75,6 +75,32 @@
 	</div>
 </div>
 
+<!-- Informazioni sulle escursioni -->
+<div class="bloccoPaccVolo" style="height: auto;">
+	<h:panelGroup id="elencoEscursioni" styleClass="tabella" layout="block">
+		<h:dataTable id="escursioni" value="#{pacchettoPredefinito.pacchetto.attivita}" var="a" rendered="#{pacchettoPredefinito.pacchetto.attivita.size() > 0}">
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:link value="#{a.escursione.nome}" outcome="dettagliEscursione">
+					<f:param name="idEscursione" value="#{a.escursione.id}" />
+				</h:link>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Data</f:facet>
+				<h:outputText value="#{a.escursione.data}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Ora</f:facet>
+				<h:outputText value="#{a.escursione.ora}">
+					<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+				</h:outputText>	
+			</h:column>
+		</h:dataTable>
+	</h:panelGroup>	
+</div>	
+
 <ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
 	<div class="bloccoPaccVolo">
 		<p>Data</p>

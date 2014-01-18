@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import dtos.AttivitaPredDTO;
 import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
-import dtos.EscursioneDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CittaInesistenteException;
@@ -122,13 +122,14 @@ public interface GestorePacchettoPredefinito {
 	void rimuoviCollegamento (PacchettoPredefinitoDTO pacchetto, CollegamentoDTO collegamento) throws CollegamentoInesistenteException, PacchettoInesistenteException;
 	
 	/**
-	 * Permette l'aggiunta di un'escursione nel pacchetto
-	 * @param pacchetto Il pacchetto nel quale si vuole aggiungere l'escursione
-	 * @param escursione L'escursione che si vuole aggiungere
+	 * Permette l'aggiunta di un'escursione nel pacchetto predefinito
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @param idEscursione L'identificativo dell'escursione
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 * @throws InsertException Quando l'escursione è già stata inserita nel pacchetto
 	 */
-	void aggiuntaEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException;
+	void aggiuntaEscursione (int idPacchetto, int idEscursione) throws EscursioneInesistenteException, PacchettoInesistenteException, InsertException;
 	
 	/**
 	 * Permette la rimozione di un'escursione da un pacchetto
@@ -137,7 +138,7 @@ public interface GestorePacchettoPredefinito {
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 */
-	void rimuoviEscursione (PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException;
+	void rimuoviEscursione (AttivitaPredDTO attivita) throws EscursioneInesistenteException, PacchettoInesistenteException;
 	
 	/**
 	 * Permette la modifica del nome del pacchetto
