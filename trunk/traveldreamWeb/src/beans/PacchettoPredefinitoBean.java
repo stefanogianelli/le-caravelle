@@ -12,12 +12,14 @@ import javax.faces.context.FacesContext;
 
 import utils.DataUtils;
 import utils.JsfUtil;
+import dtos.AttivitaPredDTO;
 import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.CollegamentoInesistenteException;
+import eccezioni.EscursioneInesistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.PacchettoInesistenteException;
@@ -432,6 +434,40 @@ public class PacchettoPredefinitoBean {
 			JsfUtil.infoMessage("Collegamento rimosso");
 		} catch (CollegamentoInesistenteException e) {
 			JsfUtil.errorMessage("Collegamento inesistente");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente");
+		}
+	}
+	
+	/**
+	 * Permette di aggiungere un'escursione nel pacchetto
+	 * @param idPacchetto l'identificativo del pacchetto
+	 * @param idEscursione L'identificativo dell'escursione
+	 * @return L'indirizzo della pagina con i dettagli del pacchetto
+	 */
+	public String aggiuntaEscursione (int idPacchetto, int idEscursione) {
+		try {
+			pacchettoBean.aggiuntaEscursione(idPacchetto, idEscursione);
+			return "dettagliPacchetto?idPacchetto=" + idPacchetto + "&faces-redirect=true";
+		} catch (EscursioneInesistenteException e) {
+			JsfUtil.errorMessage("Escursione inesistente");
+		} catch (PacchettoInesistenteException e) {
+			JsfUtil.errorMessage("Pacchetto inesistente");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage(e.getMessage());
+		}
+		return null;
+	}
+	
+	/**
+	 * Permette di rimuovere un'escursione dal pacchetto
+	 * @param attivita L'attività da rimuovere
+	 */
+	public void eliminaEscursione (AttivitaPredDTO attivita) {
+		try {
+			pacchettoBean.rimuoviEscursione(attivita);
+		} catch (EscursioneInesistenteException e) {
+			JsfUtil.errorMessage("Escursione inesistente");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");
 		}

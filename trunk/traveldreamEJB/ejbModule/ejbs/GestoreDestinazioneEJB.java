@@ -138,8 +138,8 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 			if (q.getResultList().isEmpty()) {
 				//controllo che l'escursione sia all'interno delle date della destinazione
 				if (entity.getDataArrivo().before(escursioneEntity.getData()) && entity.getDataPartenza().after(escursioneEntity.getData())) {
-					//controllo che l'escursione sia nella stessa città della destinazione
-					if (entity.getCitta().equals(escursioneEntity.getCitta())) {						
+					//controllo che l'escursione sia nella stessa regione della destinazione
+					if (entity.getCitta().getRegione().equals(escursioneEntity.getCitta().getRegione())) {						
 						Attivita attivita = new Attivita();		
 						attivita.setEscursione(escursioneEntity);		
 						attivita.setNumPartecipanti(numeroPartecipanti);

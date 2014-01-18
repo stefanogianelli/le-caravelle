@@ -452,25 +452,12 @@ public class PacchettoBean {
 	 * @return L'indirizzo della pagina dettagli del pacchetto creato
 	 */
 	public String salvaPacchettoPredefinito (int idPacchetto,String cittaPartenza, String dataArrivo, int durata) {
-		try {			
-			PacchettoPredefinitoDTO pred = predefinitoBean.getPacchetto(idPacchetto);
-			
-			this.getPacchetto().setNome(pred.getNome());
-			this.getPacchetto().setPacchettoPredefinito(pred);
-			this.getPacchetto().setPrezzo(pred.getPrezzo());
-			this.getPacchetto().setCitta(cittaBean.cercaCitta(cittaPartenza));
-			this.getDestinazione().setDataArrivo(DataUtils.parseData(dataArrivo));
-			this.getDestinazione().setDataPartenza(DataUtils.sommaGiorni(this.getDestinazione().getDataArrivo(), durata));
-			this.getDestinazione().setHotel(pred.getHotel());
-			this.getDestinazione().setCitta(this.getDestinazione().getHotel().getCitta());
-			this.getPacchetto().getDestinazioni().add(this.getDestinazione());
-			return "/utente/dettagliPacchetto?idPacchetto=" + pacchettoBean.salvaPacchettoPredefinito(this.getPacchetto()) + "&faces-redirect=true";
+		try {
+			return "/utente/dettagliPacchetto?idPacchetto=" + pacchettoBean.salvaPacchettoPredefinito(idPacchetto, cittaPartenza, dataArrivo, durata) + "&faces-redirect=true";
 		} catch (InsertException e) {
 			JsfUtil.errorMessage("Il pacchetto è già presente nel database");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta");
-		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel inesistente");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");
 		}

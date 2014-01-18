@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Table(name="attivita_pred")
 @NamedQueries ({
 	@NamedQuery(name="AttivitaPred.elenco", query="SELECT a FROM AttivitaPred a"),
-	@NamedQuery(name="AttivitaPred.getAttivita", query="SELECT a FROM AttivitaPred a WHERE a.pacchetto = :pacchetto AND a.escursione = :escursione")
+	@NamedQuery(name="AttivitaPred.getAttivita", query="SELECT a FROM AttivitaPred a WHERE a.pacchetto = :pacchetto AND a.escursione = :escursione"),
+	@NamedQuery(name="AttivitaPred.getAttivitaDaId", query="SELECT a FROM AttivitaPred a WHERE a.pacchetto.id = :pacchetto AND a.escursione.id = :escursione")
 })
 public class AttivitaPred implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +31,7 @@ public class AttivitaPred implements Serializable {
 	private Escursioni escursione;
 
 	public AttivitaPred() {
+		id = new AttivitaPredPK();
 	}
 
 	public AttivitaPredPK getId() {

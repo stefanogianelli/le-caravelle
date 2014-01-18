@@ -17,9 +17,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import dtos.AttivitaPredDTO;
 import dtos.CittaDTO;
 import dtos.CollegamentoDTO;
-import dtos.EscursioneDTO;
 import dtos.HotelDTO;
 import dtos.PacchettoPredefinitoDTO;
 import eccezioni.CittaInesistenteException;
@@ -225,33 +225,39 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void aggiuntaEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException {
-		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
+	public void aggiuntaEscursione(int idPacchetto, int idEscursione) throws EscursioneInesistenteException, PacchettoInesistenteException, InsertException {
+		PacchettiPredefiniti entity = this.convertiInEntita(idPacchetto);
 		
-		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
+		Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
 		
-		AttivitaPred attivita = new AttivitaPred();
-		attivita.setEscursione(escursioneEntity);
-		
-		entity.addAttivita(attivita);
-		
-		em.merge(entity);		
-	}
-
-	@Override
-	public void rimuoviEscursione(PacchettoPredefinitoDTO pacchetto, EscursioneDTO escursione) throws EscursioneInesistenteException, PacchettoInesistenteException {
-		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
-		
-		Escursioni escursioneEntity = this.escursione.convertiInEntita(escursione);
-		
+		//controllo che l'escursione non sia già stata aggiunta
 		TypedQuery<AttivitaPred> q = em.createNamedQuery("AttivitaPred.getAttivita", AttivitaPred.class);
 		q.setParameter("pacchetto", entity);
 		q.setParameter("escursione", escursioneEntity);
-		AttivitaPred attivita = q.getSingleResult();
 		
-		entity.removeAttivita(attivita);
+		if (q.getResultList().isEmpty()) {
+			//controllo che l'escursione sia nella stessa regione dell'hotel
+			if (entity.getHotel().getCitta().getRegione().equals(escursioneEntity.getCitta().getRegione())) {	
+				AttivitaPred attivita = new AttivitaPred();
+				attivita.setEscursione(escursioneEntity);
+				
+				entity.addAttivita(attivita);
+				
+				em.merge(entity);	
+			} else
+				throw new InsertException("L'escursione non è nella stessa regione dell'hotel");
+		} else
+			throw new InsertException("Escursione già inserita");
+	}
+
+	@Override
+	public void rimuoviEscursione(AttivitaPredDTO attivita) throws EscursioneInesistenteException, PacchettoInesistenteException {
+		AttivitaPred attivitaEntity = this.convertiInEntita(attivita);
+		PacchettiPredefiniti entity = this.convertiInEntita(attivita.getPacchetto());
 		
-		em.merge(entity);			
+		entity.removeAttivita(attivitaEntity);
+		
+		em.merge(entity);		
 	}
 
 	@Override
@@ -343,8 +349,27 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 			collegamenti.add(this.collegamento.convertiInDTO(c));
 		}
 		pacchettoDTO.setCollegamenti(collegamenti);
+		List<AttivitaPredDTO> attivita = new ArrayList<AttivitaPredDTO>();
+		for (AttivitaPred a : pacchetto.getAttivita()) {
+			attivita.add(this.convertiInDTO(a, pacchettoDTO));			
+		}
+		pacchettoDTO.setAttivita(attivita);
 		pacchettoDTO.setHotel(hotel.convertiInDTO(pacchetto.getHotel()));
 		
 		return pacchettoDTO;
+	}
+	
+	private AttivitaPred convertiInEntita (AttivitaPredDTO attivita) {
+		TypedQuery<AttivitaPred> q = em.createNamedQuery("AttivitaPred.getAttivitaDaId", AttivitaPred.class);
+		q.setParameter("pacchetto", attivita.getPacchetto().getId());
+		q.setParameter("escursione", attivita.getEscursione().getId());
+		return q.getSingleResult();
+	}
+	
+	private AttivitaPredDTO convertiInDTO (AttivitaPred attivita, PacchettoPredefinitoDTO pacchetto) {
+		AttivitaPredDTO dto = new AttivitaPredDTO();
+		dto.setEscursione(escursione.convertiInDTO(attivita.getEscursione()));
+		dto.setPacchetto(pacchetto);
+		return dto;
 	}
 }
