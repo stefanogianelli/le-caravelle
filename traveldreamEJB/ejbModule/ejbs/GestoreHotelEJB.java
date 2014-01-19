@@ -128,8 +128,13 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 			throw new HotelInesistenteException ();
 	}
 	
-	@Override
-	public Hotel convertiInEntita (int idHotel) throws HotelInesistenteException {
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param idHotel L'identificativo dell'hotel
+	 * @return L'entità desiderata
+	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 */
+	private Hotel convertiInEntita (int idHotel) throws HotelInesistenteException {
 		Hotel hotelEntity = em.find(Hotel.class, idHotel);
 		if (hotelEntity != null)
 			return hotelEntity;

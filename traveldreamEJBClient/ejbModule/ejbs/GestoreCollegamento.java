@@ -42,13 +42,6 @@ public interface GestoreCollegamento {
      */
 	List<CollegamentoDTO> elencoCollegamenti ();
 	
-    /**
-     * Mostra l'elenco dei collegamenti disponibili per tipologia
-     * @param tipo La tipologia del collegamento
-     * @return L'elenco dei collegamenti
-     */
-	List<CollegamentoDTO> elencoCollegamenti(TipoCollegamento tipo);
-	
 	/**
 	 * Mostra l'elenco dei collegamenti disponibili tra due destinazioni nella data indicate e della tipologia selezionata
 	 * @param data La data del collegamento

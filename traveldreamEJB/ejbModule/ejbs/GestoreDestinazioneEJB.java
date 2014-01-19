@@ -4,7 +4,6 @@ import interfaces.GestoreCittaLocal;
 import interfaces.GestoreDestinazioneLocal;
 import interfaces.GestoreEscursioneLocal;
 import interfaces.GestoreHotelLocal;
-import interfaces.GestorePacchettoLocal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,9 +41,6 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	
 	@EJB
 	private GestoreHotelLocal hotel;
-	
-	@EJB
-	private GestorePacchettoLocal pacchetto;
 	
 	@EJB
 	private GestoreEscursioneLocal escursione;
@@ -198,8 +194,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 			throw new DestinazioneInesistenteException ();
 	}	
 	
-	@Override
-	public Destinazioni convertiInEntita (int idDestinazione) throws DestinazioneInesistenteException {
+	private Destinazioni convertiInEntita (int idDestinazione) throws DestinazioneInesistenteException {
 		Destinazioni destinazioneEntity = em.find(Destinazioni.class, idDestinazione);
 		if (destinazioneEntity != null) 
 			return destinazioneEntity;
@@ -226,16 +221,24 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		return dto;
 	}
 	
-	@Override
-	public Attivita convertiInEntita (AttivitaDTO attivita) {
+	/**
+     * Permette la conversione da un DTO alla rispettiva entità
+     * @param attivita Il DTO dell'attivita
+     * @return L'entità desiderata
+     */
+	private Attivita convertiInEntita (AttivitaDTO attivita) {
 		TypedQuery<Attivita> q = em.createNamedQuery("Attivita.getAttivitaDaId", Attivita.class);
 		q.setParameter("destinazione", attivita.getDestinazione().getId());
 		q.setParameter("escursione", attivita.getEscursione().getId());
 		return q.getSingleResult();
 	}
 	
-	@Override
-	public AttivitaDTO convertiInDTO (Attivita attivita) {
+	/**
+     * Permette la conversione da un'entità al rispettivo DTO
+     * @param attivita L'entità da convertire
+     * @return Il relativo DTO
+     */
+	private AttivitaDTO convertiInDTO (Attivita attivita) {
 		AttivitaDTO attivitaDTO = new AttivitaDTO();
 		
 		attivitaDTO.setEscursione(escursione.convertiInDTO(attivita.getEscursione()));
