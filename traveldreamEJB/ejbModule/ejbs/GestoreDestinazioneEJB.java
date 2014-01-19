@@ -182,7 +182,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 		
 		destinazione.removeAttivita(attivitaEntity);
 		
-		em.merge(destinazione.getPacchetto());
+		em.merge(destinazione);
 	}
 	
 	@Override
