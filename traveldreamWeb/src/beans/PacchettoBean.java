@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 
 import org.primefaces.model.map.DefaultMapModel;
@@ -452,15 +453,18 @@ public class PacchettoBean {
 	 * @return L'indirizzo della pagina dettagli del pacchetto creato
 	 */
 	public String salvaPacchettoPredefinito (int idPacchetto,String cittaPartenza, String dataArrivo, int durata) {
-		try {
-			return "/utente/dettagliPacchetto?idPacchetto=" + pacchettoBean.salvaPacchettoPredefinito(idPacchetto, cittaPartenza, dataArrivo, durata) + "&faces-redirect=true";
-		} catch (InsertException e) {
-			JsfUtil.errorMessage("Il pacchetto è già presente nel database");
-		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città sconosciuta");
-		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente");
-		}
+		if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("UTENTE")) {
+			try {
+				return "/utente/dettagliPacchetto?idPacchetto=" + pacchettoBean.salvaPacchettoPredefinito(idPacchetto, cittaPartenza, dataArrivo, durata) + "&faces-redirect=true";
+			} catch (InsertException e) {
+				JsfUtil.errorMessage("Il pacchetto è già presente nel database");
+			} catch (CittaInesistenteException e) {
+				JsfUtil.errorMessage("Città sconosciuta");
+			} catch (PacchettoInesistenteException e) {
+				JsfUtil.errorMessage("Pacchetto inesistente");
+			}
+		} else
+			JsfUtil.infoMessage("E' necessario eseguire il login per poter salvare il pacchetto");
 		return null;
 	}
 	
@@ -555,19 +559,22 @@ public class PacchettoBean {
 	 * @return L'indirizzo della pagina coi dettagli del pacchetto creato
 	 */
 	public String salvaPacchettoCondiviso () {
-		try {
-			return "/utente/dettagliPacchetto.xhtml?idPacchetto=" + pacchettoBean.salvaPacchettoCondiviso(getPacchetto()) + "&faces-redirect=true";
-		} catch (CittaInesistenteException e) {
-			JsfUtil.errorMessage("Città inesistente");
-		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel inesistente");
-		} catch (EscursioneInesistenteException e) {
-			JsfUtil.errorMessage("Escursione inesistente");
-		} catch (CollegamentoInesistenteException e) {
-			JsfUtil.errorMessage("Collegamento inesistente");
-		} catch (PacchettoInesistenteException e) {
-			JsfUtil.errorMessage("Pacchetto inesistente");
-		}
+		if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("UTENTE")) {
+			try {
+				return "/utente/dettagliPacchetto.xhtml?idPacchetto=" + pacchettoBean.salvaPacchettoCondiviso(getPacchetto()) + "&faces-redirect=true";
+			} catch (CittaInesistenteException e) {
+				JsfUtil.errorMessage("Città inesistente");
+			} catch (HotelInesistenteException e) {
+				JsfUtil.errorMessage("Hotel inesistente");
+			} catch (EscursioneInesistenteException e) {
+				JsfUtil.errorMessage("Escursione inesistente");
+			} catch (CollegamentoInesistenteException e) {
+				JsfUtil.errorMessage("Collegamento inesistente");
+			} catch (PacchettoInesistenteException e) {
+				JsfUtil.errorMessage("Pacchetto inesistente");
+			}
+		} else
+			JsfUtil.infoMessage("E' necessario eseguire il login per poter salvare il pacchetto");
 		return null;
 	}
 	

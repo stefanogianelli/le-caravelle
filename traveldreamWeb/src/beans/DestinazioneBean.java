@@ -98,7 +98,7 @@ public class DestinazioneBean {
 	public void eliminaEscursione (AttivitaDTO attivita) {
 		try {
 			destinazioneBean.eliminaEscursione(attivita);
-			//JsfUtil.infoMessage("Escursione eliminata");
+			JsfUtil.infoMessage("Escursione eliminata");
 		} catch (EscursioneInesistenteException e) {
 			JsfUtil.errorMessage("Escursione inesistente");
 		} catch (DestinazioneInesistenteException e) {
