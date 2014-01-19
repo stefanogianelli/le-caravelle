@@ -6,7 +6,6 @@ import interfaces.GestoreCollegamentoLocal;
 import interfaces.GestoreDestinazioneLocal;
 import interfaces.GestoreEscursioneLocal;
 import interfaces.GestoreHotelLocal;
-import interfaces.GestorePacchettoLocal;
 import interfaces.GestorePacchettoPredefinitoLocal;
 import interfaces.GestoreProfiloLocal;
 
@@ -51,7 +50,7 @@ import enums.TipoPacchetto;
  * Session Bean implementation class GestorePacchettoEJB
  */
 @Stateless
-public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLocal {
+public class GestorePacchettoEJB implements GestorePacchetto {
 	
 	/*
 	 * Definiscono il range del numero generato casualmento per il nome del pacchetto
@@ -597,8 +596,13 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			pacchetto.removeCollegamento(ritorno);
 	}
 
-	@Override
-	public Pacchetti convertiInEntita (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param pacchetto Il DTO del pacchetto
+	 * @return L'entità desiderata
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	private Pacchetti convertiInEntita (PacchettoDTO pacchetto) throws PacchettoInesistenteException {
 		Pacchetti pacchettoEntity = em.find(Pacchetti.class, pacchetto.getId());
 		if (pacchettoEntity != null)
 			return pacchettoEntity;
@@ -606,8 +610,13 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			throw new PacchettoInesistenteException();
 	}
 
-	@Override
-	public Pacchetti convertiInEntita (int idPacchetto) throws PacchettoInesistenteException {
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @return L'entità desiderata
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	private Pacchetti convertiInEntita (int idPacchetto) throws PacchettoInesistenteException {
 		Pacchetti pacchettoEntity = em.find(Pacchetti.class, idPacchetto);
 		if (pacchettoEntity != null)
 			return pacchettoEntity;
@@ -615,8 +624,12 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			throw new PacchettoInesistenteException();
 	}
 	
-	@Override
-	public PacchettoDTO convertiInDTO (Pacchetti pacchetto) {
+    /**
+     * Permette la conversione da un'entità al rispettivo DTO
+     * @param pacchetto L'entità di partenza
+     * @return Il relativo DTO
+     */	
+	private PacchettoDTO convertiInDTO (Pacchetti pacchetto) {
 		PacchettoDTO pacchettoDTO = new PacchettoDTO();
 		
 		pacchettoDTO.setId(pacchetto.getId());

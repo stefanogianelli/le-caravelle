@@ -127,16 +127,13 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		
 		return password;
 	}
-	
-	@Override
-	public Utenti convertiInEntita (UtenteDTO utente) throws UtenteInesistenteException {
-		Utenti entity = em.find(Utenti.class, utente.getEmail());
-		if (entity != null)
-			return entity;
-		else
-			throw new UtenteInesistenteException();
-	}
-	
+
+	/**
+	 * Permette la conversione da un DTO alla rispettiva entità
+	 * @param email L'indirizzo email dell'utente
+	 * @return L'entità desiderata
+	 * @throws UtenteInesistenteException Quando l'utente non viene trovato nel database
+	 */	
 	private Utenti convertiInEntita (String email) throws UtenteInesistenteException {
 		Utenti utente = em.find(Utenti.class, email);
 		if (utente != null)

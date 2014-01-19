@@ -74,19 +74,6 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 	}
 	
 	@Override
-	public List<CollegamentoDTO> elencoCollegamenti (TipoCollegamento tipo) {
-		TypedQuery<Collegamenti> q = em.createNamedQuery("Collegamenti.elencoPerTipo", Collegamenti.class);
-		q.setParameter("tipo", tipo);
-		List<Collegamenti> collegamenti = q.getResultList();
-		Collections.sort(collegamenti);
-		List<CollegamentoDTO> dto = new ArrayList<CollegamentoDTO>();
-		for (Collegamenti c : collegamenti) {
-			dto.add(this.convertiInDTO(c));
-		}
-		return dto;
-	}	
-	
-	@Override
 	public List<CollegamentoDTO> elencoCollegamenti(Date data, String cittaPartenza, String cittaArrivo, TipoCollegamento tipo, String origine, String destinazione) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Collegamenti> cq = cb.createQuery(Collegamenti.class);
@@ -178,8 +165,12 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 			throw new CollegamentoInesistenteException ();
 	}
 	
-	@Override
-	public Collegamenti convertiInEntita (int codiceCollegamento) throws CollegamentoInesistenteException {
+	/**
+     * Permette l'eliminazione di un collegamento dal database
+     * @param codiceCollegamento Il codice del collegamento da eliminare
+     * @throws CollegamentoInesistenteException Quando non viene trovato il collegamento nel database
+     */
+	private Collegamenti convertiInEntita (int codiceCollegamento) throws CollegamentoInesistenteException {
 		Collegamenti collegamentoEntity = em.find(Collegamenti.class, codiceCollegamento);
 		if (collegamentoEntity != null)
 			return collegamentoEntity;
