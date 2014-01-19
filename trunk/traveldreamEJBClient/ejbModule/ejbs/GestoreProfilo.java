@@ -5,6 +5,7 @@ import javax.mail.MessagingException;
 
 import dtos.UtenteDTO;
 import eccezioni.EntitaEsistenteException;
+import eccezioni.UtenteInesistenteException;
 
 @Local
 public interface GestoreProfilo {
@@ -37,8 +38,9 @@ public interface GestoreProfilo {
 	
 	/**
 	 * Permette il reset della password
-	 * @param datiUtente I dati dell'utente che ha richiesto il reset
-	 * @throws MessagingException
+	 * @param email L'indirizzo email dell'utente
+	 * @throws MessagingException Quando si verifica un errore nell'invio del messaggio
+	 * @throws UtenteInesistenteException Quando l'utente non viene trovato nel database
 	 */
-	void resetPassword (UtenteDTO datiUtente) throws MessagingException;	
+	void resetPassword (String email) throws MessagingException, UtenteInesistenteException;	
 }
