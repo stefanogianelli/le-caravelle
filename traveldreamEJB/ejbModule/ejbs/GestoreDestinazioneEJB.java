@@ -152,7 +152,7 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 					} else
 						throw new InsertException("L'escursione non è nella stessa regione della destinazione");
 				} else
-					throw new InsertException("La data dell'escursione è al di fouri del periodo di permanenza nella destinazione");
+					throw new InsertException("La data dell'escursione è al di fuori del periodo di permanenza nella destinazione");
 			} else
 				throw new EntitaEsistenteException();
 		} else
