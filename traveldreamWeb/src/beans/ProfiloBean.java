@@ -123,16 +123,19 @@ public class ProfiloBean {
 	
 	/**
 	 * Permette il reset della passwrod
+	 * @return L'indirizzo della pagina di login
 	 */
-	public void resetPassword () {
+	public String resetPassword () {
 		try {
 			profiloBean.resetPassword(getProfilo().getEmail());
 			JsfUtil.infoMessage("Richiesta accettata. Riceverai a breve una email all'indirizzo selezionato con la nuova password");
+			return "login.xhtml?faces-redirect=true";
 		} catch (MessagingException e) {
 			JsfUtil.errorMessage("Errore nell'invio dell'email");
 		} catch (UtenteInesistenteException e) {
 			JsfUtil.errorMessage("Utente inesistente");
 		}
+		return null;
 	}
 
 }
