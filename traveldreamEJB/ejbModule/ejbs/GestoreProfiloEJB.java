@@ -19,6 +19,7 @@ import javax.persistence.PersistenceContext;
 import dtos.PersonaDTO;
 import dtos.UtenteDTO;
 import eccezioni.EntitaEsistenteException;
+import eccezioni.UtenteInesistenteException;
 import entities.Gruppi;
 import entities.Persone;
 import entities.Utenti;
@@ -38,7 +39,7 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	private EJBContext context;
 	
 	@EJB
-	private EmailBeanLocal email;
+	private EmailBeanLocal emailBean;
 	
 	@Override
 	public UtenteDTO getUtenteCorrente() {
@@ -65,7 +66,7 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		utente.setGruppi(gruppi);		
 		String password = this.generaPassword();
 		utente.setPassword(password);
-		this.email.inviaPassword(email, password);
+		emailBean.inviaPassword(email, password);
 		/*
 		 * DEBUG
 		 */
@@ -107,12 +108,12 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	}	
 
 	@Override
-	public void resetPassword(UtenteDTO datiUtente) throws MessagingException {
-		Utenti utente = this.convertiInEntita(datiUtente);
+	public void resetPassword(String email) throws MessagingException, UtenteInesistenteException {
+		Utenti utente = this.convertiInEntita(email);
 		
 		String password = this.generaPassword();
 		utente.setPassword(password);
-		email.resetPassword(utente.getEmail(), password);
+		emailBean.resetPassword(utente.getEmail(), password);
 		
 		em.merge(utente);
 	}
@@ -128,8 +129,20 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	}
 	
 	@Override
-	public Utenti convertiInEntita (UtenteDTO utente) {
-		return em.find(Utenti.class, utente.getEmail());
+	public Utenti convertiInEntita (UtenteDTO utente) throws UtenteInesistenteException {
+		Utenti entity = em.find(Utenti.class, utente.getEmail());
+		if (entity != null)
+			return entity;
+		else
+			throw new UtenteInesistenteException();
+	}
+	
+	private Utenti convertiInEntita (String email) throws UtenteInesistenteException {
+		Utenti utente = em.find(Utenti.class, email);
+		if (utente != null)
+			return utente;
+		else
+			throw new UtenteInesistenteException();
 	}
 	
 	@Override

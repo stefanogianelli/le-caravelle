@@ -324,7 +324,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 			entity.addCollegamento(this.collegamento.convertiInEntita(c));
 		}
 		entity.setCitta(this.citta.convertiInEntita(pacchetto.getCitta()));
-		entity.setUtente(this.profilo.convertiInEntita(pacchetto.getUtente()));
+		entity.setUtente(profilo.getUtente());
 		if (pacchetto.getTipoPacchetto() == TipoPacchetto.PREDEFINITO)
 			entity.setPacchettoPredefinito(predefinito.convertiInEntita(pacchetto.getPacchettoPredefinito()));
 		

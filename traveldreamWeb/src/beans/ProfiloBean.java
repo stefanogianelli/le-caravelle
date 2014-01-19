@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import utils.JsfUtil;
 import dtos.UtenteDTO;
 import eccezioni.EntitaEsistenteException;
+import eccezioni.UtenteInesistenteException;
 import ejbs.GestoreProfilo;
 
 @ManagedBean(name="profilo")
@@ -122,13 +123,15 @@ public class ProfiloBean {
 	
 	/**
 	 * Permette il reset della passwrod
-	 * @param datiUtente I dati dell'utente
 	 */
-	public void resetPassword (UtenteDTO datiUtente) {
+	public void resetPassword () {
 		try {
-			profiloBean.resetPassword(datiUtente);
+			profiloBean.resetPassword(getProfilo().getEmail());
+			JsfUtil.infoMessage("Richiesta accettata. Riceverai a breve una email all'indirizzo selezionato con la nuova password");
 		} catch (MessagingException e) {
 			JsfUtil.errorMessage("Errore nell'invio dell'email");
+		} catch (UtenteInesistenteException e) {
+			JsfUtil.errorMessage("Utente inesistente");
 		}
 	}
 

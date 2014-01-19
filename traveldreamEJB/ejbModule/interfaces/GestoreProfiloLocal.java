@@ -3,6 +3,7 @@ package interfaces;
 import javax.ejb.Local;
 
 import dtos.UtenteDTO;
+import eccezioni.UtenteInesistenteException;
 import entities.Utenti;
 
 @Local
@@ -18,8 +19,9 @@ public interface GestoreProfiloLocal {
 	 * Permette la conversione da un DTO alla rispettiva entità
 	 * @param utente Il DTO dell'utente
 	 * @return L'entità desiderata
+	 * @throws UtenteInesistenteException Quando l'utente non viene trovato nel database
 	 */
-	Utenti convertiInEntita (UtenteDTO utente);
+	Utenti convertiInEntita (UtenteDTO utente) throws UtenteInesistenteException;
 	
 	/**
 	 * Permette la conversione da un'entità al rispettivo DTO
