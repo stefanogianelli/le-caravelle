@@ -431,7 +431,7 @@ public class GestorePacchettoEJB implements GestorePacchetto, GestorePacchettoLo
 						
 						em.merge(entity);
 					} else
-						throw new InsertException("La data di arrivo deve essere precedente alla data di partenza");
+						throw new InsertException("La data di partenza deve essere precedente alla data di ritorno");
 				} else
 					throw new InsertException("La città di partenza e la destinazione non possono essere uguali");
 			} else
