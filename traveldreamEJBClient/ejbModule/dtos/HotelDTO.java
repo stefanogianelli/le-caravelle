@@ -43,6 +43,7 @@ public class HotelDTO implements Serializable {
 	
 	public HotelDTO () {
 		citta = new CittaDTO();
+		immagine = new String();
 	}
 	
 	public int getId() {

@@ -1,9 +1,5 @@
 package beans;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,26 +7,21 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-
 import utils.JsfUtil;
+import utils.UploadBean;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.HotelInesistenteException;
+import eccezioni.UploadException;
 import ejbs.GestoreCitta;
 import ejbs.GestoreHotel;
 
 @ManagedBean(name="hotel")
 @ViewScoped
 public class HotelBean {
-	
-	private final String pathImmagini = "/resources/images/hotel/";
 
 	@EJB
 	private GestoreHotel hotelBean;
@@ -117,33 +108,18 @@ public class HotelBean {
 	 * @return L'indirizzo della pagina dettagli dell'hotel creato
 	 */
 	public String creaHotel () {
-		File file = null;
-        OutputStream output = null; 
-        
-		try {   
-			if (getImmagine() != null) {
-				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-				
-				String prefix = FilenameUtils.getBaseName(getFilename(getImmagine()));
-			    String suffix = FilenameUtils.getExtension(getFilename(getImmagine()));	
-			    
-		    	String absoluteDiskPath = externalContext.getRealPath(pathImmagini);
-	            	
-				file = File.createTempFile(prefix + "_", "." + suffix, new File(absoluteDiskPath));
-				output = new FileOutputStream(file);
-				IOUtils.copy(getImmagine().getInputStream(), output);
-				getHotel().setImmagine(file.getName());
+		try {
+			if (getImmagine().getSize() != 0) {
+				UploadBean up = new UploadBean();
+				getHotel().setImmagine(up.upload(getImmagine(), "hotel"));
 			}
 			return "dettagliHotel?idHotel=" + hotelBean.creaHotel(this.getHotel()) + "&faces-redirect=true";
-		} catch (IOException e) {
-			if (file != null) file.delete();
-			e.printStackTrace();
 		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("L'hotel è già presente nel database");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta");
-		} finally {
-            IOUtils.closeQuietly(output);
+		} catch (UploadException e) {
+			JsfUtil.errorMessage("Si è verificato un errore durante il caricamento dell'immagine");
 		}
 		return null;
 	}
@@ -180,19 +156,4 @@ public class HotelBean {
 		}
 		return null;
 	}
-	
-	 /**
-	  * Restituisce il nome del file caricato
-	  * @param part Il file del quale si vuole conoscere il nome
-	  * @return Il nome del file (comprensivo di estensione)
-	  */
-    private static String getFilename(Part part) {  
-        for (String cd : part.getHeader("content-disposition").split(";")) {  
-            if (cd.trim().startsWith("filename")) {  
-                String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");  
-                return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1); // MSIE fix.  
-            }  
-        }  
-        return null;  
-    } 
 }
