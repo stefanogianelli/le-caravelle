@@ -19,7 +19,7 @@
 	<h1>Nuovo hotel</h1>
 	<br />
 	
-		<h:form>
+		<h:form enctype="multipart/form-data">
 			<p>
 				<h:outputText tyleClass="name-input" value="Nome hotel: " />
 				<h:inputText styleClass="text-input" value="#{hotel.hotel.nome}" />
@@ -77,8 +77,8 @@
 			
 			<p>
 				<h:outputText styleClass="name-input" value="Immagine: " />
-				<h:inputText styleClass="text-input" value="#{hotel.hotel.immagine}" />
-				<br />
+				<h:inputFile value="#{hotel.immagine}" />
+				<br />				  
 			</p>		
 			
 			<div class="bloccoButton">
