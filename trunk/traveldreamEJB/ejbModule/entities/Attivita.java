@@ -69,5 +69,13 @@ public class Attivita implements Serializable {
 		this.escursione = escursione;
 		this.getId().setIdEscursione(escursione.getId());
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (this.getDestinazione().getId() == ((Attivita)other).getDestinazione().getId() && this.getEscursione().getId() == ((Attivita)other).getEscursione().getId())
+			return true;
+		else
+			return false;		
+	}
 
 }

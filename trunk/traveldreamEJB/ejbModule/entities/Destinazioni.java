@@ -133,7 +133,7 @@ public class Destinazioni implements Serializable, Comparable<Destinazioni> {
 	@Override
 	public int compareTo(Destinazioni d) {
 		if(this.getDataArrivo().before(d.getDataArrivo()))
-				return -1;
+			return -1;
 		else if(this.getDataArrivo().compareTo(d.getDataArrivo()) == 0)
 			return 0;
 		else

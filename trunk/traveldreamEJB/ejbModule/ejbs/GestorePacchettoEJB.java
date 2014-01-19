@@ -241,7 +241,6 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 			destinazione.setCitta(pred.getHotel().getCitta());
 			for (AttivitaPred a : pred.getAttivita()) {
 				Attivita attivita = new Attivita();
-				attivita.setDestinazione(destinazione);
 				attivita.setEscursione(a.getEscursione());
 				attivita.setNumPartecipanti(1);
 				destinazione.addAttivita(attivita);
