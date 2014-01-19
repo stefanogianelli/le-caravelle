@@ -12,7 +12,7 @@ public class JsfUtil {
 	public static void errorMessage (String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
+		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
 		context.addMessage(null, messaggio);
 		context.getExternalContext().getFlash().setKeepMessages(true);
 	}
@@ -25,7 +25,7 @@ public class JsfUtil {
 	public static void errorMessage (String msg, String id) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
+		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
 		context.addMessage(id, messaggio);
 		context.getExternalContext().getFlash().setKeepMessages(true);
 	}
@@ -37,7 +37,7 @@ public class JsfUtil {
 	public static void infoMessage (String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
+		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
 		context.addMessage(null, messaggio);
 		context.getExternalContext().getFlash().setKeepMessages(true);
 	}
@@ -50,7 +50,7 @@ public class JsfUtil {
 	public static void infoMessage (String msg, String id) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		
-		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
+		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
 		context.addMessage(id, messaggio);
 		context.getExternalContext().getFlash().setKeepMessages(true);
 	}

@@ -29,6 +29,8 @@ import ejbs.GestoreHotel;
 @ManagedBean(name="hotel")
 @ViewScoped
 public class HotelBean {
+	
+	private final String pathImmagini = "/resources/images/hotel/";
 
 	@EJB
 	private GestoreHotel hotelBean;
@@ -123,10 +125,9 @@ public class HotelBean {
 				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 				
 				String prefix = FilenameUtils.getBaseName(getFilename(getImmagine()));
-			    String suffix = FilenameUtils.getExtension(getFilename(getImmagine()));	        
-		        
-		        String relativeWebPath = "/resources/images/hotel/";
-		    	String absoluteDiskPath = externalContext.getRealPath(relativeWebPath);
+			    String suffix = FilenameUtils.getExtension(getFilename(getImmagine()));	
+			    
+		    	String absoluteDiskPath = externalContext.getRealPath(pathImmagini);
 	            	
 				file = File.createTempFile(prefix + "_", "." + suffix, new File(absoluteDiskPath));
 				output = new FileOutputStream(file);
@@ -180,6 +181,11 @@ public class HotelBean {
 		return null;
 	}
 	
+	 /**
+	  * Restituisce il nome del file caricato
+	  * @param part Il file del quale si vuole conoscere il nome
+	  * @return Il nome del file (comprensivo di estensione)
+	  */
     private static String getFilename(Part part) {  
         for (String cd : part.getHeader("content-disposition").split(";")) {  
             if (cd.trim().startsWith("filename")) {  
