@@ -44,8 +44,8 @@
 			
 			<h:panelGroup id="elencoCitta">
 				<ul>
-					<ui:repeat var="citta" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
-						<li><h:outputText value="#{citta.nome}" /></li>
+					<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
+						<li><h:outputText value="#{c.nome}" /></li>
 					</ui:repeat>	
 				</ul><br />
 			</h:panelGroup>
