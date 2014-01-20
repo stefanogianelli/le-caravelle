@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">Modifica dati personali</ui:define>
+
+<ui:define name="content">
+
+<p:messages showDetail="false" autoUpdate="true" />
+
+<h1>Dati personali</h1>
+
+<h:form>	
+	<div class="bloccoDett">
+		<h3>Modifica password</h3>
+		
+		<br />
+		
+		<p>
+			<h:outputText tyleClass="name-input" value="Password corrente:" />
+			<h:inputSecret styleClass="text-input" binding="#{vecchiaPwd}" />
+		</p>
+		
+		<p>
+			<h:outputText tyleClass="name-input" value="Nuova password:" />
+			<h:inputSecret styleClass="text-input" binding="#{nuovaPwd}" />
+		</p>
+		
+		<p>
+			<h:outputText tyleClass="name-input" value="Ripeti password:" />
+			<h:inputSecret styleClass="text-input" binding="#{controlloPwd}" />
+		</p>	
+		
+		<div class="bloccoButton">
+			<h:commandButton styleClass="button" value="Modifica" action="#{profilo.modificaPassword(vecchiaPwd.value,nuovaPwd.value,controlloPwd.value)}" />
+		</div>			
+	</div>
+</h:form>
+
+<h:form>
+	<div class="bloccoDett">
+		<h3>Dati personali</h3>
+		
+		<br />
+		
+		<p>
+			<h:outputText tyleClass="name-input" value="Nome:" />
+			<h:inputText styleClass="text-input" value="#{profilo.utente.persona.nome}" disabled="#{not profilo.noUserData}" />
+		</p>
+		<p>
+			<h:outputText tyleClass="name-input" value="Cognome:" />
+			<h:inputText styleClass="text-input" value="#{profilo.utente.persona.cognome}" disabled="#{not profilo.noUserData}" />
+		</p>				
+		
+		<br />
+		
+		<p>
+			<h:outputText tyleClass="name-input" value="Data di nascita:" />
+			<p:calendar styleClass="data-input" value="#{profilo.utente.persona.dataNascita}" locale="it" disabled="#{not profilo.noUserData}"
+				required="true" requiredMessage="Inserire una data" converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />				
+		</p>
+		
+		<br />
+		
+		<p>
+			<h:outputText tyleClass="name-input" value="Documento di identità:" />
+			<h:inputText styleClass="text-input" value="#{profilo.utente.persona.documentoIdentita}" />		
+		</p>
+		
+		<br />
+		
+		<p>
+			<h:outputText tyleClass="name-input" value="Numero di telefono:" />
+			<h:inputText styleClass="text-input" value="#{profilo.utente.persona.telefono}" />		
+		</p>
+		
+		<div class="bloccoButton">
+			<h:commandButton styleClass="button" value="Salva" action="#{profilo.aggiuntaDatiPersonali()}" rendered="#{profilo.noUserData}" />
+			<h:commandButton styleClass="button" value="Modifica" action="#{profilo.modificaDatiPersonali()}" rendered="#{not profilo.noUserData}" />
+		</div>
+	</div>
+</h:form>
+
+</ui:define>
+</ui:composition>
+</html>

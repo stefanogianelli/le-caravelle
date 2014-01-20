@@ -3,7 +3,7 @@ package beans;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -12,22 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import utils.JsfUtil;
 import dtos.UtenteDTO;
 import eccezioni.EntitaEsistenteException;
+import eccezioni.InsertException;
 import eccezioni.UtenteInesistenteException;
 import ejbs.GestoreProfilo;
 
 @ManagedBean(name="profilo")
-@RequestScoped
+@ViewScoped
 public class ProfiloBean {
 	
 	@EJB
 	private GestoreProfilo profiloBean;
 	
-	private UtenteDTO profilo;
-	
-	@PostConstruct
-	public void setUp () {
-		profilo = new UtenteDTO();
-	}
+	private UtenteDTO profilo;	
+	private boolean noUserData;
 
 	public UtenteDTO getProfilo() {
 		return profilo;
@@ -36,6 +33,27 @@ public class ProfiloBean {
 	public void setProfilo(UtenteDTO profilo) {
 		this.profilo = profilo;
 	}
+	
+	public boolean isNoUserData() {
+		return noUserData;
+	}
+
+	public void setNoUserData(boolean noUserData) {
+		this.noUserData = noUserData;
+	}
+	
+	@PostConstruct
+	public void init () {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		
+		if (request.isUserInRole("UTENTE")) {
+			profilo = profiloBean.getUtenteCorrente();
+			if (profilo.getPersona().getNome() == null)
+				this.noUserData = true;
+		} else
+			profilo = new UtenteDTO();
+	}	
 	
 	/**
 	 * Restituisce il profilo dell'utente che ne fa richiesta
@@ -107,18 +125,38 @@ public class ProfiloBean {
 	
 	/**
 	 * Consente l'aggiunta dei dati personali di un utente
-	 * @param datiUtente I dati dell'utente
 	 */
-	public void aggiuntaDatiPersonali (UtenteDTO datiUtente) {
-		profiloBean.aggiuntaDatiPersonali(datiUtente);
+	public void aggiuntaDatiPersonali () {
+		profiloBean.aggiuntaDatiPersonali(getProfilo());
+		JsfUtil.infoMessage("Dati salvati");
 	}
 	
 	/**
 	 * Consente la modifica dei dati personali di un utente
-	 * @param datiUtente I dati dell'utente
 	 */
-	public void modificaDatiPersonali (UtenteDTO datiUtente) {
-		profiloBean.modificaDatiPersonali(datiUtente);
+	public void modificaDatiPersonali () {
+		System.out.println(getProfilo().getPersona().getDocumentoIdentita());
+		profiloBean.modificaDatiPersonali(getProfilo());
+		JsfUtil.infoMessage("Dati modificati");
+	}
+	
+	/**
+	 * Permette la modifica della password dell'utente
+	 * @param vecchiaPassword La password corrente
+	 * @param nuovaPassword La nuova password
+	 * @param controlloPassword La password di controllo
+	 */
+	public void modificaPassword (String vecchiaPassword, String nuovaPassword, String controlloPassword) {
+		System.out.println(nuovaPassword + " - " + controlloPassword);
+		if (nuovaPassword.equals(controlloPassword)) {
+			try {
+				profiloBean.modificaPassword(vecchiaPassword, nuovaPassword);
+				JsfUtil.infoMessage("Password modificata");
+			} catch (InsertException e) {
+				JsfUtil.errorMessage("La password corrente inserita non combacia con quella dell'utente");
+			}
+		} else
+			JsfUtil.errorMessage("La nuova password non coincide con quella di controllo");
 	}
 	
 	/**

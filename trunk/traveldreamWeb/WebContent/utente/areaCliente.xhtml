@@ -13,6 +13,12 @@
 
 <f:event listener="#{pacchetto.initMappa()}" type="preRenderView" />
 
+<h:form>
+	<div class="bloccoModifica">		
+		<h:commandButton value="Dati personali" styleClass="search-button" action="modificaDati?faces-redirect=true" />		
+	</div>
+</h:form>
+
 <div class="bloccoBiancoArea">
 	<h1>I miei viaggi</h1>
 	<p:gmap center="11.6601676, 12.0247833" zoom="2" type="HYBRID"   
