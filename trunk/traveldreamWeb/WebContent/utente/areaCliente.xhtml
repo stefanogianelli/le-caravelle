@@ -48,7 +48,7 @@
 
 <div class="bloccoArea">
 	<h1><a href="mieiRicordi.xhtml">I miei ricordi</a></h1>
-	<ui:repeat var="p" value="#{pacchetto.elencoTrePacchettiAcquistati()}">
+	<ui:repeat var="p" value="#{pacchetto.elencoTreMieiRicordi()}">
 		<div class="pacchetto">
 		  <h:link outcome="dettagliPacchetto">
 		  	<f:param name="idPacchetto" value="#{p.id}" />			  

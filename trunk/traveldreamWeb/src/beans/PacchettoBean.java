@@ -250,20 +250,13 @@ public class PacchettoBean {
 	}
 	
 	/**
-	 * Restituisce tutti i pacchetti personalizzati, predefiniti e acquistati (in date future) posseduti dall'utente
+	 * Restituisce tutti i pacchetti personalizzati e predefiniti
 	 * @return I pacchetti posseduti dall'utente
 	 */
 	public List<PacchettoDTO> elencoMieiPacchetti () {
-		PacchettoDTO p;
-		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(TipoPacchetto.ACQUISTATO);
-		//elimino dal vettore i pacchetti acquistati con date di partenza nel passato
-		for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
-			p = itr.next();
-			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataUtils.getDataOdierna()))
-				itr.remove();
-		}
-		pacchetti.addAll(pacchettoBean.elencoPacchetti(TipoPacchetto.PREDEFINITO));
+		List<PacchettoDTO> pacchetti = new ArrayList<PacchettoDTO>();		
 		pacchetti.addAll(pacchettoBean.elencoPacchetti(TipoPacchetto.PERSONALIZZATO));
+		pacchetti.addAll(pacchettoBean.elencoPacchetti(TipoPacchetto.PREDEFINITO));
 		
 		return pacchetti;
 	}
@@ -302,10 +295,27 @@ public class PacchettoBean {
 	}
 	
 	/**
+	 * Restituisce tutti i pacchetti acquistati (in date future) e da confermare dell'utente
+	 * @return I pacchetti posseduti dall'utente
+	 */
+	public List<PacchettoDTO> elencoPacchettiAcquistati () {
+		PacchettoDTO p;
+        List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(TipoPacchetto.ACQUISTATO);
+        //elimino dal vettore i pacchetti acquistati con date di partenza nel passato
+        for (Iterator<PacchettoDTO> itr = pacchetti.iterator(); itr.hasNext();) {
+        	p = itr.next();
+            if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataUtils.getDataOdierna()))
+            	itr.remove();
+        }
+        pacchetti.addAll(pacchettoBean.elencoPacchetti(TipoPacchetto.DACONFERMARE));
+        return pacchetti;
+	}	
+	
+	/**
 	 * Restituisce i primi tre pacchetti acquistati posseduti dall'utente
 	 * @return I pacchetti posseduti dall'utente
 	 */
-	public List<PacchettoDTO> elencoTrePacchettiAcquistati () {
+	public List<PacchettoDTO> elencoTreMieiRicordi () {
 		List<PacchettoDTO> elenco = pacchettoBean.elencoPacchetti(TipoPacchetto.ACQUISTATO);
 		List<PacchettoDTO> pacchetti = new ArrayList<PacchettoDTO>();
 		int cont = 0;
@@ -324,7 +334,7 @@ public class PacchettoBean {
 	 * Restituisce tutti i pacchetti acquistati posseduti dall'utente
 	 * @return I pacchetti posseduti dall'utente
 	 */
-	public List<PacchettoDTO> elencoPacchettiAcquistati () {
+	public List<PacchettoDTO> elencoMieiRicordi () {
 		PacchettoDTO p;
 		List<PacchettoDTO> pacchetti = pacchettoBean.elencoPacchetti(TipoPacchetto.ACQUISTATO);
 		//elimino dal vettore i pacchetti acquistati con date di partenza nel futuro
@@ -423,6 +433,7 @@ public class PacchettoBean {
 	public String eliminaPacchetto () {
 		try {
 			pacchettoBean.eliminaPacchetto(this.getPacchetto());
+			JsfUtil.infoMessage("Pacchetto eliminato");
 			return "areaCliente?faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");

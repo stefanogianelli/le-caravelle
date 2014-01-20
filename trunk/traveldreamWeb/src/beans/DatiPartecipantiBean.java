@@ -94,6 +94,7 @@ public class DatiPartecipantiBean {
 		
 		try {
 			pacchettoBean.acquistaPacchetto(getIdPacchetto(), getDati());
+			JsfUtil.infoMessage("Pacchetto acquistato");
 			return "areaCliente?faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");

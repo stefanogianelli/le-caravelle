@@ -277,7 +277,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 					persona.setTelefono(p.getTelefono());
 					entity.addPartecipante(persona);
 				}			
-				entity.setTipoPacchetto(TipoPacchetto.ACQUISTATO);					
+				entity.setTipoPacchetto(TipoPacchetto.DACONFERMARE);					
 				em.merge(entity);
 				
 				//TODO: da abilitare
@@ -286,6 +286,13 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 				throw new AcquistoException("Errore: il numero di partecipanti non combacia con il numero di partecipanti del pacchetto");
 		} else
 			throw new AcquistoException("Il pacchetto è incompleto");
+	}
+	
+	@Override
+	public void confermaPacchetto (int idPacchetto) throws PacchettoInesistenteException {
+		Pacchetti pacchetto = this.convertiInEntita(idPacchetto);
+		pacchetto.setTipoPacchetto(TipoPacchetto.ACQUISTATO);
+		em.merge(pacchetto);
 	}
 
 	@Override
@@ -304,7 +311,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		
 		Pacchetti entity = new Pacchetti();
 		
-		entity.setNome(pacchetto.getNome() + " (Condiviso con " + datiAmico.getNome() + " " + datiAmico.getCognome() + ")");
+		entity.setNome(pacchetto.getNome());
 		entity.setNumPartecipanti(pacchetto.getNumPartecipanti());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		entity.setTipoPacchetto(TipoPacchetto.CONDIVISO);

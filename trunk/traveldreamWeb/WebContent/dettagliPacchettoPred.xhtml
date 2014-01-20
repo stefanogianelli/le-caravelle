@@ -18,132 +18,134 @@
 
 <p:messages showDetail="false" autoUpdate="true" />
 
-<h1>#{pacchettoPredefinito.pacchetto.nome}</h1>
-
-<h:form>
-	<div class="bloccoModifica">
-		<h:commandButton value="Salva pacchetto" styleClass="search-button" action="#{pacchetto.salvaPacchettoPredefinito(id.value,cittaPartenza.value,dataPartenza.value,durata.value)}"/>
-	</div>
-
-	<div class="bloccoPacc">
-		<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(id.value)}" width="288" height="174" />
-		
-		<div class="descr">
-			<p>Città di partenza</p>
-			<h:selectOneMenu styleClass="menu-pred" binding="#{cittaPartenza}">
-					<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
+<h:panelGroup rendered="#{pacchettoPredefinito.pacchetto.id != 0}">
+	<h1>#{pacchettoPredefinito.pacchetto.nome}</h1>
+	
+	<h:form>
+		<div class="bloccoModifica">
+			<h:commandButton value="Salva pacchetto" styleClass="search-button" action="#{pacchetto.salvaPacchettoPredefinito(id.value,cittaPartenza.value,dataPartenza.value,durata.value)}"/>
+		</div>
+	
+		<div class="bloccoPacc">
+			<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(id.value)}" width="288" height="174" />
+			
+			<div class="descr">
+				<p>Città di partenza</p>
+				<h:selectOneMenu styleClass="menu-pred" binding="#{cittaPartenza}">
+						<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />
+					</h:selectOneMenu>
+				<br></br>
+				<br></br>
+				<p>Date di partenza</p>
+				<h:selectOneMenu styleClass="menu-pred" binding="#{dataPartenza}">
+						<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
+					</h:selectOneMenu>
+				<br></br>
+				<br></br>
+				<p>Durate (giorni)</p>
+				<h:selectOneMenu styleClass="menu-pred" binding="#{durata}">
+						<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
 				</h:selectOneMenu>
-			<br></br>
-			<br></br>
-			<p>Date di partenza</p>
-			<h:selectOneMenu styleClass="menu-pred" binding="#{dataPartenza}">
-					<f:selectItems value="#{pacchettoPredefinito.pacchetto.datePartenza}" var="dataPartenza" itemLabel="#{data.getData(dataPartenza)}" itemValue="#{data.getData(dataPartenza)}" />
-				</h:selectOneMenu>
-			<br></br>
-			<br></br>
-			<p>Durate (giorni)</p>
-			<h:selectOneMenu styleClass="menu-pred" binding="#{durata}">
-					<f:selectItems value="#{pacchettoPredefinito.pacchetto.durate}" />
-			</h:selectOneMenu>
-		</div>
-		
-		<div class="pulsanti">
-			<div id="prezzo">#{pacchettoPredefinito.pacchetto.prezzo} €</div>
-		</div>
-	</div>
-</h:form>
-
-<div class="bloccoPacc">
-	<div class="descr">
-		<p>Città di destinazione</p>
-		<h2>#{pacchettoPredefinito.pacchetto.hotel.citta.nome}</h2>
-	</div>
-	<div class="hotelPacc">
-		<h:graphicImage library="images/hotel" name="#{pacchettoPredefinito.pacchetto.hotel.immagine.equals('NULL') ? 'noImage.png' : pacchettoPredefinito.pacchetto.hotel.immagine}" width="195" height="113" />
-		<div class="descrHotel">
-			<p><b>#{pacchettoPredefinito.pacchetto.hotel.nome}</b></p>
-			<p>#{pacchettoPredefinito.pacchetto.hotel.indirizzo}</p>
-			<p>#{pacchettoPredefinito.pacchetto.hotel.telefono}</p>
-		</div>
-		
-		<div class="pulsanti">
-		<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
-			<f:param name="idPacchetto" value="#{id.value}" />
-			<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
-		</h:link></p>
-		</div>
-	</div>
-</div>
-
-<!-- Informazioni sulle escursioni -->
-<div class="bloccoPaccVolo" style="height: auto;">
-	<h:panelGroup id="elencoEscursioni" styleClass="tabella" layout="block">
-		<h:dataTable id="escursioni" value="#{pacchettoPredefinito.pacchetto.attivita}" var="a" rendered="#{pacchettoPredefinito.pacchetto.attivita.size() > 0}">
-			<h:column>
-				<f:facet name="header">Nome</f:facet>
-				<h:link value="#{a.escursione.nome}" outcome="dettagliEscursione">
-					<f:param name="idEscursione" value="#{a.escursione.id}" />
-				</h:link>
-			</h:column>
-			<h:column>
-				<f:facet name="header">Data</f:facet>
-				<h:outputText value="#{a.escursione.data}">
-					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-				</h:outputText>
-			</h:column>
-			<h:column>
-				<f:facet name="header">Ora</f:facet>
-				<h:outputText value="#{a.escursione.ora}">
-					<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-				</h:outputText>	
-			</h:column>
-		</h:dataTable>
-	</h:panelGroup>	
-</div>	
-
-<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
-	<div class="bloccoPaccVolo">
-		<p>Data</p>
-		<p><h:outputText value="#{c.dataPartenza}">
-				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
-			</h:outputText></p>
-		<div class="volo">
-			<div class="etichette">
-			<ul>
-				<li>Da</li>
-				<li>A</li>
-				<li>Partenza</li>
-				<li>Arrivo</li>
-				<li>Prezzo</li>
-			</ul>
 			</div>
 			
-			<div class="pulsantiVolo">
-			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
-				<f:param name="idPacchetto" value="#{id.value}" />
-				<f:param name="codiceCollegamento" value="#{c.codice}" />
-			</h:link></p>	
+			<div class="pulsanti">
+				<div id="prezzo">#{pacchettoPredefinito.pacchetto.prezzo} €</div>
 			</div>
-			<div class="dati">
-				<ul>
-					<li>#{c.cittaPartenza.nome} #{c.origine}</li>
-					<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
-					<li>
-						<h:outputText value="#{c.oraPartenza}">
-							<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-						</h:outputText>				
-					</li>
-					<li>
-						<h:outputText value="#{c.oraArrivo}">
-							<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
-						</h:outputText>						
-					</li>
-					<li>#{c.prezzo} €</li>
-				</ul>
+		</div>
+	</h:form>
+	
+	<div class="bloccoPacc">
+		<div class="descr">
+			<p>Città di destinazione</p>
+			<h2>#{pacchettoPredefinito.pacchetto.hotel.citta.nome}</h2>
+		</div>
+		<div class="hotelPacc">
+			<h:graphicImage library="images/hotel" name="#{pacchettoPredefinito.pacchetto.hotel.immagine.equals('NULL') ? 'noImage.png' : pacchettoPredefinito.pacchetto.hotel.immagine}" width="195" height="113" />
+			<div class="descrHotel">
+				<p><b>#{pacchettoPredefinito.pacchetto.hotel.nome}</b></p>
+				<p>#{pacchettoPredefinito.pacchetto.hotel.indirizzo}</p>
+				<p>#{pacchettoPredefinito.pacchetto.hotel.telefono}</p>
+			</div>
+			
+			<div class="pulsanti">
+			<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
+				<f:param name="idPacchetto" value="#{id.value}" />
+				<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
+			</h:link></p>
 			</div>
 		</div>
 	</div>
-</ui:repeat>
+	
+	<!-- Informazioni sulle escursioni -->
+	<div class="bloccoPaccVolo" style="height: auto;">
+		<h:panelGroup id="elencoEscursioni" styleClass="tabella" layout="block">
+			<h:dataTable id="escursioni" value="#{pacchettoPredefinito.pacchetto.attivita}" var="a" rendered="#{pacchettoPredefinito.pacchetto.attivita.size() > 0}">
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:link value="#{a.escursione.nome}" outcome="dettagliEscursione">
+						<f:param name="idEscursione" value="#{a.escursione.id}" />
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Data</f:facet>
+					<h:outputText value="#{a.escursione.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Ora</f:facet>
+					<h:outputText value="#{a.escursione.ora}">
+						<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+					</h:outputText>	
+				</h:column>
+			</h:dataTable>
+		</h:panelGroup>	
+	</div>	
+	
+	<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.collegamenti}">
+		<div class="bloccoPaccVolo">
+			<p>Data</p>
+			<p><h:outputText value="#{c.dataPartenza}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText></p>
+			<div class="volo">
+				<div class="etichette">
+				<ul>
+					<li>Da</li>
+					<li>A</li>
+					<li>Partenza</li>
+					<li>Arrivo</li>
+					<li>Prezzo</li>
+				</ul>
+				</div>
+				
+				<div class="pulsantiVolo">
+				<p><h:link value="Dettagli" styleClass="detail-button" outcome="dettagliCollegamento">
+					<f:param name="idPacchetto" value="#{id.value}" />
+					<f:param name="codiceCollegamento" value="#{c.codice}" />
+				</h:link></p>	
+				</div>
+				<div class="dati">
+					<ul>
+						<li>#{c.cittaPartenza.nome} #{c.origine}</li>
+						<li>#{c.cittaArrivo.nome} #{c.destinazione}</li>
+						<li>
+							<h:outputText value="#{c.oraPartenza}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>				
+						</li>
+						<li>
+							<h:outputText value="#{c.oraArrivo}">
+								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
+							</h:outputText>						
+						</li>
+						<li>#{c.prezzo} €</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</ui:repeat>
+</h:panelGroup>
 
 </ui:define>
 
