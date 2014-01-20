@@ -18,8 +18,6 @@
 		<f:event listener="#{collegamento.elencoCollegamentiDipendente(pacchettoPredefinito.pacchetto.cittaPartenza,pacchettoPredefinito.pacchetto.hotel.citta.nome)}" type="preRenderView" />
 	</f:metadata>
 	
-	<p:messages showDetail="true" autoUpdate="true" />	
-	
 	<h:form>
 		<ui:repeat var="c" value="#{collegamento.elenco}">
 			<div class="bloccoPaccVolo">

@@ -20,8 +20,6 @@
 		<f:viewParam name="cittaArrivo" value="#{collegamento.cittaArrivo}" />
 		<f:event listener="#{pacchetto.getPacchetto(collegamento.idPacchetto)}" type="preRenderView" />
 	</f:metadata>
-	
-	<p:messages showDetail="false" autoUpdate="true" />	
 
 	<h:form id="mainForm" rendered="#{pacchetto.tipoPersonalizzato}">
 		<div class="blocco">

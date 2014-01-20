@@ -16,8 +16,6 @@
 		<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
 		<f:event listener="#{hotel.cercaHotel(pacchettoPredefinito.pacchetto.hotel.citta.nome)}" type="preRenderView" />
 	</f:metadata>
-	
-	<p:messages showDetail="false" autoUpdate="true" />
 
 	<h:form rendered="#{pacchettoPredefinito.pacchetto.id != 0}">
 		<div class="blocco">

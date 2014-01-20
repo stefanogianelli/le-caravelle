@@ -14,6 +14,7 @@ public class JsfUtil {
 		
 		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
 		context.addMessage(null, messaggio);
+		context.getExternalContext().getFlash().setKeepMessages(true);
 	}
 	
 	/**
@@ -26,6 +27,7 @@ public class JsfUtil {
 		
 		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
 		context.addMessage(id, messaggio);
+		context.getExternalContext().getFlash().setKeepMessages(true);
 	}
 	
 	/**
@@ -37,6 +39,7 @@ public class JsfUtil {
 		
 		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
 		context.addMessage(null, messaggio);
+		context.getExternalContext().getFlash().setKeepMessages(true);
 	}
 	
 	/**
@@ -49,5 +52,6 @@ public class JsfUtil {
 		
 		FacesMessage messaggio = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
 		context.addMessage(id, messaggio);
+		context.getExternalContext().getFlash().setKeepMessages(true);
 	}
 }

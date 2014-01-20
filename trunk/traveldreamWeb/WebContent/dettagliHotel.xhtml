@@ -18,8 +18,6 @@
 
 <h1>Dettagli hotel</h1>
 
-<p:messages showDetail="false" autoUpdate="true" />
-
 <h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{hotel.hotel.id != 0}">
 	<h2>#{hotel.hotel.nome}</h2>
 	<p:rating styleClass="stelle-dip" value="#{hotel.hotel.stelle}" readonly="true" stars="5" />
