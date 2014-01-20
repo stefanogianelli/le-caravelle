@@ -52,6 +52,9 @@
 		<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(id.value)}" width="288" height="174" />
 		
 		<div class="descr">
+			<h:link value="Modifica" outcome="modificaPacchetto">
+				<f:param name="idPacchetto" value="#{id.value}" />
+			</h:link>
 			<p>Città di partenza</p>
 			<h:selectOneMenu styleClass="menu-pred" binding="#{cittaPartenza}">
 				<f:selectItems value="#{pacchettoPredefinito.pacchetto.cittaPartenza}" var="citta" itemValue="#{citta.nome}" itemLabel="#{citta.nome}" />

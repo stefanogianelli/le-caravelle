@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+<ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Modifica pacchetto</ui:define>
+
+<ui:define name="content">
+
+<f:metadata>
+	<f:viewParam name="idPacchetto" binding="#{id}" />
+	<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
+</f:metadata>
+
+<p:messages showDetail="false" autoUpdate="true" />
+
+<div class="bloccoDett">	
+	<h:panelGroup rendered="#{pacchettoPredefinito.pacchetto.id != 0}">	
+		<h1>Modifica pacchetto</h1>
+		<br />
+	
+		<h:form>
+			<p>
+				<h:outputText styleClass="name-input" value="Città di partenza: " />
+				<h:selectOneMenu styleClass="menu-input" binding="#{cittaText}">
+					<f:selectItems value="#{citta.nomiCitta}" />
+				</h:selectOneMenu>
+			</p>
+			
+			<div class="bloccoCitta" style="height: auto;">
+				<h:commandButton value="Salva città" styleClass="save-button">
+					<f:ajax execute="@form" listener="#{pacchettoPredefinito.salvaCitta(cittaText.value)}" render="elencoCitta" />
+				</h:commandButton>
+				
+				<h:panelGroup id="elencoCitta">
+					<ul>
+						<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
+							<li>
+								<h:outputText value="#{c.nome}" />
+								(<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviCitta(c)}" />)
+							</li>
+						</ui:repeat>	
+					</ul><br />
+				</h:panelGroup>
+			</div>
+			
+			<p>
+				<h:outputText styleClass="name-input" value="Date di partenza:" />
+				<p:calendar styleClass="data-input" binding="#{dataEntry}" locale="it" mindate="#{data.dataOdierna}"
+					converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />
+			</p>
+			
+			<div class="bloccoCitta" style="height: auto;">
+				<h:commandButton value="Salva data" styleClass="save-button">
+					<f:ajax execute="@form" listener="#{pacchettoPredefinito.salvaData(dataEntry.value)}" render="elencoDate" />
+				</h:commandButton>
+				
+				<h:panelGroup id="elencoDate">
+					<ul>
+						<ui:repeat var="da" value="#{pacchettoPredefinito.pacchetto.datePartenza}">
+							<li>
+					   			<h:outputText value="#{da}">
+					   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					   			</h:outputText>	
+					   			(<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDataPartenza(da)}" />)					
+							</li>
+						</ui:repeat>	
+					</ul><br />
+				</h:panelGroup>
+			</div>
+			
+			<p>
+				<h:outputText styleClass="name-input" value="Durate (giorni):" />
+				<h:inputText styleClass="text-input" binding="#{durataEntry}" converterMessage="Inserire una durata di tipo intero">
+					<f:convertNumber integerOnly="true"/>
+				</h:inputText>
+			</p>
+			
+			<div class="bloccoCitta" style="height: auto;">
+					<h:commandButton value="Salva durata" styleClass="save-button">
+						<f:ajax execute="@form" listener="#{pacchettoPredefinito.salvaDurata(durataEntry.value)}" render="elencoDurate" />
+					</h:commandButton>
+					<h:panelGroup id="elencoDurate">
+						<ul>
+							<ui:repeat var="d" value="#{pacchettoPredefinito.pacchetto.durate}">
+								<li>
+									<h:outputText value="#{d}" />
+									(<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDurata(d)}" />)						
+								</li>
+							</ui:repeat>	
+						</ul><br />
+					</h:panelGroup>
+				</div>
+		</h:form>
+	</h:panelGroup>
+	
+</div>
+</ui:define>
+</ui:composition>
+</html>
