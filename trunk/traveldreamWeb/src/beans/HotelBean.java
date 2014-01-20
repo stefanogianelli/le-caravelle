@@ -9,10 +9,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.Part;
 
+import utils.FileUtils;
 import utils.JsfUtil;
-import utils.UploadBean;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.DeleteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.UploadException;
@@ -110,8 +111,8 @@ public class HotelBean {
 	public String creaHotel () {
 		try {
 			if (getImmagine().getSize() != 0) {
-				UploadBean up = new UploadBean();
-				getHotel().setImmagine(up.upload(getImmagine(), "hotel"));
+				FileUtils file = new FileUtils();
+				getHotel().setImmagine(file.upload(getImmagine(), "hotel"));
 			}
 			return "dettagliHotel?idHotel=" + hotelBean.creaHotel(this.getHotel()) + "&faces-redirect=true";
 		} catch (EntitaEsistenteException e) {
@@ -130,6 +131,10 @@ public class HotelBean {
 	 */
 	public String modificaHotel () {
 		try {
+			if (getImmagine().getSize() != 0) {
+				FileUtils file = new FileUtils();
+				getHotel().setImmagine(file.upload(getImmagine(), "hotel"));
+			}
 			hotelBean.modificaDatiHotel(this.getHotel());			
 			return "dettagliHotel?idHotel=" + this.getHotel().getId() + "&faces-redirect=true";
 		} catch (CittaInesistenteException e) {
@@ -138,6 +143,8 @@ public class HotelBean {
 			JsfUtil.errorMessage("Hotel sconosciuto");
 		} catch (EntitaEsistenteException e) {
 			JsfUtil.errorMessage("I dati inseriti sono uguali a quelli di un altro hotel");
+		} catch (UploadException e) {
+			JsfUtil.errorMessage("Si è verificato un errore durante il caricamento dell'immagine");
 		}
 		return null;
 	}
@@ -153,6 +160,8 @@ public class HotelBean {
 			return "elencoHotel?faces-redirect=true";
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel sconosciuta");
+		} catch (DeleteException e) {
+			JsfUtil.errorMessage("Errore nell'eliminazione dell'hotel");
 		}
 		return null;
 	}

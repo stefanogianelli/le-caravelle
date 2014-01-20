@@ -12,8 +12,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import utils.FileUtils;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.DeleteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.HotelInesistenteException;
 import entities.Hotel;
@@ -89,23 +91,26 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 
 	@Override
 	public void modificaDatiHotel(HotelDTO hotel) throws CittaInesistenteException, HotelInesistenteException, EntitaEsistenteException {	
-		//controllo che non esista un hotel con lo stesso nome nella stessa città
-		TypedQuery<Hotel> q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
-		q.setParameter("nome", hotel.getNome());
-		q.setParameter("citta", hotel.getCitta().getNome());
-		if (!q.getResultList().isEmpty())
-			throw new EntitaEsistenteException ();
-		
 		Hotel entity = this.convertiInEntita(hotel);
 		
+		if (!entity.getNome().equals(hotel.getNome()) && !entity.getCitta().equals(hotel.getCitta())) {
+			//controllo che non esista un hotel con lo stesso nome nella stessa città
+			TypedQuery<Hotel> q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
+			q.setParameter("nome", hotel.getNome());
+			q.setParameter("citta", hotel.getCitta().getNome());
+			if (!q.getResultList().isEmpty())
+				throw new EntitaEsistenteException ();	
+			entity.setNome(hotel.getNome());
+			entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));
+		}
+		
 		entity.setEmail(hotel.getEmail());
-		entity.setIndirizzo(hotel.getIndirizzo());
-		entity.setNome(hotel.getNome());
+		entity.setIndirizzo(hotel.getIndirizzo());		
 		entity.setPrezzo(hotel.getPrezzo());
 		entity.setStelle(hotel.getStelle());
 		entity.setTelefono(hotel.getTelefono());
 		entity.setWebsite(hotel.getWebsite());
-		entity.setCitta(citta.getCitta(hotel.getCitta().getNome()));
+		
 		if(!hotel.getImmagine().isEmpty())
 			entity.setImmagine(hotel.getImmagine());
 		else
@@ -115,8 +120,12 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	}
 
 	@Override
-	public void eliminaHotel(int idHotel) throws HotelInesistenteException {
-		em.remove(this.convertiInEntita(idHotel));
+	public void eliminaHotel(int idHotel) throws HotelInesistenteException, DeleteException {
+		FileUtils file = new FileUtils();
+		Hotel hotel = this.convertiInEntita(idHotel);
+		if (!hotel.getImmagine().equals("NULL"))
+			file.deleteFile(hotel.getImmagine(), "hotel");
+		em.remove(hotel);
 	}
 	
 	@Override

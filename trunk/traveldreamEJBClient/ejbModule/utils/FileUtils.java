@@ -12,10 +12,11 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
+import eccezioni.DeleteException;
 import eccezioni.UploadException;
 
-public class UploadBean {
-	
+
+public class FileUtils {
 	private final String resourcesPath = "/resources/images/";
 	
 	/**
@@ -49,6 +50,21 @@ public class UploadBean {
 	}
 	
 	/**
+	 * Permette di cancellare un file dal server
+	 * @param nome Il nome del file
+	 * @param resourceType La directory nella quale cercare il file
+	 * @throws DeleteException Quando si verifica un errore durante l'eliminazione del file
+	 */
+	public void deleteFile (String nome, String resourceType) throws DeleteException {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();	
+	    
+    	String absoluteDiskPath = externalContext.getRealPath(resourcesPath + resourceType + "/" + nome);		
+    	File f = new File(absoluteDiskPath);
+    	if (!f.delete())
+    		throw new DeleteException();
+	}
+	
+	/**
 	 * Restituisce il nome del file caricato
 	 * @param part Il file del quale si vuole conoscere il nome
 	 * @return Il nome del file (comprensivo di estensione)
@@ -62,5 +78,4 @@ public class UploadBean {
 		}  
 		return null;  
 	} 
-	
 }
