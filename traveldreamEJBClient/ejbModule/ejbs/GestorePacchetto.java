@@ -65,9 +65,10 @@ public interface GestorePacchetto {
 	
 	/**
 	 * Mostra l'elenco dei pacchetti degli utenti da confermare e acquistati
+	 * @param tipo La tipologia di pacchetto da cercare
 	 * @return L'elenco dei pacchetti
 	 */
-	List<PacchettoDTO> elencoPacchettiUtenti ();
+	List<PacchettoDTO> elencoPacchettiUtenti (TipoPacchetto tipo);
 	
 	/**
 	 * Permette la creazione di un nuovo pacchetto personalizzato

@@ -131,14 +131,20 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 	
 	@Override
-	public List<PacchettoDTO> elencoPacchettiUtenti () {
-		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiUtenti", Pacchetti.class);
-		q.setParameter("tipo", TipoPacchetto.DACONFERMARE);
-		TypedQuery<Pacchetti> q1 = em.createNamedQuery("Pacchetti.getPacchettiUtenti", Pacchetti.class);
-		q1.setParameter("tipo", TipoPacchetto.ACQUISTATO);		
+	public List<PacchettoDTO> elencoPacchettiUtenti (TipoPacchetto tipo) {
 		List<Pacchetti> pacchetti = new ArrayList<Pacchetti>();
-		pacchetti.addAll(q.getResultList());
-		pacchetti.addAll(q1.getResultList());
+		if (tipo == null) {
+			TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiUtenti", Pacchetti.class);
+			q.setParameter("tipo", TipoPacchetto.DACONFERMARE);
+			TypedQuery<Pacchetti> q1 = em.createNamedQuery("Pacchetti.getPacchettiUtenti", Pacchetti.class);
+			q1.setParameter("tipo", TipoPacchetto.ACQUISTATO);
+			pacchetti.addAll(q.getResultList());
+			pacchetti.addAll(q1.getResultList());
+		} else {
+			TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiUtenti", Pacchetti.class);
+			q.setParameter("tipo", tipo);
+			pacchetti.addAll(q.getResultList());
+		}		
 		List<PacchettoDTO> pacchettiDTO = new ArrayList<PacchettoDTO>();
 		for (Pacchetti p : pacchetti) {
 			pacchettiDTO.add(this.convertiInDTO(p));

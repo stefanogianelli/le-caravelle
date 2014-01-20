@@ -41,7 +41,7 @@
 				<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />	
 				<p>
 					<b>
-						<h:link value="#{h.nome}" outcome="dettagliHotel">
+						<h:link value="#{h.nome.length() > 18 ? h.nome.subSequence(0,15).toString().concat('...') : h.nome}" outcome="dettagliHotel">
 							<f:param name="idHotel" value="#{h.id}" />
 						</h:link>						
 					</b>
@@ -52,7 +52,7 @@
 			
 			<div class="descr">
 				<h2>
-					<h:link value="#{h.nome}" outcome="dettagliHotel">
+					<h:link value="#{h.nome.length() > 23 ? h.nome.subSequence(0,20).toString().concat('...') : h.nome}" outcome="dettagliHotel">
 						<f:param name="idHotel" value="#{h.id}" />
 					</h:link>	
 				</h2>
