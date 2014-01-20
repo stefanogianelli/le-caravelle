@@ -26,7 +26,7 @@
 		</p>
 		
 		<p>
-			<h:outputText styleClass="name-input" value="Prezzo: " />
+			<h:outputText styleClass="name-input" value="Prezzo (al giorno): " />
 			<h:inputText styleClass="text-input" value="#{pacchettoPredefinito.pacchetto.prezzo}" required="true" requiredMessage="Inserire un prezzo" validatorMessage="Inserire un prezzo positivo" converterMessage="Il prezzo deve essere numerico">
 				<f:validateDoubleRange minimum="1.00" />
 			</h:inputText>

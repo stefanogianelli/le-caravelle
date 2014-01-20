@@ -34,7 +34,7 @@
 	
 	<!-- Blocco con il pulsante per l'eliminazione del pacchetot -->
 	<div class="bloccoModifica">
-		<p:commandButton value="Elimina pacchetto" styleClass="pacc-button" onclick="PF('eliminaPacchetto').show()" />
+		<p:commandButton value="Elimina pacchetto" styleClass="search-button" onclick="PF('eliminaPacchetto').show()" />
 		
 		<!-- Dialog di conferma eliminazione pacchetto -->
 		<p:dialog header="Elimina pacchetto" widgetVar="eliminaPacchetto" resizable="false">
@@ -216,9 +216,11 @@
 			</div>
 		</div>
 	</ui:repeat>
-	<p><h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
+	<div class="newColl">
+	<h:link value="Aggiungi collegamento" outcome="aggiuntaCollegamento">
 		<f:param name="idPacchetto" value="#{id.value}" />
-	</h:link></p>
+	</h:link>
+	</div>
 </h:panelGroup>
 
 <script type="text/javascript">
