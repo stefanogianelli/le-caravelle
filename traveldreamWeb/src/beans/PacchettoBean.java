@@ -377,8 +377,6 @@ public class PacchettoBean {
 			JsfUtil.infoMessage("Nome modificato");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");
-		} catch (InsertException e) {
-			JsfUtil.errorMessage("Nome già utilizzato");
 		}
 	}
 	

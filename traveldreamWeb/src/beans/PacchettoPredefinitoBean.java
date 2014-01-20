@@ -202,9 +202,7 @@ public class PacchettoPredefinitoBean {
 							JsfUtil.errorMessage("Hotel inesistente");
 						} catch (CittaInesistenteException w) {
 							JsfUtil.errorMessage("Città inesistente");
-						} catch (InsertException e) {
-							JsfUtil.errorMessage("Nome già usato");
-						}		
+						}	
 					} else
 						JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza");
 				} else
@@ -241,8 +239,6 @@ public class PacchettoPredefinitoBean {
 			JsfUtil.infoMessage("Nome modificato");
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");
-		} catch (InsertException e) {
-			JsfUtil.errorMessage("Nome già usato");
 		}
 	}
 	
