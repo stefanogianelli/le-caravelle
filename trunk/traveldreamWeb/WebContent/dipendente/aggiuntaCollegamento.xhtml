@@ -40,9 +40,7 @@
 					</div>
 					
 					<div class="pulsantiVolo">
-						<p>
-							<h:selectBooleanCheckbox value="#{c.selezionato}"/>
-						</p>
+							<h:selectBooleanCheckbox styleClass="prova-button" value="#{c.selezionato}"/>
 					
 						<p>
 							<h:commandLink value="Scegli" action="#{pacchettoPredefinito.aggiuntaCollegamento(idPacchetto,c)}" styleClass="detail-button" />			
@@ -69,7 +67,9 @@
 				</div>
 			</div>
 		</ui:repeat>
-		<h:commandButton value="Aggiungi multipi" action="#{pacchettoPredefinito.aggiuntaCollegamenti(idPacchetto, collegamento.elenco)}" />
+		<div class="bloccoButtonBianco">
+		<h:commandButton styleClass="search-button" value="Aggiungi collegamenti" action="#{pacchettoPredefinito.aggiuntaCollegamenti(idPacchetto, collegamento.elenco)}" />
+		</div>
 	</h:form>
 
 </ui:define>
