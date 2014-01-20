@@ -19,7 +19,9 @@
 		<h:selectOneMenu styleClass="menu-input" value="#{home.citta}">
 			<f:selectItems value="#{citta.nomiCitta}" />
 		</h:selectOneMenu><br />
-		<h:commandButton styleClass="button" value="Crea" action="#{home.creaPacchetto()}" />
+		<div class="button">
+		<h:commandButton styleClass="search-button" value="Crea" action="#{home.creaPacchetto()}" />
+		</div>
 	</div>
 	
 	<div class="blocco">
@@ -29,31 +31,13 @@
 		 <h:selectOneMenu styleClass="menu-input" value="#{home.cittaPred}">
 			<f:selectItems value="#{citta.nomiCitta}" />
 		</h:selectOneMenu><br />
-		<h:commandButton styleClass="button" value="Cerca" action="#{home.cercaPacchettoPred()}" />
+		<div class="button">
+		<h:commandButton styleClass="search-button" value="Cerca" action="#{home.cercaPacchettoPred()}" />
+		</div>
 	</div>
  
  	<div class="bloccoBianco">
         <h1><a href="/traveldreamWeb/nostriConsigli.xhtml">I nostri consigli</a></h1>
-		<div class="pacchetto">
-		<h:link outcome="dettagliPacchettoPred.xhtml">
-		     <h:graphicImage library="images" name="cuba.jpg" width="288" height="174" />
-		</h:link>
-		  <div id="linkPacc">Cuba</div>	 
-		</div>
-
-		<div class="pacchetto">
-		<h:link outcome="dettagliPacchettoPred.xhtml">
-		     <h:graphicImage library="images" name="rodi.jpg" width="288" height="174" />
-		</h:link>
-		  <div id="linkPacc">Rodi</div>	  
-		</div>
-		
-		<div class="pacchetto">
-		<h:link outcome="dettagliPacchettoPred.xhtml">
-		     <h:graphicImage library="images" name="roma.jpg" width="288" height="174" />
-		</h:link>  
-		  <div id="linkPacc">Roma</div>	  
-		</div>
 		
     </div>
  </h:form>   
