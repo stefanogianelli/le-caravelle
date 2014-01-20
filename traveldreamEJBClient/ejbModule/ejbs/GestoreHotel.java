@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.DeleteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.HotelInesistenteException;
 
@@ -55,6 +56,7 @@ public interface GestoreHotel {
 	 * Permette l'eliminazione di un hotel dal database
 	 * @param idHotel L'identificativo dell'hotel da eliminare
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
+	 * @throws DeleteException Quando si verifica un errore nell'eliminazione dell'immagine dell'hotel
 	 */
-	void eliminaHotel (int idHotel) throws HotelInesistenteException;
+	void eliminaHotel (int idHotel) throws HotelInesistenteException, DeleteException;
 }

@@ -9,8 +9,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.servlet.http.Part;
 
+import utils.FileUtils;
 import utils.JsfUtil;
-import utils.UploadBean;
 import dtos.CittaDTO;
 import eccezioni.InsertException;
 import eccezioni.UploadException;
@@ -94,8 +94,8 @@ public class CittaBean {
 	public void nuovaCitta () {
 		try {
 			if (getImmagine().getSize() != 0) {
-				UploadBean up = new UploadBean();
-				getCitta().addImmagine(up.upload(getImmagine(), "citta"));
+				FileUtils file = new FileUtils();
+				getCitta().addImmagine(file.upload(getImmagine(), "citta"));
 			}
 			cittaBean.nuovaCitta(getCitta());
 			JsfUtil.infoMessage("Città aggiunta con successo");

@@ -19,7 +19,7 @@
 <h1>Modifica hotel</h1>
 
 <h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{hotel.hotel.id != 0}">
-	<h:form>
+	<h:form enctype="multipart/form-data">
 		<p>
 			<h:outputText tyleClass="name-input" value="Nome hotel: " />
 			<h:inputText styleClass="text-input" value="#{hotel.hotel.nome}" /><br />
@@ -69,7 +69,7 @@
 		
 		<p>
 			<h:outputText styleClass="name-input" value="Immagine: " />
-			<h:inputText styleClass="text-input" value="#{hotel.hotel.immagine}" /><br />
+			<h:inputFile style="margin-left:160px;" value="#{hotel.immagine}" /><br />
 		</p>		
 		
 		<div class="bloccoButton">
