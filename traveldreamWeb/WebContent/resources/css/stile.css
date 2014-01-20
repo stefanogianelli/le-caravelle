@@ -199,10 +199,10 @@ a:hover {
 	margin-bottom:20px;
 }
 .button{
-	height:50px;
-	width:300px;
+	height: 50px;
+	width: 240px;
 	position: absolute;
-	margin:20px auto auto -120px;
+	margin:40px auto auto -90px;
 	left: 50%;
 	font-size:26px;
 	font-family:arial;
@@ -243,8 +243,8 @@ a:hover {
 .detail-button{
 	height:40px;
 	width:120px;
-	margin:20px auto 0 20px;
-	font-size:18px;
+	margin:20px auto 20px 20px;
+	font-size:20px;
 	font-family:arial;
 	text-align:center;
 	color: #003333;
@@ -252,7 +252,7 @@ a:hover {
 .flight-button{
 	height:30px;
 	width:85px;
-	margin:0;
+	margin-left: 20px;
 	font-size:14px;
 	font-family:arial;
 	text-align:center;
@@ -272,7 +272,7 @@ a:hover {
 .edit-button{
 	height:30px;
 	width:85px;
-	margin:20px auto auto 20px;
+	margin:20px 20px auto 20px;
 	font-size:14px;
 	font-family:arial;
 	text-align:center;
@@ -308,14 +308,14 @@ select{
 	display: block;
 }
 .access{
-	margin-left: 700px;
+	float: right;
+	margin: 30px 40px 0 0;
 }
 .access a{
-	margin-top: 30px;
 	color: #666666;
 	display:block;
 	text-align: center;
-	float: left;
+	float: right;
 	font-size: 18px;
 	font-weight: bold; 
 	text-decoration: none;
@@ -326,18 +326,19 @@ select{
 .benvenuto{
 	color: #669999;
 	font-size: 18px;
-	margin: 20px 0px 0px 0px;
+	margin-top: 20px;
 	display: block;
-	float: left;
+	float: right;
 }
  .imgHome{
-  margin: 15px 0 0 40px;
+  margin: 10px 0 0 40px;
   height:auto;
   width:auto;
   float:left;
   }
 .imgHome a:hover img{
-
+  height: 33%;
+  width: 33%;
   }
 .menu {
 	background-color: #999999;
@@ -639,10 +640,11 @@ select{
 /*pagine di dettagli*/
 .bloccoDett {
 	background-color: #dcdcdc;
-	height: 1635px;
+	height: auto;
 	width: 100%;
 	border-top:1px solid #dcdcdc;
 	border-bottom:5px solid white;
+	padding-bottom: 30px;
 }
 .bloccoDett img{
 	border: 1px solid #003333;
@@ -653,7 +655,7 @@ select{
 .tabella table{
 	width:940px;
 	text-align:center;
-	margin: 40px auto 0 40px;
+	margin: 60px auto 0 40px;
 	border-collapse:collapse;
 }
 .tabella td{
@@ -670,8 +672,6 @@ select{
 	background-color: #dcdcdc;
 	height: 300px;
 	width: 100%;
-	border-top:1px solid white;
-	border:1px solid transparent;
 }
 .bloccoPacc img{
 	float: left;
@@ -682,7 +682,6 @@ select{
 	height: 200px;
 	width: 100%;
 	border-top:1px solid white;
-	border:1px solid transparent;
 }
 .bloccoPaccVolo p{
 	float:left;
@@ -692,7 +691,6 @@ select{
 	height: auto;
 	width: 100%;
 	border-top:1px solid white;
-	border:1px solid transparent;
 }
 .hotelPacc
   {
@@ -718,7 +716,7 @@ select{
 }
 .bloccoRicerca {
 	background-color: #669999;
-	height: 90px;
+	height: 70px;
 	width: 100%;
 	border-top:1px solid #669999;
 	border-bottom:5px solid white;
@@ -739,7 +737,7 @@ select{
 }
 .bloccoModifica a{
 	color:white;
-	font-size: 18px;
+	font-size: 20px;
 	margin-top:10px;
 	text-decoration: none;
 	display:block;
@@ -760,7 +758,7 @@ select{
 	font-size: 26px;
 	text-align: left;
 	color:black;
-	margin: 10px 40px 0 40px;
+	margin: 10px 40px 20px 40px;
 	border:1px solid transparent;
 }
 .bloccoCitta {
