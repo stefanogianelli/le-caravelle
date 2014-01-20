@@ -33,8 +33,8 @@
 		<h:panelGroup>		
 			<h:form>
    			 	<h:outputText value="Vuoi davvero eliminare l'hotel?" /><br />	 
-       			<p:commandButton value="Sì" action="#{hotel.eliminaHotel(id.value)}" oncomplete="PF('eliminaHotel').hide();" />
-       			<p:commandButton value="No" oncomplete="PF('eliminaHotel').hide();" />
+       			<p:commandButton styleClass="si-button" value="Sì" action="#{hotel.eliminaHotel(id.value)}" oncomplete="PF('eliminaHotel').hide();" />
+       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaHotel').hide();" />
      		</h:form>
      	</h:panelGroup>
 	</p:dialog>	
