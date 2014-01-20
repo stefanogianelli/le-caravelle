@@ -43,17 +43,18 @@ public class ProfiloBean {
 	}
 	
 	@PostConstruct
-	public void init () {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		
-		if (request.isUserInRole("UTENTE")) {
-			profilo = profiloBean.getUtenteCorrente();
-			if (profilo.getPersona().getNome() == null)
-				this.noUserData = true;
-		} else
-			profilo = new UtenteDTO();
+	public void setUp () {
+		profilo = new UtenteDTO();
 	}	
+	
+	/**
+	 * Carica il profilo dell'utente corrente
+	 */
+	public void caricaProfilo () {
+		profilo = profiloBean.getUtenteCorrente();
+		if (profilo.getPersona().getNome() == null)
+			this.noUserData = true;	
+	}
 	
 	/**
 	 * Restituisce il profilo dell'utente che ne fa richiesta
@@ -135,7 +136,6 @@ public class ProfiloBean {
 	 * Consente la modifica dei dati personali di un utente
 	 */
 	public void modificaDatiPersonali () {
-		System.out.println(getProfilo().getPersona().getDocumentoIdentita());
 		profiloBean.modificaDatiPersonali(getProfilo());
 		JsfUtil.infoMessage("Dati modificati");
 	}
@@ -147,7 +147,6 @@ public class ProfiloBean {
 	 * @param controlloPassword La password di controllo
 	 */
 	public void modificaPassword (String vecchiaPassword, String nuovaPassword, String controlloPassword) {
-		System.out.println(nuovaPassword + " - " + controlloPassword);
 		if (nuovaPassword.equals(controlloPassword)) {
 			try {
 				profiloBean.modificaPassword(vecchiaPassword, nuovaPassword);
