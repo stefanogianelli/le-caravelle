@@ -69,9 +69,8 @@ public interface GestorePacchetto {
 	 * Modifica il nome di un pacchetto
 	 * @param pacchetto Il pacchetto da modificare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws InsertException Quando il nome del pacchetto esiste già nel database
 	 */
-	void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException, InsertException;
+	void modificaNomePacchetto (PacchettoDTO pacchetto) throws PacchettoInesistenteException;
 	
 	/**
 	 * Modifica la città di partenza del pacchetto

@@ -47,9 +47,8 @@ public interface GestorePacchettoPredefinito {
 	 * @return L'identificativo del pacchetto creato
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
-	 * @throws InsertException Quando il nome del pacchetto è già stato utilizzato
 	 */
-	int creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException;
+	int creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException;
 	
 	/**
 	 * Permette di aggiungere una città di partenza nel pacchetto
@@ -144,9 +143,8 @@ public interface GestorePacchettoPredefinito {
 	 * Permette la modifica del nome del pacchetto
 	 * @param pacchetto Il pacchetto da salvare
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws InsertException Quando il nome del pacchetto è già stato utilizzato
 	 */
-	void modificaNomePacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException, InsertException;
+	void modificaNomePacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException;
 	
 	/**
 	 * Permette la modifica del prezzo del pacchetto
