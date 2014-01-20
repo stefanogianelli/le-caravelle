@@ -15,10 +15,10 @@
 	<h1>Nuova città</h1>
 	<br />
 
-	<h:form>
+	<h:form enctype="multipart/form-data">
 		<p>
 			<h:outputText styleClass="name-input" value="Nome città: " />
-			<h:inputText styleClass="text-input" />
+			<h:inputText styleClass="text-input" value="#{citta.citta.nome}" />
 			<br />
 		</p>
 		
@@ -26,14 +26,14 @@
 
 		<p>
 			<h:outputText styleClass="name-input" value="Regione: " />
-			<h:inputText styleClass="text-input"  />
+			<h:inputText styleClass="text-input" value="#{citta.citta.regione}" />
 			<br />
 		</p>
 		<br />
 		
 		<p>
 			<h:outputText styleClass="name-input" value="Nazione: " />
-			<h:inputText styleClass="text-input"  />
+			<h:inputText styleClass="text-input" value="#{citta.citta.nazione}" />
 			<br />
 		</p>
 		
@@ -41,7 +41,7 @@
 		
 		<p>
 			<h:outputText styleClass="name-input" value="Latitudine: " />
-			<h:inputText styleClass="text-input" />
+			<h:inputText styleClass="text-input" value="#{citta.citta.latitudine}" />
 			<br />
 		</p>
 		
@@ -49,15 +49,20 @@
 		
 		<p>
 			<h:outputText styleClass="name-input" value="Longitudine: " />
-			<h:inputText styleClass="text-input" />
+			<h:inputText styleClass="text-input" value="#{citta.citta.longitudine}" />
 			<br />
 		</p>
 		
-		<br />
-			
+		<p>
+			<h:outputText styleClass="name-input" value="Immagine: " />
+			<h:inputFile style="margin-left:160px;" value="#{citta.immagine}" />
+			<br />				  
+		</p>			
+		
+		<br />			
 
 		<div class="bloccoButton">
-			<h:commandButton styleClass="button" value="Salva" />
+			<h:commandButton styleClass="button" value="Salva" action="#{citta.nuovaCitta()}" />
 		</div>
 	</h:form>
 	

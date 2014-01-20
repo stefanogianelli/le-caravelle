@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 
 /**
@@ -18,9 +21,11 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome", "nazione"})})
 @NamedQueries ({
     @NamedQuery(name = "Citta.elenco", query = "SELECT c FROM Citta c"),
-    @NamedQuery(name = "Citta.getCitta", query = "SELECT c FROM Citta c WHERE c.nome = :nome")
+    @NamedQuery(name = "Citta.getCitta", query = "SELECT c FROM Citta c WHERE c.nome = :nome"),
+    @NamedQuery(name = "Citta.getCittaDaNomeENazione", query = "SELECT c FROM Citta c WHERE c.nome = :nome AND c.nazione = :nazione")
 })
 public class Citta implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -42,7 +47,7 @@ public class Citta implements Serializable {
 	private String regione;
 
 	//bi-directional many-to-one association to ImmaginiCitta
-	@OneToMany(mappedBy="citta")
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="citta")
 	private List<ImmaginiCitta> immagini;
 
 	public int getId() {
@@ -110,7 +115,6 @@ public class Citta implements Serializable {
 
 	public ImmaginiCitta removeImmagini(ImmaginiCitta immagini) {
 		getImmagini().remove(immagini);
-		immagini.setCitta(null);
 
 		return immagini;
 	}
