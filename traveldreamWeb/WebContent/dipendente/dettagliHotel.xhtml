@@ -21,8 +21,8 @@
 <h:panelGroup rendered="#{hotel.hotel.id != 0}">
 	<div class="bloccoModifica">
 		<h:form>
-			<h:commandLink value="Elimina" onclick="PF('eliminaHotel').show(); return false;" />
-			<h:link value="Modifica"  outcome="modificaHotel">
+			<h:commandLink value="Elimina" onclick="PF('eliminaHotel').show(); return false;" disabled="#{not hotel.attivo}" />
+			<h:link value="Modifica"  outcome="modificaHotel" disabled="#{not hotel.attivo}">
 				<f:param name="idHotel" value="#{hotel.hotel.id}" />
 			</h:link>
 		</h:form>

@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS `traveldreamdb`.`immagini_citta` ;
 CREATE TABLE IF NOT EXISTS `traveldreamdb`.`immagini_citta` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `idCitta` INT NOT NULL,
-  `immagine` VARCHAR(45) NOT NULL,  
+  `immagine` VARCHAR(255) NOT NULL,  
   PRIMARY KEY (`id`),
   INDEX `fk_immagini_citta_idx` (`idCitta` ASC),
   CONSTRAINT `fk_immagini_citta`
@@ -105,7 +105,8 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`hotel` (
   `email` VARCHAR(45) NOT NULL,
   `prezzo` DOUBLE NOT NULL,
   `citta` INT NOT NULL,
-  `immagine` VARCHAR(45),
+  `immagine` VARCHAR(255),
+  `attivo` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE (`nome`, `citta`),
   INDEX `fk_Hotel_Citta 1_idx` (`citta` ASC),

@@ -1,7 +1,17 @@
 package entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 
 /**
@@ -10,9 +20,9 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries ({
-	@NamedQuery(name = "Hotel.elenco", query = "SELECT h FROM Hotel h"),
+	@NamedQuery(name = "Hotel.elenco", query = "SELECT h FROM Hotel h WHERE h.attivo = 1"),
 	@NamedQuery(name = "Hotel.getHotel", query = "SELECT h FROM Hotel h WHERE h.nome = :nome AND h.citta.nome = :citta"),
-	@NamedQuery(name = "Hotel.elencoPerCitta", query = "SELECT h FROM Hotel h WHERE h.citta.nome = :citta")
+	@NamedQuery(name = "Hotel.elencoPerCitta", query = "SELECT h FROM Hotel h WHERE h.citta.nome = :citta AND h.attivo = 1")
 })	
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome", "citta"})})
 public class Hotel implements Serializable {
@@ -41,6 +51,8 @@ public class Hotel implements Serializable {
 	private Citta citta;
 	
 	private String immagine;
+	
+	private int attivo;
 
 	public int getId() {
 		return this.id;
@@ -120,6 +132,14 @@ public class Hotel implements Serializable {
 
 	public void setImmagine(String immagine) {
 		this.immagine = immagine;
+	}
+
+	public int getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(int attivo) {
+		this.attivo = attivo;
 	}
 
 }

@@ -31,7 +31,8 @@ import javax.persistence.UniqueConstraint;
 	@NamedQuery(name="PacchettiPredefiniti.elenco", query="SELECT p FROM PacchettiPredefiniti p"),
 	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaId", query="SELECT p FROM PacchettiPredefiniti p WHERE p.id = :id"),
 	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaNome", query="SELECT p FROM PacchettiPredefiniti p WHERE p.nome = :nome"),
-	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaCitta", query="SELECT p FROM PacchettiPredefiniti p WHERE p.hotel.citta.nome = :citta")
+	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaCitta", query="SELECT p FROM PacchettiPredefiniti p WHERE p.hotel.citta.nome = :citta"),
+	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaHotel", query="SELECT p FROM PacchettiPredefiniti p WHERE p.hotel.id = :hotel")
 })
 public class PacchettiPredefiniti implements Serializable {
 	private static final long serialVersionUID = 1L;
