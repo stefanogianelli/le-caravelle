@@ -17,8 +17,6 @@
 		<f:event listener="#{pacchetto.getDestinazione(idDestinazione)}" type="preRenderView" />
 		<f:event listener="#{hotel.cercaHotel(pacchetto.destinazione.citta.nome)}" type="preRenderView" />
 	</f:metadata>
-	
-	<p:messages showDetail="false" autoUpdate="true" />
 
 	<h:form rendered="#{pacchetto.destinazione.id != 0}">
 		<div class="blocco">

@@ -15,8 +15,6 @@
 		<f:viewParam name="idPacchetto" binding="#{id}" />
 		<f:event listener="#{pacchetto.getPacchetto(id.value)}" type="preRenderView" />
 	</f:metadata>
-	
-	<p:messages showDetail="false" autoUpdate="true" />
 
 	<h:form rendered="#{pacchetto.pacchetto.id != 0}">
 		<div class="blocco">

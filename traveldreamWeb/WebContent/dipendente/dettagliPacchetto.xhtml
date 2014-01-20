@@ -16,8 +16,6 @@
 	<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
 </f:metadata>
 
-<p:messages showDetail="false" autoUpdate="true" />
-
 <h:panelGroup rendered="#{pacchettoPredefinito.pacchetto.id != 0}">
 	<h1 id="nomePacchetto" style="display: block;">
 		#{pacchettoPredefinito.pacchetto.nome}
