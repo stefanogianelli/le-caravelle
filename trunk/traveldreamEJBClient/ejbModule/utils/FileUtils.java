@@ -12,7 +12,6 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
-import eccezioni.DeleteException;
 import eccezioni.UploadException;
 
 
@@ -53,15 +52,13 @@ public class FileUtils {
 	 * Permette di cancellare un file dal server
 	 * @param nome Il nome del file
 	 * @param resourceType La directory nella quale cercare il file
-	 * @throws DeleteException Quando si verifica un errore durante l'eliminazione del file
 	 */
-	public void deleteFile (String nome, String resourceType) throws DeleteException {
+	public void deleteFile (String nome, String resourceType) {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();	
 	    
     	String absoluteDiskPath = externalContext.getRealPath(resourcesPath + resourceType + "/" + nome);		
     	File f = new File(absoluteDiskPath);
-    	if (!f.delete())
-    		throw new DeleteException();
+    	f.delete();
 	}
 	
 	/**

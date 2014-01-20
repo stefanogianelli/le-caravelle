@@ -25,7 +25,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQueries ({
-	@NamedQuery(name="Destinazioni.elenco", query="SELECT d FROM Destinazioni d")
+	@NamedQuery(name="Destinazioni.elenco", query="SELECT d FROM Destinazioni d"),
+	@NamedQuery(name="Destinazioni.getDestinazioneDaHotel", query="SELECT d FROM Destinazioni d WHERE d.hotel.id = :hotel")
 })
 public class Destinazioni implements Serializable, Comparable<Destinazioni> {
 	private static final long serialVersionUID = 1L;

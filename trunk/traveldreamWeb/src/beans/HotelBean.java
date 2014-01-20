@@ -13,7 +13,6 @@ import utils.FileUtils;
 import utils.JsfUtil;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
-import eccezioni.DeleteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.HotelInesistenteException;
 import eccezioni.UploadException;
@@ -160,9 +159,18 @@ public class HotelBean {
 			return "elencoHotel?faces-redirect=true";
 		} catch (HotelInesistenteException e) {
 			JsfUtil.errorMessage("Hotel sconosciuta");
-		} catch (DeleteException e) {
-			JsfUtil.errorMessage("Errore nell'eliminazione dell'hotel");
 		}
 		return null;
+	}
+	
+	/**
+	 * Verifica se un hotel è attivo
+	 * @return true se l'hotel è attivo, false altrimenti
+	 */
+	public boolean isAttivo () {
+		if (getHotel().getAttivo() == 1)
+			return true;
+		else
+			return false;
 	}
 }

@@ -41,6 +41,8 @@ public class HotelDTO implements Serializable {
 	
 	private String immagine;
 	
+	private int attivo;
+	
 	public HotelDTO () {
 		citta = new CittaDTO();
 		immagine = new String();
@@ -124,5 +126,13 @@ public class HotelDTO implements Serializable {
 
 	public void setImmagine(String immagine) {
 		this.immagine = immagine;
+	}
+
+	public int getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(int attivo) {
+		this.attivo = attivo;
 	}
 }

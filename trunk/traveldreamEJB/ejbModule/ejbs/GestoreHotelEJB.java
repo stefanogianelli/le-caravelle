@@ -15,10 +15,11 @@ import javax.persistence.TypedQuery;
 import utils.FileUtils;
 import dtos.HotelDTO;
 import eccezioni.CittaInesistenteException;
-import eccezioni.DeleteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.HotelInesistenteException;
+import entities.Destinazioni;
 import entities.Hotel;
+import entities.PacchettiPredefiniti;
 
 /**
  * Session Bean implementation class GestoreHotelEJB
@@ -82,6 +83,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 			entity.setImmagine(hotel.getImmagine());
 		else
 			entity.setImmagine("NULL");
+		entity.setAttivo(1);
 		
 		em.persist(entity);
 		em.flush();
@@ -120,12 +122,22 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	}
 
 	@Override
-	public void eliminaHotel(int idHotel) throws HotelInesistenteException, DeleteException {
-		FileUtils file = new FileUtils();
-		Hotel hotel = this.convertiInEntita(idHotel);
-		if (!hotel.getImmagine().equals("NULL"))
-			file.deleteFile(hotel.getImmagine(), "hotel");
-		em.remove(hotel);
+	public void eliminaHotel(int idHotel) throws HotelInesistenteException {
+		Hotel hotel = this.convertiInEntita(idHotel);	
+		//Controllo che l'hotel non sia inserito in almeno un pacchetto
+		TypedQuery<Destinazioni> q = em.createNamedQuery("Destinazioni.getDestinazioneDaHotel", Destinazioni.class);
+		q.setParameter("hotel", idHotel);
+		TypedQuery<PacchettiPredefiniti> q1 = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaHotel", PacchettiPredefiniti.class);
+		q.setParameter("hotel", idHotel);
+		if (q.getResultList().isEmpty() && q1.getResultList().isEmpty()) {
+			FileUtils file = new FileUtils();
+			if (!hotel.getImmagine().equals("NULL"))
+				file.deleteFile(hotel.getImmagine(), "hotel");
+			em.remove(hotel);
+		} else {
+			hotel.setAttivo(0);
+			em.merge(hotel);
+		}
 	}
 	
 	@Override
@@ -165,6 +177,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 		dto.setWebsite(hotel.getWebsite());
 		dto.setCitta(citta.convertiInDTO(hotel.getCitta()));
 		dto.setImmagine(hotel.getImmagine());
+		dto.setAttivo(hotel.getAttivo());
 		
 		return dto;
 	}
