@@ -15,7 +15,7 @@
 
 <p:messages showDetail="false" autoUpdate="true" />
 
-<h1>Elenco pacchetti degli utenti</h1>
+<h1>Elenco pacchetti utenti</h1>
 
 <h:form>
 	<div class="bloccoRicerca">
@@ -54,7 +54,7 @@
 				#{p.prezzo} €
 				</div>
 				<br></br>
-				<h3>#{p.tipoPacchetto == "ACQUISTATO" ? "Confermato" : "Da confermare"}</h3>
+				<div id="conf">#{p.tipoPacchetto == "ACQUISTATO" ? "Confermato" : "Da confermare"}</div>
 			</div>
 			
 			<div class="pulsanti">

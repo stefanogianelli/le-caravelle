@@ -21,7 +21,7 @@
 <h:panelGroup rendered="#{pacchettoPredefinito.pacchetto.id != 0}">
 	<h1 id="nomePacchetto" style="display: block;">
 		#{pacchettoPredefinito.pacchetto.nome}
-		<h:commandButton styleClass="matita" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
+		<h:commandButton title="Click per cambiare il nome" styleClass="matita" onclick="toggle('nomePacchetto'); toggle('modificaNome'); return false;" />
 	</h1>
 	
 	<h1 id="modificaNome" style="display: none;">
@@ -52,7 +52,7 @@
 		<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(id.value)}" width="288" height="174" />
 		
 		<div class="descr">
-			<h:link value="Modifica" outcome="modificaPacchetto">
+			<h:link value="Modifica" style="margin-top:40px; font-size:20px" outcome="modificaPacchetto">
 				<f:param name="idPacchetto" value="#{id.value}" />
 			</h:link>
 			<p>Città di partenza</p>

@@ -879,6 +879,12 @@ select{
 	margin: 0 40px;
 }
 
+.prova-button{
+	height:25px;
+	width:25px;
+	margin:10px auto 0 20px;
+}
+
 /* Primefaces override */
 
 .tabella .ui-inplace-content {
@@ -912,4 +918,23 @@ select{
 	margin-left: 35px;
 	font-size: 20px;
 	font-weight: bold;
+}
+
+#conf{ 
+	font-size: 30px;
+	text-align: left;
+	color:#FF3333;
+	border: 1px solid transparent;
+	margin: 40px 0 0 0;
+}
+.bloccoButtonBianco {
+	background-color: white;
+	height: 80px;
+	display:block;
+	float:none;
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	margin: 0 40px;
+	border:1px solid transparent;
 }
