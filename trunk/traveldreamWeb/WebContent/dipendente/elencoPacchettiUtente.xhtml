@@ -21,6 +21,12 @@
 	<div class="bloccoRicerca">
 		<p>
 			<h:outputText styleClass="name-input" value="Tipologia:" />
+			<h:selectOneMenu styleClass="menu-input" value="#{pacchettiUtente.tipo}">
+				<f:selectItem itemLabel="Da confermare" itemValue="DACONFERMARE" />
+				<f:selectItem itemLabel="Confermato" itemValue="ACQUISTATO" />
+			</h:selectOneMenu>
+			<h:commandButton value="Tutti" styleClass="flight-button" action="#{pacchettiUtente.elencoPacchettiDaConfermare(true)}" />
+			<h:commandButton value="Cerca" styleClass="flight-button" action="#{pacchettiUtente.cercaPacchetti()}" update="elenco" />
 		</p>
 	</div>
 </h:form>
@@ -33,7 +39,7 @@
 				 	<f:param name="idPacchetto" value="#{p.id}" />
 				 	<h:graphicImage library="images/citta" name="#{pacchettiUtente.getImmagine(p.id)}" width="288" height="174" />
 				 </h:link>
-				 <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,11).toString().concat('...') : p.nome}</div> 
+				 <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,10).toString().concat('...') : p.nome}</div> 
 			</div>
 				
 			<div class="descr">

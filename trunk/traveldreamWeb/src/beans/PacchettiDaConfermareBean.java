@@ -27,6 +27,7 @@ public class PacchettiDaConfermareBean {
 	private PacchettoDTO pacchetto;
 	private PaginatorBean paginator;
 	private List<PacchettoDTO> elenco;
+	private TipoPacchetto tipo;
 	
 	@PostConstruct
 	public void setUp () {
@@ -53,6 +54,14 @@ public class PacchettiDaConfermareBean {
 		return paginator;
 	}
 	
+	public TipoPacchetto getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoPacchetto tipo) {
+		this.tipo = tipo;
+	}
+
 	/**
 	 * Cerca il pacchetto corrispondente all'identificativo
 	 * @param id L'identificativo del pacchetto
@@ -71,12 +80,23 @@ public class PacchettiDaConfermareBean {
 	 */
 	public void elencoPacchettiDaConfermare (boolean force) {
 		if (paginator == null || force == true) {
-			getElenco().addAll(pacchettoBean.elencoPacchettiUtenti());
+			getElenco().addAll(pacchettoBean.elencoPacchettiUtenti(null));
 			if (!getElenco().isEmpty())
 				paginator = new PaginatorBean(getElenco());
 			else
 				JsfUtil.infoMessage("Nessun pacchetto da visualizzare");
 		}
+	}
+	
+	/**
+	 * Ricerca i pacchetti di una particolare tipologia
+	 */
+	public void cercaPacchetti () {
+		List<PacchettoDTO> lista = pacchettoBean.elencoPacchettiUtenti(getTipo());
+		if (lista.isEmpty())
+			JsfUtil.infoMessage("Nessun risultato");
+		else
+			paginator = new PaginatorBean (lista);
 	}
 	
 	/**
