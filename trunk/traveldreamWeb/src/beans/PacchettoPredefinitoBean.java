@@ -37,6 +37,10 @@ public class PacchettoPredefinitoBean {
 	private PaginatorBean paginator;
 	private String citta;
 	
+	public PacchettoPredefinitoBean () {
+		pacchetto = new PacchettoPredefinitoDTO();
+	}
+	
 	@PostConstruct
 	public void setUp () {
 		elenco = new ArrayList<PacchettoPredefinitoDTO>();
