@@ -2,8 +2,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
-	</ui:composition>
+<ui:composition template="/template.xhtml">
+
+<ui:define name="title">I nostri consigli</ui:define>
+
+<ui:define name="content">
+
+<p:messages showDetail="false" autoUpdate="true" />
+
+<h1>I nostri consigli</h1>
+
+<h:form id="elenco">
+	<ui:repeat var="p" value="#{pacchettoPredefinito.paginator.model}" varStatus="status">
+		<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
+			<div class="pacchetto">
+				 <h:link outcome="dettagliPacchettoPred">
+				 	<f:param name="idPacchetto" value="#{p.id}" />
+				 	<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(p.id)}" width="288" height="174" />
+				 </h:link>
+				 <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,10).toString().concat('...') : p.nome}</div> 
+			</div>
+				
+			<div class="descr">
+				<h2>
+					<h:link outcome="dettagliPacchettoPred">
+						<f:param name="idPacchetto" value="#{p.id}" />	
+						#{p.nome.length() > 25 ? p.nome.subSequence(0,26).toString().concat('...') : p.nome}
+					</h:link>			
+				</h2>
+				<br></br>
+				<div id="prezzo">
+				#{p.prezzo} €
+				</div>
+			</div>
+		</div>
+	</ui:repeat>
+	</h:form>
+	
+</ui:define>
+</ui:composition>
 </html>

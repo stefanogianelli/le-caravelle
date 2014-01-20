@@ -11,7 +11,7 @@
 
 <ui:define name="content">
 
-<div class="mioBlocco">
+<div class="mioBloccoHome">
 	<h1><a href="elencoPacchetti.xhtml">Elenco pacchetti</a></h1>
 	
 	<h:form>
@@ -20,7 +20,7 @@
 	
 </div>
 
-<div class="mioBloccoBianco">
+<div class="mioBloccoBiancoHome">
 	<h1><a href="elencoHotel.xhtml">Elenco hotel</a></h1>
 	
 	<h:form>
@@ -28,7 +28,7 @@
 	</h:form>
 </div>
 
-<div class="mioBlocco">
+<div class="mioBloccoHome">
 	<h1><a href="elencoCollegamenti.xhtml">Elenco collegamenti</a></h1>
 	
 	<h:form>
@@ -36,11 +36,19 @@
 	</h:form>
 </div>
 
-<div class="mioBloccoBianco">
+<div class="mioBloccoBiancoHome">
 	<h1><a href="elencoEscursioni.xhtml">Elenco escursioni</a></h1>
 	
 	<h:form>
 	<h:commandButton value="Nuova escursione" styleClass="search-button" action="nuovaEscursione?faces-redirect=true" />
+	</h:form>
+</div>
+
+<div class="mioBloccoHome">
+	<h1><a href="elencoCitta.xhtml">Elenco città</a></h1>
+	
+	<h:form>
+	<h:commandButton value="Nuova città" styleClass="search-button" action="nuovaCitta?faces-redirect=true" />
 	</h:form>
 </div>
 

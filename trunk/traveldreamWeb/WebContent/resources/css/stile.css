@@ -202,7 +202,7 @@ a:hover {
 	height: 50px;
 	width: 240px;
 	position: absolute;
-	margin:40px auto auto -90px;
+	margin:30px auto auto -120px;
 	left: 50%;
 	font-size:26px;
 	font-family:arial;
@@ -226,7 +226,7 @@ a:hover {
 	position: absolute;
 	left:50%;
 	margin: 5px 0 auto -120px;
-	font-size:18px;
+	font-size:20px;
 	font-family:arial;
 	text-align:center;
 	color: #003333;
@@ -434,7 +434,7 @@ select{
 	}
 .blocco {
 	background-color: #dcdcdc;
-	height: 405px;
+	height: 420px;
 	width: 100%;
 	border-top:1px solid #dcdcdc;
 	border-bottom:5px solid white;
@@ -442,7 +442,7 @@ select{
 
 .bloccoBianco {
 	background-color: white;
-	height: 405px;
+	height: 420px;
 	width: 100%;
 	border-bottom:5px solid white;
 }
@@ -937,4 +937,18 @@ select{
 	color:black;
 	margin: 0 40px;
 	border:1px solid transparent;
+}
+.mioBloccoHome{
+	background-color: #dcdcdc;
+	height: 215px;
+	width: 100%;
+	border-top:1px solid #dcdcdc;
+	border-bottom:5px solid white;
+}
+
+.mioBloccoBiancoHome{
+	background-color: white;
+	height: 215px;
+	width: 100%;
+	border-top:1px solid white;
 }
