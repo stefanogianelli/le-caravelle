@@ -19,8 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import enums.TipoPacchetto;
 
@@ -30,7 +28,6 @@ import enums.TipoPacchetto;
  * 
  */
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
 @NamedQueries ({
 	@NamedQuery(name="Pacchetti.elenco", query="SELECT p FROM Pacchetti p"),
 	@NamedQuery(name="Pacchetti.getPacchettiPerTipo", query="SELECT p FROM Pacchetti p WHERE p.utente.email = :utente AND p.tipoPacchetto = :tipo"),

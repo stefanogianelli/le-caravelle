@@ -92,36 +92,30 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public int creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException {
-		PacchettiPredefiniti entity = new PacchettiPredefiniti();
+	public int creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException {
+		PacchettiPredefiniti entity = new PacchettiPredefiniti();		
 		
-		//Controllo che il nome del pacchetto non sia già stato utilizzato
-		TypedQuery<PacchettiPredefiniti> q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaNome", PacchettiPredefiniti.class);
-		q.setParameter("nome", pacchetto.getNome());
-		if (q.getResultList().isEmpty()) {		
-			entity.setNome(pacchetto.getNome());
-			entity.setPrezzo(pacchetto.getPrezzo());
-			for (CittaDTO c : pacchetto.getCittaPartenza()) {
-				entity.addCitta(citta.getCitta(c.getNome()));
-			}
-			for (Date d : pacchetto.getDatePartenza()) {
-				DatePartenza data = new DatePartenza();
-				data.setData(d);			
-				entity.addDataPartenza(data);
-			}
-			for (Integer i : pacchetto.getDurate()) {
-				Durate durata = new Durate();
-				durata.setDurata(i);	
-				entity.addDurata(durata);
-			}
-			entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
-			
-			em.persist(entity);
-			em.flush();
-			
-			return entity.getId();
-		} else
-			throw new InsertException();
+		entity.setNome(pacchetto.getNome());
+		entity.setPrezzo(pacchetto.getPrezzo());
+		for (CittaDTO c : pacchetto.getCittaPartenza()) {
+			entity.addCitta(citta.getCitta(c.getNome()));
+		}
+		for (Date d : pacchetto.getDatePartenza()) {
+			DatePartenza data = new DatePartenza();
+			data.setData(d);			
+			entity.addDataPartenza(data);
+		}
+		for (Integer i : pacchetto.getDurate()) {
+			Durate durata = new Durate();
+			durata.setDurata(i);	
+			entity.addDurata(durata);
+		}
+		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
+		
+		em.persist(entity);
+		em.flush();
+		
+		return entity.getId();
 	}
 	
 	@Override
@@ -261,18 +255,12 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public void modificaNomePacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException, InsertException {
+	public void modificaNomePacchetto (PacchettoPredefinitoDTO pacchetto) throws PacchettoInesistenteException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
-		
-		//Controllo che il nome del pacchetto non sia già stato utilizzato
-		TypedQuery<PacchettiPredefiniti> q = em.createNamedQuery("PacchettiPredefiniti.getPacchettoDaNome", PacchettiPredefiniti.class);
-		q.setParameter("nome", pacchetto.getNome());
-		if (q.getResultList().isEmpty()) {	
-			entity.setNome(pacchetto.getNome());
+
+		entity.setNome(pacchetto.getNome());
 			
-			em.merge(entity);
-		} else
-			throw new InsertException();
+		em.merge(entity);
 	}
 	
 	@Override
