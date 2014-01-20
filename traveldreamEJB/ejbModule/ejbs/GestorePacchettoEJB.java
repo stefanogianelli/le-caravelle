@@ -100,6 +100,10 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 			throw new PacchettoInesistenteException();
 	}
 	
+	public PacchettoDTO getPacchettoDipendente (int idPacchetto) throws PacchettoInesistenteException {
+		return this.convertiInDTO(this.convertiInEntita(idPacchetto));
+	}
+	
 	@Override
 	public List<PacchettoDTO> elencoPacchetti(TipoPacchetto tipo) {		
 		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerTipo", Pacchetti.class);
@@ -124,6 +128,22 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 			pacchettiDTO.add(this.convertiInDTO(p));
 		}
 		return pacchettiDTO;
+	}
+	
+	@Override
+	public List<PacchettoDTO> elencoPacchettiUtenti () {
+		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiUtenti", Pacchetti.class);
+		q.setParameter("tipo", TipoPacchetto.DACONFERMARE);
+		TypedQuery<Pacchetti> q1 = em.createNamedQuery("Pacchetti.getPacchettiUtenti", Pacchetti.class);
+		q1.setParameter("tipo", TipoPacchetto.ACQUISTATO);		
+		List<Pacchetti> pacchetti = new ArrayList<Pacchetti>();
+		pacchetti.addAll(q.getResultList());
+		pacchetti.addAll(q1.getResultList());
+		List<PacchettoDTO> pacchettiDTO = new ArrayList<PacchettoDTO>();
+		for (Pacchetti p : pacchetti) {
+			pacchettiDTO.add(this.convertiInDTO(p));
+		}
+		return pacchettiDTO;		
 	}
 	
 	@Override

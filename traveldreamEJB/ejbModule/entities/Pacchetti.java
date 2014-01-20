@@ -31,7 +31,8 @@ import enums.TipoPacchetto;
 @NamedQueries ({
 	@NamedQuery(name="Pacchetti.elenco", query="SELECT p FROM Pacchetti p"),
 	@NamedQuery(name="Pacchetti.getPacchettiPerTipo", query="SELECT p FROM Pacchetti p WHERE p.utente.email = :utente AND p.tipoPacchetto = :tipo"),
-	@NamedQuery(name="Pacchetti.getPacchettiPerNome", query="SELECT p FROM Pacchetti p WHERE p.nome = :nome AND p.utente.email = :utente")
+	@NamedQuery(name="Pacchetti.getPacchettiPerNome", query="SELECT p FROM Pacchetti p WHERE p.nome = :nome AND p.utente.email = :utente"),
+	@NamedQuery(name="Pacchetti.getPacchettiUtenti", query="SELECT p FROM Pacchetti p WHERE p.tipoPacchetto = :tipo")
 })
 public class Pacchetti implements Serializable {
 	private static final long serialVersionUID = 1L;
