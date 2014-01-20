@@ -29,7 +29,7 @@
 	<ui:repeat var="p" value="#{pacchettiUtente.paginator.model}" varStatus="status">
 		<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
 			<div class="pacchetto">
-				 <h:link outcome="dettagliPacchetto">
+				 <h:link outcome="dettagliPacchettoUtente">
 				 	<f:param name="idPacchetto" value="#{p.id}" />
 				 	<h:graphicImage library="images/citta" name="#{pacchettiUtente.getImmagine(p.id)}" width="288" height="174" />
 				 </h:link>
@@ -38,7 +38,7 @@
 				
 			<div class="descr">
 				<h2>
-					<h:link outcome="dettagliPacchetto">
+					<h:link outcome="dettagliPacchettoUtente">
 						<f:param name="idPacchetto" value="#{p.id}" />	
 						#{p.nome.length() > 25 ? p.nome.subSequence(0,26).toString().concat('...') : p.nome}
 					</h:link>			
@@ -48,12 +48,12 @@
 				#{p.prezzo} €
 				</div>
 				<br></br>
-				<h3>#{p.tipoPacchetto}</h3>
+				<h3>#{p.tipoPacchetto == "ACQUISTATO" ? "Confermato" : "Da confermare"}</h3>
 			</div>
 			
 			<div class="pulsanti">
 				<p>
-					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliPacchetto">
+					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliPacchettoUtente">
 						<f:param name="idPacchetto" value="#{p.id}" />
 					</h:link>
 				</p>
@@ -62,13 +62,13 @@
 	</ui:repeat>
 	<div style="text-align: center;">
 		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto;" >
-			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.prev()}" render=":elenco" />
+			<f:ajax execute="@form" listener="#{pacchettiUtente.paginator.prev()}" render=":elenco" />
 		</h:commandButton>
-		<h:outputText value="#{pacchettoPredefinito.paginator.pageIndex} / #{pacchettoPredefinito.paginator.pages}" />
+		<h:outputText value="#{pacchettiUtente.paginator.pageIndex} / #{pacchettiUtente.paginator.pages}" />
 		<h:commandButton styleClass="edit-button" value="Successiva &gt;" style="width: auto;">
-			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.next()}" render=":elenco" />
+			<f:ajax execute="@form" listener="#{pacchettiUtente.paginator.next()}" render=":elenco" />
 		</h:commandButton>
-		<h:inputHidden value="#{pacchettoPredefinito.paginator.pageIndex}"/>
+		<h:inputHidden value="#{pacchettiUtente.paginator.pageIndex}"/>
 	</div>	
 </h:form>
 

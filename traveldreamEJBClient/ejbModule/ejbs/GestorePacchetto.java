@@ -125,6 +125,13 @@ public interface GestorePacchetto {
 	void acquistaPacchetto (int idPacchetto, List<PersonaDTO> partecipanti) throws PacchettoInesistenteException, AcquistoException, MessagingException;
 	
 	/**
+	 * Permette al dipendente di confermare l'acquisto di un pacchetto
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	void confermaPacchetto (int idPacchetto) throws PacchettoInesistenteException;
+	
+	/**
 	 * Permette la condivisione di un pacchetto
 	 * @param pacchetto Il pacchetto da condividere
 	 * @param datiAmico I dati dell'amico

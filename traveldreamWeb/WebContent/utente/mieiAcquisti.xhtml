@@ -12,7 +12,7 @@
 
 <h1>I miei acquisti</h1>
 
-<ui:repeat var="p" value="#{pacchetto.elencoMieiPacchetti()}" varStatus="status">
+<ui:repeat var="p" value="#{pacchetto.elencoPacchettiAcquistati()}" varStatus="status">
 	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">
 		<div class="pacchetto">
 			<h:link outcome="dettagliPacchetto">
