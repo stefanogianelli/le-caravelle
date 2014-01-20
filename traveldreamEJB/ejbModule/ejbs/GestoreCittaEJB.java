@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 
 import dtos.CittaDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.InsertException;
 import entities.Citta;
 import entities.ImmaginiCitta;
 
@@ -44,6 +45,31 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 		} catch (NoResultException e) {
 			throw new CittaInesistenteException();
 		}
+	}
+
+	@Override
+	public void nuovaCitta (CittaDTO citta) throws InsertException {
+		//controllo che la città sia già presente nel database
+		TypedQuery<Citta> q = em.createNamedQuery("Citta.getCittaDaNomeENazione", Citta.class);
+		q.setParameter("nome", citta.getNome());
+		q.setParameter("nazione", citta.getNazione());
+		if (q.getResultList().isEmpty()) {
+			Citta c = new Citta();
+			
+			c.setNome(citta.getNome());
+			c.setRegione(citta.getRegione());
+			c.setNazione(citta.getNazione());
+			c.setLongitudine(citta.getLongitudine());
+			c.setLatitudine(citta.getLatitudine());
+			for(String i : citta.getImmagini()) {
+				ImmaginiCitta imm = new ImmaginiCitta();
+				imm.setImmagine(i);
+				c.addImmagini(imm);
+			}
+			
+			em.persist(c);
+		} else
+			throw new InsertException();
 	}
 	
 	@Override

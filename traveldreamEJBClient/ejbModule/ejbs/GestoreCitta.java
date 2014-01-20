@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import dtos.CittaDTO;
 import eccezioni.CittaInesistenteException;
+import eccezioni.InsertException;
 
 @Local
 public interface GestoreCitta {
@@ -23,4 +24,11 @@ public interface GestoreCitta {
 	 * @throws CittaInesistenteException Se la città non viene trovata nel database
 	 */
 	CittaDTO cercaCitta (String nome)  throws CittaInesistenteException;
+	
+	/**
+	 * Permette di aggiungere una nuova città nel database
+	 * @param citta I dati della città
+	 * @throws InsertException Quando la città è già presente nel database
+	 */
+	void nuovaCitta (CittaDTO citta) throws InsertException;
 }

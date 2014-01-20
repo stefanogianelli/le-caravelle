@@ -4,16 +4,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class CittaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private int id;
 
+	@NotEmpty(message="Inserire una nazione")
 	private String nazione;
 
+	@NotEmpty(message="Inserire un nome")
 	private String nome;
 
+	@NotEmpty(message="Inserire una regione")
 	private String regione;
 	
 	private float latitudine;
@@ -80,6 +85,14 @@ public class CittaDTO implements Serializable {
 
 	public void setImmagini(List<String> immagini) {
 		this.immagini = immagini;
+	}
+	
+	public void addImmagine (String immagine) {
+		immagini.add(immagine);
+	}
+	
+	public void removeImmagine (String immagine) {
+		immagini.remove(immagine);
 	}
 
 	@Override
