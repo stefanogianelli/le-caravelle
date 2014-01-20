@@ -6,11 +6,11 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <ui:composition template="/template.xhtml">
-<ui:define name="title">I miei pacchetti</ui:define>
+<ui:define name="title">I miei acquisti</ui:define>
 
 <ui:define name="content">
 
-<h1>I miei pacchetti</h1>
+<h1>I miei acquisti</h1>
 
 <ui:repeat var="p" value="#{pacchetto.elencoMieiPacchetti()}" varStatus="status">
 	<div class="#{status.index % 2 == 0 ? 'mioBloccoBianco' : 'mioBlocco'}">

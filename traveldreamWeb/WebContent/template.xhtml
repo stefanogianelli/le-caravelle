@@ -20,17 +20,17 @@
 	
 		<div class="imgHome">
 		<h:link outcome="/homepage.xhtml">
-		     <h:graphicImage library="images" name="cile.JPG" width="50" height="70" />
+		     <h:graphicImage library="images" name="monete.png" width="162" height="87" />
 		</h:link>
 		</div> 
 		
 		<div class="access">
 			<h:form>
-				<h:link value="Login" outcome="login" rendered="#{not (facesContext.externalContext.isUserInRole('UTENTE') or facesContext.externalContext.isUserInRole('DIPENDENTE'))}" />
-				<h:commandLink style="width: 135px;" value="Logout" action="#{profilo.logout()}" rendered="#{facesContext.externalContext.isUserInRole('UTENTE') or facesContext.externalContext.isUserInRole('DIPENDENTE')}" />
 				<h:link style="width: 135px;" value="Area Personale" outcome="/utente/areaCliente" rendered="#{facesContext.externalContext.isUserInRole('UTENTE')}" />
+				<h:link value="Login e registrazione" outcome="login" rendered="#{not (facesContext.externalContext.isUserInRole('UTENTE') or facesContext.externalContext.isUserInRole('DIPENDENTE'))}" />
+				<h:commandLink style="width: 135px;" value="Logout" action="#{profilo.logout()}" rendered="#{facesContext.externalContext.isUserInRole('UTENTE') or facesContext.externalContext.isUserInRole('DIPENDENTE')}" />
 			</h:form>
-			<h:outputText value="Benvenuto #{profilo.nome}" style="margin: 20px 0px 0px 0px; display: block; float: left;" rendered="#{facesContext.externalContext.isUserInRole('UTENTE')}" />
+			<h:outputText value="Benvenuto #{profilo.nome}!" styleClass="benvenuto" rendered="#{facesContext.externalContext.isUserInRole('UTENTE')}" />
 		</div>
 		
 	</div>
@@ -38,7 +38,7 @@
 	<div class="menu">
 		<a href="/traveldreamWeb/utente/creazionePacchetto.xhtml">Crea pacchetto</a>
 		<a href="/traveldreamWeb/pacchettiPredefiniti.xhtml">Scegli pacchetto</a>
-		<a href="/traveldreamWeb/lastMinute.xhtml">Last minute</a>
+		<a href="/traveldreamWeb/mieiAcquisti.xhtml">I miei acquisti</a>
 		<a href="/traveldreamWeb/nostriConsigli.xhtml">I nostri consigli</a>
 		<a href="/traveldreamWeb/Info/guidaDestinazioni.xhtml">Le destinazioni</a>
 	</div>
