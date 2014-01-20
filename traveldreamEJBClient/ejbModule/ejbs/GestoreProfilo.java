@@ -5,6 +5,7 @@ import javax.mail.MessagingException;
 
 import dtos.UtenteDTO;
 import eccezioni.EntitaEsistenteException;
+import eccezioni.InsertException;
 import eccezioni.UtenteInesistenteException;
 
 @Local
@@ -23,6 +24,14 @@ public interface GestoreProfilo {
      * @throws EntitaEsistenteException Quando esiste un utente con la stessa email
      */
 	void registrazioneUtente (String email) throws MessagingException, EntitaEsistenteException;
+	
+	/**
+	 * Permette la modifica della password
+	 * @param vecchiaPassword La password corrente
+	 * @param nuovaPassword La nuova password
+	 * @throws InsertException Quando la vecchia password inserita dall'utente non combacia con quella presente nel database
+	 */
+	void modificaPassword (String vecchiaPassword, String nuovaPassword) throws InsertException;
 	
 	/**
 	 * Permette l'aggiunta dei dati personali di un utente

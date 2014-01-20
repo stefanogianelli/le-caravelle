@@ -16,9 +16,12 @@ import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import dtos.PersonaDTO;
 import dtos.UtenteDTO;
 import eccezioni.EntitaEsistenteException;
+import eccezioni.InsertException;
 import eccezioni.UtenteInesistenteException;
 import entities.Gruppi;
 import entities.Persone;
@@ -76,6 +79,16 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	}
 	
 	@Override
+	public void modificaPassword (String vecchiaPassword, String nuovaPassword) throws InsertException {
+		Utenti utente = this.getUtente();
+		
+		if (DigestUtils.sha256Hex(vecchiaPassword).equals(utente.getPassword()))
+			utente.setPassword(nuovaPassword);
+		else
+			throw new InsertException();
+	}
+	
+	@Override
 	public void aggiuntaDatiPersonali(UtenteDTO datiUtente) {
 		Utenti utente = this.getUtente();
 
@@ -98,9 +111,6 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		Persone persona = utente.getPersona();
 		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
 		persona.setTelefono(datiUtente.getPersona().getTelefono());
-		persona.setNome(datiUtente.getPersona().getNome());
-		persona.setCognome(datiUtente.getPersona().getCognome());
-		persona.setDataNascita(datiUtente.getPersona().getDataNascita());
 
 		utente.setPersona(persona);
 		
