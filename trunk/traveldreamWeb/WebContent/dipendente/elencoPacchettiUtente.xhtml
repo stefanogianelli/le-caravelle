@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Pacchetti Utente</ui:define>
+
+<ui:define name="content">
+
+<f:event listener="#{pacchettiUtente.elencoPacchettiDaConfermare(false)}" type="preRenderView" />
+
+<p:messages showDetail="false" autoUpdate="true" />
+
+<h1>Elenco pacchetti degli utenti</h1>
+
+<h:form>
+	<div class="bloccoRicerca">
+		<p>
+			<h:outputText styleClass="name-input" value="Tipologia:" />
+		</p>
+	</div>
+</h:form>
+
+<h:form id="elenco" rendered="#{pacchettiUtente.paginator != null}">
+	<ui:repeat var="p" value="#{pacchettiUtente.paginator.model}" varStatus="status">
+		<div class="#{status.index % 2 == 0 ? 'mioBlocco' : 'mioBloccoBianco'}">
+			<div class="pacchetto">
+				 <h:link outcome="dettagliPacchetto">
+				 	<f:param name="idPacchetto" value="#{p.id}" />
+				 	<h:graphicImage library="images/citta" name="#{pacchettiUtente.getImmagine(p.id)}" width="288" height="174" />
+				 </h:link>
+				 <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,11).toString().concat('...') : p.nome}</div> 
+			</div>
+				
+			<div class="descr">
+				<h2>
+					<h:link outcome="dettagliPacchetto">
+						<f:param name="idPacchetto" value="#{p.id}" />	
+						#{p.nome.length() > 25 ? p.nome.subSequence(0,26).toString().concat('...') : p.nome}
+					</h:link>			
+				</h2>
+				<br></br>
+				<div id="prezzo">
+				#{p.prezzo} €
+				</div>
+				<br></br>
+				<h3>#{p.tipoPacchetto}</h3>
+			</div>
+			
+			<div class="pulsanti">
+				<p>
+					<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliPacchetto">
+						<f:param name="idPacchetto" value="#{p.id}" />
+					</h:link>
+				</p>
+			</div>
+		</div>
+	</ui:repeat>
+	<div style="text-align: center;">
+		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto;" >
+			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.prev()}" render=":elenco" />
+		</h:commandButton>
+		<h:outputText value="#{pacchettoPredefinito.paginator.pageIndex} / #{pacchettoPredefinito.paginator.pages}" />
+		<h:commandButton styleClass="edit-button" value="Successiva &gt;" style="width: auto;">
+			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.next()}" render=":elenco" />
+		</h:commandButton>
+		<h:inputHidden value="#{pacchettoPredefinito.paginator.pageIndex}"/>
+	</div>	
+</h:form>
+
+</ui:define>
+</ui:composition>
+</html>

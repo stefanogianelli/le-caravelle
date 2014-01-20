@@ -37,12 +37,9 @@ public class PacchettoPredefinitoBean {
 	private PaginatorBean paginator;
 	private String citta;
 	
-	public PacchettoPredefinitoBean () {
-		pacchetto = new PacchettoPredefinitoDTO();
-	}
-	
 	@PostConstruct
 	public void setUp () {
+		pacchetto = new PacchettoPredefinitoDTO();
 		elenco = new ArrayList<PacchettoPredefinitoDTO>();
 		this.setCitta(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("citta"));
 		if (this.getCitta() == null)

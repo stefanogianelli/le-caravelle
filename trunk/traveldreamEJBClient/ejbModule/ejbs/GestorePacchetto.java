@@ -40,6 +40,14 @@ public interface GestorePacchetto {
 	 */
 	PacchettoDTO getPacchettoCondiviso (int idPacchetto, String email)  throws PacchettoInesistenteException;
 	
+	/**
+	 * Resituisce il pacchetto associato all'identificativo inserito senza effettuare il controllo sul proprietario
+	 * @param idPacchetto L'identificativo del pacchetto
+	 * @return Il pacchetto corrispondente
+	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
+	 */
+	PacchettoDTO getPacchettoDipendente (int idPacchetto) throws PacchettoInesistenteException;
+	
     /**
      * Mostra l'elenco dei pacchetti per tipologia posseduti da un utente
      * @param tipo La tipologia di pacchetto da cercare
@@ -54,6 +62,12 @@ public interface GestorePacchetto {
      * @return L'elenco dei pacchetti
      */
 	List<PacchettoDTO> elencoTrePacchetti(TipoPacchetto tipo);
+	
+	/**
+	 * Mostra l'elenco dei pacchetti degli utenti da confermare e acquistati
+	 * @return L'elenco dei pacchetti
+	 */
+	List<PacchettoDTO> elencoPacchettiUtenti ();
 	
 	/**
 	 * Permette la creazione di un nuovo pacchetto personalizzato
