@@ -29,8 +29,8 @@
 			<p:dialog header="Elimina escursione" widgetVar="eliminaEscursione" resizable="false">
 				<h:panelGroup>
 	   			 	<h:outputText value="Vuoi davvero eliminare l'escursione?" /><br />	 
-	       			<p:commandButton value="Sì" action="#{escursione.eliminaEscursione(id.value)}" oncomplete="PF('eliminaEscursione').hide();" ajax="false" />
-	       			<p:commandButton value="No" oncomplete="PF('eliminaEscursione').hide();" />
+	       			<p:commandButton styleClass="si-button" value="Sì" action="#{escursione.eliminaEscursione(id.value)}" oncomplete="PF('eliminaEscursione').hide();" ajax="false" />
+	       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaEscursione').hide();" />
 	      		</h:panelGroup>
 			</p:dialog>
 			

@@ -29,8 +29,8 @@
 			<p:dialog header="Elimina collegamento" widgetVar="eliminaCollegamento" resizable="false">
 				<h:panelGroup>
 	   			 	<h:outputText value="Vuoi davvero eliminare il collegamento?" /><br />	 
-	       			<p:commandButton value="Sì" action="#{collegamento.eliminaCollegamento(codice.value)}" oncomplete="PF('eliminaCollegamento').hide();" ajax="false" />
-	       			<p:commandButton value="No" oncomplete="PF('eliminaCollegamento').hide();" />
+	       			<p:commandButton styleClass="si-button" value="Sì" action="#{collegamento.eliminaCollegamento(codice.value)}" oncomplete="PF('eliminaCollegamento').hide();" ajax="false" />
+	       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaCollegamento').hide();" />
 	      		</h:panelGroup>
 			</p:dialog>
 						
