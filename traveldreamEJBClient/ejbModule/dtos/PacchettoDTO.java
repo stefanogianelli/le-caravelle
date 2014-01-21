@@ -33,11 +33,14 @@ public class PacchettoDTO implements Serializable {
 	
 	private TipoPacchetto tipoPacchetto;
 	
+	private List<PersonaDTO> datiPartecipanti;
+	
 	public PacchettoDTO () {
 		numPartecipanti = 1;
 		destinazioni = new ArrayList<DestinazioneDTO>();
 		collegamenti = new ArrayList<CollegamentoDTO>();
 		citta = new CittaDTO();
+		datiPartecipanti = new ArrayList<PersonaDTO>();
 	}
 
 	public int getId() {
@@ -118,5 +121,13 @@ public class PacchettoDTO implements Serializable {
 
 	public void setTipoPacchetto(TipoPacchetto tipoPacchetto) {
 		this.tipoPacchetto = tipoPacchetto;
+	}
+
+	public List<PersonaDTO> getDatiPartecipanti() {
+		return datiPartecipanti;
+	}
+
+	public void setDatiPartecipanti(List<PersonaDTO> datiPartecipanti) {
+		this.datiPartecipanti = datiPartecipanti;
 	}
 }

@@ -220,47 +220,39 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	}
 	
 	@Override
-	public int salvaPacchettoPredefinito (int idPacchetto,String cittaPartenza, String dataArrivo, int durata) throws PacchettoInesistenteException, CittaInesistenteException, InsertException {
+	public int salvaPacchettoPredefinito (int idPacchetto,String cittaPartenza, String dataArrivo, int durata) throws PacchettoInesistenteException, CittaInesistenteException {
 		PacchettiPredefiniti pred = predefinito.convertiInEntita(idPacchetto);		
+			
+		Pacchetti entity = new Pacchetti();
+		Destinazioni destinazione = new Destinazioni();
 		
-		//controllo che il nome del pacchetto non esista nel database
-		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPerNome", Pacchetti.class);
-		q.setParameter("nome", pred.getNome());
-		q.setParameter("utente", profilo.getUtente().getEmail());
-		if(q.getResultList().isEmpty()) {		
-			Pacchetti entity = new Pacchetti();
-			Destinazioni destinazione = new Destinazioni();
-			
-			entity.setNome(pred.getNome());			
-			entity.setNumPartecipanti(1);
-			entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
-			entity.setPacchettoPredefinito(pred);
-			entity.setCitta(citta.getCitta(cittaPartenza));
-			entity.setUtente(this.profilo.getUtente());
-			
-			destinazione.setDataArrivo(DataUtils.parseData(dataArrivo));
-			destinazione.setDataPartenza(DataUtils.sommaGiorni(destinazione.getDataArrivo(), durata));
-			destinazione.setHotel(pred.getHotel());
-			destinazione.setCitta(pred.getHotel().getCitta());
-			for (AttivitaPred a : pred.getAttivita()) {
-				if (a.getEscursione().getData().after(destinazione.getDataArrivo()) && a.getEscursione().getData().before(destinazione.getDataPartenza())) {
-					Attivita attivita = new Attivita();
-					attivita.setEscursione(a.getEscursione());
-					attivita.setNumPartecipanti(1);
-					destinazione.addAttivita(attivita);
-				}
+		entity.setNome(pred.getNome());			
+		entity.setNumPartecipanti(1);
+		entity.setTipoPacchetto(TipoPacchetto.PREDEFINITO);
+		entity.setPacchettoPredefinito(pred);
+		entity.setCitta(citta.getCitta(cittaPartenza));
+		entity.setUtente(this.profilo.getUtente());
+		
+		destinazione.setDataArrivo(DataUtils.parseData(dataArrivo));
+		destinazione.setDataPartenza(DataUtils.sommaGiorni(destinazione.getDataArrivo(), durata));
+		destinazione.setHotel(pred.getHotel());
+		destinazione.setCitta(pred.getHotel().getCitta());
+		for (AttivitaPred a : pred.getAttivita()) {
+			if (a.getEscursione().getData().after(destinazione.getDataArrivo()) && a.getEscursione().getData().before(destinazione.getDataPartenza())) {
+				Attivita attivita = new Attivita();
+				attivita.setEscursione(a.getEscursione());
+				attivita.setNumPartecipanti(1);
+				destinazione.addAttivita(attivita);
 			}
-			entity.addDestinazione(destinazione);	
-			
-			entity.setPrezzo(this.calcolaPrezzoPredefinito(entity));
-			
-			em.persist(entity);
-			em.flush();
-			
-			return entity.getId();
 		}
-		else
-			throw new InsertException();
+		entity.addDestinazione(destinazione);	
+		
+		entity.setPrezzo(this.calcolaPrezzoPredefinito(entity));
+		
+		em.persist(entity);
+		em.flush();
+		
+		return entity.getId();
 	}
 
 	@Override
@@ -385,7 +377,7 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	public void eliminaPacchetto(PacchettoDTO pacchetto) throws PacchettoInesistenteException {
 		Pacchetti entity = this.convertiInEntita(pacchetto);
 		if (pacchetto.getTipoPacchetto() == TipoPacchetto.CONDIVISO) {
-			//rimuovo tutte le condivisione del pacchetto
+			//rimuovo tutte le condivisioni del pacchetto
 			TypedQuery<Amici> q = em.createNamedQuery("Amici.getPacchetti", Amici.class);
 			q.setParameter("id", pacchetto.getId());
 			List<Amici> amici = q.getResultList();
@@ -663,6 +655,11 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 		if (pacchetto.getPacchettoPredefinito() != null)
 			pacchettoDTO.setPacchettoPredefinito(this.predefinito.convertiInDTO(pacchetto.getPacchettoPredefinito()));
 		pacchettoDTO.setUtente(profilo.convertiInDTO(pacchetto.getUtente()));
+		List<PersonaDTO> part = new ArrayList<PersonaDTO>();
+		for (Persone p : pacchetto.getDatiPartecipanti()) {
+			part.add(profilo.convertiInDTO(p));
+		}
+		pacchettoDTO.setDatiPartecipanti(part);
 		
 		return pacchettoDTO;
 	}

@@ -30,11 +30,10 @@ public class HotelDTO implements Serializable {
 	@Max(value = 5, message = "Il numero di stelle deve essere minore o uguale a 5")
 	private int stelle;
 	
-	@Pattern(regexp="\\+?\\d{4,12}",
+	@Pattern(regexp="\\+?\\d{4,20}",
 			message="Numero di telefono non valido")
 	private String telefono;
 
-	@NotEmpty(message = "Inserire l'indirizzo del sito web")
 	private String website;
 
 	private CittaDTO citta;

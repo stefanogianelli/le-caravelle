@@ -465,8 +465,6 @@ public class PacchettoBean {
 		if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("UTENTE")) {
 			try {
 				return "/utente/dettagliPacchetto?idPacchetto=" + pacchettoBean.salvaPacchettoPredefinito(idPacchetto, cittaPartenza, dataArrivo, durata) + "&faces-redirect=true";
-			} catch (InsertException e) {
-				JsfUtil.errorMessage("Il pacchetto è già presente nel database");
 			} catch (CittaInesistenteException e) {
 				JsfUtil.errorMessage("Città sconosciuta");
 			} catch (PacchettoInesistenteException e) {
@@ -840,6 +838,17 @@ public class PacchettoBean {
 	 */
 	public boolean isTipoPersonalizzato () {
 		if (this.getPacchetto().getTipoPacchetto() == TipoPacchetto.PERSONALIZZATO)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Verificata se il pacchetto corrente è di tipo acquistato o da confermare
+	 * @return true se il pacchetto è acquistato o da confermare, false altrimenti
+	 */	
+	public boolean isTipoAcquistato () {
+		if (this.getPacchetto().getTipoPacchetto() == TipoPacchetto.ACQUISTATO || this.getPacchetto().getTipoPacchetto() == TipoPacchetto.DACONFERMARE)
 			return true;
 		else
 			return false;

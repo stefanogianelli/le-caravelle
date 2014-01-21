@@ -111,9 +111,8 @@ public interface GestorePacchetto {
 	 * @return L'identificativo del pacchetto creato
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws InsertException Quando il nome del pacchetto esiste già nel database
 	 */
-	int salvaPacchettoPredefinito (int idPacchetto,String cittaPartenza, String dataArrivo, int durata) throws PacchettoInesistenteException, CittaInesistenteException, InsertException;
+	int salvaPacchettoPredefinito (int idPacchetto,String cittaPartenza, String dataArrivo, int durata) throws PacchettoInesistenteException, CittaInesistenteException;
 	
 	/**
 	 * Permette l'acquisto di un pacchetto

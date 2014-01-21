@@ -257,6 +257,33 @@
 	<h:link value="Aggiungi destinazione" disabled="true" />
 </div>
 
+<div class="tabella">
+	<h:dataTable value="#{pacchettiUtente.elencoPartecipanti()}" var="dat" style="text-align: center;">
+		<h:column>
+			<f:facet name="header">Nome</f:facet>
+			#{dat.nome}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Cognome</f:facet>
+			#{dat.cognome}
+		</h:column>	
+		<h:column>
+			<f:facet name="header">Data nascita</f:facet>
+			<h:outputText value="#{dat.dataNascita}">
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+			</h:outputText>			
+		</h:column>
+		<h:column>
+			<f:facet name="header">Documento</f:facet>
+			#{dat.documentoIdentita}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Telefono</f:facet>
+			#{dat.telefono}
+		</h:column>				
+	</h:dataTable>
+</div>
+
 </h:panelGroup>	
 
 
