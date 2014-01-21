@@ -10,10 +10,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.Part;
 
+import utils.FileUtils;
 import dtos.CittaDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.InsertException;
+import eccezioni.UploadException;
 import entities.Citta;
 import entities.ImmaginiCitta;
 
@@ -46,6 +49,16 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 			throw new CittaInesistenteException();
 		}
 	}
+	
+	@Override
+	public CittaDTO getCitta (int idCitta) throws CittaInesistenteException {		
+		return this.convertiInDTO(this.convertiInEntita(idCitta));
+	}
+	
+	@Override
+	public CittaDTO cercaCitta (String nome)  throws CittaInesistenteException {
+		return this.convertiInDTO(this.getCitta(nome));
+	}	
 
 	@Override
 	public void nuovaCitta (CittaDTO citta) throws InsertException {
@@ -73,13 +86,81 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 	}
 	
 	@Override
-	public CittaDTO cercaCitta (String nome)  throws CittaInesistenteException {
-		return this.convertiInDTO(this.getCitta(nome));
+	public void modificaCitta (CittaDTO citta) throws CittaInesistenteException, InsertException {
+		Citta c = this.convertiInEntita(citta);
+		
+		//controllo che non esista un'altra città con lo stesso nome e nazione
+		if (!c.getNome().equals(citta.getNome()) || !c.getNazione().equals(citta.getNazione())) {
+			TypedQuery<Citta> q = em.createNamedQuery("Citta.getCittaDaNomeENazione", Citta.class);
+			q.setParameter("nome", citta.getNome());
+			q.setParameter("nazione", citta.getNazione());
+			if (q.getResultList().isEmpty()) {
+				c.setNome(citta.getNome());
+				c.setNazione(citta.getNazione());
+			} else
+				throw new InsertException();
+		}
+		
+		c.setRegione(citta.getRegione());		
+		c.setLongitudine(citta.getLongitudine());
+		c.setLatitudine(citta.getLatitudine());
+		
+		em.merge(c);
+	}
+	
+	@Override
+	public void aggiuntaImmagine (int idCitta, Part immagine) throws UploadException, CittaInesistenteException, InsertException {
+		Citta c = this.convertiInEntita(idCitta);
+		
+		if (immagine.getSize() != 0) {
+			FileUtils file = new FileUtils();
+			ImmaginiCitta imm = new ImmaginiCitta();
+			imm.setImmagine(file.upload(immagine, "citta"));
+			c.addImmagini(imm);
+			em.merge(c);
+		} else
+			throw new InsertException();
+	}
+	
+	@Override
+	public void rimuoviImmagine (int idCitta, String nomeImmagine) throws CittaInesistenteException {
+		Citta c = this.convertiInEntita(idCitta);
+		ImmaginiCitta imm = null;
+		for (ImmaginiCitta i : c.getImmagini()) {
+			if (i.getImmagine().equals(nomeImmagine)) {
+				imm = i;
+				break;
+			}
+		}
+		FileUtils file = new FileUtils();
+		file.deleteFile(nomeImmagine, "citta");
+		c.removeImmagini(imm);
+		em.merge(c);
+	}
+	
+	@Override
+	public void eliminaCitta (int idCitta) throws CittaInesistenteException {
+		Citta c = this.convertiInEntita(idCitta);
+		em.remove(c);
 	}
     
 	@Override
 	public Citta convertiInEntita (CittaDTO citta) throws CittaInesistenteException {
 		Citta cittaEntity = em.find(Citta.class, citta.getId());
+		if (cittaEntity != null)
+			return cittaEntity;
+		else
+			throw new CittaInesistenteException ();
+	}	
+	
+	/**
+	 * Permette di ottenere un'entità a partire dal suo identificativo
+	 * @param idCitta L'identificativo della città
+	 * @return L'entità desiderata
+	 * @throws CittaInesistenteException Se la città non viene trovata nel database
+	 */
+	private Citta convertiInEntita (int idCitta) throws CittaInesistenteException {
+		Citta cittaEntity = em.find(Citta.class, idCitta);
 		if (cittaEntity != null)
 			return cittaEntity;
 		else

@@ -95,7 +95,7 @@ public class GestoreHotelEJB implements GestoreHotel, GestoreHotelLocal {
 	public void modificaDatiHotel(HotelDTO hotel) throws CittaInesistenteException, HotelInesistenteException, EntitaEsistenteException {	
 		Hotel entity = this.convertiInEntita(hotel);
 		
-		if (!entity.getNome().equals(hotel.getNome()) && !entity.getCitta().getNome().equals(hotel.getCitta().getNome())) {
+		if (!entity.getNome().equals(hotel.getNome()) || !entity.getCitta().getNome().equals(hotel.getCitta().getNome())) {
 			//controllo che non esista un hotel con lo stesso nome nella stessa città
 			TypedQuery<Hotel> q = em.createNamedQuery("Hotel.getHotel", Hotel.class);
 			q.setParameter("nome", hotel.getNome());
