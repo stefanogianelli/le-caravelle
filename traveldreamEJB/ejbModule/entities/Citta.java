@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -49,6 +50,12 @@ public class Citta implements Serializable {
 	//bi-directional many-to-one association to ImmaginiCitta
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="citta", orphanRemoval=true)
 	private List<ImmaginiCitta> immagini;
+	
+	private Integer attivo;
+	
+	public Citta () {
+		immagini = new ArrayList<ImmaginiCitta>();
+	}
 
 	public int getId() {
 		return this.id;
@@ -119,6 +126,14 @@ public class Citta implements Serializable {
 		return immagini;
 	}
 	
+	public Integer getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(Integer attivo) {
+		this.attivo = attivo;
+	}
+
 	@Override
 	public boolean equals (Object other) {		
 		if (this.getNome().equals(((Citta) other).getNome()))

@@ -113,6 +113,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 		entity.setOra(new Time(escursione.getOra().getTime()));
 		entity.setPrezzo(escursione.getPrezzo());
 		entity.setCitta(citta.getCitta(escursione.getCitta().getNome()));
+		entity.setAttivo(1);
 		
 		em.persist(entity);
 		em.flush();
