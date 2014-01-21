@@ -18,17 +18,18 @@ public class AttivitaPK implements Serializable {
 	@Column(insertable=false, updatable=false)
 	private int idEscursione;
 
-	public AttivitaPK() {
-	}
 	public int getIdDestinazione() {
 		return this.idDestinazione;
 	}
+	
 	public void setIdDestinazione(int idDestinazione) {
 		this.idDestinazione = idDestinazione;
 	}
+	
 	public int getIdEscursione() {
 		return this.idEscursione;
 	}
+	
 	public void setIdEscursione(int idEscursione) {
 		this.idEscursione = idEscursione;
 	}

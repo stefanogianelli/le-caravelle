@@ -16,9 +16,6 @@ public class DuratePK implements Serializable {
 
 	@Column(insertable=false, updatable=false)
 	private int idPacchettoPredefinito;
-
-	public DuratePK() {
-	}
 	
 	public int getDurata() {
 		return this.durata;

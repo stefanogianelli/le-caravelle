@@ -17,10 +17,6 @@ public class AttivitaPredPK implements Serializable {
 
 	@Column(insertable=false, updatable=false)
 	private int idPacchettoPredefinito;
-
-	public AttivitaPredPK() {
-		
-	}
 	
 	public int getIdEscursione() {
 		return this.idEscursione;
