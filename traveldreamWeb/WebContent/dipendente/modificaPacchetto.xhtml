@@ -11,12 +11,14 @@
 
 <ui:define name="content">
 
-<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Annulla</a></p>
-
 <f:metadata>
 	<f:viewParam name="idPacchetto" binding="#{id}" />
 	<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
 </f:metadata>
+
+<p><h:link value="Torna al pacchetto"  outcome="dettagliPacchetto">
+	<f:param name="idPacchetto" value="#{id.value}" />
+</h:link></p>
 
 <div class="bloccoDett">	
 	<h:panelGroup rendered="#{pacchettoPredefinito.pacchetto.id != 0}">	
@@ -41,7 +43,7 @@
 						<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
 							<li>
 								<h:outputText value="#{c.nome}" />
-								(<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviCitta(c)}" />)
+								&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviCitta(c)}" />
 							</li>
 						</ui:repeat>	
 					</ul><br />
@@ -66,7 +68,7 @@
 					   			<h:outputText value="#{da}">
 					   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 					   			</h:outputText>	
-					   			(<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDataPartenza(da)}" />)					
+					   			&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDataPartenza(da)}" />					
 							</li>
 						</ui:repeat>	
 					</ul><br />
@@ -89,7 +91,7 @@
 							<ui:repeat var="d" value="#{pacchettoPredefinito.pacchetto.durate}">
 								<li>
 									<h:outputText value="#{d}" />
-									(<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDurata(d)}" />)						
+									&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDurata(d)}" />						
 								</li>
 							</ui:repeat>	
 						</ul><br />

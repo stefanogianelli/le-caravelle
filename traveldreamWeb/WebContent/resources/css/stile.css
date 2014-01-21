@@ -50,6 +50,19 @@ h3 {
 	text-align: center;
 	margin: 30px 50px;
 	}
+.bloccoCitta ul { 
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	margin: 20px 40px 0 40px;
+	list-style-type:decimal
+	}
+.bloccoCitta li { 
+	font-size: 26px;
+	text-align: left;
+	color:black;
+	margin: 20px 40px 0 40px;
+	}
 a:link, a:visited{
 	color: #999999;
 	text-decoration:none;
@@ -57,9 +70,6 @@ a:link, a:visited{
 a:hover { 
 	color: #003333;
 	}
-span {
-	text-align: center;
-}
 .editName{
 	font-family: Impact;
 	font-size: 70px;
@@ -389,10 +399,13 @@ select{
 	text-decoration: none; 
 	color: white;
 	height: 35px;
-	margin-top: 10px;
+	margin: 10px 0 0 0;
+	padding: 0;
 }
 .menu li ul{
 	display: none;
+	margin: 0;
+	padding: 0;
 }
 .menu li:hover ul{
 	display: block;
@@ -401,7 +414,7 @@ select{
 	width:200px;
 	text-align: center;
 	background-color: #999999;
-	margin-top: 10px;
+	margin: 10px 0 0 0;
 }
 .footer {
 	margin: 0;
