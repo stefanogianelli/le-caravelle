@@ -14,7 +14,8 @@ import javax.persistence.*;
 @NamedQueries ({
 	@NamedQuery(name="AttivitaPred.elenco", query="SELECT a FROM AttivitaPred a"),
 	@NamedQuery(name="AttivitaPred.getAttivita", query="SELECT a FROM AttivitaPred a WHERE a.pacchetto = :pacchetto AND a.escursione = :escursione"),
-	@NamedQuery(name="AttivitaPred.getAttivitaDaId", query="SELECT a FROM AttivitaPred a WHERE a.pacchetto.id = :pacchetto AND a.escursione.id = :escursione")
+	@NamedQuery(name="AttivitaPred.getAttivitaDaId", query="SELECT a FROM AttivitaPred a WHERE a.pacchetto.id = :pacchetto AND a.escursione.id = :escursione"),
+	@NamedQuery(name="AttivitaPred.getAttivitaConEscursione", query="SELECT a FROM AttivitaPred a WHERE a.escursione = :escursione")	
 })
 public class AttivitaPred implements Serializable {
 	private static final long serialVersionUID = 1L;

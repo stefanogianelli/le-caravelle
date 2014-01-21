@@ -164,7 +164,7 @@ public class HotelBean {
 	}
 	
 	/**
-	 * Verifica se un hotel è attivo
+	 * Verifica se l'hotel è attivo
 	 * @return true se l'hotel è attivo, false altrimenti
 	 */
 	public boolean isAttivo () {

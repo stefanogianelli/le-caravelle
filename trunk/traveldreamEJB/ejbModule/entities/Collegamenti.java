@@ -16,9 +16,9 @@ import java.util.Date;
  */
 @Entity
 @NamedQueries ({
-	@NamedQuery(name = "Collegamenti.elenco", query = "SELECT c FROM Collegamenti c"),
-	@NamedQuery(name = "Collegamenti.getOrigini" , query = "SELECT DISTINCT c.origine FROM Collegamenti c WHERE c.cittaPartenza.nome = :nomeCitta"),
-	@NamedQuery(name = "Collegamenti.getDestinazioni" , query = "SELECT DISTINCT c.destinazione FROM Collegamenti c WHERE c.cittaArrivo.nome = :nomeCitta")
+	@NamedQuery(name = "Collegamenti.elenco", query = "SELECT c FROM Collegamenti c WHERE c.attivo = 1"),
+	@NamedQuery(name = "Collegamenti.getOrigini" , query = "SELECT DISTINCT c.origine FROM Collegamenti c WHERE c.cittaPartenza.nome = :nomeCitta AND c.attivo = 1"),
+	@NamedQuery(name = "Collegamenti.getDestinazioni" , query = "SELECT DISTINCT c.destinazione FROM Collegamenti c WHERE c.cittaArrivo.nome = :nomeCitta AND c.attivo = 1")
 })
 public class Collegamenti implements Serializable, Comparable<Collegamenti> {
 	
