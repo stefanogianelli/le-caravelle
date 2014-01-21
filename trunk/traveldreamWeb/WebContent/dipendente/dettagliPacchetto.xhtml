@@ -123,7 +123,7 @@
 			<h:dataTable id="escursioni" value="#{pacchettoPredefinito.pacchetto.attivita}" var="a" rendered="#{pacchettoPredefinito.pacchetto.attivita.size() > 0}">
 				<h:column>
 					<f:facet name="header">Nome</f:facet>
-					<h:link value="#{a.escursione.nome}" outcome="dettagliEscursione">
+					<h:link style="font-weight: bold" value="#{a.escursione.nome}" outcome="dettagliEscursione">
 						<f:param name="idEscursione" value="#{a.escursione.id}" />
 					</h:link>
 				</h:column>

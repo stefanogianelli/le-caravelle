@@ -22,23 +22,25 @@
 
 <h:panelGroup rendered="#{escursione.escursione.id != 0}">
 	<div class="bloccoModifica">
-		<h:form>
+		<h:form id="disatt">
 			<h:commandLink value="Elimina" onclick="PF('eliminaEscursione').show(); return false;" disabled="#{not escursione.attivo}" />
-			
-			<!-- Dialog di conferma eliminazione escursione -->
-			<p:dialog header="Elimina escursione" widgetVar="eliminaEscursione" resizable="false">
-				<h:panelGroup>
-	   			 	<h:outputText value="Vuoi davvero eliminare l'escursione?" /><br />	 
-	       			<p:commandButton styleClass="si-button" value="Sì" action="#{escursione.eliminaEscursione(id.value)}" oncomplete="PF('eliminaEscursione').hide();" ajax="false" />
-	       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaEscursione').hide();" />
-	      		</h:panelGroup>
-			</p:dialog>
 			
 			<h:link value="Modifica" outcome="modificaEscursione" disabled="#{not escursione.attivo}">
 				<f:param name="idEscursione" value="#{id.value}" />
 			</h:link>
 		</h:form>
 	</div>
+	
+	<h:form>
+		<!-- Dialog di conferma eliminazione escursione -->
+		<p:dialog header="Elimina escursione" widgetVar="eliminaEscursione" resizable="false">
+			<h:panelGroup>
+   			 	<h:outputText value="Vuoi davvero eliminare l'escursione?" /><br />	 
+       			<p:commandButton styleClass="si-button" value="Sì" action="#{escursione.eliminaEscursione(id.value)}" oncomplete="PF('eliminaEscursione').hide();" ajax="false" />
+       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaEscursione').hide();" />
+      		</h:panelGroup>
+		</p:dialog>	
+	</h:form>
 	
 	<div class="bloccoDett">
 		<h2>#{escursione.escursione.nome}</h2>
