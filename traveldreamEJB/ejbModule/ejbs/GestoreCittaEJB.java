@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.Part;
 
@@ -18,7 +19,12 @@ import eccezioni.CittaInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.UploadException;
 import entities.Citta;
+import entities.Collegamenti;
+import entities.Destinazioni;
+import entities.Escursioni;
+import entities.Hotel;
 import entities.ImmaginiCitta;
+import entities.Pacchetti;
 
 /**
  * Session Bean implementation class GestoreCittaEJB
@@ -79,7 +85,7 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 				imm.setImmagine(i);
 				c.addImmagini(imm);
 			}
-			
+			c.setAttivo(1);
 			em.persist(c);
 		} else
 			throw new InsertException();
@@ -141,7 +147,29 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 	@Override
 	public void eliminaCitta (int idCitta) throws CittaInesistenteException {
 		Citta c = this.convertiInEntita(idCitta);
-		em.remove(c);
+		//controllo che la città sia inutilizzata
+		TypedQuery<Collegamenti> q = em.createNamedQuery("Collegamenti.getCollegamentiConCitta", Collegamenti.class);
+		q.setParameter("citta", c);
+		TypedQuery<Destinazioni> q1 = em.createNamedQuery("Destinazioni.getDestinazioneInCitta", Destinazioni.class);
+		q1.setParameter("citta", c);
+		TypedQuery<Escursioni> q2 = em.createNamedQuery("Escursioni.getEscursioneInCitta", Escursioni.class);
+		q2.setParameter("citta", c);
+		TypedQuery<Hotel> q3 = em.createNamedQuery("Hotel.getHotelInCitta", Hotel.class);
+		q3.setParameter("citta", c);
+		TypedQuery<Pacchetti> q4 = em.createNamedQuery("Pacchetti.getPacchettiInCitta", Pacchetti.class);
+		q4.setParameter("citta", c);
+		Query q5 = em.createNativeQuery("SELECT * FROM citta_origine_pred WHERE idCitta = ?1");
+		q5.setParameter("1", c.getId());
+		if (q.getResultList().isEmpty() && q1.getResultList().isEmpty() && q2.getResultList().isEmpty() && q3.getResultList().isEmpty() && q4.getResultList().isEmpty() && q5.getResultList().isEmpty()) {
+			FileUtils file = new FileUtils();
+			for (ImmaginiCitta i : c.getImmagini()) {
+				file.deleteFile(i.getImmagine(), "citta");
+			}
+			em.remove(c);
+		} else {
+			c.setAttivo(0);
+			em.merge(c);
+		}					
 	}
     
 	@Override
@@ -182,6 +210,7 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 			immagini.add(i.getImmagine());
 		}
 		dto.setImmagini(immagini);
+		dto.setAttivo(citta.getAttivo());
 		
 		return dto;
 	}

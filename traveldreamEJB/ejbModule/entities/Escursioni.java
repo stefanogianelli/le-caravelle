@@ -18,7 +18,8 @@ import java.util.Date;
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome", "citta"})})
 @NamedQueries ({
 	@NamedQuery(name = "Escursioni.elenco", query = "SELECT e FROM Escursioni e WHERE e.attivo = 1"),
-	@NamedQuery(name = "Escursioni.getEscursioneDaNomeEData", query = "SELECT e FROM Escursioni e WHERE e.nome = :nome AND e.citta.nome = :citta AND e.data = :data")
+	@NamedQuery(name = "Escursioni.getEscursioneDaNomeEData", query = "SELECT e FROM Escursioni e WHERE e.nome = :nome AND e.citta.nome = :citta AND e.data = :data"),
+	@NamedQuery(name = "Escursioni.getEscursioneInCitta", query = "SELECT e FROM Escursioni e WHERE e.citta = :citta")
 })
 public class Escursioni implements Serializable, Comparable<Escursioni> {
 	private static final long serialVersionUID = 1L;

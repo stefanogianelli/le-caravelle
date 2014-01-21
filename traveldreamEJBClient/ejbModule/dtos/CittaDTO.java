@@ -27,6 +27,8 @@ public class CittaDTO implements Serializable {
 	
 	private List<String> immagini;
 	
+	private int attivo;
+	
 	public CittaDTO () {
 		immagini = new ArrayList<String>();
 	}
@@ -93,6 +95,14 @@ public class CittaDTO implements Serializable {
 	
 	public void removeImmagine (String immagine) {
 		immagini.remove(immagine);
+	}
+
+	public int getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(int attivo) {
+		this.attivo = attivo;
 	}
 
 	@Override

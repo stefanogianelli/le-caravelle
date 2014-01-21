@@ -5,12 +5,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-
 <ui:composition template="templateDip.xhtml">
+
+<ui:define name="title">Elenco città</ui:define>
 
 <ui:define name="content">
 
-<f:event listener="#{citta.elencoCitta(false)}" type="preRenderView" />
+<f:event listener="#{citta.initElenco()}" type="preRenderView" />
 
 <h1>Elenco città</h1>
 
@@ -24,41 +25,40 @@
 
 	<h:panelGroup id="elencoCitta">
 		<div class="tabella">
-		<h:dataTable value="#{citta.paginator.model}" var="c" style="text-align: center;">
-			<h:column>
-				<f:facet name="header">Nome città</f:facet>
-				#{c.nome}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Regione</f:facet>
-				#{c.regione} <br></br>
-			</h:column>	
-			<h:column>
-				<f:facet name="header">Nazione</f:facet>
-				#{c.nazione}
-			</h:column>
-			<h:column>
-				<h:form>
-					<h:link value="Modifica"  outcome="modificaCitta">
-						<f:param name="idCitta" value="#{c.id}" />
-					</h:link>
-					<br />
-					<h:commandLink value="Elimina" onclick="PF('eliminaCitta').show(); return false;" />
-					
-					<!-- Dialog di conferma eliminazione citta -->
-					<p:dialog header="Elimina pacchetto" widgetVar="eliminaCitta" resizable="false">
-						<h:panelGroup>		
-							<h:form>
-				   			 	<h:outputText value="Vuoi davvero eliminare la città?" /><br />	 
-				       			<p:commandButton value="Sì" action="#{citta.eliminaCitta(c.id)}" oncomplete="PF('eliminaCitta').hide();" />
-				       			<p:commandButton value="No" oncomplete="PF('eliminaCitta').hide();" />
-			      			</h:form>
-			      		</h:panelGroup>
-					</p:dialog>
-				</h:form>	
-			</h:column>
-
-		</h:dataTable>
+			<h:dataTable value="#{citta.elenco}" var="c" style="text-align: center;">
+				<h:column>
+					<f:facet name="header">Nome città</f:facet>
+					#{c.nome}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Regione</f:facet>
+					#{c.regione} <br></br>
+				</h:column>	
+				<h:column>
+					<f:facet name="header">Nazione</f:facet>
+					#{c.nazione}
+				</h:column>
+				<h:column>
+					<h:form>
+						<h:link value="Modifica"  outcome="modificaCitta">
+							<f:param name="idCitta" value="#{c.id}" />
+						</h:link>
+						<br />
+						<h:commandLink value="Elimina" onclick="PF('eliminaCitta').show(); return false;" />
+						
+						<!-- Dialog di conferma eliminazione citta -->
+						<p:dialog header="Elimina pacchetto" widgetVar="eliminaCitta" resizable="false">
+							<h:panelGroup>		
+								<h:form>
+					   			 	<h:outputText value="Vuoi davvero eliminare la città?" /><br />	 
+					       			<p:commandButton value="Sì" action="#{citta.eliminaCitta(c.id)}" oncomplete="PF('eliminaCitta').hide();" update=":elencoCitta" />
+					       			<p:commandButton value="No" oncomplete="PF('eliminaCitta').hide();" />
+				      			</h:form>
+				      		</h:panelGroup>
+						</p:dialog>
+					</h:form>	
+				</h:column>
+			</h:dataTable>
 		</div>
 	</h:panelGroup>
 
