@@ -27,10 +27,12 @@ public class CittaBean {
 	private PaginatorBean paginator;
 	private CittaDTO citta;
 	private Part immagine;
+	private List<CittaDTO> elenco;
 	
 	@PostConstruct
 	public void setUp () {
 		citta = new CittaDTO();
+		elenco = new ArrayList<CittaDTO>();
 	}
 	
 	public PaginatorBean getPaginator() {
@@ -53,6 +55,14 @@ public class CittaBean {
 		this.immagine = immagine;
 	}
 	
+	public List<CittaDTO> getElenco() {
+		return elenco;
+	}
+
+	public void setElenco(List<CittaDTO> elenco) {
+		this.elenco = elenco;
+	}
+
 	/**
 	 * Carica i dati di una città
 	 * @param idCitta L'identificativo della città
@@ -99,6 +109,13 @@ public class CittaBean {
 	public void elencoCitta (boolean force) {
 		if (paginator == null || force == true)
 			paginator = new PaginatorBean(cittaBean.elencoCitta());
+	}
+	
+	/**
+	 * Mostra tutte le città presenti nel database
+	 */
+	public void initElenco () {
+		setElenco(cittaBean.elencoCitta());
 	}
 	
 	/**

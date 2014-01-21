@@ -24,7 +24,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"nome", "nazione"})})
 @NamedQueries ({
-    @NamedQuery(name = "Citta.elenco", query = "SELECT c FROM Citta c"),
+    @NamedQuery(name = "Citta.elenco", query = "SELECT c FROM Citta c WHERE c.attivo = 1"),
     @NamedQuery(name = "Citta.getCitta", query = "SELECT c FROM Citta c WHERE c.nome = :nome"),
     @NamedQuery(name = "Citta.getCittaDaNomeENazione", query = "SELECT c FROM Citta c WHERE c.nome = :nome AND c.nazione = :nazione")
 })
