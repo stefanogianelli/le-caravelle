@@ -60,7 +60,7 @@
 		</div>
 	</ui:repeat>
 	<div style="text-align: center;">
-		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto;" >
+		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto; margin-right: 20px;" >
 			<f:ajax execute="@form" listener="#{escursione.paginator.prev()}" render=":elenco" />
 		</h:commandButton>
 		<h:outputText value="#{escursione.paginator.pageIndex} / #{escursione.paginator.pages}" />
