@@ -13,6 +13,7 @@ import utils.JsfUtil;
 import dtos.CollegamentoDTO;
 import dtos.DestinazioneDTO;
 import dtos.PacchettoDTO;
+import dtos.PersonaDTO;
 import eccezioni.PacchettoInesistenteException;
 import ejbs.GestorePacchetto;
 import enums.TipoPacchetto;
@@ -72,6 +73,17 @@ public class PacchettiDaConfermareBean {
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
+	}
+	
+	/**
+	 * Ritorna la lista di tutti i partecipanti al viaggio
+	 * @return La lista dei partecipanti
+	 */
+	public List<PersonaDTO> elencoPartecipanti () {
+		List<PersonaDTO> elenco = new ArrayList<PersonaDTO>();
+		elenco.add(getPacchetto().getUtente().getPersona());
+		elenco.addAll(getPacchetto().getDatiPartecipanti());
+		return elenco;
 	}
 
 	/**

@@ -172,4 +172,16 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		
 		return utenteDTO;
 	}
+	
+	public PersonaDTO convertiInDTO (Persone persona) {
+		PersonaDTO p = new PersonaDTO();
+		
+		p.setNome(persona.getNome());
+		p.setCognome(persona.getCognome());
+		p.setDataNascita(persona.getDataNascita());
+		p.setDocumentoIdentita(persona.getDocumentoIdentita());
+		p.setTelefono(persona.getTelefono());
+		
+		return p;
+	}
 }
