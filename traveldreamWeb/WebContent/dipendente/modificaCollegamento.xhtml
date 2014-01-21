@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Annulla</a></p>
+
 <f:metadata>
 	<f:viewParam name="codiceCollegamento" binding="#{id}" />
 	<f:event listener="#{collegamento.getCollegamento(id.value)}" type="preRenderView" />

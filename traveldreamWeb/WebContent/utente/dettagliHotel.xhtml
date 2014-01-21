@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Indietro</a></p>
+
 <f:metadata>
 	<f:viewParam name="idHotel" binding="#{id}" />
 	<f:event listener="#{hotel.getHotel(id.value)}" type="preRenderView" />

@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Annulla</a></p>
+
 <f:metadata>
 	<f:viewParam name="idPacchetto" binding="#{id}" />
 	<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />

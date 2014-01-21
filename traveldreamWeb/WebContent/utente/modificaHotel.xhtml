@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Annulla</a></p>
+
 	<f:metadata>
 		<f:viewParam name="idPacchetto" binding="#{id}" />
 		<f:viewParam name="idDestinazione" binding="#{idDestinazione}" />
@@ -19,10 +21,9 @@
 	</f:metadata>
 
 	<h:form rendered="#{pacchetto.destinazione.id != 0}">
-		<div class="blocco">
+		<div class="bloccoModHot">
 	        <h1>Crea il tuo pacchetto</h1>
-	        <h2>Aggiungi destinazione</h2>
-	        <h3>Seleziona la destinazione</h3>
+	        <h3>Destinazione</h3>
 	        <h:outputText styleClass="centro" value="#{pacchetto.destinazione.citta.nome}" />
 		</div>
 		

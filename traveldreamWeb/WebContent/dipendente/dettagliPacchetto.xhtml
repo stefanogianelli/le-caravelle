@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Indietro</a></p>
+
 <f:metadata>
 	<f:viewParam name="idPacchetto" binding="#{id}" />
 	<f:event listener="#{pacchettoPredefinito.getPacchetto(id.value)}" type="preRenderView" />
@@ -101,14 +103,14 @@
 			</div>
 			<div class="pulsanti">
 			<p>
-				<h:link value="Modifica" styleClass="detail-button" outcome="modificaHotelPacchetto">
-					<f:param name="idPacchetto" value="#{id.value}" />
-				</h:link>
-			</p>
-			<p>
 				<h:link value="Dettagli" styleClass="detail-button" outcome="dettagliHotel">
 					<f:param name="idPacchetto" value="#{id.value}" />
 					<f:param name="idHotel" value="#{pacchettoPredefinito.pacchetto.hotel.id}" />
+				</h:link>
+			</p>
+			<p>
+				<h:link value="Modifica" styleClass="detail-button" outcome="modificaHotelPacchetto">
+					<f:param name="idPacchetto" value="#{id.value}" />
 				</h:link>
 			</p>
 			</div>		
