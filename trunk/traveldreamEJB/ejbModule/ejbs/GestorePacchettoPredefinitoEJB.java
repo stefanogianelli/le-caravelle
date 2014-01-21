@@ -92,12 +92,14 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	}
 
 	@Override
-	public int creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException {
+	public int creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException {
 		PacchettiPredefiniti entity = new PacchettiPredefiniti();		
 		
 		entity.setNome(pacchetto.getNome());
 		entity.setPrezzo(pacchetto.getPrezzo());
 		for (CittaDTO c : pacchetto.getCittaPartenza()) {
+			if (c.equals(pacchetto.getHotel().getCitta()))
+				throw new InsertException();
 			entity.addCitta(citta.getCitta(c.getNome()));
 		}
 		for (Date d : pacchetto.getDatePartenza()) {
@@ -122,10 +124,14 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	public void aggiuntaCittaPartenza (PacchettoPredefinitoDTO pacchetto, String nomeCitta) throws PacchettoInesistenteException, CittaInesistenteException, InsertException {
 		PacchettiPredefiniti entity = this.convertiInEntita(pacchetto);
 		
+		//verifico che la città non sia uguale alla destinazione
+		if (entity.getHotel().getCitta().getNome().equals(nomeCitta))
+			throw new InsertException("La città inserita è uguale alla città della destinazione");
+		
 		//verifico che la città non sia già stata inserita
 		for (Citta c : entity.getCittaPartenza()) {
 			if (c.getNome().equalsIgnoreCase(nomeCitta))
-				throw new InsertException();
+				throw new InsertException("Città già inserita");
 		}
 
 		entity.addCitta(citta.getCitta(nomeCitta));
