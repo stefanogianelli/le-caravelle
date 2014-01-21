@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Indietro</a></p>
+
 	<f:metadata>
 		<f:viewParam name="idPacchetto" value="#{collegamento.idPacchetto}" />
 		<f:viewParam name="dataPartenza" value="#{collegamento.dataPartenza}">

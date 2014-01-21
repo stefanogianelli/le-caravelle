@@ -12,9 +12,12 @@
 <ui:define name="content">
 
 <f:metadata>
+	<f:viewParam name="idPacchetto" binding="#{idPacchetto}" />
 	<f:viewParam name="idHotel" binding="#{id}" />
 	<f:event listener="#{hotel.getHotel(id.value)}" type="preRenderView" />
 </f:metadata>
+
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Indietro</a></p>
 
 <h1>Dettagli hotel</h1>
 

@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Annulla</a></p>
+
 <f:metadata>
 	<f:viewParam name="nomeCitta" binding="#{nome}" />
 	<f:event listener="#{citta.getCitta(nome.value)}" type="preRenderView" />

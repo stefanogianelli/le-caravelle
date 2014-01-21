@@ -11,6 +11,8 @@
 
 <ui:define name="content">
 
+<p><a href="#{facesContext.externalContext.getRequest().getHeader('referer')}">Indietro</a></p>
+
 <h1>Pacchetti condivisi</h1>
 
 <ui:repeat var="p" value="#{pacchetto.elencoPacchettiCondivisi()}" varStatus="status">
