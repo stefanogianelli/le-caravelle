@@ -22,21 +22,23 @@
 
 <h:panelGroup rendered="#{collegamento.collegamento.codice != 0}">	
 	<div class="bloccoModifica">
-		<h:form>
+		<h:form id="disatt">
 			<h:commandLink value="Elimina" onclick="PF('eliminaCollegamento').show(); return false;"  disabled="#{not collegamento.attivo}" />
-			
-			<!-- Dialog di conferma eliminazione collegamento -->
-			<p:dialog header="Elimina collegamento" widgetVar="eliminaCollegamento" resizable="false">
-				<h:panelGroup>
-	   			 	<h:outputText value="Vuoi davvero eliminare il collegamento?" /><br />	 
-	       			<p:commandButton styleClass="si-button" value="Sì" action="#{collegamento.eliminaCollegamento(codice.value)}" oncomplete="PF('eliminaCollegamento').hide();" ajax="false" />
-	       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaCollegamento').hide();" />
-	      		</h:panelGroup>
-			</p:dialog>
 						
 			<h:link value="Modifica" outcome="modificaCollegamento" disabled="#{not collegamento.attivo}">
 				<f:param name="codiceCollegamento" value="#{collegamento.collegamento.codice}" />
 			</h:link>
+		</h:form>
+		
+		<h:form>
+		<!-- Dialog di conferma eliminazione collegamento -->
+		<p:dialog header="Elimina collegamento" widgetVar="eliminaCollegamento" resizable="false">
+			<h:panelGroup>
+   			 	<h:outputText value="Vuoi davvero eliminare il collegamento?" /><br />	 
+       			<p:commandButton styleClass="si-button" value="Sì" action="#{collegamento.eliminaCollegamento(codice.value)}" oncomplete="PF('eliminaCollegamento').hide();" ajax="false" />
+       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaCollegamento').hide();" />
+      		</h:panelGroup>
+		</p:dialog>
 		</h:form>
 	</div>
 	
