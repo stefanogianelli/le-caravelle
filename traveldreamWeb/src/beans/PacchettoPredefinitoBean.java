@@ -199,6 +199,8 @@ public class PacchettoPredefinitoBean {
 							JsfUtil.errorMessage("Hotel inesistente");
 						} catch (CittaInesistenteException w) {
 							JsfUtil.errorMessage("Città inesistente");
+						} catch (InsertException e) {
+							JsfUtil.errorMessage("E' stata inserita come città di partenza la stessa città della destinazione");
 						}	
 					} else
 						JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza");
@@ -284,7 +286,7 @@ public class PacchettoPredefinitoBean {
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città inesistente");
 		} catch (InsertException e) {
-			JsfUtil.errorMessage("Città già inserita");
+			JsfUtil.errorMessage(e.getMessage());
 		}
 	}
 	

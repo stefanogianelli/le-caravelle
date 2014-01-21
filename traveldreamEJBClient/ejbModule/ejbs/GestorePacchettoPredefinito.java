@@ -47,8 +47,9 @@ public interface GestorePacchettoPredefinito {
 	 * @return L'identificativo del pacchetto creato
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
+	 * @throws InsertException Quando il dipendente aggiunge come città di partenza la stessa città della destinazione
 	 */
-	int creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException;
+	int creaPacchetto (PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException;
 	
 	/**
 	 * Permette di aggiungere una città di partenza nel pacchetto
@@ -56,7 +57,7 @@ public interface GestorePacchettoPredefinito {
 	 * @param nomeCitta Il nome della città
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
 	 * @throws CittaInesistenteException Quando la non viene trovata la città nel database
-	 * @throws InsertException Quando la città è già stata inserita
+	 * @throws InsertException Quando la città è già stata inserita o quando si inserisce la stessa città della destinazione
 	 */
 	void aggiuntaCittaPartenza (PacchettoPredefinitoDTO pacchetto, String nomeCitta) throws PacchettoInesistenteException, CittaInesistenteException, InsertException;
 	
