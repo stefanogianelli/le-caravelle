@@ -52,8 +52,7 @@ public class Collegamenti implements Serializable, Comparable<Collegamenti> {
 	@JoinColumn(name="cittaPartenza")
 	private Citta cittaPartenza;
 
-	public Collegamenti() {
-	}
+	private Integer attivo;
 
 	public int getCodice() {
 		return this.codice;
@@ -133,6 +132,14 @@ public class Collegamenti implements Serializable, Comparable<Collegamenti> {
 
 	public void setCittaPartenza(Citta cittaPartenza) {
 		this.cittaPartenza = cittaPartenza;
+	}
+
+	public Integer getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(Integer attivo) {
+		this.attivo = attivo;
 	}
 
 	@Override

@@ -34,7 +34,6 @@ public class Attivita implements Serializable {
 	public Attivita() {
 		id = new AttivitaPK();
 	}
-
 	
 	public AttivitaPK getId() {
 		return this.id;

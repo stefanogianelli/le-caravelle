@@ -214,6 +214,7 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`collegamenti` (
   `prezzo` DOUBLE NOT NULL,
   `cittaArrivo` INT NOT NULL,
   `cittaPartenza` INT NOT NULL,
+  `attivo` TINYINT(1) NOT NULL,
   PRIMARY KEY (`codice`),
   INDEX `fk_Collegamento_Citta 1_idx` (`cittaArrivo` ASC),
   INDEX `fk_Collegamento_Citta 2_idx` (`cittaPartenza` ASC),
@@ -293,6 +294,7 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`escursioni` (
   `categoria` VARCHAR(45) NOT NULL,
   `prezzo` DOUBLE NOT NULL,
   `idCitta` INT NOT NULL,
+  `attivo` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Escursione_Citta 2_idx` (`idCitta` ASC),
   CONSTRAINT `fk_Escursione_Citta 2`

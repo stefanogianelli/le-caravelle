@@ -20,9 +20,6 @@ public class PersonePK implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date dataNascita;
-
-	public PersonePK() {
-	}
 	
 	public String getNome() {
 		return this.nome;

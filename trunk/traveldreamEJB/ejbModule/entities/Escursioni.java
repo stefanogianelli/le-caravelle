@@ -46,8 +46,7 @@ public class Escursioni implements Serializable, Comparable<Escursioni> {
     @JoinColumn(name="idCitta")
 	private Citta citta;		
 
-	public Escursioni() {
-	}
+	private Integer attivo;
 
 	public int getId() {
 		return this.id;
@@ -111,6 +110,14 @@ public class Escursioni implements Serializable, Comparable<Escursioni> {
 
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
+	}
+
+	public Integer getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(Integer attivo) {
+		this.attivo = attivo;
 	}
 
 	@Override

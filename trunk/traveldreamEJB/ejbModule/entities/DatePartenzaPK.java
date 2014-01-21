@@ -19,9 +19,6 @@ public class DatePartenzaPK implements Serializable {
 
 	@Column(insertable=false, updatable=false)
 	private int idPacchettoPredefinito;
-
-	public DatePartenzaPK() {
-	}
 	
 	public Date getData() {
 		return this.data;
