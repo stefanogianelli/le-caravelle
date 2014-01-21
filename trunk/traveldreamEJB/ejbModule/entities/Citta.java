@@ -47,7 +47,7 @@ public class Citta implements Serializable {
 	private String regione;
 
 	//bi-directional many-to-one association to ImmaginiCitta
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="citta")
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="citta", orphanRemoval=true)
 	private List<ImmaginiCitta> immagini;
 
 	public int getId() {
@@ -106,7 +106,7 @@ public class Citta implements Serializable {
 		this.immagini = immagini;
 	}
 
-	public ImmaginiCitta addImmagini(ImmaginiCitta immagini) {
+	public ImmaginiCitta addImmagini (ImmaginiCitta immagini) {
 		getImmagini().add(immagini);
 		immagini.setCitta(this);
 

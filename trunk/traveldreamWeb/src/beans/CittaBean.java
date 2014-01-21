@@ -53,9 +53,13 @@ public class CittaBean {
 		this.immagine = immagine;
 	}
 	
-	public void getCitta(String nomeCitta){
+	/**
+	 * Carica i dati di una città
+	 * @param idCitta L'identificativo della città
+	 */
+	public void getCitta(int idCitta){
 		try {
-			this.setCitta(cittaBean.cercaCitta(nomeCitta));
+			this.setCitta(cittaBean.getCitta(idCitta));
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città inesistente");
 		}
@@ -119,19 +123,55 @@ public class CittaBean {
 	 * Permette di modificare una città nel database
 	 */
 	public void modificaCitta () {
-		
+		try {
+			cittaBean.modificaCitta(getCitta());
+			JsfUtil.infoMessage("Città modificata");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città sconosciuta");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Esiste un'altra città con lo stesso nome");
+		}
+	}
+	
+	/**
+	 * Permette di aggiungere una nuova immagine della città
+	 */
+	public void aggiuntaImmagine () {
+		try {
+			cittaBean.aggiuntaImmagine(getCitta().getId(), getImmagine());
+			JsfUtil.infoMessage("Immagine caricata con successo");
+		} catch (UploadException e) {
+			JsfUtil.errorMessage("Si è verificato un errore durante il caricamento dell'immagine");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città sconosciuta");
+		} catch (InsertException e) {
+			JsfUtil.errorMessage("Nessuna immagine selezionata");
+		}
+	}
+	
+	/**
+	 * Permette di rimuovere un'immagine
+	 * @param nomeImmagine Il nome dell'immagine da rimuovere
+	 */
+	public void rimuoviImmagine (String nomeImmagine) {
+		try {
+			cittaBean.rimuoviImmagine(getCitta().getId(), nomeImmagine);
+			JsfUtil.infoMessage("Immagine rimossa");
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città sconosciuta");
+		}
 	}
 	
 	/**
 	 * Permette di eliminare una città nel database
+	 * @param idCitta L'identificativo della città
 	 */
-	public String eliminaCitta (int idCitta) {
-		/*try {
+	public void eliminaCitta (int idCitta) {
+		try {
 			cittaBean.eliminaCitta(idCitta);
-			return "elencoCitta?faces-redirect=true";
+			JsfUtil.infoMessage("Città eliminata");
 		} catch (CittaInesistenteException e) {
 			JsfUtil.errorMessage("Città sconosciuta");
-		}*/
-		return null;
+		}
 	}
 }

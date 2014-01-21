@@ -22,7 +22,7 @@ public class PersonaDTO implements Serializable {
 	@NotEmpty(message="Inserire un documento d'identità")
 	private String documentoIdentita;
 
-	@Pattern(regexp="^\\+(?:[0-9] ?){6,14}[0-9]$",
+	@Pattern(regexp="\\+?\\d{4,12}",
 			message="Numero di telefono non valido")
 	private String telefono;
 
