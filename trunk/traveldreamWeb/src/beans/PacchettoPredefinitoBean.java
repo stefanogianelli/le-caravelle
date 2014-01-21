@@ -146,12 +146,16 @@ public class PacchettoPredefinitoBean {
 	 * @param durata La durata
 	 */
 	public void aggiuntaDurata (int durata) {
-		//verifico che la durata non sia già stata inserita
-		if (this.getPacchetto().getDurate().indexOf(durata) == -1) {
-			this.getPacchetto().getDurate().add(durata);
-			JsfUtil.infoMessage("Durata aggiunta");
+		//verifico che la durata sia positiva
+		if (durata > 0) {
+			//verifico che la durata non sia già stata inserita
+			if (this.getPacchetto().getDurate().indexOf(durata) == -1) {
+				this.getPacchetto().getDurate().add(durata);
+				JsfUtil.infoMessage("Durata aggiunta");
+			} else
+				JsfUtil.errorMessage("Durata già inserita");
 		} else
-			JsfUtil.errorMessage("Durata già inserita");
+			JsfUtil.errorMessage("Inserire una durata maggiore di 0");
 	}
 	
 	/**
@@ -174,36 +178,23 @@ public class PacchettoPredefinitoBean {
 	 * @param hotel L'hotel da aggiungere al pacchetto
 	 * @return L'indirizzo della pagina con i dettagli del pacchetto creato
 	 */
-	public String creaPacchetto (HotelDTO hotel) {
-		boolean check = true;
-		
+	public String creaPacchetto (HotelDTO hotel) {		
 		//verifico che sia stata inserita almeno una città di partenza
 		if (!this.getPacchetto().getCittaPartenza().isEmpty()) {	
 			//verifico che sia stata inserita almeno una data di partenza
 			if (!this.getPacchetto().getDatePartenza().isEmpty()) {
 				//verifico che sia stata inserita almeno una durata
-				if (!this.getPacchetto().getDurate().isEmpty()) {				
-					//verifico che l'hotel inserito non sia nella stessa città di una delle città di partenza
-					for (CittaDTO c : this.getPacchetto().getCittaPartenza()) {
-						if (c.equals(hotel.getCitta())) {
-							check = false;
-							break;
-						}
-					}
-					
-					if (check) {								
-						try {
-							this.getPacchetto().setHotel(hotel);
-							return "dettagliPacchetto?idPacchetto=" + pacchettoBean.creaPacchetto(getPacchetto()) + "&faces-redirect=true";
-						} catch (HotelInesistenteException e) {
-							JsfUtil.errorMessage("Hotel inesistente");
-						} catch (CittaInesistenteException w) {
-							JsfUtil.errorMessage("Città inesistente");
-						} catch (InsertException e) {
-							JsfUtil.errorMessage("E' stata inserita come città di partenza la stessa città della destinazione");
-						}	
-					} else
-						JsfUtil.errorMessage("L'hotel si trova nella stessa città di una delle città di partenza");
+				if (!this.getPacchetto().getDurate().isEmpty()) {	
+					try {
+						this.getPacchetto().setHotel(hotel);
+						return "dettagliPacchetto?idPacchetto=" + pacchettoBean.creaPacchetto(getPacchetto()) + "&faces-redirect=true";
+					} catch (HotelInesistenteException e) {
+						JsfUtil.errorMessage("Hotel inesistente");
+					} catch (CittaInesistenteException w) {
+						JsfUtil.errorMessage("Città inesistente");
+					} catch (InsertException e) {
+						JsfUtil.errorMessage("E' stata inserita come città di partenza la stessa città della destinazione");
+					}	
 				} else
 					JsfUtil.errorMessage("Inserire almeno una durata");
 			} else
@@ -348,16 +339,20 @@ public class PacchettoPredefinitoBean {
 	 * @param durata La durata da aggiungere
 	 */
 	public void salvaDurata (int durata) {
-		//verifico che la durata non sia già stata inserita
-		if (this.getPacchetto().getDurate().indexOf(durata) == -1) {
-			try {
-				pacchettoBean.aggiuntaDurata(getPacchetto(), durata);
-				JsfUtil.infoMessage("Durata aggiunta");
-			} catch (PacchettoInesistenteException e) {
-				JsfUtil.errorMessage("Pacchetto inesistente");
-			}
+		//controllo che la durata sia positiva
+		if (durata > 0) {
+			//verifico che la durata non sia già stata inserita
+			if (this.getPacchetto().getDurate().indexOf(durata) == -1) {
+				try {
+					pacchettoBean.aggiuntaDurata(getPacchetto(), durata);
+					JsfUtil.infoMessage("Durata aggiunta");
+				} catch (PacchettoInesistenteException e) {
+					JsfUtil.errorMessage("Pacchetto inesistente");
+				}
+			} else
+				JsfUtil.errorMessage("Durata già esistente");
 		} else
-			JsfUtil.errorMessage("Durata già esistente");
+			JsfUtil.errorMessage("Inserire una durata maggiore di 0");
 	}
 	
 	/**
