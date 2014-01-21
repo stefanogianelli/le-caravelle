@@ -158,7 +158,7 @@ public class HotelBean {
 			hotelBean.eliminaHotel(idHotel);
 			return "elencoHotel?faces-redirect=true";
 		} catch (HotelInesistenteException e) {
-			JsfUtil.errorMessage("Hotel sconosciuta");
+			JsfUtil.errorMessage("Hotel sconosciuto");
 		}
 		return null;
 	}

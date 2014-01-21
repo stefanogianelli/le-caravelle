@@ -23,20 +23,20 @@
 	        <h1>Crea il tuo pacchetto</h1>
 	        <h2>Aggiungi destinazione</h2>
 	        <h3>Seleziona la destinazione</h3>
-	        <h:outputText styleClass="text-input" value="#{pacchetto.destinazione.citta.nome}" />
+	        <h:outputText styleClass="centro" value="#{pacchetto.destinazione.citta.nome}" />
 		</div>
 		
 		<div class="blocco">
 			<div class="data">
 				<h3>Data di partenza</h3>
-				<h:outputText styleClass="text-input" value="#{pacchetto.destinazione.dataArrivo}">
+				<h:outputText styleClass="centro" value="#{pacchetto.destinazione.dataArrivo}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText>
 			</div>
 			
 			<div class="data">
 				<h3>Data di ritorno</h3>
-				<h:outputText styleClass="text-input" value="#{pacchetto.destinazione.dataPartenza}">
+				<h:outputText styleClass="centro" value="#{pacchetto.destinazione.dataPartenza}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText>
 			</div>
