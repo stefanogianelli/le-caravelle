@@ -24,6 +24,8 @@ import dtos.EscursioneDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.EntitaEsistenteException;
 import eccezioni.EscursioneInesistenteException;
+import entities.Attivita;
+import entities.AttivitaPred;
 import entities.Citta;
 import entities.Escursioni;
 import enums.CategoriaEscursione;
@@ -79,6 +81,8 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 			predicati.add(cb.lessThanOrEqualTo(escursione.<Date>get("data"), data));
 			predicati.add(cb.greaterThanOrEqualTo(escursione.<Date>get("data"), data));
 		}
+		//seleziono solo le escursioni attive
+		predicati.add(cb.equal(escursione.get("attivo"), 1));
 		cq.where(predicati.toArray(new Predicate[]{}));
 		TypedQuery<Escursioni> q = em.createQuery(cq);
 		List<Escursioni> escursioni = q.getResultList();
@@ -118,30 +122,44 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 
 	@Override
 	public void modificaDatiEscursione(EscursioneDTO escursione) throws EscursioneInesistenteException, CittaInesistenteException, EntitaEsistenteException {
-		//verifico che non esista già un'escursione con lo stesso nome nella stessa città e nello stesso giorno
-		TypedQuery<Escursioni> q = em.createNamedQuery("Escursioni.getEscursioneDaNomeEData", Escursioni.class);
-		q.setParameter("nome", escursione.getNome());
-		q.setParameter("citta", escursione.getCitta().getNome());
-		q.setParameter("data", escursione.getData());
-		if(!q.getResultList().isEmpty())
-			throw new EntitaEsistenteException();
-		
 		Escursioni entity = this.convertiInEntita(escursione);
 		
-		entity.setCategoria(escursione.getCategoria());
-		entity.setData(escursione.getData());
-		entity.setDurata(escursione.getDurata());
-		entity.setNome(escursione.getNome());
+		if (!entity.getNome().equals(escursione.getNome()) && !entity.getCitta().getNome().equals(escursione.getCitta().getNome()) && !entity.getData().equals(escursione.getData())) {
+			//verifico che non esista già un'escursione con lo stesso nome nella stessa città e nello stesso giorno
+			TypedQuery<Escursioni> q = em.createNamedQuery("Escursioni.getEscursioneDaNomeEData", Escursioni.class);
+			q.setParameter("nome", escursione.getNome());
+			q.setParameter("citta", escursione.getCitta().getNome());
+			q.setParameter("data", escursione.getData());
+			if(!q.getResultList().isEmpty())
+				throw new EntitaEsistenteException();
+			entity.setNome(escursione.getNome());
+			entity.setCitta(citta.getCitta(escursione.getCitta().getNome()));
+			entity.setData(escursione.getData());
+		}		
+		
+		entity.setCategoria(escursione.getCategoria());		
+		entity.setDurata(escursione.getDurata());		
 		entity.setOra(new Time(escursione.getOra().getTime()));
 		entity.setPrezzo(escursione.getPrezzo());
-		entity.setCitta(citta.getCitta(escursione.getCitta().getNome()));
+		
 		
 		em.merge(entity);
 	}
 
 	@Override
 	public void eliminaEscursione(int idEscursione) throws EscursioneInesistenteException {
-		em.remove(this.convertiInEntita(idEscursione));
+		Escursioni e = this.convertiInEntita(idEscursione);
+		//controllo che l'escursione da eliminare non sia inserita in nessun pacchetto
+		TypedQuery<Attivita> q = em.createNamedQuery("Attivita.getAttivitaConEscursione", Attivita.class);
+		q.setParameter("escursione", e);
+		TypedQuery<AttivitaPred> q1 = em.createNamedQuery("AttivitaPred.getAttivitaConEscursione", AttivitaPred.class);
+		q1.setParameter("escursione", e);
+		if (q.getResultList().isEmpty() && q1.getResultList().isEmpty())
+			em.remove(e);
+		else {
+			e.setAttivo(0);
+			em.merge(e);
+		}
 	}
 
 	@Override
@@ -174,6 +192,7 @@ public class GestoreEscursioneEJB implements GestoreEscursione, GestoreEscursion
 		dto.setOra(escursione.getOra());
 		dto.setPrezzo(escursione.getPrezzo());
 		dto.setCitta(citta.convertiInDTO(escursione.getCitta()));
+		dto.setAttivo(escursione.getAttivo());
 		
 		return dto;
 	}

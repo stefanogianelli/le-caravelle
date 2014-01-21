@@ -102,7 +102,9 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 			predicati.add(cb.equal(collegamenti.get("origine"), origine));
 		//destinazione
 		if (destinazione != null && !destinazione.equals("Qualsiasi"))
-			predicati.add(cb.equal(collegamenti.get("destinazione"), destinazione));		
+			predicati.add(cb.equal(collegamenti.get("destinazione"), destinazione));	
+		//aggiunto filtro sui collegamenti attivi
+		predicati.add(cb.equal(collegamenti.get("attivo"), 1));
 		cq.where(predicati.toArray(new Predicate[]{}));
 		TypedQuery<Collegamenti> q = em.createQuery(cq);
 		List<Collegamenti> elenco = q.getResultList();
@@ -153,7 +155,18 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 
 	@Override
 	public void eliminaCollegamento (int codiceCollegamento) throws CollegamentoInesistenteException {
-		em.remove(this.convertiInEntita(codiceCollegamento));
+		Collegamenti c = this.convertiInEntita(codiceCollegamento);
+		//Controllo che il collegamento da eliminare non sia inserito in nessun pacchetto
+		Query q = em.createNativeQuery("SELECT * FROM mezzi_trasporto WHERE idCollegamento = ?1");
+		q.setParameter("1", codiceCollegamento);
+		Query q1 = em.createNativeQuery("SELECT * FROM mezzi_trasporto_pred WHERE idCollegamento = ?1");
+		q1.setParameter("1", codiceCollegamento);
+		if (q.getResultList().isEmpty() && q1.getResultList().isEmpty())
+			em.remove(c);
+		else {
+			c.setAttivo(0);
+			em.merge(c);
+		}
 	}
 	
 	@Override
@@ -192,6 +205,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		dto.setTipoCollegamento(collegamento.getTipoCollegamento());
 		dto.setCittaArrivo(citta.convertiInDTO(collegamento.getCittaArrivo()));
 		dto.setCittaPartenza(citta.convertiInDTO(collegamento.getCittaPartenza()));
+		dto.setAttivo(collegamento.getAttivo());
 		
 		return dto;
 	}

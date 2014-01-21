@@ -31,6 +31,8 @@ public class EscursioneDTO implements Serializable {
 
 	private CittaDTO citta;
 	
+	private int attivo;
+	
 	public EscursioneDTO () {
 		citta = new CittaDTO();
 	}
@@ -97,5 +99,13 @@ public class EscursioneDTO implements Serializable {
 
 	public void setCitta(CittaDTO citta) {
 		this.citta = citta;
+	}
+
+	public int getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(int attivo) {
+		this.attivo = attivo;
 	}
 }

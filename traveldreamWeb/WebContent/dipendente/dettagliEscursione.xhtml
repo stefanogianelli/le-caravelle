@@ -21,7 +21,7 @@
 <h:panelGroup rendered="#{escursione.escursione.id != 0}">
 	<div class="bloccoModifica">
 		<h:form>
-			<h:commandLink value="Elimina" onclick="PF('eliminaEscursione').show(); return false;" />
+			<h:commandLink value="Elimina" onclick="PF('eliminaEscursione').show(); return false;" disabled="#{not escursione.attivo}" />
 			
 			<!-- Dialog di conferma eliminazione escursione -->
 			<p:dialog header="Elimina escursione" widgetVar="eliminaEscursione" resizable="false">
@@ -32,7 +32,7 @@
 	      		</h:panelGroup>
 			</p:dialog>
 			
-			<h:link value="Modifica" outcome="modificaEscursione">
+			<h:link value="Modifica" outcome="modificaEscursione" disabled="#{not escursione.attivo}">
 				<f:param name="idEscursione" value="#{id.value}" />
 			</h:link>
 		</h:form>
