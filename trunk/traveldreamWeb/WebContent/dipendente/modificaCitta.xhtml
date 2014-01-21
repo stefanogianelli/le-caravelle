@@ -7,16 +7,20 @@
 
 <ui:composition template="templateDip.xhtml">
 
-<ui:define name="title">Nuova città</ui:define>
+<ui:define name="title">Modifica città</ui:define>
 
 <ui:define name="content">
 
-<div class="bloccoDett">
-	
-	<h1>Nuova città</h1>
-	<br />
+<f:metadata>
+	<f:viewParam name="nomeCitta" binding="#{nome}" />
+	<f:event listener="#{citta.getCitta(nome.value)}" type="preRenderView" />
+</f:metadata>
 
-	<h:form enctype="multipart/form-data">
+<h1>Modifica città</h1>
+
+<h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{citta.citta.id != 0}">
+<h:form enctype="multipart/form-data">
+
 		<p>
 			<h:outputText styleClass="name-input" value="Nome città: " />
 			<h:inputText styleClass="text-input" value="#{citta.citta.nome}" />
@@ -59,17 +63,25 @@
 			<h:inputFile style="margin-left:160px;" value="#{citta.immagine}" />
 			<br />				  
 		</p>			
+
+		<!--  <div class="bloccoCitta" style="height: auto;">
+			<h:panelGroup id="elencoCitta">
+				<ul>
+					<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
+						<li><h:outputText value="#{c.nome}" /></li>
+					</ui:repeat>	
+				</ul><br />
+			</h:panelGroup>
+		</div>-->
 		
 		<br />			
 
 		<div class="bloccoButton">
-			<h:commandButton styleClass="button" value="Salva" action="#{citta.nuovaCitta()}" />
+			<h:commandButton styleClass="button" value="Salva" action="#{citta.modificaCitta()}" />
 		</div>
 	</h:form>
 	
-</div>
-
+</h:panelGroup>
 </ui:define>
 </ui:composition>
-
 </html>

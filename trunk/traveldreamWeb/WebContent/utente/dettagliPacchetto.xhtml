@@ -46,8 +46,8 @@
 			<h:panelGroup>		
 				<h:form>
 	   			 	<h:outputText value="Vuoi davvero eliminare il pacchetto?" /><br />	 
-	       			<p:commandButton value="Sì" action="#{pacchetto.eliminaPacchetto()}" oncomplete="PF('eliminaPacchetto').hide();" />
-	       			<p:commandButton value="No" oncomplete="PF('eliminaPacchetto').hide();" />
+	       			<p:commandButton styleClass="si-button" value="Sì" action="#{pacchetto.eliminaPacchetto()}" oncomplete="PF('eliminaPacchetto').hide();" />
+	       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaPacchetto').hide();" />
       			</h:form>
       		</h:panelGroup>
 		</p:dialog>
@@ -319,7 +319,7 @@
 			<h:dataTable id="escursioni" value="#{d.attivita}" var="a" rendered="#{d.attivita.size() > 0}">
 				<h:column>
 					<f:facet name="header">Nome</f:facet>
-					<h:link value="#{a.escursione.nome}" outcome="dettagliEscursione">
+					<h:link style="font-weight: bold" value="#{a.escursione.nome}" outcome="dettagliEscursione">
 						<f:param name="idEscursione" value="#{a.escursione.id}" />
 					</h:link>
 				</h:column>

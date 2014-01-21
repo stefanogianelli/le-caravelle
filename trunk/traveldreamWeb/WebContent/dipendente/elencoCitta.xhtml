@@ -24,6 +24,35 @@
 
 <div class="bloccoDett">
 
+	<h:panelGroup id="elencoCitta">
+		<div class="tabella">
+		<h:dataTable value="#{citta.paginator.model}" var="c" style="text-align: center;">
+			<h:column>
+				<f:facet name="header">Nome città</f:facet>
+				#{c.nome}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Regione</f:facet>
+				#{c.regione} <br></br>
+			</h:column>	
+			<h:column>
+				<f:facet name="header">Nazione</f:facet>
+				#{c.nazione}
+			</h:column>
+			<h:column>
+				<h:form>
+				<h:link value="Modifica"  outcome="modificaCitta">
+					<f:param name="nomeCitta" value="#{c.nome}" />
+				</h:link>
+				<br></br>
+				<h:commandLink value="Elimina" onclick="PF('eliminaCitta').show(); return false;" />
+				</h:form>	
+			</h:column>
+
+		</h:dataTable>
+		</div>
+	</h:panelGroup>
+
 </div>
 	
 </ui:define>

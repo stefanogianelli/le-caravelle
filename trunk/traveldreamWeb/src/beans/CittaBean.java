@@ -12,6 +12,7 @@ import javax.servlet.http.Part;
 import utils.FileUtils;
 import utils.JsfUtil;
 import dtos.CittaDTO;
+import eccezioni.CittaInesistenteException;
 import eccezioni.InsertException;
 import eccezioni.UploadException;
 import ejbs.GestoreCitta;
@@ -50,6 +51,14 @@ public class CittaBean {
 
 	public void setImmagine(Part immagine) {
 		this.immagine = immagine;
+	}
+	
+	public void getCitta(String nomeCitta){
+		try {
+			this.setCitta(cittaBean.cercaCitta(nomeCitta));
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città inesistente");
+		}
 	}
 
 	/**
@@ -105,4 +114,24 @@ public class CittaBean {
 			JsfUtil.errorMessage("Città già presente nel database");
 		}
 	}	
+
+	/**
+	 * Permette di modificare una città nel database
+	 */
+	public void modificaCitta () {
+		
+	}
+	
+	/**
+	 * Permette di eliminare una città nel database
+	 */
+	public String eliminaCitta (int idCitta) {
+		/*try {
+			cittaBean.eliminaCitta(idCitta);
+			return "elencoCitta?faces-redirect=true";
+		} catch (CittaInesistenteException e) {
+			JsfUtil.errorMessage("Città sconosciuta");
+		}*/
+		return null;
+	}
 }
