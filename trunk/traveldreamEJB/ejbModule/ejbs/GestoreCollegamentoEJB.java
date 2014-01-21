@@ -129,6 +129,7 @@ public class GestoreCollegamentoEJB implements GestoreCollegamento, GestoreColle
 		entity.setTipoCollegamento(collegamento.getTipoCollegamento());
 		entity.setCittaArrivo(citta.getCitta(collegamento.getCittaArrivo().getNome()));
 		entity.setCittaPartenza(citta.getCitta(collegamento.getCittaPartenza().getNome()));
+		entity.setAttivo(1);
 		
 		em.persist(entity);
 		em.flush();
