@@ -23,17 +23,17 @@
 		
 		<p>
 			<h:outputText tyleClass="name-input" value="Password corrente:" />
-			<h:inputSecret styleClass="text-input" binding="#{vecchiaPwd}" />
+			<h:inputSecret styleClass="text-input" binding="#{vecchiaPwd}" required="true" requiredMessage="Inserire la password corrente" />
 		</p>
 		
 		<p>
 			<h:outputText tyleClass="name-input" value="Nuova password:" />
-			<h:inputSecret styleClass="text-input" binding="#{nuovaPwd}" />
+			<h:inputSecret styleClass="text-input" binding="#{nuovaPwd}" required="true" requiredMessage="Inserire la nuova password" />
 		</p>
 		
 		<p>
 			<h:outputText tyleClass="name-input" value="Ripeti password:" />
-			<h:inputSecret styleClass="text-input" binding="#{controlloPwd}" />
+			<h:inputSecret styleClass="text-input" binding="#{controlloPwd}" required="true" requiredMessage="Inserire la password di controllo" />
 		</p>	
 		
 		<div class="bloccoButton">
