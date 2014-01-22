@@ -149,6 +149,7 @@ public class ProfiloBean {
 	 * @param controlloPassword La password di controllo
 	 */
 	public void modificaPassword (String vecchiaPassword, String nuovaPassword, String controlloPassword) {
+		//controllo che la nuova password inserita e quella di controllo siano uguali
 		if (nuovaPassword.equals(controlloPassword)) {
 			try {
 				profiloBean.modificaPassword(vecchiaPassword, nuovaPassword);
