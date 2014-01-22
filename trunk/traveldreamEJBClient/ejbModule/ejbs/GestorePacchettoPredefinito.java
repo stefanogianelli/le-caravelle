@@ -42,6 +42,12 @@ public interface GestorePacchettoPredefinito {
 	List<PacchettoPredefinitoDTO> elencoPacchettoPerCitta (String nomeCitta);
 	
 	/**
+	 * Mostra l'elenco degli ultimi quattro pacchetti predefiniti aggiunti
+	 * @return L'elenco dei pacchetti predefiniti
+	 */
+	List<PacchettoPredefinitoDTO> elencoConsigli ();
+	
+	/**
 	 * Permette la creazione di un nuovo pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
 	 * @return L'identificativo del pacchetto creato

@@ -29,6 +29,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name="pacchetti_predefiniti", uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
 @NamedQueries ({
 	@NamedQuery(name="PacchettiPredefiniti.elenco", query="SELECT p FROM PacchettiPredefiniti p"),
+	@NamedQuery(name="PacchettiPredefiniti.elencoUltimiPacchetti", query="SELECT p FROM PacchettiPredefiniti p ORDER BY p.id DESC"),
 	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaId", query="SELECT p FROM PacchettiPredefiniti p WHERE p.id = :id"),
 	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaNome", query="SELECT p FROM PacchettiPredefiniti p WHERE p.nome = :nome"),
 	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaCitta", query="SELECT p FROM PacchettiPredefiniti p WHERE p.hotel.citta.nome = :citta"),
