@@ -14,8 +14,6 @@ public class HotelDTO implements Serializable {
 
 	private int id;
 
-	@Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-            message="email non valida")
 	private String email;
 
 	@NotEmpty(message = "Inserire un indirizzo")
