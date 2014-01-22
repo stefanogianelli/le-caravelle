@@ -401,7 +401,7 @@
 					<h:selectOneMenu styleClass="editData" binding="#{durata}">
 						<f:selectItems value="#{pacchetto.predefinito.durate}" />
 					</h:selectOneMenu>					
-		           	<h:commandButton styleClass="data-button" value="Salva" action="#{pacchetto.modificaDurata(durata.value,d)}" oncomplete="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDurata'); return false;">
+		           	<h:commandButton styleClass="data-button" value="Salva" oncomplete="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDurata'); return false;">
 		           		<f:ajax execute="@form" listener="#{pacchetto.modificaDurata(durata.value,d)}" render=":destinazioni:dataPartenza :destinazioni:modificaDurata :destinazioni:pannelloVoloRitorno :prezzoPacchetto" /> 
 		           	</h:commandButton>
 		           	<h:commandButton styleClass="edit-button" value="Annulla" onclick="toggle('destinazioni:#{status.index}:dataPartenza'); toggle('destinazioni:#{status.index}:modificaDurata'); return false;" />
