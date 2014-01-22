@@ -7,6 +7,7 @@ import interfaces.GestoreHotelLocal;
 import interfaces.GestorePacchettoPredefinitoLocal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -342,11 +343,13 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		for (DatePartenza d : pacchetto.getDatePartenza()) {
 			datePartenza.add(d.getId().getData());
 		}
+		Collections.sort(datePartenza);
 		pacchettoDTO.setDatePartenza(datePartenza);
 		List<Integer> durate = new ArrayList<Integer>();
 		for (Durate d : pacchetto.getDurate()) {
 			durate.add(d.getId().getDurata());
 		}
+		Collections.sort(durate);
 		pacchettoDTO.setDurate(durate);
 		List<CollegamentoDTO> collegamenti = new ArrayList<CollegamentoDTO>();
 		for (Collegamenti c : pacchetto.getCollegamenti()) {
