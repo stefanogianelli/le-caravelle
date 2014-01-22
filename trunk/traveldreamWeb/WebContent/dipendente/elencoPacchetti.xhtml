@@ -69,11 +69,11 @@
 		</div>
 	</ui:repeat>
 	<div style="text-align: center;">
-		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto; margin-right: 20px;" >
+		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto; margin-right: 20px;" onclick="javascript:window.location='#elenco'">
 			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.prev()}" render=":elenco" />
 		</h:commandButton>
 		<h:outputText value="#{pacchettoPredefinito.paginator.pageIndex} / #{pacchettoPredefinito.paginator.pages}" />
-		<h:commandButton styleClass="edit-button" value="Successiva &gt;" style="width: auto;">
+		<h:commandButton styleClass="edit-button" value="Successiva &gt;" style="width: auto;" onclick="javascript:window.location='#elenco'">
 			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.next()}" render=":elenco" />
 		</h:commandButton>
 		<h:inputHidden value="#{pacchettoPredefinito.paginator.pageIndex}"/>
