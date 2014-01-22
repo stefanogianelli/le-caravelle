@@ -54,6 +54,8 @@ public class ProfiloBean {
 		profilo = profiloBean.getUtenteCorrente();
 		if (profilo.getPersona().getNome() == null)
 			this.noUserData = true;	
+		else
+			this.noUserData = false;
 	}
 	
 	/**
