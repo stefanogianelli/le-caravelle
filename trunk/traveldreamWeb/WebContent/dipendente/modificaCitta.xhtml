@@ -21,8 +21,7 @@
 <h1>Modifica città</h1>
 
 <h:panelGroup styleClass="bloccoDett" layout="block" rendered="#{citta.citta.id != 0}">
-<h:form enctype="multipart/form-data">
-
+	<h:form enctype="multipart/form-data">
 		<p>
 			<h:outputText styleClass="name-input" value="Nome città: " />
 			<h:inputText styleClass="text-input" value="#{citta.citta.nome}" />
@@ -62,7 +61,7 @@
 		
 		<p>
 			<h:outputText styleClass="name-input" value="Immagine: " />
-			<h:inputFile style="margin-left:160px;" value="#{citta.immagine}" />
+			<h:inputFile id="immagineField" style="margin-left:160px;" value="#{citta.immagine}" />
 			<br />				  
 		</p>	
 		
@@ -70,28 +69,25 @@
 		
 		<div class="bloccoButton">
 			<h:commandButton value="Carica" styleClass="button">
-				<f:ajax execute="@form" listener="#{citta.aggiuntaImmagine()}" render="elencoCitta" />
+				<f:ajax execute="@form" listener="#{citta.aggiuntaImmagine()}" render="@all" />
 			</h:commandButton>
 		</div>
 
 		<div class="bloccoCitta" style="height: auto;">
-			<h:panelGroup id="elencoCitta">
-				<ul>
-					<ui:repeat var="i" value="#{citta.citta.immagini}">
-						<li>
-							<h:outputText value="#{i}" />
-							(<h:commandLink value="rimuovi" action="#{citta.rimuoviImmagine(i)}" />)
-						</li>
-					</ui:repeat>	
-				</ul>
-			</h:panelGroup>
+			<ul>
+				<ui:repeat var="i" value="#{citta.citta.immagini}">
+					<li>
+						<h:outputText value="#{i}" />
+						(<h:commandLink value="rimuovi" action="#{citta.rimuoviImmagine(i)}" />)
+					</li>
+				</ui:repeat>	
+			</ul>
 		</div>
 
 		<div class="bloccoButton">
 			<h:commandButton styleClass="button" value="Salva" action="#{citta.modificaCitta()}" />
 		</div>
-	</h:form>
-	
+	</h:form>	
 </h:panelGroup>
 </ui:define>
 </ui:composition>
