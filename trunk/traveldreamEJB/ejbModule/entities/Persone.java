@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
@@ -20,7 +21,10 @@ import javax.persistence.OneToOne;
  * 
  */
 @Entity
-@NamedQuery(name="Persone.elenco", query="SELECT p FROM Persone p")
+@NamedQueries ({
+	@NamedQuery(name="Persone.elenco", query="SELECT p FROM Persone p"),
+	@NamedQuery(name="Persone.getPersona", query="SELECT p FROM Persone p WHERE p.id.nome = :nome AND p.id.cognome = :cognome AND p.id.dataNascita = :dataNascita")
+})
 public class Persone implements Serializable {
 	private static final long serialVersionUID = 1L;
 

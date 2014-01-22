@@ -55,7 +55,7 @@
 		</div>
 	</ui:repeat>
 	<div style="text-align: center;">
-		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto;" onclick="javascript:window.location='#elenco'">
+		<h:commandButton styleClass="edit-button" value="&lt; Precedente" style="width: auto; margin-right: 20px;" onclick="javascript:window.location='#elenco'">
 			<f:ajax execute="@form" listener="#{pacchettoPredefinito.paginator.prev()}" render=":elenco" />
 		</h:commandButton>
 		<h:outputText value="#{pacchettoPredefinito.paginator.pageIndex} / #{pacchettoPredefinito.paginator.pages}" />

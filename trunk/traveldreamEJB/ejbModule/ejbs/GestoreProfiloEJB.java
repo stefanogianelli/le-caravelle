@@ -14,7 +14,9 @@ import javax.ejb.EJBContext;
 import javax.ejb.Stateless;
 import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -70,10 +72,6 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		String password = this.generaPassword();
 		utente.setPassword(password);
 		emailBean.inviaPassword(email, password);
-		/*
-		 * DEBUG
-		 */
-		System.out.println("Utente: " + email + "\nPassword: " + password);
 		
 		em.persist(utente);
 	}
@@ -91,17 +89,35 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 	@Override
 	public void aggiuntaDatiPersonali(UtenteDTO datiUtente) {
 		Utenti utente = this.getUtente();
-
-		Persone persona = new Persone ();
-		persona.setNome(datiUtente.getPersona().getNome());
-		persona.setCognome(datiUtente.getPersona().getCognome());
-		persona.setDataNascita(datiUtente.getPersona().getDataNascita());
-		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
-		persona.setTelefono(datiUtente.getPersona().getTelefono());
 		
-		utente.setPersona(persona);
+		utente.setPersona(this.creaPersona(datiUtente.getPersona()));
 		
 		em.merge(utente);
+	}
+	
+	@Override
+	public Persone creaPersona (PersonaDTO persona) {
+		//verifico se la persona è già presente nel database
+		Persone p;
+		TypedQuery<Persone> q = em.createNamedQuery("Persone.getPersona", Persone.class);
+		q.setParameter("nome", persona.getNome());
+		q.setParameter("cognome", persona.getCognome());
+		q.setParameter("dataNascita", persona.getDataNascita());
+		try {
+			p = q.getSingleResult();
+			//aggiorno i restanti dati della persona
+			p.setDocumentoIdentita(persona.getDocumentoIdentita());
+			p.setTelefono(persona.getTelefono());
+		} catch (NoResultException e) {
+			//creo una nuova entità
+			p = new Persone();
+			p.setNome(persona.getNome());
+			p.setCognome(persona.getCognome());
+			p.setDataNascita(persona.getDataNascita());
+			p.setDocumentoIdentita(persona.getDocumentoIdentita());
+			p.setTelefono(persona.getTelefono());
+		}
+		return p;
 	}
 	
 	@Override
@@ -111,10 +127,8 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		Persone persona = utente.getPersona();
 		persona.setDocumentoIdentita(datiUtente.getPersona().getDocumentoIdentita());
 		persona.setTelefono(datiUtente.getPersona().getTelefono());
-
-		utente.setPersona(persona);
 		
-		em.merge(utente);
+		em.merge(persona);
 	}	
 
 	@Override

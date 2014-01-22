@@ -160,14 +160,17 @@ public class PacchettiDaConfermareBean {
 	
 	/**
 	 * Permette di confermare il pacchetto
+	 * @return L'indirizzo della pagina con l'elenco dei pacchetti degli utenti
 	 */
-	public void confermaPacchetto () {
+	public String confermaPacchetto () {
 		try {
 			pacchettoBean.confermaPacchetto(getPacchetto().getId());
 			JsfUtil.infoMessage("Pacchetto confermato");
+			return "elencoPacchettiUtente.xhtml?faces-redirect=true";
 		} catch (PacchettoInesistenteException e) {
 			JsfUtil.errorMessage("Pacchetto inesistente");
 		}
+		return null;
 	}
 	
 	/**

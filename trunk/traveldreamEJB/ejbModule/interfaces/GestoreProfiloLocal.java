@@ -17,6 +17,13 @@ public interface GestoreProfiloLocal {
 	Utenti getUtente();	
 	
 	/**
+	 * Permette di creare una nuova entità persona se la persona non esiste database, altrimenti ne modifica i dati
+	 * @param persona I dati della persona
+	 * @return L'entità creata o modificata
+	 */
+	Persone creaPersona (PersonaDTO persona);
+	
+	/**
 	 * Permette la conversione da un'entità al rispettivo DTO
 	 * @param utente L'entità di partenza
 	 * @return Il relativo DTO

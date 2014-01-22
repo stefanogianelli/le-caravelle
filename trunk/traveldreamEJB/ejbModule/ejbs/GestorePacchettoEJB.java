@@ -267,18 +267,12 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 			//aggiungo i dati dei partecipanti nel pacchetto
 			if (entity.getNumPartecipanti() == partecipanti.size() + 1) {
 				for (PersonaDTO p : partecipanti) {
-					Persone persona = new Persone();
-					persona.setNome(p.getNome());
-					persona.setCognome(p.getCognome());
-					persona.setDataNascita(p.getDataNascita());
-					persona.setDocumentoIdentita(p.getDocumentoIdentita());
-					persona.setTelefono(p.getTelefono());
-					entity.addPartecipante(persona);
+					entity.addPartecipante(profilo.creaPersona(p));
 				}			
 				entity.setTipoPacchetto(TipoPacchetto.DACONFERMARE);					
 				em.merge(entity);
 				
-				//TODO: da abilitare
+				//TODO: da abilitare al termine della fase di testing
 				//emailBean.confermaAcquisto(entity.getUtente().getEmail(), entity.getNome());
 			} else
 				throw new AcquistoException("Errore: il numero di partecipanti non combacia con il numero di partecipanti del pacchetto");
