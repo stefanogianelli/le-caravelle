@@ -49,7 +49,10 @@
 				</h2>
 				<br></br>
 				<div id="prezzo">
-				#{p.prezzo} €
+					<h:outputText value="#{p.prezzo}">
+						<f:convertNumber pattern="#,###,##0.00" />
+					</h:outputText>
+					€				
 				</div>
 				<br></br>
 				<div id="conf">#{p.tipoPacchetto == "ACQUISTATO" ? "Confermato" : "Da confermare"}</div>

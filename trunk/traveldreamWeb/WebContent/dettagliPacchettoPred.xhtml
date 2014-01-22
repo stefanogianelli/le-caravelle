@@ -49,7 +49,12 @@
 			</div>
 			
 			<div class="pulsanti">
-				<div id="prezzo">#{pacchettoPredefinito.pacchetto.prezzo} €</div>
+				<div id="prezzo">
+					<h:outputText value="#{pacchettoPredefinito.pacchetto.prezzo}">
+						<f:convertNumber pattern="#,###,##0.00" />
+					</h:outputText>
+					€				
+				</div>
 			</div>
 		</div>
 	</h:form>
@@ -139,7 +144,12 @@
 								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 							</h:outputText>						
 						</li>
-						<li>#{c.prezzo} €</li>
+						<li>
+							<h:outputText value="#{c.prezzo}">
+								<f:convertNumber pattern="#,###,##0.00" />
+							</h:outputText>
+							€						
+						</li>
 					</ul>
 				</div>
 			</div>

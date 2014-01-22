@@ -74,7 +74,10 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Prezzo</f:facet>
-				#{e.prezzo} €
+				<h:outputText value="#{e.prezzo}">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:outputText>
+				€				
 			</h:column>
 			<h:column>
 				<h:commandButton styleClass="flight-button" action="#{destinazione.aggiuntaEscursione(id.value,idDestinazione,e.id)}" value="Scegli" />

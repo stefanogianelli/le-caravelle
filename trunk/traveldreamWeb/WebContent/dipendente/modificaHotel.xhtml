@@ -36,6 +36,7 @@
 			<h:outputText styleClass="name-input" value="Prezzo a notte: " />
 				<h:inputText styleClass="text-input" value="#{hotel.hotel.prezzo}" required="true" requiredMessage="Inserire un prezzo" validatorMessage="Inserire un prezzo positivo" converterMessage="Il prezzo deve essere numerico">
 					<f:validateDoubleRange minimum="1.00" />
+					<f:convertNumber pattern="#,###,##0.00" />
 				</h:inputText><br />
 		</p>
 		

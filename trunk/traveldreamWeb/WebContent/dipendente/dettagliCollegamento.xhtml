@@ -66,7 +66,13 @@
 		<p>Origine: #{collegamento.collegamento.origine}</p>
 		<p>Destinazione: #{collegamento.collegamento.destinazione}</p>
 		<br></br>
-		<p>Prezzo: #{collegamento.collegamento.prezzo} €</p>
+		<p>
+			Prezzo:&nbsp;
+			<h:outputText value="#{collegamento.collegamento.prezzo}">
+				<f:convertNumber pattern="#,###,##0.00" />
+			</h:outputText>
+			€
+		</p>
 	</div>
 </h:panelGroup>
 
