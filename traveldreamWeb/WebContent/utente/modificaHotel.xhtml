@@ -51,14 +51,25 @@
 					<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />
 					<p><b>#{h.nome}</b></p>
 					<p:rating value="#{h.stelle}" styleClass="stelle-dett" readonly="true" stars="5" />
-					<p>#{h.prezzo} €</p>
+					<p>
+						<h:outputText value="#{h.prezzo}">
+							<f:convertNumber pattern="#,###,##0.00" />
+						</h:outputText>
+						€					
+					</p>
 					
 					<p:dialog header="#{h.nome}" widgetVar="#{h.nome}" modal="true" resizable="false">  
 						<h:panelGroup styleClass="dettagliHotel" layout="block" style="height: auto;">
 							<h2>#{h.nome}</h2>
 							<p:rating value="#{h.stelle}" styleClass="stelle-descr" readonly="true" stars="5" />
 							<h:graphicImage library="images/hotel" name="#{h.immagine.equals('NULL') ? 'noImage.png' : h.immagine}" width="195" height="113" />
-							<p>Prezzo a notte: #{h.prezzo} €</p>
+							<p>
+								Prezzo a notte:&nbsp;
+								<h:outputText value="#{h.prezzo}">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+								€								
+							</p>
 							<br></br>
 							<p>Indirizzo: #{h.indirizzo} (<a href="http://maps.google.com/?q=#{h.indirizzo}, #{h.citta.nome}, #{h.citta.nazione}" target="_blank">mappa</a>)</p>
 							<p>Città: #{h.citta.nome}</p>

@@ -104,7 +104,12 @@
 								<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
 							</h:outputText>
 						</li>
-						<li>#{c.prezzo} €</li>
+						<li>
+							<h:outputText value="#{c.prezzo}">
+								<f:convertNumber pattern="#,###,##0.00" />
+							</h:outputText>
+							€						
+						</li>
 					</ul>
 					</div>
 				</div>
@@ -192,7 +197,12 @@
 									<f:convertDateTime type="time" pattern="HH:mm" timeZone="Europe/Rome" />
 								</h:outputText>
 							</li>
-							<li>#{c.prezzo} €</li>
+							<li>
+								<h:outputText value="#{c.prezzo}">
+									<f:convertNumber pattern="#,###,##0.00" />
+								</h:outputText>
+								€							
+							</li>
 						</ul>
 					</div>
 				</div>

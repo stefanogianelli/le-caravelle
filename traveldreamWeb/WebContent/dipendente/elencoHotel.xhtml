@@ -45,7 +45,12 @@
 					</b>
 				</p>
 				<p:rating value="#{h.stelle}" styleClass="stelle-dett" readonly="true" stars="5" />
-				<p>#{h.prezzo} €</p>
+				<p>
+					<h:outputText value="#{h.prezzo}">
+						<f:convertNumber pattern="#,###,##0.00" />
+					</h:outputText>
+					€				
+				</p>
 			</div>
 			
 			<div class="descr">

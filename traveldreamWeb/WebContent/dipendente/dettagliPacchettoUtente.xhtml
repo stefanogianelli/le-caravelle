@@ -114,7 +114,12 @@
 							<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 						</h:outputText>
 					</li>
-					<li>#{pacchettiUtente.getCollegamento(d.dataArrivo).prezzo} €</li>
+					<li>
+						<h:outputText value="#{pacchettiUtente.getCollegamento(d.dataArrivo).prezzo}">
+							<f:convertNumber pattern="#,###,##0.00" />
+						</h:outputText>
+						€
+					</li>
 				</ul>
 			</h:panelGroup>             
 			

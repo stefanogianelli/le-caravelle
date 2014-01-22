@@ -80,6 +80,7 @@
 						<p:ajax event="save" listener="#{pacchettoPredefinito.modificaPrezzoPacchetto()}" update=":prezzoPacchetto" />
 		                <p:inputText value="#{pacchettoPredefinito.pacchetto.prezzo}" required="true" requiredMessage="Inserire un prezzo" validatorMessage="Inserire un prezzo positivo" converterMessage="Il prezzo deve essere numerico">
 		                	<f:validateDoubleRange minimum="1.00" />
+		                	<f:convertNumber pattern="#,###,##0.00" />
 		                </p:inputText>	                							                
 		            </p:inplace>	
 		            <h:outputText value=" €" />	
@@ -213,7 +214,12 @@
 								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 							</h:outputText>						
 						</li>
-						<li>#{c.prezzo} €</li>
+						<li>
+							<h:outputText value="#{c.prezzo}">
+								<f:convertNumber pattern="#,###,##0.00" />
+							</h:outputText>
+							€							
+						</li>
 					</ul>
 				</div>
 			</div>

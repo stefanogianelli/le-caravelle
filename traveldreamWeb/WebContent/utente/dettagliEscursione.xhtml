@@ -39,7 +39,13 @@
 		</p>
 		<p>Durata (ore): #{escursione.escursione.durata}</p>
 		<br></br>
-		<p>Prezzo: #{escursione.escursione.prezzo} €</p>
+		<p>
+			Prezzo:&nbsp;
+			<h:outputText value="#{escursione.escursione.prezzo}">
+				<f:convertNumber pattern="#,###,##0.00" />
+			</h:outputText>
+			€				
+		</p>
 		<br></br>
 		<p>Tipo di escursione: #{escursione.escursione.categoria.label}</p>
 	</div>

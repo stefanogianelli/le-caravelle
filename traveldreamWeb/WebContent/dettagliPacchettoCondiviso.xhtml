@@ -54,7 +54,12 @@
 		
 		<!-- Prezzo del pacchetto -->
 		<h:panelGroup id="prezzoPacchetto" styleClass="pulsanti" layout="block">
-			<div id="prezzo">#{pacchetto.pacchetto.prezzo} €</div>
+			<div id="prezzo">
+				<h:outputText value="#{pacchetto.pacchetto.prezzo}">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:outputText>
+				€			
+			</div>
 		</h:panelGroup>
 	</div>	
 
@@ -113,7 +118,12 @@
 							<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 						</h:outputText>
 					</li>
-					<li>#{pacchetto.getCollegamento(d.dataArrivo).prezzo} €</li>
+					<li>
+						<h:outputText value="#{pacchetto.getCollegamento(d.dataArrivo).prezzo}">
+							<f:convertNumber pattern="#,###,##0.00" />
+						</h:outputText>
+						€					
+					</li>
 				</ul>
 			</h:panelGroup>             
 			
@@ -242,7 +252,12 @@
 								<f:convertDateTime pattern="HH:mm" timeZone="Europe/Rome" />
 							</h:outputText>
 						</li>
-						<li>#{pacchetto.getCollegamento(d.dataPartenza).prezzo} €</li>
+						<li>
+							<h:outputText value="#{pacchetto.getCollegamento(d.dataPartenza).prezzo}">
+								<f:convertNumber pattern="#,###,##0.00" />
+							</h:outputText>
+							€						
+						</li>
 					</ul>
 				</h:panelGroup>
 				
