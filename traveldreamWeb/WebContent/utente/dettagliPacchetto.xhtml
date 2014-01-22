@@ -276,19 +276,8 @@
 		</div>
 			
 		<h:form>
-			<p:commandButton value="Elimina" styleClass="detail-button" onclick="PF('eliminaDestinazione').show();" disabled="#{not pacchetto.tipoPersonalizzato}"/>
-		</h:form>		
-		
-		<!-- Dialog di conferma eliminazione destinazione -->
-		<p:dialog header="Elimina destinazione" widgetVar="eliminaDestinazione" resizable="false">
-			<h:panelGroup>		
-				<h:form>
-	   			 	<h:outputText value="Vuoi davvero eliminare la destinazione?" /><br />	 
-	       			<p:commandButton value="Sì" action="#{pacchetto.eliminaDestinazione(d)}" oncomplete="PF('eliminaDestinazione').hide();" ajax="false" />
-	       			<p:commandButton value="No" oncomplete="PF('eliminaDestinazione').hide();" />
-      			</h:form>
-      		</h:panelGroup>
-		</p:dialog>		
+			<h:commandButton value="Elimina" styleClass="detail-button" action="#{pacchetto.eliminaDestinazione(d)}" disabled="#{not pacchetto.tipoPersonalizzato}"/>
+		</h:form>
 			
 		<!-- Informazioni sull'hotel -->
 		<div class="hotelPacc">
