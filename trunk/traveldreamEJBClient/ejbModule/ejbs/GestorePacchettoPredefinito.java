@@ -48,6 +48,12 @@ public interface GestorePacchettoPredefinito {
 	List<PacchettoPredefinitoDTO> elencoConsigli ();
 	
 	/**
+	 * Mostra l'elenco degli ultimi tre pacchetti predefiniti aggiunti
+	 * @return L'elenco dei pacchetti predefiniti
+	 */
+	List<PacchettoPredefinitoDTO> elencoTreConsigli ();
+	
+	/**
 	 * Permette la creazione di un nuovo pacchetto predefinito
 	 * @param pacchetto I dati del pacchetto
 	 * @return L'identificativo del pacchetto creato

@@ -38,7 +38,15 @@
  
  	<div class="bloccoBianco">
         <h1><a href="/traveldreamWeb/nostriConsigli.xhtml">I nostri consigli</a></h1>
-		
+		<ui:repeat var="p" value="#{pacchetto.elencoTreConsigli()}">
+			<div class="pacchetto">
+			  <h:link outcome="dettagliPacchettoPred">
+			  	<f:param name="idPacchetto" value="#{p.id}" />			  
+			 	<h:graphicImage library="images/citta" name="#{pacchettoPredefinito.getImmagine(p.id)}" width="288" height="174" />
+			  </h:link>
+			  <div id="linkPacc">#{p.nome.length() > 10 ? p.nome.subSequence(0,10).toString().concat('...') : p.nome}</div> 
+			</div>
+		</ui:repeat>		
     </div>
  </h:form>   
 	<div class="domande">
