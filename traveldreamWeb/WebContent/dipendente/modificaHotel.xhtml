@@ -24,7 +24,8 @@
 	<h:form enctype="multipart/form-data">
 		<p>
 			<h:outputText tyleClass="name-input" value="Nome hotel: " />
-			<h:inputText styleClass="text-input" value="#{hotel.hotel.nome}" /><br />
+			<h:inputText styleClass="text-input" value="#{hotel.hotel.nome}"  maxlength="45" />
+			<br />
 		</p>
 		
 		<p>
@@ -44,7 +45,8 @@
 		
 		<p>
 			<h:outputText styleClass="name-input" value="Indirizzo: " />
-			<h:inputText styleClass="text-input" value="#{hotel.hotel.indirizzo}" /><br />
+			<h:inputText styleClass="text-input" value="#{hotel.hotel.indirizzo}"  maxlength="45" />
+			<br />
 		</p>
 		
 		<p>
@@ -62,12 +64,14 @@
 		
 		<p>
 			<h:outputText styleClass="name-input" value="Website: " />
-			<h:inputText styleClass="text-input" value="#{hotel.hotel.website}" /><br />
+			<h:inputText styleClass="text-input" value="#{hotel.hotel.website}" maxlength="255" />
+			<br />
 		</p>
 		
 		<p>
 			<h:outputText styleClass="name-input" value="Email: " />
-			<h:inputText styleClass="text-input" value="#{hotel.hotel.email}" /><br />
+			<h:inputText styleClass="text-input" value="#{hotel.hotel.email}" maxlength="45" />
+			<br />
 		</p>
 		
 		<p>
