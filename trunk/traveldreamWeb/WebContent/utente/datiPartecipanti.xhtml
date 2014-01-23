@@ -31,11 +31,11 @@
 			
 			<p>
 				<h:outputText tyleClass="name-input" value="Nome:" />
-				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.nome}" maxlength="45" />
+				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.nome}" disabled="#{not datiPartecipanti.noUserData}" maxlength="45" />
 			</p>
 			<p>
 				<h:outputText tyleClass="name-input" value="Cognome:" />
-				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.cognome}" maxlength="45" />
+				<h:inputText styleClass="text-input" value="#{datiPartecipanti.utente.persona.cognome}" disabled="#{not datiPartecipanti.noUserData}" maxlength="45" />
 			</p>
 					
 			
@@ -43,8 +43,8 @@
 			
 			<p>
 				<h:outputText tyleClass="name-input" value="Data di nascita:" />
-				<p:calendar styleClass="data-input" value="#{datiPartecipanti.utente.persona.dataNascita}" locale="it"
-								required="true" requiredMessage="Inserire una data" converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />				
+				<p:calendar styleClass="data-input" value="#{datiPartecipanti.utente.persona.dataNascita}" locale="it" disabled="#{not datiPartecipanti.noUserData}"
+					required="true" requiredMessage="Inserire una data" converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />				
 			</p>
 			
 			<br />
@@ -85,7 +85,7 @@
 			<p>
 				<h:outputText tyleClass="name-input" value="Data di nascita:" />
 				<p:calendar styleClass="data-input" value="#{d.dataNascita}" locale="it"
-								required="true" requiredMessage="Inserire una data" converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />					
+					required="true" requiredMessage="Inserire una data" converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />					
 			</p>
 			
 			<br />

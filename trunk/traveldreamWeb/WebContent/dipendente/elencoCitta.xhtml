@@ -44,16 +44,14 @@
 							<f:param name="idCitta" value="#{c.id}" />
 						</h:link>
 						<br />
-						<h:commandLink value="Elimina" onclick="PF('eliminaCitta').show(); return false;" />
+						<h:commandLink value="Elimina" onclick="PF('eliminaCitta#{c.id}').show(); return false;" />
 						
 						<!-- Dialog di conferma eliminazione citta -->
-						<p:dialog header="Elimina pacchetto" widgetVar="eliminaCitta" resizable="false">
-							<h:panelGroup>		
-								<h:form>
-					   			 	<h:outputText value="Vuoi davvero eliminare la città?" /><br />	 
-					       			<p:commandButton value="Sì" action="#{citta.eliminaCitta(c.id)}" oncomplete="PF('eliminaCitta').hide();" update=":elencoCitta" />
-					       			<p:commandButton value="No" oncomplete="PF('eliminaCitta').hide();" />
-				      			</h:form>
+						<p:dialog header="Elimina pacchetto" widgetVar="eliminaCitta#{c.id}" resizable="false">
+							<h:panelGroup>
+				   			 	<h:outputText value="Vuoi davvero eliminare la città #{c.nome}?" /><br />	 
+				       			<p:commandButton value="Sì" action="#{citta.eliminaCitta(c.id)}" ajax="false" oncomplete="PF('eliminaCitta#{c.id}').hide();" update=":elencoCitta" />
+				       			<p:commandButton value="No" oncomplete="PF('eliminaCitta#{c.id}').hide();" />
 				      		</h:panelGroup>
 						</p:dialog>
 					</h:form>	
