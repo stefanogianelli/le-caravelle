@@ -79,7 +79,7 @@
 		</p>
 	
 		<div class="bloccoButton">
-			<h:commandButton action="#{escursione.modificaEscursione()}" styleClass="button" value="Salva" />
+			<h:commandButton action="#{escursione.modificaEscursione()}" styleClass="button" value="Salva" disabled="#{escursione.escursione.attivo == 0}" />
 		</div>
 	</h:form>
 </h:panelGroup>

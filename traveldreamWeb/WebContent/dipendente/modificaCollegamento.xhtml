@@ -88,7 +88,7 @@
 		</p>		
 
 		<div class="bloccoButton">
-			<h:commandButton value="Salva" styleClass="button" action="#{collegamento.creaCollegamento()}" />
+			<h:commandButton value="Salva" styleClass="button" action="#{collegamento.creaCollegamento()}" disabled="#{collegamento.collegamento.attivo == 0}" />
 		</div>
 	</h:form>
 </h:panelGroup>
