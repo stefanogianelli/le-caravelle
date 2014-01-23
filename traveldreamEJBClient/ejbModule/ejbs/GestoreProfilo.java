@@ -51,5 +51,12 @@ public interface GestoreProfilo {
 	 * @throws MessagingException Quando si verifica un errore nell'invio del messaggio
 	 * @throws UtenteInesistenteException Quando l'utente non viene trovato nel database
 	 */
-	void resetPassword (String email) throws MessagingException, UtenteInesistenteException;	
+	void resetPassword (String email) throws MessagingException, UtenteInesistenteException;
+	
+	/**
+	 * Permette l'iscrizione alla newsletter
+	 * @param email L'indirizzo email
+	 * @throws MessagingException Quando si verifica un errore nell'invio del messaggio
+	 */
+	void iscrizioneNewsletter (String email) throws MessagingException;
 }

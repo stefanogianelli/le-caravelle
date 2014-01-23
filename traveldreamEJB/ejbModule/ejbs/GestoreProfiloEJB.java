@@ -151,6 +151,11 @@ public class GestoreProfiloEJB implements GestoreProfilo, GestoreProfiloLocal {
 		
 		return password;
 	}
+	
+	@Override
+	public void iscrizioneNewsletter (String email) throws MessagingException {
+		emailBean.iscrizioneNewsletter(email);
+	}
 
 	/**
 	 * Permette la conversione da un DTO alla rispettiva entità
