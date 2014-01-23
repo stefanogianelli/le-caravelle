@@ -74,7 +74,7 @@
 		<br />
 		
 		<div class="bloccoButton">
-			<h:commandButton value="Carica" styleClass="button">
+			<h:commandButton value="Carica" styleClass="button" disabled="#{citta.citta.attivo == 0}">
 				<f:ajax execute="@form" listener="#{citta.aggiuntaImmagine()}" render="@all" />
 			</h:commandButton>
 		</div>
@@ -83,15 +83,15 @@
 			<ul>
 				<ui:repeat var="i" value="#{citta.citta.immagini}">
 					<li>
-						<h:outputText value="#{i}" />
-						(<h:commandLink value="rimuovi" action="#{citta.rimuoviImmagine(i)}" />)
+						<h:outputText value="#{i}" />&nbsp;
+						<h:commandLink value="(rimuovi)" action="#{citta.rimuoviImmagine(i)}" rendered="#{citta.citta.attivo == 1}" />
 					</li>
 				</ui:repeat>	
 			</ul>
 		</div>
 
 		<div class="bloccoButton">
-			<h:commandButton styleClass="button" value="Salva" action="#{citta.modificaCitta()}" />
+			<h:commandButton styleClass="button" value="Salva" action="#{citta.modificaCitta()}" disabled="#{citta.citta.attivo == 0}" />
 		</div>
 	</h:form>	
 </h:panelGroup>

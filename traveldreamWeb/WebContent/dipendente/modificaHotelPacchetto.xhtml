@@ -62,7 +62,7 @@
 						</h:panelGroup>
 					</p:dialog>					
 					
-					<p:commandButton value="Scegli" action="#{pacchettoPredefinito.modificaHotel(id.value, h)}" />
+					<p:commandButton value="Scegli" action="#{pacchettoPredefinito.modificaHotel(id.value, h)}" disabled="#{pacchettoPredefinito.pacchetto.attivo == 0}" />
 		
 					<p:commandButton value="Dettagli" onclick="PF('#{h.nome}').show();"/>			
 				</div>		

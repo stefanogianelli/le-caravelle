@@ -133,7 +133,7 @@ public interface GestorePacchettoPredefinito {
 	 * @param idEscursione L'identificativo dell'escursione
 	 * @throws EscursioneInesistenteException Quando l'escursione non viene trovata nel database
 	 * @throws PacchettoInesistenteException Quando il pacchetto non viene trovato nel database
-	 * @throws InsertException Quando l'escursione è già stata inserita nel pacchetto
+	 * @throws InsertException Quando l'escursione è già stata inserita nel pacchetto, quando la regione non combacia con la regione dell'hotel o nel caso in cui il pacchetto è stato disattivato
 	 */
 	void aggiuntaEscursione (int idPacchetto, int idEscursione) throws EscursioneInesistenteException, PacchettoInesistenteException, InsertException;
 	

@@ -43,7 +43,7 @@
 							<h:selectBooleanCheckbox styleClass="prova-button" value="#{c.selezionato}"/>
 					
 						<p>
-							<h:commandLink value="Scegli" action="#{pacchettoPredefinito.aggiuntaCollegamento(idPacchetto,c)}" styleClass="detail-button" />			
+							<h:commandLink value="Scegli" action="#{pacchettoPredefinito.aggiuntaCollegamento(idPacchetto,c)}" styleClass="detail-button" disabled="#{pacchettoPredefinito.pacchetto.attivo == 0}" />			
 						</p>
 					</div>
 					
@@ -73,7 +73,7 @@
 			</div>
 		</ui:repeat>
 		<div class="bloccoButtonBianco">
-		<h:commandButton styleClass="search-button" value="Aggiungi collegamenti" action="#{pacchettoPredefinito.aggiuntaCollegamenti(idPacchetto, collegamento.elenco)}" />
+		<h:commandButton styleClass="search-button" value="Aggiungi collegamenti" action="#{pacchettoPredefinito.aggiuntaCollegamenti(idPacchetto, collegamento.elenco)}" disabled="#{pacchettoPredefinito.pacchetto.attivo == 0}" />
 		</div>
 	</h:form>
 
