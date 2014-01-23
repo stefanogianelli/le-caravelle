@@ -13,6 +13,13 @@
 
 <f:event listener="#{profilo.caricaProfilo()}" type="preRenderView" />
 
+<!-- Fix allineamento del calendario -->
+<style>
+select {
+	position: static;
+}
+</style>
+
 <p><a href="areaCliente.xhtml">Indietro</a></p>
 
 <h1>Dati personali</h1>
@@ -61,7 +68,7 @@
 		
 		<p>
 			<h:outputText tyleClass="name-input" value="Data di nascita:" />
-			<p:calendar styleClass="data-input" value="#{profilo.profilo.persona.dataNascita}" locale="it" disabled="#{not profilo.noUserData}"
+			<p:calendar styleClass="data-input" value="#{profilo.profilo.persona.dataNascita}" locale="it" disabled="#{not profilo.noUserData}" navigator="true" yearRange="-100:+1"
 				required="true" requiredMessage="Inserire una data" converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" />				
 		</p>
 		
