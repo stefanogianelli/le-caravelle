@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`hotel` (
   `indirizzo` VARCHAR(255) NOT NULL,
   `telefono` VARCHAR(45) NOT NULL,
   `website` VARCHAR(255) NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NULL,
   `prezzo` DOUBLE NOT NULL,
   `citta` INT NOT NULL,
   `immagine` VARCHAR(255),
