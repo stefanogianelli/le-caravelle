@@ -35,6 +35,7 @@ import entities.Collegamenti;
 import entities.DatePartenza;
 import entities.Durate;
 import entities.Escursioni;
+import entities.Pacchetti;
 import entities.PacchettiPredefiniti;
 
 /**
@@ -124,6 +125,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 			entity.addDurata(durata);
 		}
 		entity.setHotel(hotel.convertiInEntita(pacchetto.getHotel()));
+		entity.setAttivo(1);
 		
 		em.persist(entity);
 		em.flush();
@@ -306,7 +308,16 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 
 	@Override
 	public void eliminaPacchetto(int idPacchetto) throws PacchettoInesistenteException {
-		em.remove(this.convertiInEntita(idPacchetto));
+		PacchettiPredefiniti p = this.convertiInEntita(idPacchetto);
+		//verifico che se il pacchetto viene utilizzato come base per qualche pacchetto degli utenti
+		TypedQuery<Pacchetti> q = em.createNamedQuery("Pacchetti.getPacchettiPredefiniti", Pacchetti.class);
+		q.setParameter("predefinito", p);
+		if (q.getResultList().isEmpty())
+			em.remove(p);
+		else {
+			p.setAttivo(0);
+			em.merge(p);
+		}
 	}
 	
 	@Override
@@ -362,6 +373,7 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 		}
 		pacchettoDTO.setAttivita(attivita);
 		pacchettoDTO.setHotel(hotel.convertiInDTO(pacchetto.getHotel()));
+		pacchettoDTO.setAttivo(pacchetto.getAttivo());
 		
 		return pacchettoDTO;
 	}

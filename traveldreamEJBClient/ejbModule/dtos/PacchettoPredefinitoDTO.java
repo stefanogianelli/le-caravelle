@@ -30,6 +30,8 @@ public class PacchettoPredefinitoDTO implements Serializable {
 	
 	private List<AttivitaPredDTO> attivita;
 	
+	private int attivo;
+	
 	public PacchettoPredefinitoDTO () {
 		cittaPartenza = new ArrayList<CittaDTO>();
 		datePartenza = new ArrayList<Date>();
@@ -110,4 +112,13 @@ public class PacchettoPredefinitoDTO implements Serializable {
 	public void setAttivita(List<AttivitaPredDTO> attivita) {
 		this.attivita = attivita;
 	}
+
+	public int getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(int attivo) {
+		this.attivo = attivo;
+	}
+	
 }

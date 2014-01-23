@@ -129,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `traveldreamdb`.`pacchetti_predefiniti` (
   `nome` VARCHAR(255) NOT NULL,
   `prezzo` DOUBLE NOT NULL,
   `idHotel` INT NOT NULL,
+  `attivo` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_PacchettoPredefinito_Hotel2_idx` (`idHotel` ASC),
   CONSTRAINT `fk_PacchettoPredefinito_Hotel2`
