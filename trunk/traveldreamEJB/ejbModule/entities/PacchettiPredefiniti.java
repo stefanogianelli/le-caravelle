@@ -18,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 
 /**
@@ -26,13 +25,12 @@ import javax.persistence.UniqueConstraint;
  * 
  */
 @Entity
-@Table(name="pacchetti_predefiniti", uniqueConstraints={@UniqueConstraint(columnNames={"nome"})})
+@Table(name="pacchetti_predefiniti")
 @NamedQueries ({
-	@NamedQuery(name="PacchettiPredefiniti.elenco", query="SELECT p FROM PacchettiPredefiniti p"),
-	@NamedQuery(name="PacchettiPredefiniti.elencoUltimiPacchetti", query="SELECT p FROM PacchettiPredefiniti p ORDER BY p.id DESC"),
+	@NamedQuery(name="PacchettiPredefiniti.elenco", query="SELECT p FROM PacchettiPredefiniti p WHERE p.attivo = 1"),
+	@NamedQuery(name="PacchettiPredefiniti.elencoUltimiPacchetti", query="SELECT p FROM PacchettiPredefiniti p WHERE p.attivo = 1 ORDER BY p.id DESC"),
 	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaId", query="SELECT p FROM PacchettiPredefiniti p WHERE p.id = :id"),
-	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaNome", query="SELECT p FROM PacchettiPredefiniti p WHERE p.nome = :nome"),
-	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaCitta", query="SELECT p FROM PacchettiPredefiniti p WHERE p.hotel.citta.nome = :citta"),
+	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaCitta", query="SELECT p FROM PacchettiPredefiniti p WHERE p.hotel.citta.nome = :citta AND p.attivo = 1"),
 	@NamedQuery(name="PacchettiPredefiniti.getPacchettoDaHotel", query="SELECT p FROM PacchettiPredefiniti p WHERE p.hotel.id = :hotel")
 })
 public class PacchettiPredefiniti implements Serializable {
@@ -84,6 +82,8 @@ public class PacchettiPredefiniti implements Serializable {
 	
 	@OneToMany(cascade={CascadeType.MERGE}, mappedBy="pacchetto", orphanRemoval=true)
 	private List<AttivitaPred> attivita;
+	
+	private Integer attivo;
 
 	public PacchettiPredefiniti() {
 		cittaPartenza = new ArrayList<Citta>();
@@ -227,6 +227,14 @@ public class PacchettiPredefiniti implements Serializable {
 		this.getAttivita().remove(attivita);
 		
 		return attivita;
+	}
+
+	public Integer getAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(Integer attivo) {
+		this.attivo = attivo;
 	}
 
 }

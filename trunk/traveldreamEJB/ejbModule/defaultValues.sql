@@ -257,7 +257,7 @@ INSERT INTO gruppi VALUES ('francesca@gmail.com' , 'UTENTE');
 INSERT INTO gruppi VALUES ('dipendente@gmail.com' , 'DIPENDENTE');
 
 -- 1 Pacchetto Parigi
-INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('From Paris with love', 98, 23);
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel, attivo) VALUES ('From Paris with love', 98, 23, 1);
 
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (1, 1);
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (1, 2);
@@ -279,7 +279,7 @@ INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (38, 1);
 
 -- 2 Pacchetto Parigi
-INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('Capodanno', 132, 25);
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel, attivo) VALUES ('Capodanno', 132, 25, 1);
 
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (2, 1);
 
@@ -306,7 +306,7 @@ INSERT INTO `mezzi_trasporto` VALUES (2,80), (2,81);
 INSERT INTO `destinazioni` VALUES (2,'2013-08-08','2013-08-15',2,17,8);
 
 -- 5 Pacchetto Barcellona
-INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('La Rambla', 65, 11);
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel, attivo) VALUES ('La Rambla', 65, 11, 1);
 
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (3, 1), (3, 2);
 
@@ -320,7 +320,7 @@ INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (31, 3), (32, 3), (46, 3), (47, 3), (73, 3), (74, 3);
 
 -- 6 Pacchetto New York
-INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('The big Apple', 153, 10);
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel, attivo) VALUES ('The big Apple', 153, 10, 1);
 
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (4, 1), (4, 2);
 
@@ -334,7 +334,7 @@ INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (55, 4), (71, 4), (72, 4), (76, 4), (77, 4);
 
 -- 7 Pacchetto L'Avana
-INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel) VALUES ('Cuba', 127, 14);
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel, attivo) VALUES ('Cuba', 127, 14, 1);
 
 INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (5, 1), (5, 3);
 
