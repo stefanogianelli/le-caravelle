@@ -14,6 +14,12 @@ import javax.persistence.TypedQuery;
 import javax.servlet.http.Part;
 
 import utils.FileUtils;
+
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+
 import dtos.CittaDTO;
 import eccezioni.CittaInesistenteException;
 import eccezioni.InsertException;
@@ -78,8 +84,14 @@ public class GestoreCittaEJB implements GestoreCitta, GestoreCittaLocal {
 			c.setNome(citta.getNome());
 			c.setRegione(citta.getRegione());
 			c.setNazione(citta.getNazione());
-			c.setLongitudine(citta.getLongitudine());
-			c.setLatitudine(citta.getLatitudine());
+			//recupero coordinate
+			final Geocoder geocoder = new Geocoder();
+			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(citta.getNome() +"," + citta.getNazione()).setLanguage("it").getGeocoderRequest();
+			GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+			if (!geocoderResponse.getResults().isEmpty()) {
+				c.setLongitudine(geocoderResponse.getResults().get(0).getGeometry().getBounds().getNortheast().getLng().floatValue());
+				c.setLatitudine(geocoderResponse.getResults().get(0).getGeometry().getBounds().getNortheast().getLat().floatValue());
+			}
 			for(String i : citta.getImmagini()) {
 				ImmaginiCitta imm = new ImmaginiCitta();
 				imm.setImmagine(i);

@@ -43,26 +43,6 @@
 		<br />
 		
 		<p>
-			<h:outputText styleClass="name-input" value="Latitudine: " />
-			<h:inputText styleClass="text-input" value="#{citta.citta.latitudine}" validatorMessage="La latitudine deve essere compresa tra -90 e 90" converterMessage="La latitudine deve essere numerica">
-				<f:validateDoubleRange minimum="-90" maximum="90" />
-				<f:convertNumber pattern="#,###,##0.00000000"/>
-			</h:inputText>
-			<br />
-		</p>
-		
-		<br />
-		
-		<p>
-			<h:outputText styleClass="name-input" value="Longitudine: " />
-			<h:inputText styleClass="text-input" value="#{citta.citta.longitudine}" validatorMessage="La longitudine deve essere compresa tra -180 e 180" converterMessage="La longitudine deve essere numerica">
-				<f:validateDoubleRange minimum="-180" maximum="180" />
-				<f:convertNumber pattern="#,###,##0.00000000"/>
-			</h:inputText>
-			<br />
-		</p>
-		
-		<p>
 			<h:outputText styleClass="name-input" value="Immagine: " />
 			<h:inputFile style="margin-left:160px;" value="#{citta.immagine}" validator="#{imageValidator.validateImage}" />
 			<br />				  
