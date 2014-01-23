@@ -23,9 +23,9 @@
 <h:panelGroup rendered="#{collegamento.collegamento.codice != 0}">	
 	<div class="bloccoModifica">
 		<h:form id="disatt">
-			<h:commandLink value="Elimina" onclick="PF('eliminaCollegamento').show(); return false;"  disabled="#{not collegamento.attivo}" />
+			<h:commandLink value="Elimina" onclick="PF('eliminaCollegamento').show(); return false;" disabled="#{collegamento.collegamento.attivo == 0}" />
 						
-			<h:link value="Modifica" outcome="modificaCollegamento" disabled="#{not collegamento.attivo}">
+			<h:link value="Modifica" outcome="modificaCollegamento" disabled="#{collegamento.collegamento.attivo == 0}">
 				<f:param name="codiceCollegamento" value="#{collegamento.collegamento.codice}" />
 			</h:link>
 		</h:form>

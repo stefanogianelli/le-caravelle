@@ -80,7 +80,7 @@
 		</p>		
 		
 		<div class="bloccoButton">
-			<h:commandButton action="#{hotel.modificaHotel()}" styleClass="button" value="Salva" />
+			<h:commandButton action="#{hotel.modificaHotel()}" styleClass="button" value="Salva" disabled="#{hotel.hotel.attivo == 0}" />
 		</div>
 	</h:form>
 </h:panelGroup>

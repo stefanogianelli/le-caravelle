@@ -272,16 +272,5 @@ public class CollegamentoBean {
 			JsfUtil.errorMessage("Collegamento inesistente");
 		}
 		return null;
-	}	
-	
-	/**
-	 * Verifica se il collegamento è attivo
-	 * @return true se il collegamento è attivo, false altrimenti
-	 */
-	public boolean isAttivo () {
-		if (getCollegamento().getAttivo() == 1)
-			return true;
-		else
-			return false;
 	}
 }

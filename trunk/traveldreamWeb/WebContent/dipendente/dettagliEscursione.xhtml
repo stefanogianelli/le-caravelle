@@ -23,9 +23,9 @@
 <h:panelGroup rendered="#{escursione.escursione.id != 0}">
 	<div class="bloccoModifica">
 		<h:form id="disatt">
-			<h:commandLink value="Elimina" onclick="PF('eliminaEscursione').show(); return false;" disabled="#{not escursione.attivo}" />
+			<h:commandLink value="Elimina" onclick="PF('eliminaEscursione').show(); return false;" disabled="#{escursione.escursione.attivo == 0}" />
 			
-			<h:link value="Modifica" outcome="modificaEscursione" disabled="#{not escursione.attivo}">
+			<h:link value="Modifica" outcome="modificaEscursione" disabled="#{escursione.escursione.attivo == 0}">
 				<f:param name="idEscursione" value="#{id.value}" />
 			</h:link>
 		</h:form>

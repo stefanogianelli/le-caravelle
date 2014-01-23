@@ -199,16 +199,5 @@ public class EscursioneBean {
 		}
 		return null;
 	}
-	
-	/**
-	 * Verifica se l'escursione è attiva
-	 * @return true se l'escursione è attivo, false altrimenti
-	 */
-	public boolean isAttivo () {
-		if (getEscursione().getAttivo() == 1)
-			return true;
-		else
-			return false;
-	}
 
 }
