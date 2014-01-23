@@ -31,12 +31,14 @@
 			<h3>Data di partenza</h3>
 			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataArrivo}" locale="it" mindate="#{data.dataOdierna}"
 				required="true" requiredMessage="Inserire una data di partenza"
-				converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)" /> 
+				converterMessage="Inserire una data di partenza nel formato dd/MM/yyyy (es.: 05/01/2014)">
+				<p:ajax event="dateSelect" update="dataRit" />
+			</p:calendar> 
 		</div>
 		
 		<div class="data">
 			<h3>Data di ritorno</h3>
-			<p:calendar styleClass="data-input" value="#{pacchetto.destinazione.dataPartenza}" locale="it" mindate="#{data.dataGiornoSuccessivo}"
+			<p:calendar id="dataRit" styleClass="data-input" value="#{pacchetto.destinazione.dataPartenza}" locale="it" mindate="#{pacchetto.destinazione.dataArrivo}"
 				required="true" requiredMessage="Inserire una data di ritorno"
 				converterMessage="Inserire una data di ritorno nel formato dd/MM/yyyy (es.: 05/01/2014)" />
 		</div>
