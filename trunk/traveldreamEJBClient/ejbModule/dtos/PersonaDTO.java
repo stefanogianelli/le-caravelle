@@ -3,6 +3,7 @@ package dtos;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -17,6 +18,7 @@ public class PersonaDTO implements Serializable {
 	@NotEmpty(message="Inserire un cognome")
 	private String cognome;
 
+	@Past(message="Davvero sei nato nel futuro?")
 	private Date dataNascita;
 	
 	@NotEmpty(message="Inserire un documento d'identità")
