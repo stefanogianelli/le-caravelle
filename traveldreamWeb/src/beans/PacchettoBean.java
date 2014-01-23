@@ -140,7 +140,8 @@ public class PacchettoBean {
 		for (PacchettoDTO p : pacchetti) {
 			if (p.getDestinazioni().get(p.getDestinazioni().size() - 1).getDataPartenza().before(DataUtils.getDataOdierna())) {
 				for (DestinazioneDTO d : p.getDestinazioni()) {
-					simpleModel.addOverlay(new Marker(new LatLng(d.getCitta().getLatitudine(), d.getCitta().getLongitudine()), d.getCitta().getNome()));
+					if (d.getCitta().getLatitudine() != 0 && d.getCitta().getLongitudine() != 0)
+						simpleModel.addOverlay(new Marker(new LatLng(d.getCitta().getLatitudine(), d.getCitta().getLongitudine()), d.getCitta().getNome()));
 				}
 			}
 		}			
