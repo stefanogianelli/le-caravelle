@@ -43,6 +43,8 @@ import entities.PacchettiPredefiniti;
  */
 @Stateless
 public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefinito, GestorePacchettoPredefinitoLocal {
+	
+	private final int NUMERO_CONSIGLI = 4;
 
 	@PersistenceContext
 	private EntityManager em;
@@ -97,11 +99,21 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	public List<PacchettoPredefinitoDTO> elencoConsigli () {
 		TypedQuery<PacchettiPredefiniti> q = em.createNamedQuery("PacchettiPredefiniti.elencoUltimiPacchetti", PacchettiPredefiniti.class);
 		List<PacchettoPredefinitoDTO> elenco = new ArrayList<PacchettoPredefinitoDTO>();
-		for (PacchettiPredefiniti p : q.setMaxResults(4).getResultList()) {
+		for (PacchettiPredefiniti p : q.setMaxResults(NUMERO_CONSIGLI).getResultList()) {
 			elenco.add(this.convertiInDTO(p));
 		}
 		return elenco;
 	}
+	
+	@Override
+	public List<PacchettoPredefinitoDTO> elencoTreConsigli () {
+		TypedQuery<PacchettiPredefiniti> q = em.createNamedQuery("PacchettiPredefiniti.elencoUltimiPacchetti", PacchettiPredefiniti.class);
+		List<PacchettoPredefinitoDTO> elenco = new ArrayList<PacchettoPredefinitoDTO>();
+		for (PacchettiPredefiniti p : q.setMaxResults(3).getResultList()) {
+			elenco.add(this.convertiInDTO(p));
+		}
+		return elenco;
+	}	
 
 	@Override
 	public int creaPacchetto(PacchettoPredefinitoDTO pacchetto) throws HotelInesistenteException, CittaInesistenteException, InsertException {

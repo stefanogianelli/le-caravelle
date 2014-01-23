@@ -353,6 +353,14 @@ public class PacchettoBean {
 	public List<PacchettoPredefinitoDTO> elencoConsigli () {
 		return predefinitoBean.elencoConsigli();
 	}
+	
+	/**
+	 * Mostra l'elenco degli ultimi tre pacchetti predefiniti aggiunti
+	 * @return L'elenco dei pacchetti predefiniti
+	 */
+	public List<PacchettoPredefinitoDTO> elencoTreConsigli () {
+		return predefinitoBean.elencoTreConsigli();
+	}	
 
 	/**
 	 * Permette la creazione di un nuovo pacchetto
