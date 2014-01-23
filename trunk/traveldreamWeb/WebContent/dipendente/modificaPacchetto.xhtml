@@ -34,7 +34,7 @@
 			</p>
 			
 			<div class="bloccoCitta" style="height: auto;">
-				<h:commandButton value="Salva città" styleClass="save-button">
+				<h:commandButton value="Salva città" styleClass="save-button" disabled="#{pacchettoPredefinito.pacchetto.attivo == 0}">
 					<f:ajax execute="@form" listener="#{pacchettoPredefinito.salvaCitta(cittaText.value)}" render="elencoCitta" />
 				</h:commandButton>
 				
@@ -43,7 +43,7 @@
 						<ui:repeat var="c" value="#{pacchettoPredefinito.pacchetto.cittaPartenza}">
 							<li>
 								<h:outputText value="#{c.nome}" />
-								&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviCitta(c)}" />
+								&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviCitta(c)}" rendered="#{pacchettoPredefinito.pacchetto.attivo == 1}" />
 							</li>
 						</ui:repeat>	
 					</ul><br />
@@ -57,7 +57,7 @@
 			</p>
 			
 			<div class="bloccoCitta" style="height: auto;">
-				<h:commandButton value="Salva data" styleClass="save-button">
+				<h:commandButton value="Salva data" styleClass="save-button" disabled="#{pacchettoPredefinito.pacchetto.attivo == 0}">
 					<f:ajax execute="@form" listener="#{pacchettoPredefinito.salvaData(dataEntry.value)}" render="elencoDate" />
 				</h:commandButton>
 				
@@ -68,7 +68,7 @@
 					   			<h:outputText value="#{da}">
 					   				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 					   			</h:outputText>	
-					   			&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDataPartenza(da)}" />					
+					   			&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDataPartenza(da)}" rendered="#{pacchettoPredefinito.pacchetto.attivo == 1}" />					
 							</li>
 						</ui:repeat>	
 					</ul><br />
@@ -83,7 +83,7 @@
 			</p>
 			
 			<div class="bloccoCitta" style="height: auto;">
-					<h:commandButton value="Salva durata" styleClass="save-button">
+					<h:commandButton value="Salva durata" styleClass="save-button" disabled="#{pacchettoPredefinito.pacchetto.attivo == 0}">
 						<f:ajax execute="@form" listener="#{pacchettoPredefinito.salvaDurata(durataEntry.value)}" render="elencoDurate" />
 					</h:commandButton>
 					<h:panelGroup id="elencoDurate">
@@ -91,7 +91,7 @@
 							<ui:repeat var="d" value="#{pacchettoPredefinito.pacchetto.durate}">
 								<li>
 									<h:outputText value="#{d}" />
-									&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDurata(d)}" />						
+									&nbsp;<h:commandLink value="rimuovi" action="#{pacchettoPredefinito.rimuoviDurata(d)}" rendered="#{pacchettoPredefinito.pacchetto.attivo == 1}" />						
 								</li>
 							</ui:repeat>	
 						</ul><br />

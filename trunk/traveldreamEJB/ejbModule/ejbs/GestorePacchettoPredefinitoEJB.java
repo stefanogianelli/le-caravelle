@@ -241,26 +241,30 @@ public class GestorePacchettoPredefinitoEJB implements GestorePacchettoPredefini
 	public void aggiuntaEscursione(int idPacchetto, int idEscursione) throws EscursioneInesistenteException, PacchettoInesistenteException, InsertException {
 		PacchettiPredefiniti entity = this.convertiInEntita(idPacchetto);
 		
-		Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
-		
-		//controllo che l'escursione non sia già stata aggiunta
-		TypedQuery<AttivitaPred> q = em.createNamedQuery("AttivitaPred.getAttivita", AttivitaPred.class);
-		q.setParameter("pacchetto", entity);
-		q.setParameter("escursione", escursioneEntity);
-		
-		if (q.getResultList().isEmpty()) {
-			//controllo che l'escursione sia nella stessa regione dell'hotel
-			if (entity.getHotel().getCitta().getRegione().equals(escursioneEntity.getCitta().getRegione())) {	
-				AttivitaPred attivita = new AttivitaPred();
-				attivita.setEscursione(escursioneEntity);
-				
-				entity.addAttivita(attivita);
-				
-				em.merge(entity);	
+		//controllo che il pacchetto non sia stato disattivato
+		if (entity.getAttivo() == 1) {		
+			Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
+			
+			//controllo che l'escursione non sia già stata aggiunta
+			TypedQuery<AttivitaPred> q = em.createNamedQuery("AttivitaPred.getAttivita", AttivitaPred.class);
+			q.setParameter("pacchetto", entity);
+			q.setParameter("escursione", escursioneEntity);
+			
+			if (q.getResultList().isEmpty()) {
+				//controllo che l'escursione sia nella stessa regione dell'hotel
+				if (entity.getHotel().getCitta().getRegione().equals(escursioneEntity.getCitta().getRegione())) {	
+					AttivitaPred attivita = new AttivitaPred();
+					attivita.setEscursione(escursioneEntity);
+					
+					entity.addAttivita(attivita);
+					
+					em.merge(entity);	
+				} else
+					throw new InsertException("L'escursione non è nella stessa regione dell'hotel");
 			} else
-				throw new InsertException("L'escursione non è nella stessa regione dell'hotel");
+				throw new InsertException("Escursione già inserita");
 		} else
-			throw new InsertException("Escursione già inserita");
+			throw new InsertException("Pacchetto disattivato");
 	}
 
 	@Override
