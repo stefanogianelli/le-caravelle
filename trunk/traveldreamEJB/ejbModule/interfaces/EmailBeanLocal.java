@@ -38,4 +38,11 @@ public interface EmailBeanLocal {
 	 * @throws MessagingException Quando non è possibile inviare la mail
 	 */
 	void confermaAcquisto (String email, String nomePacchetto) throws MessagingException;
+	
+	/**
+	 * Permette di iscriversi alla newsletter
+	 * @param email L'indirizzo email
+	 * @throws MessagingException Quando non è possibile inviare la mail
+	 */
+	void iscrizioneNewsletter (String email) throws MessagingException;
 }

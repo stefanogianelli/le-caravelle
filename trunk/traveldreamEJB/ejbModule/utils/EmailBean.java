@@ -63,4 +63,10 @@ public class EmailBean implements EmailBeanLocal {
     	String messaggio = "Grazie per aver acquistato il pacchetto " + nomePacchetto;
     	this.inviaMessaggio(email, "Conferma acquisto", messaggio);
     }
+    
+    @Override
+    public void iscrizioneNewsletter (String email) throws MessagingException {
+    	String messaggio = "Grazie per esserti iscritto alla nostra newsletter!";
+    	this.inviaMessaggio(email, "Iscrizione newsletter", messaggio);
+    }
 }

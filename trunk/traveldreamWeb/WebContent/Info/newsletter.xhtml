@@ -2,20 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/template.xhtml">
+<ui:composition template="/template.xhtml">
 	
 <ui:define name="title">Newsletter</ui:define>
-
+	
 <ui:define name="content">
 
-<div class="info">
-
-<h1>Iscriviti alla newsletter</h1>
-
-</div>
-</ui:define>
-
+	<div class="bloccoLogin">
+        <h1>Iscriviti alla newsletter</h1>
+        <br /><br />
+		<h:form>
+			<p>
+				<h:outputText styleClass="name-input" value="Email: " />
+				<h:inputText styleClass="text-input" value="#{newsletter.email}"/><br />
+			</p>		
+		
+			<div class="bloccoButton">
+				<h:commandButton styleClass="button" value="Iscriviti" action="#{newsletter.iscriviti()}" onclick="jQuery(this).addClass('ui-state-disabled')" />
+			</div>
+		</h:form>
+	</div>
+	
+	</ui:define>
 	</ui:composition>
 </html>
