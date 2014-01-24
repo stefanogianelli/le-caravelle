@@ -14,14 +14,14 @@
 	<div class="bloccoLogin">
         <h1>Iscriviti alla newsletter</h1>
         <br /><br />
-		<h:form>
+		<h:form prependId="false">
 			<p>
 				<h:outputText styleClass="name-input" value="Email: " />
 				<h:inputText styleClass="text-input" value="#{newsletter.email}"/><br />
 			</p>		
 		
 			<div class="bloccoButton">
-				<h:commandButton styleClass="button" value="Iscriviti" action="#{newsletter.iscriviti()}" />
+				<p:commandButton id="newsButton" styleClass="button" value="Iscriviti" action="#{newsletter.iscriviti()}" onclick="document.getElementById('newsButton').disabled = true" oncomplete="document.getElementById('newsButton').disabled = false" />
 			</div>
 		</h:form>
 	</div>

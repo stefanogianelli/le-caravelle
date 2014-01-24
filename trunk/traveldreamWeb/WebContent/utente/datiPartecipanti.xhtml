@@ -28,7 +28,7 @@ select {
 
 <h1>Dati partecipante</h1>
 
-<h:form>	
+<h:form prependId="false">	
 	<div class="bloccoDett" style="height: auto;">
 		<!-- Dati utente -->
 		<h:panelGroup>
@@ -113,7 +113,9 @@ select {
 		</ui:repeat>
 		
 		<div class="bloccoButton">
-			<h:commandButton styleClass="button" value="Conferma" action="#{datiPartecipanti.acquista()}" />
+			<h:commandButton id="confirmButton" styleClass="button" value="Conferma" onclick="document.getElementById('confirmButton').disabled = true" oncomplete="document.getElementById('confirmButton').disabled = false;">
+				<f:ajax execute="@form" listener="#{datiPartecipanti.acquista()}" render="@this :messaggi" />
+			</h:commandButton>
 		</div>
 	</div>
 </h:form>
