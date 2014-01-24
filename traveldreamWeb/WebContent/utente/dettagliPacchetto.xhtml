@@ -59,7 +59,7 @@
 		<!-- Dialog che compare in sovraimpressione per inserire i dati dell'amico -->
 		<p:dialog header="Condividi" widgetVar="condividiPacchetto" resizable="false">
 			<h:panelGroup>		
-				<h:form>
+				<h:form prependId="false">
 	   			 	<h:panelGrid columns="2" style="margin-bottom:10px">        			 
 	       				<h:outputLabel for="email" value="email:" />  
 	         			<p:inputText id="email" value="#{pacchetto.amico.email}" />
@@ -71,7 +71,7 @@
 	         			<p:inputText id="cognome" value="#{pacchetto.amico.cognome}" />
 	       			</h:panelGrid>  
 	 
-	       			<p:commandButton id="condividi" value="Condividi" action="#{pacchetto.condividiPacchetto()}" oncomplete="PF('condividiPacchetto').hide();" />
+	       			<p:commandButton id="condividiButton" value="Condividi" action="#{pacchetto.condividiPacchetto()}"  onclick="document.getElementById('condividiButton').disabled = true" oncomplete="PF('condividiPacchetto').hide(); document.getElementById('condividiButton').disabled = false" />
       			</h:form>
       		</h:panelGroup>
 		</p:dialog>

@@ -44,23 +44,19 @@
        <h3>Step 1: inserisci la tua email</h3>
        <h3>Step 2: ricevi una password personale</h3>
 		<br></br>
-		<h:form>
+		<h:form prependId="false">
 			<p>
 				<h:outputText styleClass="name-input" value="Email: " />
 				<h:inputText styleClass="text-input" value="#{profilo.profilo.email}"/><br />
 			</p>		
 		
 			<div class="bloccoButton">
-				<h:commandButton styleClass="button" value="Conferma" action="#{profilo.registrazione()}" />
+				<h:commandButton id="confirmButton" styleClass="button" value="Conferma" onclick="document.getElementById('confirmButton').disabled = true" oncomplete="document.getElementById('confirmButton').disabled = false;">
+					<f:ajax execute="@form" listener="#{profilo.registrazione()}" render="@this :messaggi" />
+				</h:commandButton>
 			</div>
 		</h:form>
 </div>
-	
-	<div class="consigli">
-		<br></br>
-	</div>
-	
-	
 	
 	</ui:define>
 	</ui:composition>
