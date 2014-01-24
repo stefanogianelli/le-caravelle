@@ -293,8 +293,8 @@
 				<h:panelGroup>
 					<h:form>
 		   			 	<h:outputText value="Vuoi davvero eliminare la destinazione #{d.citta.nome}?" /><br />
-		       			<p:commandButton value="Sì" action="#{pacchetto.eliminaDestinazione(d)}" oncomplete="PF('eliminaDestinazione#{d.id}').hide();" ajax="false" />
-		       			<p:commandButton value="No" oncomplete="PF('eliminaDestinazione#{d.id}').hide();" />
+		       			<p:commandButton styleClass="si-button" value="Sì" action="#{pacchetto.eliminaDestinazione(d)}" oncomplete="PF('eliminaDestinazione#{d.id}').hide();" ajax="false" />
+		       			<p:commandButton styleClass="no-button" value="No" oncomplete="PF('eliminaDestinazione#{d.id}').hide();" />
 	      			</h:form>
 	      		</h:panelGroup>
 			</p:dialog>			
