@@ -14,9 +14,7 @@
   	
   	<servlet-mapping>
     	<servlet-name>Faces Servlet</servlet-name>
-    	<url-pattern>/faces/*</url-pattern>
-   		<url-pattern>*.xhtml</url-pattern>
-		<url-pattern>*.jsf</url-pattern>    
+   		<url-pattern>*.xhtml</url-pattern>   
   	</servlet-mapping>
   	
 	<login-config>
@@ -42,8 +40,8 @@
 		<auth-constraint>
 			<role-name>DIPENDENTE</role-name>
 		</auth-constraint>
-	</security-constraint>
-		<security-constraint>
+	</security-constraint>	
+	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>area_utenti</web-resource-name>
 			<url-pattern>/utente/*</url-pattern>
@@ -52,6 +50,15 @@
 			<role-name>UTENTE</role-name>
 		</auth-constraint>	
 	</security-constraint>	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>test</web-resource-name>
+			<url-pattern>/test/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>NONE</role-name>
+		</auth-constraint>	
+	</security-constraint>		
 	
 	<session-config>
 		<session-timeout>60</session-timeout>		

@@ -131,6 +131,8 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Jose Marti', 'JFK', '2014-03-08', '07:00:00', '20:15:00', 295, 3, 5, 1);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'CPT', 'Malpensa', '2014-03-08', '13:30:00', '09:45:00', 510, 1, 9, 1);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'RHO', 'Malpensa', '2014-03-08', '10:50:00', '17:00:00', 195, 1, 8, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'JFK', 'Jose Marti', '2014-03-08', '08:00:00', '21:15:00', 320, 5, 3, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'JFK', 'Jose Marti', '2014-03-08', '12:00:00', '02:15:00', 380, 5, 3, 1);
 
 -- Partenze il 15/03/2014
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Fiumicino', 'JFK', '2014-03-15', '11:50:00', '22:35:00', 650, 3, 2, 1);
