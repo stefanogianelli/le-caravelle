@@ -750,7 +750,7 @@ public class PacchettoBean {
 		} catch (DestinazioneInesistenteException e) {
 			JsfUtil.errorMessage("Destinazione inesistente");
 		} catch (InsertException e) {
-			JsfUtil.errorMessage("L'hotel non si trova nella stessa città della destinazione");
+			JsfUtil.errorMessage(e.getMessage());
 		}
 		return null;
 	}
