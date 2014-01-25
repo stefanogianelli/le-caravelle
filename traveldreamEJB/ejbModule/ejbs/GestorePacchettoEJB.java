@@ -259,24 +259,28 @@ public class GestorePacchettoEJB implements GestorePacchetto {
 	public void acquistaPacchetto(int idPacchetto, List<PersonaDTO> partecipanti) throws PacchettoInesistenteException, AcquistoException, MessagingException {
 		Pacchetti entity = this.convertiInEntita(idPacchetto);
 		
-		//controllo che il pacchetto sia completo
-		int numeroDestinazioni = entity.getDestinazioni().size();
-		int numeroCollegamenti = entity.getCollegamenti().size();
-		
-		if (numeroCollegamenti == numeroDestinazioni + 1) {
-			//aggiungo i dati dei partecipanti nel pacchetto
-			if (entity.getNumPartecipanti() == partecipanti.size() + 1) {
-				for (PersonaDTO p : partecipanti) {
-					entity.addPartecipante(profilo.creaPersona(p));
-				}			
-				entity.setTipoPacchetto(TipoPacchetto.DACONFERMARE);					
-				em.merge(entity);
-				
-				emailBean.confermaAcquisto(entity.getUtente().getEmail(), entity.getNome());
+		//verifico che l'utente connesso sia il proprietario del pacchetto
+		if (entity.getUtente().equals(profilo.getUtente())) {		
+			//controllo che il pacchetto sia completo
+			int numeroDestinazioni = entity.getDestinazioni().size();
+			int numeroCollegamenti = entity.getCollegamenti().size();
+			
+			if (numeroCollegamenti == numeroDestinazioni + 1) {
+				//aggiungo i dati dei partecipanti nel pacchetto
+				if (entity.getNumPartecipanti() == partecipanti.size() + 1) {
+					for (PersonaDTO p : partecipanti) {
+						entity.addPartecipante(profilo.creaPersona(p));
+					}			
+					entity.setTipoPacchetto(TipoPacchetto.DACONFERMARE);					
+					em.merge(entity);
+					
+					emailBean.confermaAcquisto(entity.getUtente().getEmail(), entity.getNome());
+				} else
+					throw new AcquistoException("Errore: il numero di partecipanti non combacia con il numero di partecipanti del pacchetto");
 			} else
-				throw new AcquistoException("Errore: il numero di partecipanti non combacia con il numero di partecipanti del pacchetto");
+				throw new AcquistoException("Il pacchetto è incompleto");
 		} else
-			throw new AcquistoException("Il pacchetto è incompleto");
+			throw new AcquistoException("Acquisto non consentito");
 	}
 	
 	@Override
