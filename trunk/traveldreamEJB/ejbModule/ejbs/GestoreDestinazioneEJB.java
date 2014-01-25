@@ -130,37 +130,42 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	public void aggiuntaEscursione(int idDestinazione, int idEscursione, int numeroPartecipanti) throws EscursioneInesistenteException, DestinazioneInesistenteException, EntitaEsistenteException, NumeroPartecipantiException, InsertException {
 		Destinazioni entity = this.convertiInEntita(idDestinazione);
 		
-		//Controllo che il numero di partecipanti all'escursione sia minore o uguale al numero di partecipanti al viaggio
-		if (numeroPartecipanti <= entity.getPacchetto().getNumPartecipanti()) {
-			Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
-			
-			//controllo che l'escursione non sia già stata aggiunta
-			TypedQuery<Attivita> q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
-			q.setParameter("destinazione", entity);
-			q.setParameter("escursione", escursioneEntity);
-			
-			if (q.getResultList().isEmpty()) {
-				//controllo che l'escursione sia all'interno delle date della destinazione
-				if (entity.getDataArrivo().before(escursioneEntity.getData()) && entity.getDataPartenza().after(escursioneEntity.getData())) {
-					//controllo che l'escursione sia nella stessa regione della destinazione
-					if (entity.getCitta().getRegione().equals(escursioneEntity.getCitta().getRegione())) {						
-						Attivita attivita = new Attivita();		
-						attivita.setEscursione(escursioneEntity);		
-						attivita.setNumPartecipanti(numeroPartecipanti);
-						
-						entity.addAttivita(attivita);
-						//aggiorno il prezzo del pacchetto
-						entity.getPacchetto().setPrezzo(entity.getPacchetto().getPrezzo() + escursioneEntity.getPrezzo()*numeroPartecipanti);
-						
-						em.merge(entity);
+    	//verifico che l'utente connesso sia il proprietario del pacchetto
+    	if (entity.getPacchetto().getUtente().equals(profilo.getUtente())) {   		
+		
+			//Controllo che il numero di partecipanti all'escursione sia minore o uguale al numero di partecipanti al viaggio
+			if (numeroPartecipanti <= entity.getPacchetto().getNumPartecipanti()) {
+				Escursioni escursioneEntity = escursione.convertiInEntita(idEscursione);
+				
+				//controllo che l'escursione non sia già stata aggiunta
+				TypedQuery<Attivita> q = em.createNamedQuery("Attivita.getAttivita", Attivita.class);
+				q.setParameter("destinazione", entity);
+				q.setParameter("escursione", escursioneEntity);
+				
+				if (q.getResultList().isEmpty()) {
+					//controllo che l'escursione sia all'interno delle date della destinazione
+					if (entity.getDataArrivo().before(escursioneEntity.getData()) && entity.getDataPartenza().after(escursioneEntity.getData())) {
+						//controllo che l'escursione sia nella stessa regione della destinazione
+						if (entity.getCitta().getRegione().equals(escursioneEntity.getCitta().getRegione())) {						
+							Attivita attivita = new Attivita();		
+							attivita.setEscursione(escursioneEntity);		
+							attivita.setNumPartecipanti(numeroPartecipanti);
+							
+							entity.addAttivita(attivita);
+							//aggiorno il prezzo del pacchetto
+							entity.getPacchetto().setPrezzo(entity.getPacchetto().getPrezzo() + escursioneEntity.getPrezzo()*numeroPartecipanti);
+							
+							em.merge(entity);
+						} else
+							throw new InsertException("L'escursione non è nella stessa regione della destinazione");
 					} else
-						throw new InsertException("L'escursione non è nella stessa regione della destinazione");
+						throw new InsertException("La data dell'escursione è al di fuori del periodo di permanenza nella destinazione");
 				} else
-					throw new InsertException("La data dell'escursione è al di fuori del periodo di permanenza nella destinazione");
+					throw new EntitaEsistenteException();
 			} else
-				throw new EntitaEsistenteException();
-		} else
-			throw new NumeroPartecipantiException();
+				throw new NumeroPartecipantiException();
+    	} else
+    		throw new InsertException("Modifica non consentita");
 	}
 
 	@Override
