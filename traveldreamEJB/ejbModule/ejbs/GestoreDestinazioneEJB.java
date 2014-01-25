@@ -4,6 +4,7 @@ import interfaces.GestoreCittaLocal;
 import interfaces.GestoreDestinazioneLocal;
 import interfaces.GestoreEscursioneLocal;
 import interfaces.GestoreHotelLocal;
+import interfaces.GestoreProfiloLocal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +48,9 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
 	
 	@EJB
 	private GestoreCittaLocal citta;
+	
+	@EJB
+	private GestoreProfiloLocal profilo;
 	
 	@Override
 	public DestinazioneDTO getDestinazione (int idDestinazione) throws DestinazioneInesistenteException {
@@ -108,12 +112,16 @@ public class GestoreDestinazioneEJB implements GestoreDestinazione, GestoreDesti
     @Override
     public void modificaHotel (int idDestinazione, HotelDTO hotel) throws HotelInesistenteException, DestinazioneInesistenteException, InsertException {
     	Destinazioni entity = this.convertiInEntita(idDestinazione);
-    			
-		//controllo che l'hotel sia nella stessa città della destinazione
-		if (entity.getCitta().getNome().equals(hotel.getCitta().getNome())) {
-			entity.setHotel(this.hotel.convertiInEntita(hotel));
-		} else
-			throw new InsertException();
+    	
+    	//verifico che l'utente connesso sia il proprietario del pacchetto
+    	if (entity.getPacchetto().getUtente().equals(profilo.getUtente())) {    			
+			//controllo che l'hotel sia nella stessa città della destinazione
+			if (entity.getCitta().getNome().equals(hotel.getCitta().getNome())) {
+				entity.setHotel(this.hotel.convertiInEntita(hotel));
+			} else
+				throw new InsertException("L'hotel non si trova nella stessa città della destinazione");
+    	} else
+    		throw new InsertException("Modifica non consentita");
 		
 		em.merge(entity);
     }

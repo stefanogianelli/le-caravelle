@@ -29,7 +29,7 @@ public interface GestoreDestinazione {
 	 * @param hotel L'hotel da aggiungere
 	 * @throws HotelInesistenteException Quando l'hotel non viene trovato nel database
 	 * @throws DestinazioneInesistenteException Quando la destinazione non viene trovata nel database
-	 * @throws InsertException Quando l'hotel non si trova nella stessa città della destinazione
+	 * @throws InsertException Quando l'hotel non si trova nella stessa città della destinazione o quando si tenta di modificare la destinazione di un altro pacchetto
 	 */
 	void modificaHotel (int idDestinazione, HotelDTO hotel) throws HotelInesistenteException, DestinazioneInesistenteException, InsertException;
 	
