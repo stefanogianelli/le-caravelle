@@ -179,6 +179,8 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'JFK', 'Jose Marti', '2014-03-08', '12:00:00', '02:15:00', 380, 5, 3, 1);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Fiumicino', 'Linate', '2014-03-15', '06:55:00', '08:10:00', 50, 1, 2, 1);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Ciampino', 'JFK', '2014-03-22', '10:10:00', '20:55:00', 480, 3, 2, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Malpensa', 'JFK', '2014-03-22', '08:05:00', '18:50:00', 450, 3, 1, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Jose Marti', 'JFK', '2014-03-22', '07:00:00', '20:15:00', 295, 3, 5, 1);
 
 -- Escursioni del 02/03
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Castello Sforzesco', '2014-03-02', '10:00:00','3', 'CULTURA', 15, 1, 1);
@@ -404,6 +406,64 @@ INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (56, 5), (57, 5), (66, 5);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (14, 5), (15, 5);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (52, 5), (53, 5), (58, 5), (64, 5), (65, 5);
+
+-- Pacchetto Personalizzato
+INSERT INTO pacchetti VALUES (7, 'Viaggio infinito', 2, 8856, 'PERSONALIZZATO', 1, NULL, 'stefano@gmail.com');
+
+INSERT INTO destinazioni VALUES (7, '2014-03-01', '2014-03-04', 7, 11, 4);
+INSERT INTO destinazioni VALUES (8, '2014-03-04', '2014-03-08', 7, 7, 2);
+INSERT INTO destinazioni VALUES (9, '2014-03-08', '2014-03-15', 7, 10, 3);
+INSERT INTO destinazioni VALUES (10, '2014-03-15', '2014-03-22', 7, 16, 5);
+
+INSERT INTO mezzi_trasporto VALUES (7, 6);
+INSERT INTO mezzi_trasporto VALUES (7, 31);
+INSERT INTO mezzi_trasporto VALUES (7, 50);
+INSERT INTO mezzi_trasporto VALUES (7, 86);
+INSERT INTO mezzi_trasporto VALUES (7, 88);
+
+INSERT INTO attivita VALUES (2, 7, 4);
+INSERT INTO attivita VALUES (2, 9, 55);
+INSERT INTO attivita VALUES (2, 10, 81);
+
+-- Pacchetto Condiviso
+INSERT INTO pacchetti VALUES (8, 'Viaggio infinito', 2, 8856, 'CONDIVISO', 1, NULL, 'stefano@gmail.com');
+
+INSERT INTO destinazioni VALUES (11, '2014-03-01', '2014-03-04', 8, 11, 4);
+INSERT INTO destinazioni VALUES (12, '2014-03-04', '2014-03-08', 8, 7, 2);
+INSERT INTO destinazioni VALUES (13, '2014-03-08', '2014-03-15', 8, 10, 3);
+INSERT INTO destinazioni VALUES (14, '2014-03-15', '2014-03-22', 8, 16, 5);
+
+INSERT INTO mezzi_trasporto VALUES (8, 6);
+INSERT INTO mezzi_trasporto VALUES (8, 31);
+INSERT INTO mezzi_trasporto VALUES (8, 50);
+INSERT INTO mezzi_trasporto VALUES (8, 86);
+INSERT INTO mezzi_trasporto VALUES (8, 88);
+
+INSERT INTO attivita VALUES (2, 11, 4);
+INSERT INTO attivita VALUES (2, 13, 55);
+INSERT INTO attivita VALUES (2, 14, 81);
+
+INSERT INTO amici VALUES ('francesca@gmail.com', 'Francesca', 'Garziera');
+
+INSERT INTO condiviso_con VALUES (8, 'francesca@gmail.com');
+
+-- Pacchetto Personalizzato
+INSERT INTO pacchetti VALUES (9, 'Viaggio infinito', 2, 8856, 'PERSONALIZZATO', 1, NULL, 'francesca@gmail.com');
+
+INSERT INTO destinazioni VALUES (15, '2014-03-01', '2014-03-04', 9, 11, 4);
+INSERT INTO destinazioni VALUES (16, '2014-03-04', '2014-03-08', 9, 7, 2);
+INSERT INTO destinazioni VALUES (17, '2014-03-08', '2014-03-15', 9, 10, 3);
+INSERT INTO destinazioni VALUES (18, '2014-03-15', '2014-03-22', 9, 16, 5);
+
+INSERT INTO mezzi_trasporto VALUES (9, 6);
+INSERT INTO mezzi_trasporto VALUES (9, 31);
+INSERT INTO mezzi_trasporto VALUES (9, 50);
+INSERT INTO mezzi_trasporto VALUES (9, 86);
+INSERT INTO mezzi_trasporto VALUES (9, 88);
+
+INSERT INTO attivita VALUES (2, 15, 4);
+INSERT INTO attivita VALUES (2, 17, 55);
+INSERT INTO attivita VALUES (2, 18, 81);
 
 -- Dati partecipanti
 INSERT INTO dati_partecipanti VALUES ('Stefano', 'Gianelli', '1991-01-25', 1);
