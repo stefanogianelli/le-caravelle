@@ -55,7 +55,12 @@
 		
 		<!-- Prezzo del pacchetto -->
 		<h:panelGroup id="prezzoPacchetto" styleClass="pulsanti" layout="block">
-			<div id="prezzo">#{pacchettiUtente.pacchetto.prezzo} €</div>
+			<div id="prezzo">
+				<h:outputText value="#{pacchettiUtente.pacchetto.prezzo}">
+					<f:convertNumber pattern="#,###,##0.00" />
+				</h:outputText>
+				€
+			</div>			
 		</h:panelGroup>
 	</div>	
 
