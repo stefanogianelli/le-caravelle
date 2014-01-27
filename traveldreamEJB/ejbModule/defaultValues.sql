@@ -5,7 +5,7 @@ INSERT INTO citta (id, nome, regione, nazione, lat, lon, attivo) VALUES (4, 'Bar
 INSERT INTO citta (id, nome, regione, nazione, lat, lon, attivo) VALUES (5, 'L''Avana', 'L''Avana', 'Cuba', 23.133333, -82.383333, 1);
 INSERT INTO citta (id, nome, regione, nazione, lat, lon, attivo) VALUES (8, 'Rodi', 'Rodi', 'Grecia', 36.4, 28.216667, 1);
 INSERT INTO citta (id, nome, regione, nazione, lat, lon, attivo) VALUES (9, 'Citta del Capo', 'Capo Occidentale', 'Sudafrica', -33.9264, 18.4227, 1);
-INSERT INTO citta (id, nome, regione, nazione, lat, lon, attivo) VALUES (12, 'Parigi', 'Œle-de-France', 'Francia', 48.856667, 2.351944, 1);
+INSERT INTO citta (id, nome, regione, nazione, lat, lon, attivo) VALUES (12, 'Parigi', '√éle-de-France', 'Francia', 48.856667, 2.351944, 1);
 
 INSERT INTO immagini_citta (idCitta, immagine) VALUES (1, 'milano1.JPG');
 INSERT INTO immagini_citta (idCitta, immagine) VALUES (1, 'milano2.jpg');
@@ -30,7 +30,7 @@ INSERT INTO immagini_citta (idCitta, immagine) VALUES (9, 'cittaCapo2.jpg');
 INSERT INTO immagini_citta (idCitta, immagine) VALUES (9, 'cittaCapo3.jpg');
 INSERT INTO immagini_citta (idCitta, immagine) VALUES (12, 'parigi1.jpg');
 INSERT INTO immagini_citta (idCitta, immagine) VALUES (12, 'parigi2.jpg');
-INSERT INTO immagini_citta (idCitta, immagine) VALUES (12, 'parigi2.jpg');
+INSERT INTO immagini_citta (idCitta, immagine) VALUES (12, 'parigi3.jpg');
 
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine, attivo) VALUES ('Hotel La Madonnina', 3, 'Via G. Mazzini 10', '+39 02 89096917', 'http://www.hotellamadonninamilano.it/', 'info@hotellamadonninamilano.it', 160.0, 1, 'madonnina.jpg', 1);
 INSERT INTO hotel (nome, stelle, indirizzo, telefono, website, email, prezzo, citta, immagine, attivo) VALUES ('Starhotel Rosa', 4, 'Piazza Fontana 3', '+39 02 88311', 'http://rosagrand.starhotels.com/it/home.aspx', 'rosa.mi@starhotels.it', 85.0, 1, 'starhotel.jpg', 1);
@@ -154,12 +154,12 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'JFK', 'Ciampino', '2014-03-22', '10:10:00', '20:55:00', 480, 2, 3, 1);
 
 -- Vecchi
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Malpensa', 'CPT', '2013-12-01', '15:10:00', '09:25:00', 450, 9, 1, 1);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'CPT', 'Malpensa', '2013-12-15', '13:30:00', '09:45:00', 510, 1, 9, 1);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Malpensa', 'RHO', '2013-08-08', '10:50:00', '17:00:00', 195, 8, 1, 1);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'RHO', 'Malpensa', '2013-08-15', '17:30:00', '10:00:00', 212, 1, 8, 1);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Malpensa', 'Orly', '2013-12-30', '07:00:00', '08:20:00', 45, 12, 1, 1);
-INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Orly', 'Linate', '2014-01-03', '19:30:00', '20:50:00', 90, 1, 12, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Malpensa', 'CPT', '2013-12-01', '15:10:00', '09:25:00', 450, 9, 1, 0);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'CPT', 'Malpensa', '2013-12-15', '13:30:00', '09:45:00', 510, 1, 9, 0);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Malpensa', 'RHO', '2013-08-08', '10:50:00', '17:00:00', 195, 8, 1, 0);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'RHO', 'Malpensa', '2013-08-15', '17:30:00', '10:00:00', 212, 1, 8, 0);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Malpensa', 'Orly', '2013-12-30', '07:00:00', '08:20:00', 45, 12, 1, 0);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Orly', 'Linate', '2014-01-03', '19:30:00', '20:50:00', 90, 1, 12, 0);
 
 
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Linate', 'Ciampino', '2014-03-22', '10:00:00', '12:15:00', 50, 2, 1, 1);
@@ -175,9 +175,10 @@ INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza,
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Jose Marti', 'Fiumicino', '2014-03-15', '09:00:00', '22:15:00', 795, 2, 5, 1);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Jose Marti', 'Fiumicino', '2014-03-08', '09:00:00', '22:15:00', 795, 2, 5, 1);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Jose Marti', 'Fiumicino', '2014-03-22', '09:00:00', '22:15:00', 795, 2, 5, 1);
-
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'JFK', 'Jose Marti', '2014-03-08', '08:00:00', '21:15:00', 320, 5, 3, 1);
 INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'JFK', 'Jose Marti', '2014-03-08', '12:00:00', '02:15:00', 380, 5, 3, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Fiumicino', 'Linate', '2014-03-15', '06:55:00', '08:10:00', 50, 1, 2, 1);
+INSERT INTO collegamenti (tipoCollegamento, origine, destinazione, dataPartenza, oraPartenza, oraArrivo, prezzo, cittaArrivo, cittaPartenza, attivo) VALUES ('AEREO', 'Ciampino', 'JFK', '2014-03-22', '10:10:00', '20:55:00', 480, 3, 2, 1);
 
 -- Escursioni del 02/03
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Castello Sforzesco', '2014-03-02', '10:00:00','3', 'CULTURA', 15, 1, 1);
@@ -194,7 +195,7 @@ INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, att
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Museo Picasso', '2014-03-02', '10:00:00','3', 'CULTURA', 12, 4, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Central Park in bicicletta', '2014-03-02', '15:00:00','3', 'SPORT', 9, 3, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('The Metropolitan Museum of Art', '2014-03-02', '09:00:00','4', 'CULTURA', 25, 3, 1);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Giro citt‡ guidato', '2014-03-02', '14:00:00','3', 'RELAX', 50, 3, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Giro citt√† guidato', '2014-03-02', '14:00:00','3', 'RELAX', 50, 3, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Gran teatro de La Havana', '2014-03-02', '14:00:00','3', 'RELAX', 60, 5, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Playas de Este', '2014-03-02', '10:00:00','6', 'MARE', 6, 5, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Castillo De Los Tres Reyes Magos', '2014-03-02', '17:00:00','2', 'CULTURA', 10, 5, 1);
@@ -217,7 +218,7 @@ INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, att
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Museo Picasso', '2014-03-05', '10:00:00','3', 'CULTURA', 12, 4, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Central Park in bicicletta', '2014-03-05', '15:00:00','3', 'SPORT', 9, 3, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('The Metropolitan Museum of Art', '2014-03-05', '09:00:00','4', 'CULTURA', 25, 3, 1);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Giro citt‡ guidato', '2014-03-05', '14:00:00','3', 'RELAX', 50, 3, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Giro citt√† guidato', '2014-03-05', '14:00:00','3', 'RELAX', 50, 3, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Gran teatro de La Havana', '2014-03-05', '14:00:00','3', 'RELAX', 60, 5, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Playas de Este', '2014-03-05', '10:00:00','6', 'MARE', 6, 5, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Castillo De Los Tres Reyes Magos', '2014-03-05', '17:00:00','2', 'CULTURA', 10, 5, 1);
@@ -240,7 +241,7 @@ INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, att
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Museo Picasso', '2014-03-09', '10:00:00','3', 'CULTURA', 12, 4, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Central Park in bicicletta', '2014-03-09', '15:00:00','3', 'SPORT', 9, 3, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('The Metropolitan Museum of Art', '2014-03-09', '09:00:00','4', 'CULTURA', 25, 3, 1);
-INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Giro citt‡ guidato', '2014-03-09', '10:00:00','3', 'RELAX', 50, 3, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Giro citt√† guidato', '2014-03-09', '10:00:00','3', 'RELAX', 50, 3, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Gran teatro de La Havana', '2014-03-09', '14:00:00','3', 'RELAX', 60, 5, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Playas de Este', '2014-03-09', '10:00:00','6', 'MARE', 6, 5, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Castillo De Los Tres Reyes Magos', '2014-03-09', '17:00:00','2', 'CULTURA', 10, 5, 1);
@@ -248,10 +249,39 @@ INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, att
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Kirstenbosch National Gardens', '2014-03-09', '15:00:00','3', 'RELAX', 6, 9, 1);
 INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Robben Island', '2014-03-09', '09:30:00','5', 'CULTURA', 30, 9, 1);
 
+-- Escursioni del 16/03
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Castello Sforzesco', '2014-03-16', '10:00:00','3', 'CULTURA', 15, 1, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Navigli', '2014-03-16', '17:00:00','5', 'RELAX', 8, 1, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Colosseo', '2014-03-16', '10:30:00','2', 'CULTURA', 12, 2, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Parque Guell', '2014-03-16', '11:00:00','3', 'CULTURA', 15, 4, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Museo del Louvre', '2014-03-16', '09:30:00','4', 'CULTURA', 0, 12, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Museo Rodin', '2014-03-16', '16:00:00','2', 'CULTURA', 8, 12, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Tour Eiffel', '2014-03-16', '19:00:00','2', 'RELAX', 12, 12, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Auditorium della musica', '2014-03-16', '21:00:00','3', 'RELAX', 30, 2, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Ostia', '2014-03-16', '10:00:00','8', 'MARE', 60, 2, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Il mercato della Boqueria', '2014-03-16', '12:00:00','3', 'RELAX', 0, 4, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('La Barceloneta', '2014-03-16', '15:00:00','3', 'MARE', 0, 4, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Museo Picasso', '2014-03-16', '10:00:00','3', 'CULTURA', 12, 4, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Central Park in bicicletta', '2014-03-16', '15:00:00','3', 'SPORT', 9, 3, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('The Metropolitan Museum of Art', '2014-03-16', '09:00:00','4', 'CULTURA', 25, 3, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Giro citt√† guidato', '2014-03-16', '10:00:00','3', 'RELAX', 50, 3, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Gran teatro de La Havana', '2014-03-16', '14:00:00','3', 'RELAX', 60, 5, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Playas de Este', '2014-03-16', '10:00:00','6', 'MARE', 6, 5, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Castillo De Los Tres Reyes Magos', '2014-03-16', '17:00:00','2', 'CULTURA', 10, 5, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Table Mountain', '2014-03-16', '10:00:00','6', 'SPORT', 0, 9, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Kirstenbosch National Gardens', '2014-03-16', '15:00:00','3', 'RELAX', 6, 9, 1);
+INSERT INTO escursioni (nome, data, ora, durata, categoria, prezzo, idCitta, attivo) VALUES ('Robben Island', '2014-03-16', '09:30:00','5', 'CULTURA', 30, 9, 1);
+
+-- Persone
+INSERT INTO persone VALUES ('Francesca', 'Garziera', '1990-03-11', 'AK5910664', '3425564723');
+INSERT INTO persone VALUES ('Stefano', 'Gianelli', '1991-01-25', 'AK2950634', '3393494136');
+INSERT INTO persone VALUES ('Paolo', 'Cavallini', '1990-03-19', 'SR7413951', '3495631689');
+INSERT INTO persone VALUES ('Giulia', 'Piallini', '1989-07-10', 'AK35689421', '3381985496');
+
 -- emai: stefano@gmail.com - password: stefano
-INSERT INTO utenti (email, password) VALUES ('stefano@gmail.com', '05b9115df05a2a467841772eccc969822d884c9e71841050fe9e0893cce7d11b');
+INSERT INTO utenti VALUES ('stefano@gmail.com', '05b9115df05a2a467841772eccc969822d884c9e71841050fe9e0893cce7d11b', 'Stefano', 'Gianelli', '1991-01-25');
 -- emai: francesca@gmail.com - password: francesca
-INSERT INTO utenti (email, password) VALUES ('francesca@gmail.com', '5dfd46e27a5e3e8e06fcb92817b0955f7fd28048f5003bfd4e5be8e67bf417db');
+INSERT INTO utenti VALUES ('francesca@gmail.com', '5dfd46e27a5e3e8e06fcb92817b0955f7fd28048f5003bfd4e5be8e67bf417db', 'Francesca', 'Garziera', '1990-03-11');
 -- emai: dipendente@gmail.com - password: dipendente
 INSERT INTO utenti (email, password) VALUES ('dipendente@gmail.com', '24d331432e0ea5ffa4664d35d57e993224f3c08aa7034b3468010c63b14e0cdd');
 
@@ -282,31 +312,56 @@ INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (38, 1);
 
 -- 2 Pacchetto Parigi
-INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel, attivo) VALUES ('Capodanno', 132, 25, 1);
+INSERT INTO pacchetti VALUES (3,'Capodanno',2,380,'ACQUISTATO',1,NULL,'francesca@gmail.com');
 
-INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (2, 1);
+INSERT INTO `mezzi_trasporto` VALUES (3,82), (3,83);
 
-INSERT INTO date_partenza (data, idPacchettoPredefinito) VALUES ('2013-12-30', 2);
+INSERT INTO `destinazioni` VALUES (3,'2013-12-30','2014-01-03',3,25,12);
 
-INSERT INTO durate (durata, idPacchettoPredefinito) VALUES (4, 2);
+INSERT INTO pacchetti VALUES (4,'Capodanno',2,380,'ACQUISTATO',1,NULL,'stefano@gmail.com');
 
-INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (82, 2);
-INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (83, 2);
+INSERT INTO `mezzi_trasporto` VALUES (4,82), (4,83);
+
+INSERT INTO `destinazioni` VALUES (4,'2013-12-30','2014-01-03',4,25,12);
 
 -- 3 Pacchetto Waka waka
-INSERT INTO pacchetti VALUES (1,'Waka waka',4,8880,'ACQUISTATO',1,NULL,'francesca@gmail.com');
+INSERT INTO pacchetti VALUES (1,'Waka waka',3,8880,'ACQUISTATO',1,NULL,'francesca@gmail.com');
 
 INSERT INTO `mezzi_trasporto` VALUES (1,78), (1,79);
 
 INSERT INTO `destinazioni` VALUES (1,'2013-12-01','2013-12-15',1,21,9);
 
--- 4 Pacchetto Rodi
+INSERT INTO pacchetti VALUES (5,'Waka waka',3,8880,'ACQUISTATO',1,NULL,'stefano@gmail.com');
 
+INSERT INTO `mezzi_trasporto` VALUES (5,78), (5,79);
+
+INSERT INTO `destinazioni` VALUES (5,'2013-12-01','2013-12-15',5,21,9);
+
+-- 4 Pacchetto Rodi
 INSERT INTO pacchetti VALUES (2,'Rodi',3,2901,'ACQUISTATO',1,NULL,'francesca@gmail.com');
 
 INSERT INTO `mezzi_trasporto` VALUES (2,80), (2,81);
 
 INSERT INTO `destinazioni` VALUES (2,'2013-08-08','2013-08-15',2,17,8);
+
+INSERT INTO pacchetti VALUES (6,'Rodi',3,2901,'ACQUISTATO',1,NULL,'stefano@gmail.com');
+
+INSERT INTO `mezzi_trasporto` VALUES (6,80), (6,81);
+
+INSERT INTO `destinazioni` VALUES (6,'2013-08-08','2013-08-15',6,17,8);
+
+-- Pacchetto Roma
+INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel, attivo) VALUES ('Dolce Vita', 105, 6, 1);
+
+INSERT INTO citta_origine_pred (idPacchettoPredefinito, idCitta) VALUES (2, 1), (2, 3);
+
+INSERT INTO date_partenza (data, idPacchettoPredefinito) VALUES ('2014-03-01', 2), ('2014-03-08', 2);
+
+INSERT INTO durate (durata, idPacchettoPredefinito) VALUES (7, 2), (14, 2);
+
+INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (3, 2), (4, 2), (39, 2), (40, 2), (41, 2), (42, 2), (50, 2), (51, 2), (55, 2), (61, 2), (69, 2), (85, 2), (90, 2), (91, 2), (99, 2), (100, 2);
+
+INSERT INTO attivita_pred VALUES (3,2),(45,2), (50,2), (66,2);
 
 -- 5 Pacchetto Barcellona
 INSERT INTO pacchetti_predefiniti (nome, prezzo, idHotel, attivo) VALUES ('La Rambla', 65, 11, 1);
@@ -349,3 +404,15 @@ INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (56, 5), (57, 5), (66, 5);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (14, 5), (15, 5);
 INSERT INTO mezzi_trasporto_pred (idCollegamento, idPacchettoPredefinito) VALUES (52, 5), (53, 5), (58, 5), (64, 5), (65, 5);
+
+-- Dati partecipanti
+INSERT INTO dati_partecipanti VALUES ('Stefano', 'Gianelli', '1991-01-25', 1);
+INSERT INTO dati_partecipanti VALUES ('Paolo', 'Cavallini', '1990-03-19', 1);
+INSERT INTO dati_partecipanti VALUES ('Paolo', 'Cavallini', '1990-03-19', 2);
+INSERT INTO dati_partecipanti VALUES ('Giulia', 'Piallini', '1989-07-10', 2);
+INSERT INTO dati_partecipanti VALUES ('Giulia', 'Piallini', '1989-07-10', 3);
+INSERT INTO dati_partecipanti VALUES ('Francesca', 'Garziera', '1990-03-11', 4);
+INSERT INTO dati_partecipanti VALUES ('Paolo', 'Cavallini', '1990-03-19', 4);
+INSERT INTO dati_partecipanti VALUES ('Francesca', 'Garziera', '1990-03-11', 5);
+INSERT INTO dati_partecipanti VALUES ('Giulia', 'Piallini', '1989-07-10', 5);
+INSERT INTO dati_partecipanti VALUES ('Francesca', 'Garziera', '1990-03-11', 6);
